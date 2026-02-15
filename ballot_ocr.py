@@ -1034,14 +1034,25 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
                         "party_abbr": ""
                     }
 
-        # Validate party numbers against ECT data (for party-list forms)
+        # NEW: Enrich party information for party-list forms
+        party_info = {}  # NEW: Store party details for party-list forms
         if is_party_list and ECT_AVAILABLE:
             for party_num in party_votes.keys():
                 party = ect_data.get_party(party_num)
                 if party:
+                    party_info[str(party_num)] = {
+                        "name": party.name,
+                        "abbr": party.abbr,
+                        "color": party.color
+                    }
                     print(f"  Party #{party_num}: {party.name} ({party.abbr})")
                 else:
                     print(f"  WARNING: Party #{party_num} not found in ECT data")
+                    party_info[str(party_num)] = {
+                        "name": "Unknown",
+                        "abbr": "",
+                        "color": ""
+                    }
 
         # Determine form_type string for output
         if form_type is not None:
@@ -1144,7 +1155,8 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
             vote_details=vote_details,
             party_votes=party_votes,
             party_details=party_details,
-            candidate_info=candidate_info,  # NEW: Include candidate info
+            candidate_info=candidate_info,  # Include candidate info
+            party_info=party_info,  # NEW: Include party info for party-list forms
             total_votes=reported_total or calculated_sum,
             valid_votes=reported_valid or calculated_sum,
             invalid_votes=reported_invalid,
@@ -1157,6 +1169,197 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
     except Exception as e:
         print(f"Error processing extracted data: {e}")
         return None
+
+
+def detect_discrepancies(extracted_data: BallotData, official_data: Optional[dict] = None) -> dict:
+    """
+    Detect discrepancies between extracted ballot data and official ECT results.
+    
+    Args:
+        extracted_data: BallotData object with extracted votes
+        official_data: Optional dict with official vote counts from ECT
+        
+    Returns:
+        Dictionary with discrepancy report
+    """
+    report = {
+        "form_type": extracted_data.form_type,
+        "polling_station": extracted_data.polling_station_id,
+        "extracted_total": extracted_data.valid_votes,
+        "official_total": official_data.get("total", 0) if official_data else None,
+        "discrepancies": [],
+        "summary": {
+            "high_severity": 0,
+            "medium_severity": 0,
+            "low_severity": 0,
+            "matches": 0
+        }
+    }
+    
+    # If no official data, return empty report
+    if not official_data:
+        report["status"] = "pending_official_data"
+        return report
+    
+    # Determine form type and compare accordingly
+    if extracted_data.form_category == "party_list":
+        # Compare party votes
+        official_votes = official_data.get("party_votes", {})
+        for party_num_str, extracted_votes in extracted_data.party_votes.items():
+            party_num = int(party_num_str)
+            official_votes_count = official_votes.get(party_num, 0)
+            
+            if extracted_votes == official_votes_count:
+                report["summary"]["matches"] += 1
+            else:
+                variance = abs(extracted_votes - official_votes_count)
+                variance_pct = (variance / official_votes_count * 100) if official_votes_count > 0 else 100.0
+                
+                # Determine severity
+                if variance_pct > 10:
+                    severity = "HIGH"
+                    report["summary"]["high_severity"] += 1
+                elif variance_pct > 5:
+                    severity = "MEDIUM"
+                    report["summary"]["medium_severity"] += 1
+                else:
+                    severity = "LOW"
+                    report["summary"]["low_severity"] += 1
+                
+                # Get party name if available
+                party_info = extracted_data.party_info.get(party_num_str, {})
+                party_name = party_info.get("name", f"Party #{party_num_str}")
+                party_abbr = party_info.get("abbr", "")
+                
+                report["discrepancies"].append({
+                    "type": "party_vote",
+                    "party_number": party_num,
+                    "party_name": party_name,
+                    "party_abbr": party_abbr,
+                    "extracted": extracted_votes,
+                    "official": official_votes_count,
+                    "variance": variance,
+                    "variance_pct": f"{variance_pct:.1f}%",
+                    "severity": severity
+                })
+    else:
+        # Compare constituency votes
+        official_votes = official_data.get("vote_counts", {})
+        for position, extracted_votes in extracted_data.vote_counts.items():
+            official_votes_count = official_votes.get(position, 0)
+            
+            if extracted_votes == official_votes_count:
+                report["summary"]["matches"] += 1
+            else:
+                variance = abs(extracted_votes - official_votes_count)
+                variance_pct = (variance / official_votes_count * 100) if official_votes_count > 0 else 100.0
+                
+                # Determine severity
+                if variance_pct > 10:
+                    severity = "HIGH"
+                    report["summary"]["high_severity"] += 1
+                elif variance_pct > 5:
+                    severity = "MEDIUM"
+                    report["summary"]["medium_severity"] += 1
+                else:
+                    severity = "LOW"
+                    report["summary"]["low_severity"] += 1
+                
+                # Get candidate name if available
+                candidate_info = extracted_data.candidate_info.get(position, {})
+                candidate_name = candidate_info.get("name", f"Position #{position}")
+                
+                report["discrepancies"].append({
+                    "type": "candidate_vote",
+                    "position": position,
+                    "candidate_name": candidate_name,
+                    "extracted": extracted_votes,
+                    "official": official_votes_count,
+                    "variance": variance,
+                    "variance_pct": f"{variance_pct:.1f}%",
+                    "severity": severity
+                })
+    
+    # Overall status
+    if report["summary"]["high_severity"] > 0:
+        report["status"] = "discrepancies_found_high"
+    elif report["summary"]["medium_severity"] > 0:
+        report["status"] = "discrepancies_found_medium"
+    elif report["summary"]["low_severity"] > 0:
+        report["status"] = "discrepancies_found_low"
+    else:
+        report["status"] = "verified"
+    
+    return report
+
+
+def format_discrepancy_report(discrepancy_report: dict) -> str:
+    """
+    Format a discrepancy report as human-readable text.
+    
+    Args:
+        discrepancy_report: Report dict from detect_discrepancies()
+        
+    Returns:
+        Formatted report string
+    """
+    lines = []
+    lines.append("=" * 70)
+    lines.append("BALLOT VERIFICATION REPORT")
+    lines.append("=" * 70)
+    
+    lines.append(f"\nForm Type: {discrepancy_report['form_type']}")
+    lines.append(f"Polling Station: {discrepancy_report['polling_station']}")
+    
+    # Status with emoji
+    status = discrepancy_report.get('status', 'unknown')
+    status_emoji = {
+        'verified': '✓',
+        'discrepancies_found_low': '⚠',
+        'discrepancies_found_medium': '⚠⚠',
+        'discrepancies_found_high': '✗',
+        'pending_official_data': '?'
+    }.get(status, '?')
+    
+    status_text = {
+        'verified': 'VERIFIED - No discrepancies',
+        'discrepancies_found_low': 'LOW SEVERITY discrepancies found',
+        'discrepancies_found_medium': 'MEDIUM SEVERITY discrepancies found',
+        'discrepancies_found_high': 'HIGH SEVERITY discrepancies found',
+        'pending_official_data': 'Waiting for official results'
+    }.get(status, 'Unknown status')
+    
+    lines.append(f"\nStatus: {status_emoji} {status_text}")
+    
+    # Summary
+    summary = discrepancy_report['summary']
+    lines.append(f"\nVerification Summary:")
+    lines.append(f"  Verified matches: {summary['matches']}")
+    lines.append(f"  Low severity issues: {summary['low_severity']}")
+    lines.append(f"  Medium severity issues: {summary['medium_severity']}")
+    lines.append(f"  High severity issues: {summary['high_severity']}")
+    
+    # Discrepancies
+    if discrepancy_report['discrepancies']:
+        lines.append(f"\nDiscrepancies Detected ({len(discrepancy_report['discrepancies'])} items):")
+        lines.append("-" * 70)
+        
+        for disc in discrepancy_report['discrepancies']:
+            if disc['type'] == 'candidate_vote':
+                lines.append(f"\nPosition {disc['position']}: {disc['candidate_name']}")
+            else:
+                lines.append(f"\nParty #{disc['party_number']}: {disc['party_name']} ({disc['party_abbr']})")
+            
+            lines.append(f"  Extracted: {disc['extracted']} votes")
+            lines.append(f"  Official:  {disc['official']} votes")
+            lines.append(f"  Variance:  {disc['variance']} votes ({disc['variance_pct']})")
+            lines.append(f"  Severity:  {disc['severity']}")
+    else:
+        lines.append(f"\n✓ All votes verified successfully!")
+    
+    lines.append("\n" + "=" * 70)
+    
+    return "\n".join(lines)
 
 
 def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
@@ -1264,9 +1467,12 @@ def main():
                 if ballot_data.form_category == "party_list":
                     result["page_parties"] = ballot_data.page_parties
                     result["party_votes"] = ballot_data.party_votes
+                    # NEW: Include party info for party-list forms
+                    if ballot_data.party_info:
+                        result["party_info"] = ballot_data.party_info
                 else:
                     result["vote_counts"] = ballot_data.vote_counts
-                    # NEW: Include candidate info for constituency forms
+                    # Include candidate info for constituency forms
                     if ballot_data.candidate_info:
                         result["candidate_info"] = ballot_data.candidate_info
                 results.append(result)

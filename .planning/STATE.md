@@ -21,8 +21,8 @@ Phase 2: ECT Integration & Matching
 
 - [x] 2.1. Candidate Data Integration
 - [x] 2.2. Candidate Matching by Position
-- [ ] 2.3. Party Matching Enhancement
-- [ ] 2.4. Discrepancy Detection
+- [x] 2.3. Party Matching Enhancement
+- [x] 2.4. Discrepancy Detection
 - [ ] 2.5. Comparison Reports
 
 ## Phase 1 Progress - COMPLETE ✓
