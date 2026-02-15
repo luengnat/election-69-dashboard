@@ -62,6 +62,21 @@ class FormType(Enum):
         return 57 if self.is_party_list else 6  # 57 parties, or ~6 constituency candidates
 
 
+# Thai numeral to Arabic numeral mapping
+THAI_NUMERALS = {
+    "๐": "0", "๑": "1", "๒": "2", "๓": "3", "๔": "4",
+    "๕": "5", "๖": "6", "๗": "7", "๘": "8", "๙": "9",
+}
+
+
+def convert_thai_numerals(text: str) -> str:
+    """Convert Thai numerals (๐๑๒๓๔๕๖๗๘๙) to Arabic numerals (0123456789)."""
+    result = text
+    for thai, arabic in THAI_NUMERALS.items():
+        result = result.replace(thai, arabic)
+    return result
+
+
 # Thai number word mappings
 THAI_DIGITS = {
     "ศูนย์": 0, "หนึ่ง": 1, "สอง": 2, "สาม": 3, "สี่": 4,
@@ -920,6 +935,8 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
             for party_num, vote_data in raw_party_votes.items():
                 if vote_data is None:
                     continue
+                # Convert Thai numerals to Arabic (๑๒๓ -> 123)
+                party_num = convert_thai_numerals(str(party_num))
                 if isinstance(vote_data, dict):
                     numeric = vote_data.get("numeric", 0)
                     thai_text = vote_data.get("thai_text", "")
@@ -934,6 +951,8 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
             for candidate_num, vote_data in raw_vote_counts.items():
                 if vote_data is None:
                     continue
+                # Convert Thai numerals to Arabic
+                candidate_num = convert_thai_numerals(str(candidate_num))
                 if isinstance(vote_data, dict):
                     numeric = vote_data.get("numeric", 0)
                     thai_text = vote_data.get("thai_text", "")
