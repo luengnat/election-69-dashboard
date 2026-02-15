@@ -229,6 +229,42 @@ class BallotData:
     confidence_details: dict = field(default_factory=dict)  # Breakdown of confidence factors
 
 
+@dataclass
+class AggregatedResults:
+    """Aggregated results for a constituency from multiple polling stations."""
+    province: str
+    constituency: str  # District/name
+    constituency_no: int
+    
+    # Vote aggregation
+    candidate_totals: dict[int, int] = field(default_factory=dict)  # position -> total votes
+    party_totals: dict[str, int] = field(default_factory=dict)  # party # -> total votes
+    candidate_info: dict[int, dict] = field(default_factory=dict)  # position -> {name, party_abbr, votes}
+    party_info: dict[str, dict] = field(default_factory=dict)  # party # -> {name, abbr, votes}
+    
+    # Polling information
+    polling_units_reporting: int = 0  # How many units provided data
+    total_polling_units: int = 0  # Expected total units
+    valid_votes_total: int = 0
+    invalid_votes_total: int = 0
+    blank_votes_total: int = 0
+    overall_total: int = 0
+    
+    # Quality metrics
+    aggregated_confidence: float = 0.0
+    ballots_processed: int = 0
+    ballots_with_discrepancies: int = 0
+    
+    # Winners (highest votes per position)
+    winners: list[dict] = field(default_factory=list)  # [{position, name, party, votes, percentage}, ...]
+    turnout_rate: float = 0.0
+    discrepancy_rate: float = 0.0
+    
+    # Source tracking
+    source_ballots: list[str] = field(default_factory=list)  # List of source file names
+    form_types: list[str] = field(default_factory=list)  # Form types used
+
+
 def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 150) -> list[str]:
     """Convert PDF to PNG images using pdftoppm."""
     output_prefix = "page"
@@ -1701,6 +1737,469 @@ def save_report(report_content: str, output_path: str) -> bool:
     except Exception as e:
         print(f"✗ Error saving report: {e}")
         return False
+
+
+def aggregate_ballot_results(ballot_data_list: list[BallotData]) -> dict[tuple, AggregatedResults]:
+    """
+    Aggregate ballot results by constituency.
+    
+    Args:
+        ballot_data_list: List of BallotData objects from multiple polling stations
+        
+    Returns:
+        Dictionary mapping (province, constituency_no) to AggregatedResults
+    """
+    # Group ballots by constituency
+    grouped = {}
+    
+    for ballot in ballot_data_list:
+        key = (ballot.province, ballot.constituency_number)
+        if key not in grouped:
+            grouped[key] = []
+        grouped[key].append(ballot)
+    
+    # Aggregate each constituency
+    results = {}
+    for (province, cons_no), ballots in grouped.items():
+        results[(province, cons_no)] = aggregate_constituency(province, cons_no, ballots)
+    
+    return results
+
+
+def aggregate_constituency(province: str, constituency_no: int, ballots: list[BallotData]) -> AggregatedResults:
+    """
+    Aggregate ballot results for a single constituency.
+    
+    Args:
+        province: Province name
+        constituency_no: Constituency number
+        ballots: List of BallotData objects for this constituency
+        
+    Returns:
+        AggregatedResults with aggregated votes and analysis
+    """
+    if not ballots:
+        return AggregatedResults(province=province, constituency=province, constituency_no=constituency_no)
+    
+    # Determine if this is constituency or party-list based on first ballot
+    is_party_list = ballots[0].form_category == "party_list"
+    
+    # Initialize aggregation
+    agg = AggregatedResults(
+        province=province,
+        constituency=ballots[0].district or province,
+        constituency_no=constituency_no,
+        ballots_processed=len(ballots),
+    )
+    
+    # Aggregate votes
+    if is_party_list:
+        # Party-list aggregation
+        party_vote_counts = {}
+        party_info_map = {}
+        
+        for ballot in ballots:
+            # Add votes
+            for party_num_str, votes in ballot.party_votes.items():
+                party_vote_counts[party_num_str] = party_vote_counts.get(party_num_str, 0) + votes
+            
+            # Collect party info
+            for party_num_str, info in ballot.party_info.items():
+                if party_num_str not in party_info_map:
+                    party_info_map[party_num_str] = info
+        
+        agg.party_totals = party_vote_counts
+        agg.party_info = party_info_map
+        
+    else:
+        # Constituency aggregation
+        candidate_vote_counts = {}
+        candidate_info_map = {}
+        
+        for ballot in ballots:
+            # Add votes
+            for position, votes in ballot.vote_counts.items():
+                candidate_vote_counts[position] = candidate_vote_counts.get(position, 0) + votes
+            
+            # Collect candidate info
+            for position, info in ballot.candidate_info.items():
+                if position not in candidate_info_map:
+                    candidate_info_map[position] = info
+        
+        agg.candidate_totals = candidate_vote_counts
+        agg.candidate_info = candidate_info_map
+    
+    # Aggregate vote categories
+    valid_total = 0
+    invalid_total = 0
+    blank_total = 0
+    
+    for ballot in ballots:
+        valid_total += ballot.valid_votes
+        invalid_total += ballot.invalid_votes
+        blank_total += ballot.blank_votes
+    
+    agg.valid_votes_total = valid_total
+    agg.invalid_votes_total = invalid_total
+    agg.blank_votes_total = blank_total
+    agg.overall_total = valid_total + invalid_total + blank_total
+    
+    # Count polling units
+    polling_units = set()
+    for ballot in ballots:
+        polling_units.add(ballot.polling_unit)
+    agg.polling_units_reporting = len(polling_units)
+    
+    # Calculate aggregated confidence
+    if ballots:
+        avg_confidence = sum(b.confidence_score for b in ballots) / len(ballots)
+        agg.aggregated_confidence = avg_confidence
+    
+    # Track discrepancies
+    agg.ballots_with_discrepancies = sum(1 for b in ballots if b.confidence_score < 0.9)
+    agg.discrepancy_rate = (agg.ballots_with_discrepancies / len(ballots)) if ballots else 0.0
+    
+    # Calculate winners
+    if is_party_list:
+        # Sort parties by votes
+        sorted_parties = sorted(agg.party_totals.items(), key=lambda x: x[1], reverse=True)
+        for party_num_str, votes in sorted_parties[:5]:  # Top 5 parties
+            info = agg.party_info.get(party_num_str, {})
+            percentage = (votes / agg.valid_votes_total * 100) if agg.valid_votes_total > 0 else 0
+            agg.winners.append({
+                "party_number": party_num_str,
+                "name": info.get("name", "Unknown"),
+                "abbr": info.get("abbr", ""),
+                "votes": votes,
+                "percentage": f"{percentage:.2f}%"
+            })
+    else:
+        # Sort candidates by votes
+        sorted_candidates = sorted(agg.candidate_totals.items(), key=lambda x: x[1], reverse=True)
+        for position, votes in sorted_candidates[:5]:  # Top 5 candidates
+            info = agg.candidate_info.get(position, {})
+            percentage = (votes / agg.valid_votes_total * 100) if agg.valid_votes_total > 0 else 0
+            agg.winners.append({
+                "position": position,
+                "name": info.get("name", "Unknown"),
+                "party": info.get("party_abbr", ""),
+                "votes": votes,
+                "percentage": f"{percentage:.2f}%"
+            })
+    
+    # Calculate turnout rate (if we have expected total units)
+    if agg.total_polling_units > 0:
+        agg.turnout_rate = (agg.polling_units_reporting / agg.total_polling_units) * 100
+    
+    # Track source ballots
+    agg.source_ballots = [b.source_file for b in ballots]
+    agg.form_types = list(set(b.form_type for b in ballots))
+    
+    return agg
+
+
+def generate_constituency_report(agg: AggregatedResults) -> str:
+    """
+    Generate a detailed markdown report for aggregated constituency results.
+    
+    Args:
+        agg: AggregatedResults object with aggregated data
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    lines = []
+    lines.append("# Constituency Results Report")
+    lines.append("")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    # Header
+    lines.append("## Constituency Information")
+    lines.append("")
+    lines.append(f"| Field | Value |")
+    lines.append("|-------|-------|")
+    lines.append(f"| Province | {agg.province} |")
+    lines.append(f"| Constituency | {agg.constituency} |")
+    lines.append(f"| Constituency # | {agg.constituency_no} |")
+    lines.append("")
+    
+    # Data collection status
+    lines.append("## Data Collection Status")
+    lines.append("")
+    lines.append(f"| Metric | Value |")
+    lines.append("|--------|-------|")
+    lines.append(f"| Ballots Processed | {agg.ballots_processed} |")
+    lines.append(f"| Polling Units Reporting | {agg.polling_units_reporting} |")
+    lines.append(f"| Reporting Rate | {agg.turnout_rate:.1f}% |")
+    lines.append(f"| Form Types Used | {', '.join(agg.form_types)} |")
+    lines.append("")
+    
+    # Vote totals
+    lines.append("## Vote Totals")
+    lines.append("")
+    lines.append(f"| Category | Votes |")
+    lines.append("|----------|-------|")
+    lines.append(f"| Valid Votes | {agg.valid_votes_total} |")
+    lines.append(f"| Invalid Votes | {agg.invalid_votes_total} |")
+    lines.append(f"| Blank Votes | {agg.blank_votes_total} |")
+    lines.append(f"| **Overall Total** | **{agg.overall_total}** |")
+    lines.append("")
+    
+    # Quality metrics
+    lines.append("## Data Quality")
+    lines.append("")
+    confidence_emoji = {
+        True: "✓",
+        False: "⚠"
+    }.get(agg.aggregated_confidence >= 0.95, "?")
+    
+    lines.append(f"**Aggregated Confidence:** {confidence_emoji} {agg.aggregated_confidence:.1%}")
+    lines.append(f"**Discrepancy Rate:** {agg.discrepancy_rate:.1%}")
+    lines.append(f"**Ballots with Issues:** {agg.ballots_with_discrepancies}/{agg.ballots_processed}")
+    lines.append("")
+    
+    # Results table
+    is_party_list = bool(agg.party_totals)
+    
+    if is_party_list:
+        lines.append("## Party Results")
+        lines.append("")
+        lines.append(f"| Party # | Party Name | Abbr | Votes | Percentage |")
+        lines.append("|---------|-----------|------|-------|-----------|")
+        
+        # Sort by votes descending
+        sorted_results = sorted(agg.party_totals.items(), key=lambda x: x[1], reverse=True)
+        for party_num_str, votes in sorted_results:
+            info = agg.party_info.get(party_num_str, {})
+            party_name = info.get("name", "Unknown")
+            abbr = info.get("abbr", "")
+            percentage = (votes / agg.valid_votes_total * 100) if agg.valid_votes_total > 0 else 0
+            lines.append(f"| {party_num_str} | {party_name} | {abbr} | {votes} | {percentage:.2f}% |")
+        
+        lines.append("")
+    else:
+        lines.append("## Candidate Results")
+        lines.append("")
+        lines.append(f"| Pos | Candidate Name | Party | Votes | Percentage |")
+        lines.append("|-----|----------------|-------|-------|-----------|")
+        
+        # Sort by votes descending
+        sorted_results = sorted(agg.candidate_totals.items(), key=lambda x: x[1], reverse=True)
+        for position, votes in sorted_results:
+            info = agg.candidate_info.get(position, {})
+            candidate_name = info.get("name", "Unknown")
+            party = info.get("party_abbr", "")
+            percentage = (votes / agg.valid_votes_total * 100) if agg.valid_votes_total > 0 else 0
+            lines.append(f"| {position} | {candidate_name} | {party} | {votes} | {percentage:.2f}% |")
+        
+        lines.append("")
+    
+    # Winners
+    if agg.winners:
+        lines.append("## Winners")
+        lines.append("")
+        for i, winner in enumerate(agg.winners[:3], 1):
+            if is_party_list:
+                lines.append(f"**#{i}** {winner['name']} ({winner['abbr']})")
+                lines.append(f"  - Votes: {winner['votes']}")
+                lines.append(f"  - Percentage: {winner['percentage']}")
+            else:
+                lines.append(f"**#{i}** {winner['name']} ({winner['party']})")
+                lines.append(f"  - Votes: {winner['votes']}")
+                lines.append(f"  - Percentage: {winner['percentage']}")
+            lines.append("")
+    
+    # Source information
+    lines.append("## Source Information")
+    lines.append("")
+    lines.append(f"**Ballots Included:**")
+    for source in agg.source_ballots:
+        lines.append(f"- {source}")
+    lines.append("")
+    
+    # Footer
+    lines.append("---")
+    lines.append("")
+    
+    return "\n".join(lines)
+
+
+def analyze_constituency_discrepancies(agg: AggregatedResults, ballots: list[BallotData], official_data: Optional[dict] = None) -> dict:
+    """
+    Analyze discrepancies at the constituency level.
+    
+    Args:
+        agg: AggregatedResults with aggregated votes
+        ballots: List of source BallotData objects
+        official_data: Optional official results for comparison
+        
+    Returns:
+        Dictionary with discrepancy analysis
+    """
+    analysis = {
+        "constituency": f"{agg.province} - {agg.constituency}",
+        "overall_discrepancy_rate": agg.discrepancy_rate,
+        "ballots_analyzed": len(ballots),
+        "problematic_ballots": [],
+        "candidate_variance": {},
+        "party_variance": {},
+        "recommendations": []
+    }
+    
+    # Analyze each ballot's contribution
+    is_party_list = bool(agg.party_totals)
+    
+    if is_party_list:
+        # Party-list analysis
+        for ballot in ballots:
+            if ballot.confidence_score < 0.9:
+                analysis["problematic_ballots"].append({
+                    "source": ballot.source_file,
+                    "confidence": ballot.confidence_score,
+                    "issues": ballot.confidence_details
+                })
+    else:
+        # Constituency analysis
+        for ballot in ballots:
+            if ballot.confidence_score < 0.9:
+                analysis["problematic_ballots"].append({
+                    "source": ballot.source_file,
+                    "confidence": ballot.confidence_score,
+                    "issues": ballot.confidence_details
+                })
+    
+    # Calculate variance by candidate/party if official data available
+    if official_data:
+        if is_party_list:
+            official_parties = official_data.get("party_votes", {})
+            for party_num_str, agg_votes in agg.party_totals.items():
+                official_votes = official_parties.get(int(party_num_str), 0)
+                if official_votes > 0:
+                    variance_pct = abs(agg_votes - official_votes) / official_votes * 100
+                    severity = "HIGH" if variance_pct > 10 else "MEDIUM" if variance_pct > 5 else "LOW"
+                    
+                    analysis["party_variance"][party_num_str] = {
+                        "extracted": agg_votes,
+                        "official": official_votes,
+                        "variance_pct": f"{variance_pct:.2f}%",
+                        "severity": severity
+                    }
+        else:
+            official_candidates = official_data.get("vote_counts", {})
+            for position, agg_votes in agg.candidate_totals.items():
+                official_votes = official_candidates.get(position, 0)
+                if official_votes > 0:
+                    variance_pct = abs(agg_votes - official_votes) / official_votes * 100
+                    severity = "HIGH" if variance_pct > 10 else "MEDIUM" if variance_pct > 5 else "LOW"
+                    
+                    analysis["candidate_variance"][position] = {
+                        "extracted": agg_votes,
+                        "official": official_votes,
+                        "variance_pct": f"{variance_pct:.2f}%",
+                        "severity": severity
+                    }
+    
+    # Generate recommendations
+    if agg.discrepancy_rate > 0.5:
+        analysis["recommendations"].append("⚠ CRITICAL: Over 50% of ballots have discrepancies. Recommend manual review of all ballots.")
+    elif agg.discrepancy_rate > 0.25:
+        analysis["recommendations"].append("⚠ HIGH: 25-50% of ballots have discrepancies. Recommend review of problematic ballots.")
+    elif agg.discrepancy_rate > 0.1:
+        analysis["recommendations"].append("⚠ MEDIUM: 10-25% of ballots have minor discrepancies. Recommend spot checks.")
+    else:
+        analysis["recommendations"].append("✓ LOW: <10% discrepancies. Data quality acceptable.")
+    
+    if agg.aggregated_confidence < 0.85:
+        analysis["recommendations"].append("⚠ Low confidence aggregate. Consider re-extraction.")
+    else:
+        analysis["recommendations"].append("✓ Good confidence aggregate.")
+    
+    return analysis
+
+
+def generate_discrepancy_summary(analyses: list[dict]) -> str:
+    """
+    Generate a summary report of discrepancies across constituencies.
+    
+    Args:
+        analyses: List of discrepancy analysis dicts from analyze_constituency_discrepancies()
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    lines = []
+    lines.append("# Discrepancy Analysis Summary")
+    lines.append("")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    # Overall statistics
+    total_constituencies = len(analyses)
+    high_discrepancy = sum(1 for a in analyses if a["overall_discrepancy_rate"] > 0.5)
+    medium_discrepancy = sum(1 for a in analyses if 0.25 < a["overall_discrepancy_rate"] <= 0.5)
+    low_discrepancy = sum(1 for a in analyses if 0 < a["overall_discrepancy_rate"] <= 0.25)
+    no_discrepancy = sum(1 for a in analyses if a["overall_discrepancy_rate"] == 0)
+    
+    lines.append("## Overall Statistics")
+    lines.append("")
+    lines.append(f"| Category | Count | Percentage |")
+    lines.append("|----------|-------|-----------|")
+    lines.append(f"| Constituencies Analyzed | {total_constituencies} | 100% |")
+    lines.append(f"| No Discrepancies | {no_discrepancy} | {no_discrepancy/total_constituencies*100:.1f}% |")
+    lines.append(f"| Low Discrepancies | {low_discrepancy} | {low_discrepancy/total_constituencies*100:.1f}% |")
+    lines.append(f"| Medium Discrepancies | {medium_discrepancy} | {medium_discrepancy/total_constituencies*100:.1f}% |")
+    lines.append(f"| High Discrepancies | {high_discrepancy} | {high_discrepancy/total_constituencies*100:.1f}% |")
+    lines.append("")
+    
+    # Problem areas
+    problem_areas = [a for a in analyses if a["overall_discrepancy_rate"] > 0.1]
+    if problem_areas:
+        lines.append("## Problem Areas")
+        lines.append("")
+        lines.append(f"> ⚠ **{len(problem_areas)} constituency/ies with >10% discrepancies**")
+        lines.append("")
+        
+        for analysis in sorted(problem_areas, key=lambda x: x["overall_discrepancy_rate"], reverse=True):
+            rate = analysis["overall_discrepancy_rate"] * 100
+            lines.append(f"### {analysis['constituency']}")
+            lines.append(f"**Discrepancy Rate:** {rate:.1f}% ({analysis['ballots_analyzed']} ballots analyzed)")
+            
+            if analysis["problematic_ballots"]:
+                lines.append(f"**Problematic Ballots:** {len(analysis['problematic_ballots'])}")
+                for ballot in analysis["problematic_ballots"][:3]:
+                    lines.append(f"- {ballot['source']}: {ballot['confidence']:.0%} confidence")
+            
+            lines.append("")
+    
+    # Recommendations
+    lines.append("## Overall Recommendations")
+    lines.append("")
+    if high_discrepancy > 0:
+        lines.append("⚠ **IMMEDIATE ACTION REQUIRED**")
+        lines.append(f"- {high_discrepancy} constituency/ies have >50% discrepancies")
+        lines.append("- Recommend manual verification of all ballots in these areas")
+    elif medium_discrepancy > 0:
+        lines.append("⚠ **REVIEW RECOMMENDED**")
+        lines.append(f"- {medium_discrepancy} constituency/ies have 25-50% discrepancies")
+        lines.append("- Review problematic ballots and re-extract if needed")
+    elif low_discrepancy > 0:
+        lines.append("✓ **SPOT CHECKS RECOMMENDED**")
+        lines.append(f"- {low_discrepancy} constituency/ies have 10-25% discrepancies")
+        lines.append("- Minor issues detected, spot checks recommended")
+    else:
+        lines.append("✓ **NO ACTION NEEDED**")
+        lines.append("- All constituencies have acceptable discrepancy rates")
+    
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    
+    return "\n".join(lines)
 
 
 def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
