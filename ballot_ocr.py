@@ -2202,6 +2202,532 @@ def generate_discrepancy_summary(analyses: list[dict]) -> str:
     return "\n".join(lines)
 
 
+def calculate_vote_statistics(agg: AggregatedResults) -> dict:
+    """
+    Calculate statistical metrics for aggregated votes.
+    
+    Args:
+        agg: AggregatedResults object
+        
+    Returns:
+        Dictionary with statistics
+    """
+    import statistics
+    
+    stats = {
+        "vote_distribution": {},
+        "outliers": [],
+        "anomalies": [],
+        "recommendations": []
+    }
+    
+    is_party_list = bool(agg.party_totals)
+    votes_list = list(agg.party_totals.values()) if is_party_list else list(agg.candidate_totals.values())
+    
+    if not votes_list or len(votes_list) < 2:
+        return stats
+    
+    # Calculate basic statistics
+    mean_votes = statistics.mean(votes_list)
+    median_votes = statistics.median(votes_list)
+    stdev_votes = statistics.stdev(votes_list) if len(votes_list) > 1 else 0
+    
+    stats["vote_distribution"] = {
+        "mean": round(mean_votes, 2),
+        "median": median_votes,
+        "std_dev": round(stdev_votes, 2),
+        "min": min(votes_list),
+        "max": max(votes_list),
+        "range": max(votes_list) - min(votes_list)
+    }
+    
+    # Detect outliers using IQR method
+    if len(votes_list) >= 4:
+        sorted_votes = sorted(votes_list)
+        q1_idx = len(sorted_votes) // 4
+        q3_idx = (3 * len(sorted_votes)) // 4
+        q1 = sorted_votes[q1_idx]
+        q3 = sorted_votes[q3_idx]
+        iqr = q3 - q1
+        
+        lower_bound = q1 - 1.5 * iqr
+        upper_bound = q3 + 1.5 * iqr
+        
+        if is_party_list:
+            for party_num_str, votes in agg.party_totals.items():
+                if votes < lower_bound or votes > upper_bound:
+                    info = agg.party_info.get(party_num_str, {})
+                    stats["outliers"].append({
+                        "party_number": party_num_str,
+                        "party_name": info.get("name", "Unknown"),
+                        "votes": votes,
+                        "type": "LOW" if votes < lower_bound else "HIGH",
+                        "severity": "MEDIUM"
+                    })
+        else:
+            for position, votes in agg.candidate_totals.items():
+                if votes < lower_bound or votes > upper_bound:
+                    info = agg.candidate_info.get(position, {})
+                    stats["outliers"].append({
+                        "position": position,
+                        "candidate_name": info.get("name", "Unknown"),
+                        "votes": votes,
+                        "type": "LOW" if votes < lower_bound else "HIGH",
+                        "severity": "MEDIUM"
+                    })
+    
+    # Detect anomalies (unusual patterns)
+    if agg.valid_votes_total > 0:
+        if is_party_list:
+            for party_num_str, votes in agg.party_totals.items():
+                vote_pct = (votes / agg.valid_votes_total) * 100
+                
+                # Anomaly: One party gets >80% of votes
+                if vote_pct > 80:
+                    info = agg.party_info.get(party_num_str, {})
+                    stats["anomalies"].append({
+                        "type": "EXTREME_CONCENTRATION",
+                        "party_number": party_num_str,
+                        "party_name": info.get("name", "Unknown"),
+                        "percentage": f"{vote_pct:.1f}%",
+                        "severity": "HIGH",
+                        "description": f"Party {party_num_str} received {vote_pct:.1f}% of votes"
+                    })
+                
+                # Anomaly: Zero votes (could indicate missing data or no support)
+                if votes == 0 and len(agg.party_totals) > 10:
+                    info = agg.party_info.get(party_num_str, {})
+                    stats["anomalies"].append({
+                        "type": "ZERO_VOTES",
+                        "party_number": party_num_str,
+                        "party_name": info.get("name", "Unknown"),
+                        "votes": 0,
+                        "severity": "LOW",
+                        "description": f"Party {party_num_str} received zero votes"
+                    })
+        else:
+            for position, votes in agg.candidate_totals.items():
+                vote_pct = (votes / agg.valid_votes_total) * 100
+                
+                # Anomaly: One candidate gets >75% of votes
+                if vote_pct > 75:
+                    info = agg.candidate_info.get(position, {})
+                    stats["anomalies"].append({
+                        "type": "EXTREME_CONCENTRATION",
+                        "position": position,
+                        "candidate_name": info.get("name", "Unknown"),
+                        "percentage": f"{vote_pct:.1f}%",
+                        "severity": "MEDIUM",
+                        "description": f"Position {position} received {vote_pct:.1f}% of votes"
+                    })
+    
+    # Generate recommendations based on statistics
+    if stats["outliers"]:
+        stats["recommendations"].append(f"⚠ {len(stats['outliers'])} outlier(s) detected. Recommend spot checks.")
+    
+    if any(a["severity"] == "HIGH" for a in stats["anomalies"]):
+        stats["recommendations"].append("⚠ High-severity anomalies detected. Manual review recommended.")
+    
+    if stdev_votes > mean_votes * 0.5:
+        stats["recommendations"].append("⚠ High variance in vote distribution. Verify data consistency.")
+    
+    if not stats["recommendations"]:
+        stats["recommendations"].append("✓ Vote distribution looks normal. No anomalies detected.")
+    
+    return stats
+
+
+def detect_anomalous_constituencies(results: dict[tuple, AggregatedResults]) -> list[dict]:
+    """
+    Identify constituencies with statistical anomalies.
+    
+    Args:
+        results: Dictionary of (province, cons_no) -> AggregatedResults
+        
+    Returns:
+        List of anomaly reports
+    """
+    anomalies = []
+    
+    for key, agg in results.items():
+        stats = calculate_vote_statistics(agg)
+        
+        # Check for issues
+        if stats["outliers"] or stats["anomalies"] or any("High" in rec or "high" in rec for rec in stats["recommendations"]):
+            anomalies.append({
+                "constituency": f"{agg.province} - {agg.constituency}",
+                "statistics": stats,
+                "severity": max(
+                    (a.get("severity", "LOW") for a in stats["anomalies"]), 
+                    default="LOW"
+                ),
+                "issue_count": len(stats["outliers"]) + len(stats["anomalies"])
+            })
+    
+    return sorted(anomalies, key=lambda x: x["issue_count"], reverse=True)
+
+
+def generate_anomaly_report(anomalies: list[dict]) -> str:
+    """
+    Generate a report of detected anomalies.
+    
+    Args:
+        anomalies: List of anomaly dicts from detect_anomalous_constituencies()
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    lines = []
+    lines.append("# Statistical Anomaly Report")
+    lines.append("")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    if not anomalies:
+        lines.append("## No Anomalies Detected")
+        lines.append("")
+        lines.append("✓ All constituencies show normal statistical patterns.")
+        lines.append("")
+        return "\n".join(lines)
+    
+    lines.append(f"## Summary")
+    lines.append("")
+    lines.append(f"**Constituencies with Anomalies:** {len(anomalies)}")
+    lines.append("")
+    
+    # Severity breakdown
+    high_severity = sum(1 for a in anomalies if a["severity"] == "HIGH")
+    medium_severity = sum(1 for a in anomalies if a["severity"] == "MEDIUM")
+    low_severity = sum(1 for a in anomalies if a["severity"] == "LOW")
+    
+    lines.append(f"| Severity | Count |")
+    lines.append("|----------|-------|")
+    lines.append(f"| HIGH | {high_severity} |")
+    lines.append(f"| MEDIUM | {medium_severity} |")
+    lines.append(f"| LOW | {low_severity} |")
+    lines.append("")
+    
+    # Detailed anomalies
+    lines.append("## Detailed Anomalies")
+    lines.append("")
+    
+    for anomaly in anomalies:
+        lines.append(f"### {anomaly['constituency']}")
+        lines.append(f"**Severity:** {anomaly['severity']} ({anomaly['issue_count']} issues)")
+        lines.append("")
+        
+        stats = anomaly["statistics"]
+        
+        # Vote distribution stats
+        if stats["vote_distribution"]:
+            dist = stats["vote_distribution"]
+            lines.append(f"**Vote Distribution:**")
+            lines.append(f"- Mean: {dist['mean']} votes")
+            lines.append(f"- Median: {dist['median']} votes")
+            lines.append(f"- Std Dev: {dist['std_dev']}")
+            lines.append(f"- Range: {dist['min']} - {dist['max']} ({dist['range']} spread)")
+            lines.append("")
+        
+        # Outliers
+        if stats["outliers"]:
+            lines.append(f"**Outliers Detected:**")
+            for outlier in stats["outliers"]:
+                if "party_number" in outlier:
+                    lines.append(f"- Party #{outlier['party_number']}: {outlier['votes']} votes ({outlier['type']})")
+                else:
+                    lines.append(f"- Position {outlier['position']}: {outlier['votes']} votes ({outlier['type']})")
+            lines.append("")
+        
+        # Anomalies
+        if stats["anomalies"]:
+            lines.append(f"**Pattern Anomalies:**")
+            for anomaly_item in stats["anomalies"]:
+                lines.append(f"- [{anomaly_item['severity']}] {anomaly_item['description']}")
+            lines.append("")
+        
+        # Recommendations
+        if stats["recommendations"]:
+            lines.append(f"**Recommendations:**")
+            for rec in stats["recommendations"]:
+                lines.append(f"- {rec}")
+            lines.append("")
+    
+    # Footer
+    lines.append("---")
+    lines.append("")
+    lines.append("## Next Steps")
+    lines.append("")
+    if high_severity > 0:
+        lines.append("⚠ **IMMEDIATE ACTION REQUIRED**")
+        lines.append(f"- {high_severity} constituency/ies with HIGH severity anomalies")
+        lines.append("- Recommend manual verification of these areas")
+    elif medium_severity > 0:
+        lines.append("⚠ **REVIEW RECOMMENDED**")
+        lines.append(f"- {medium_severity} constituency/ies with MEDIUM severity anomalies")
+        lines.append("- Verify vote data and polling station reports")
+    else:
+        lines.append("✓ **ROUTINE CHECKS SUFFICIENT**")
+        lines.append("- Low severity anomalies detected")
+        lines.append("- Standard verification procedures recommended")
+    
+    lines.append("")
+    
+    return "\n".join(lines)
+
+
+def generate_province_report(province_results: list[AggregatedResults], anomalies: list[dict]) -> str:
+    """
+    Generate a comprehensive province-level report.
+    
+    Args:
+        province_results: List of AggregatedResults for all constituencies in province
+        anomalies: List of anomaly dicts from detect_anomalous_constituencies()
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    if not province_results:
+        return "No results to report"
+    
+    province_name = province_results[0].province
+    
+    lines = []
+    lines.append("# Province Electoral Report")
+    lines.append("")
+    lines.append(f"**Province:** {province_name}")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    # Overview
+    lines.append("## Overview")
+    lines.append("")
+    lines.append(f"| Metric | Value |")
+    lines.append("|--------|-------|")
+    lines.append(f"| Constituencies Reporting | {len(province_results)} |")
+    lines.append(f"| Total Valid Votes | {sum(r.valid_votes_total for r in province_results)} |")
+    lines.append(f"| Total Invalid Votes | {sum(r.invalid_votes_total for r in province_results)} |")
+    lines.append(f"| Overall Total Votes | {sum(r.overall_total for r in province_results)} |")
+    lines.append(f"| Average Confidence | {(sum(r.aggregated_confidence for r in province_results) / len(province_results) * 100):.1f}% |")
+    lines.append("")
+    
+    # Data quality
+    lines.append("## Data Quality Summary")
+    lines.append("")
+    high_conf = sum(1 for r in province_results if r.aggregated_confidence >= 0.95)
+    med_conf = sum(1 for r in province_results if 0.85 <= r.aggregated_confidence < 0.95)
+    low_conf = sum(1 for r in province_results if r.aggregated_confidence < 0.85)
+    
+    lines.append(f"**Confidence Levels:**")
+    lines.append(f"- High (95%+): {high_conf} constituencies")
+    lines.append(f"- Medium (85-95%): {med_conf} constituencies")
+    lines.append(f"- Low (<85%): {low_conf} constituencies")
+    lines.append("")
+    
+    # Anomalies in this province
+    province_anomalies = [a for a in anomalies if province_name in a["constituency"]]
+    if province_anomalies:
+        lines.append(f"**Anomalies Detected:** {len(province_anomalies)} constituency/ies")
+        lines.append("")
+    
+    # Constituency breakdown
+    lines.append("## Constituency Results")
+    lines.append("")
+    lines.append(f"| # | Constituency | Valid Votes | Invalid | Confidence | Status |")
+    lines.append("|---|--------------|------------|---------|-----------|--------|")
+    
+    for i, result in enumerate(province_results, 1):
+        # Determine status
+        if result.aggregated_confidence >= 0.95:
+            status = "✓"
+        elif result.aggregated_confidence >= 0.85:
+            status = "⚠"
+        else:
+            status = "✗"
+        
+        # Check for anomalies
+        has_anomaly = any(result.constituency in a["constituency"] for a in province_anomalies)
+        if has_anomaly:
+            status += " ⚠"
+        
+        lines.append(f"| {i} | {result.constituency} | {result.valid_votes_total} | {result.invalid_votes_total} | {result.aggregated_confidence:.0%} | {status} |")
+    
+    lines.append("")
+    
+    # Recommendations
+    lines.append("## Recommendations")
+    lines.append("")
+    if low_conf > 0 or province_anomalies:
+        if low_conf > 0:
+            lines.append(f"⚠ **{low_conf}** constituency/ies with confidence <85%. Manual review recommended.")
+        if province_anomalies:
+            lines.append(f"⚠ **{len(province_anomalies)}** constituency/ies with detected anomalies.")
+        if high_conf == len(province_results):
+            lines.append("✓ All other constituencies show good data quality.")
+    else:
+        lines.append("✓ All constituencies show good data quality.")
+    
+    lines.append("")
+    
+    return "\n".join(lines)
+
+
+def generate_executive_summary(
+    all_results: list[AggregatedResults],
+    anomalies: list[dict],
+    provinces: Optional[list[str]] = None
+) -> str:
+    """
+    Generate an executive summary report.
+    
+    Args:
+        all_results: All AggregatedResults from all constituencies
+        anomalies: All detected anomalies
+        provinces: Optional list of provinces (auto-detected if None)
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    if not all_results:
+        return "No results to summarize"
+    
+    # Detect provinces if not provided
+    if provinces is None:
+        provinces = sorted(set(r.province for r in all_results))
+    
+    lines = []
+    lines.append("# Electoral Results - Executive Summary")
+    lines.append("")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    # Key statistics
+    total_valid = sum(r.valid_votes_total for r in all_results)
+    total_invalid = sum(r.invalid_votes_total for r in all_results)
+    total_blank = sum(r.blank_votes_total for r in all_results)
+    total_votes = sum(r.overall_total for r in all_results)
+    avg_confidence = (sum(r.aggregated_confidence for r in all_results) / len(all_results)) if all_results else 0
+    
+    lines.append("## Key Statistics")
+    lines.append("")
+    lines.append(f"| Metric | Value |")
+    lines.append("|--------|-------|")
+    lines.append(f"| Total Constituencies | {len(all_results)} |")
+    lines.append(f"| Total Provinces | {len(provinces)} |")
+    lines.append(f"| Total Valid Votes | {total_valid:,} |")
+    lines.append(f"| Total Invalid Votes | {total_invalid:,} |")
+    lines.append(f"| Total Blank Votes | {total_blank:,} |")
+    lines.append(f"| **Overall Total** | **{total_votes:,}** |")
+    lines.append(f"| Average Confidence | {avg_confidence:.1%} |")
+    lines.append("")
+    
+    # Data quality assessment
+    lines.append("## Data Quality Assessment")
+    lines.append("")
+    
+    if avg_confidence >= 0.95:
+        quality_rating = "EXCELLENT"
+        quality_emoji = "✓✓✓"
+    elif avg_confidence >= 0.85:
+        quality_rating = "GOOD"
+        quality_emoji = "✓✓"
+    elif avg_confidence >= 0.75:
+        quality_rating = "ACCEPTABLE"
+        quality_emoji = "✓"
+    else:
+        quality_rating = "POOR"
+        quality_emoji = "✗"
+    
+    lines.append(f"**Overall Rating:** {quality_emoji} {quality_rating}")
+    lines.append(f"**Average Confidence:** {avg_confidence:.1%}")
+    lines.append("")
+    
+    # Province summary
+    lines.append("## By Province")
+    lines.append("")
+    lines.append(f"| Province | Constituencies | Valid Votes | Avg Confidence |")
+    lines.append("|----------|---|---|---|")
+    
+    for province in provinces:
+        prov_results = [r for r in all_results if r.province == province]
+        if prov_results:
+            prov_valid = sum(r.valid_votes_total for r in prov_results)
+            prov_conf = sum(r.aggregated_confidence for r in prov_results) / len(prov_results)
+            lines.append(f"| {province} | {len(prov_results)} | {prov_valid:,} | {prov_conf:.1%} |")
+    
+    lines.append("")
+    
+    # Top winners (if constituency results)
+    is_party_list = bool(all_results[0].party_totals) if all_results else False
+    if not is_party_list and all_results:
+        lines.append("## Top Candidates Overall")
+        lines.append("")
+        
+        # Aggregate all candidates
+        all_winners = []
+        for result in all_results:
+            for winner in result.winners:
+                all_winners.append({
+                    "name": winner["name"],
+                    "province": result.province,
+                    "votes": winner["votes"],
+                    "percentage": winner["percentage"]
+                })
+        
+        # Sort by votes
+        top_winners = sorted(all_winners, key=lambda x: x["votes"], reverse=True)[:10]
+        
+        lines.append(f"| Rank | Candidate | Province | Votes | Percentage |")
+        lines.append("|------|-----------|----------|-------|-----------|")
+        
+        for i, winner in enumerate(top_winners, 1):
+            lines.append(f"| {i} | {winner['name']} | {winner['province']} | {winner['votes']:,} | {winner['percentage']} |")
+        
+        lines.append("")
+    
+    # Issues and recommendations
+    lines.append("## Issues & Recommendations")
+    lines.append("")
+    
+    if anomalies:
+        lines.append(f"⚠ **{len(anomalies)}** constituency/ies with detected anomalies")
+        lines.append("")
+    
+    high_anomalies = [a for a in anomalies if a["severity"] == "HIGH"]
+    medium_anomalies = [a for a in anomalies if a["severity"] == "MEDIUM"]
+    
+    if high_anomalies:
+        lines.append(f"**CRITICAL ISSUES ({len(high_anomalies)}):**")
+        for anom in high_anomalies[:5]:
+            lines.append(f"- {anom['constituency']}")
+        lines.append("")
+    
+    if medium_anomalies:
+        lines.append(f"**NEEDS REVIEW ({len(medium_anomalies)}):**")
+        for anom in medium_anomalies[:5]:
+            lines.append(f"- {anom['constituency']}")
+        lines.append("")
+    
+    # Final recommendations
+    if avg_confidence < 0.85:
+        lines.append("⚠ **Low average confidence.** Consider re-verification of data.")
+    elif len(anomalies) > len(all_results) * 0.2:
+        lines.append("⚠ **High anomaly rate.** Manual review of flagged constituencies recommended.")
+    else:
+        lines.append("✓ **Data quality acceptable.** Proceed with standard verification process.")
+    
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    
+    return "\n".join(lines)
+
+
 def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
     """
     Compare extracted ballot data with official ECT API data.
