@@ -223,6 +223,8 @@ class BallotData:
     invalid_votes: int = 0
     blank_votes: int = 0  # บัตรไม่ประสงค์ลงคะแนน
     source_file: str = ""
+    confidence_score: float = 0.0  # 0.0 to 1.0
+    confidence_details: dict = field(default_factory=dict)  # Breakdown of confidence factors
 
 
 def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 150) -> list[str]:
@@ -1045,6 +1047,64 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
         if polling_unit:
             polling_station_id += f"-{polling_unit}"
 
+        # Calculate confidence score
+        confidence_details = {}
+        confidence_score = 0.0
+
+        # Factor 1: Thai text validation (40% weight)
+        all_details = vote_details if vote_details else party_details
+        if all_details:
+            validated_count = sum(1 for e in all_details.values() if e.is_validated)
+            validation_rate = validated_count / len(all_details)
+            confidence_details["thai_text_validation"] = {
+                "weight": 0.4,
+                "validated": validated_count,
+                "total": len(all_details),
+                "rate": validation_rate,
+                "score": validation_rate * 0.4
+            }
+            confidence_score += validation_rate * 0.4
+
+        # Factor 2: Sum validation (30% weight)
+        sum_valid = (calculated_sum == reported_valid) if reported_valid else False
+        confidence_details["sum_validation"] = {
+            "weight": 0.3,
+            "calculated_sum": calculated_sum,
+            "reported_valid": reported_valid,
+            "match": sum_valid,
+            "score": 0.3 if sum_valid else 0.0
+        }
+        confidence_score += 0.3 if sum_valid else 0.0
+
+        # Factor 3: Province validation (30% weight)
+        province_valid = False
+        if ECT_AVAILABLE and province:
+            is_valid, _ = ect_data.validate_province_name(province)
+            province_valid = is_valid
+        confidence_details["province_validation"] = {
+            "weight": 0.3,
+            "province": province,
+            "valid": province_valid,
+            "score": 0.3 if province_valid else 0.0
+        }
+        confidence_score += 0.3 if province_valid else 0.0
+
+        confidence_details["overall_score"] = confidence_score
+
+        # Determine confidence level
+        if confidence_score >= 0.9:
+            confidence_level = "HIGH"
+        elif confidence_score >= 0.7:
+            confidence_level = "MEDIUM"
+        elif confidence_score >= 0.5:
+            confidence_level = "LOW"
+        else:
+            confidence_level = "VERY_LOW"
+
+        confidence_details["level"] = confidence_level
+
+        print(f"  Confidence: {confidence_level} ({confidence_score:.1%})")
+
         return BallotData(
             form_type=form_type_output,
             form_category="party_list" if is_party_list else "constituency",
@@ -1063,6 +1123,8 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
             invalid_votes=reported_invalid,
             blank_votes=reported_blank,
             source_file=image_path,
+            confidence_score=confidence_score,
+            confidence_details=confidence_details,
         )
 
     except Exception as e:
@@ -1168,6 +1230,8 @@ def main():
                     "invalid_votes": ballot_data.invalid_votes,
                     "blank_votes": ballot_data.blank_votes,
                     "total_votes": ballot_data.total_votes,
+                    "confidence_score": ballot_data.confidence_score,
+                    "confidence_level": ballot_data.confidence_details.get("level", "UNKNOWN"),
                     "source_file": ballot_data.source_file,
                 }
                 if ballot_data.form_category == "party_list":

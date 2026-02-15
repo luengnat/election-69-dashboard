@@ -1,0 +1,23 @@
+[
+  {
+    "form_type": "ส.ส. 5/16",
+    "form_category": "constituency",
+    "province": "แพร่",
+    "constituency_number": 1,
+    "district": "เมืองแพร่",
+    "polling_unit": 2,
+    "polling_station": "แพร่-เขต 1 เมืองแพร่-2",
+    "valid_votes": 642,
+    "invalid_votes": 3,
+    "blank_votes": 0,
+    "total_votes": 645,
+    "confidence_score": 0.8666666666666667,
+    "confidence_level": "MEDIUM",
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 614,
+      "2": 4,
+      "3": 24
+    }
+  }
+]
