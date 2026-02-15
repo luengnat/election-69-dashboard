@@ -1362,6 +1362,347 @@ def format_discrepancy_report(discrepancy_report: dict) -> str:
     return "\n".join(lines)
 
 
+def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: Optional[dict] = None) -> str:
+    """
+    Generate a comprehensive markdown report for a single ballot.
+    
+    Args:
+        ballot_data: BallotData object with extraction results
+        discrepancy_report: Optional discrepancy report from detect_discrepancies()
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    lines = []
+    lines.append("# Ballot Verification Report")
+    lines.append("")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    # Header section
+    lines.append("## Form Information")
+    lines.append("")
+    lines.append(f"| Field | Value |")
+    lines.append("|-------|-------|")
+    lines.append(f"| Form Type | {ballot_data.form_type} |")
+    lines.append(f"| Category | {ballot_data.form_category.title()} |")
+    lines.append(f"| Province | {ballot_data.province} |")
+    lines.append(f"| Constituency | {ballot_data.constituency_number} |")
+    lines.append(f"| District | {ballot_data.district} |")
+    lines.append(f"| Polling Unit | {ballot_data.polling_unit} |")
+    lines.append(f"| Polling Station | {ballot_data.polling_station_id} |")
+    lines.append("")
+    
+    # Vote totals
+    lines.append("## Vote Summary")
+    lines.append("")
+    lines.append(f"| Metric | Count |")
+    lines.append("|--------|-------|")
+    lines.append(f"| Valid Votes | {ballot_data.valid_votes} |")
+    lines.append(f"| Invalid Votes | {ballot_data.invalid_votes} |")
+    lines.append(f"| Blank Votes | {ballot_data.blank_votes} |")
+    lines.append(f"| **Total Votes** | **{ballot_data.total_votes}** |")
+    lines.append("")
+    
+    # Extraction quality
+    lines.append("## Extraction Quality")
+    lines.append("")
+    confidence_level = ballot_data.confidence_details.get("level", "UNKNOWN")
+    confidence_score = ballot_data.confidence_score
+    
+    # Confidence level emoji
+    confidence_emoji = {
+        "HIGH": "✓",
+        "MEDIUM": "⚠",
+        "LOW": "⚠",
+        "VERY_LOW": "✗"
+    }.get(confidence_level, "?")
+    
+    lines.append(f"**Confidence Level:** {confidence_emoji} {confidence_level} ({confidence_score:.1%})")
+    lines.append("")
+    
+    # Confidence factors
+    confidence_details = ballot_data.confidence_details
+    if "thai_text_validation" in confidence_details:
+        val = confidence_details["thai_text_validation"]
+        lines.append(f"- Thai Text Validation: {val['validated']}/{val['total']} ({val['rate']:.1%})")
+    
+    if "sum_validation" in confidence_details:
+        val = confidence_details["sum_validation"]
+        match_status = "✓ Matched" if val["match"] else "✗ Mismatch"
+        lines.append(f"- Sum Validation: {match_status} (calculated={val['calculated_sum']}, reported={val['reported_valid']})")
+    
+    if "province_validation" in confidence_details:
+        val = confidence_details["province_validation"]
+        valid_status = "✓ Valid" if val["valid"] else "✗ Invalid"
+        lines.append(f"- Province Validation: {valid_status} ({val['province']})")
+    
+    lines.append("")
+    
+    # Votes breakdown
+    if ballot_data.form_category == "party_list":
+        lines.append("## Party Votes")
+        lines.append("")
+        if ballot_data.party_votes:
+            lines.append(f"| Party # | Party Name | Abbr | Votes |")
+            lines.append("|---------|-----------|------|-------|")
+            for party_num_str in sorted(ballot_data.party_votes.keys(), key=lambda x: int(x)):
+                votes = ballot_data.party_votes[party_num_str]
+                party_info = ballot_data.party_info.get(party_num_str, {})
+                party_name = party_info.get("name", "Unknown")
+                party_abbr = party_info.get("abbr", "")
+                lines.append(f"| {party_num_str} | {party_name} | {party_abbr} | {votes} |")
+        lines.append("")
+        if ballot_data.page_parties:
+            lines.append(f"**Page Parties:** {ballot_data.page_parties}")
+            lines.append("")
+    else:
+        lines.append("## Candidate Votes")
+        lines.append("")
+        if ballot_data.vote_counts:
+            lines.append(f"| Pos | Candidate Name | Party | Votes |")
+            lines.append("|-----|----------------|-------|-------|")
+            for position in sorted(ballot_data.vote_counts.keys()):
+                votes = ballot_data.vote_counts[position]
+                candidate_info = ballot_data.candidate_info.get(position, {})
+                candidate_name = candidate_info.get("name", "Unknown")
+                party_abbr = candidate_info.get("party_abbr", "")
+                lines.append(f"| {position} | {candidate_name} | {party_abbr} | {votes} |")
+        lines.append("")
+    
+    # Discrepancy section
+    if discrepancy_report:
+        lines.append("## Verification Results")
+        lines.append("")
+        
+        status = discrepancy_report.get("status", "unknown")
+        status_emoji = {
+            "verified": "✓",
+            "discrepancies_found_low": "⚠",
+            "discrepancies_found_medium": "⚠⚠",
+            "discrepancies_found_high": "✗",
+            "pending_official_data": "?"
+        }.get(status, "?")
+        
+        status_text = {
+            "verified": "VERIFIED - No discrepancies",
+            "discrepancies_found_low": "LOW SEVERITY discrepancies found",
+            "discrepancies_found_medium": "MEDIUM SEVERITY discrepancies found",
+            "discrepancies_found_high": "HIGH SEVERITY discrepancies found",
+            "pending_official_data": "Waiting for official results"
+        }.get(status, "Unknown status")
+        
+        lines.append(f"**Status:** {status_emoji} {status_text}")
+        lines.append("")
+        
+        summary = discrepancy_report["summary"]
+        lines.append(f"**Summary:**")
+        lines.append(f"- Verified matches: {summary['matches']}")
+        lines.append(f"- Low severity issues: {summary['low_severity']}")
+        lines.append(f"- Medium severity issues: {summary['medium_severity']}")
+        lines.append(f"- High severity issues: {summary['high_severity']}")
+        lines.append("")
+        
+        if discrepancy_report["discrepancies"]:
+            lines.append("### Discrepancies Detected")
+            lines.append("")
+            lines.append(f"| Item | Extracted | Official | Variance | Severity |")
+            lines.append("|------|-----------|----------|----------|----------|")
+            
+            for disc in discrepancy_report["discrepancies"]:
+                if disc["type"] == "candidate_vote":
+                    item = f"Pos {disc['position']}: {disc['candidate_name']}"
+                else:
+                    item = f"Party #{disc['party_number']}: {disc['party_name']}"
+                
+                lines.append(f"| {item} | {disc['extracted']} | {disc['official']} | {disc['variance_pct']} | {disc['severity']} |")
+            
+            lines.append("")
+    
+    # Footer
+    lines.append("---")
+    lines.append(f"*Source File:* {ballot_data.source_file}")
+    lines.append("")
+    
+    return "\n".join(lines)
+
+
+def generate_batch_report(results: list[dict], ballot_data_list: list[BallotData]) -> str:
+    """
+    Generate a summary report for a batch of ballots.
+    
+    Args:
+        results: List of discrepancy report dicts
+        ballot_data_list: List of BallotData objects
+        
+    Returns:
+        Formatted markdown report string
+    """
+    from datetime import datetime
+    
+    lines = []
+    lines.append("# Batch Ballot Verification Report")
+    lines.append("")
+    lines.append(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    lines.append("")
+    
+    # Overall statistics
+    total_ballots = len(results)
+    verified = sum(1 for r in results if r.get("status") == "verified")
+    low_severity = sum(1 for r in results if r.get("status") == "discrepancies_found_low")
+    medium_severity = sum(1 for r in results if r.get("status") == "discrepancies_found_medium")
+    high_severity = sum(1 for r in results if r.get("status") == "discrepancies_found_high")
+    
+    accuracy_rate = (verified / total_ballots * 100) if total_ballots > 0 else 0
+    
+    lines.append("## Overall Statistics")
+    lines.append("")
+    lines.append(f"| Metric | Count | Percentage |")
+    lines.append("|--------|-------|-----------|")
+    lines.append(f"| Total Ballots | {total_ballots} | 100% |")
+    lines.append(f"| Verified (No Issues) | {verified} | {verified/total_ballots*100:.1f}% |")
+    lines.append(f"| Low Severity Issues | {low_severity} | {low_severity/total_ballots*100:.1f}% |")
+    lines.append(f"| Medium Severity Issues | {medium_severity} | {medium_severity/total_ballots*100:.1f}% |")
+    lines.append(f"| High Severity Issues | {high_severity} | {high_severity/total_ballots*100:.1f}% |")
+    lines.append("")
+    
+    # Accuracy indicator
+    if accuracy_rate >= 95:
+        accuracy_emoji = "✓✓✓"
+        accuracy_text = "Excellent"
+    elif accuracy_rate >= 90:
+        accuracy_emoji = "✓✓"
+        accuracy_text = "Good"
+    elif accuracy_rate >= 80:
+        accuracy_emoji = "✓"
+        accuracy_text = "Acceptable"
+    else:
+        accuracy_emoji = "✗"
+        accuracy_text = "Poor"
+    
+    lines.append(f"**Verification Accuracy:** {accuracy_emoji} {accuracy_text} ({accuracy_rate:.1f}%)")
+    lines.append("")
+    
+    # Form type breakdown
+    if ballot_data_list:
+        form_types = {}
+        constituencies = {}
+        provinces = {}
+        
+        for ballot in ballot_data_list:
+            form_type = ballot.form_type
+            form_types[form_type] = form_types.get(form_type, 0) + 1
+            
+            if ballot.constituency_number:
+                cons_key = f"{ballot.province} - Constituency {ballot.constituency_number}"
+                constituencies[cons_key] = constituencies.get(cons_key, 0) + 1
+            
+            if ballot.province:
+                provinces[ballot.province] = provinces.get(ballot.province, 0) + 1
+        
+        if form_types:
+            lines.append("## Form Type Breakdown")
+            lines.append("")
+            lines.append(f"| Form Type | Count |")
+            lines.append("|-----------|-------|")
+            for form_type, count in sorted(form_types.items()):
+                lines.append(f"| {form_type} | {count} |")
+            lines.append("")
+        
+        if provinces:
+            lines.append("## Province Breakdown")
+            lines.append("")
+            lines.append(f"| Province | Count |")
+            lines.append("|----------|-------|")
+            for province, count in sorted(provinces.items()):
+                lines.append(f"| {province} | {count} |")
+            lines.append("")
+    
+    # High severity issues summary
+    high_severity_items = []
+    for i, result in enumerate(results):
+        if result.get("status") == "discrepancies_found_high":
+            for disc in result.get("discrepancies", []):
+                if disc.get("severity") == "HIGH":
+                    high_severity_items.append({
+                        "ballot_index": i,
+                        "station": result.get("polling_station", "Unknown"),
+                        "discrepancy": disc
+                    })
+    
+    if high_severity_items:
+        lines.append("## High Severity Issues")
+        lines.append("")
+        lines.append(f"> **⚠ {len(high_severity_items)} high-severity discrepancies detected across batch**")
+        lines.append("")
+        lines.append(f"| Polling Station | Item | Extracted | Official | Variance |")
+        lines.append("|-----------------|------|-----------|----------|----------|")
+        for item in high_severity_items[:10]:  # Show top 10
+            disc = item["discrepancy"]
+            if disc["type"] == "candidate_vote":
+                item_name = f"Pos {disc['position']}: {disc['candidate_name']}"
+            else:
+                item_name = f"Party #{disc['party_number']}: {disc['party_name']}"
+            
+            lines.append(f"| {item['station']} | {item_name} | {disc['extracted']} | {disc['official']} | {disc['variance_pct']} |")
+        
+        if len(high_severity_items) > 10:
+            lines.append(f"| ... | *{len(high_severity_items) - 10} more issues* | | | |")
+        
+        lines.append("")
+    
+    # Recommendations
+    lines.append("## Recommendations")
+    lines.append("")
+    if high_severity > 0:
+        lines.append("⚠ **Manual Review Required**")
+        lines.append("")
+        lines.append(f"- {high_severity} ballot(s) with high-severity discrepancies")
+        lines.append("- Review extracted data against source documents")
+        lines.append("- Verify against official ECT results")
+        lines.append("- Investigate potential OCR errors or data entry issues")
+    elif medium_severity > 0:
+        lines.append("⚠ **Quality Check Recommended**")
+        lines.append("")
+        lines.append(f"- {medium_severity} ballot(s) with medium-severity discrepancies")
+        lines.append("- Cross-check with official results")
+        lines.append("- Consider re-extraction if discrepancies exceed 5%")
+    else:
+        lines.append("✓ **No Action Required**")
+        lines.append("")
+        lines.append("- All ballots verified successfully")
+        lines.append(f"- Accuracy rate: {accuracy_rate:.1f}%")
+    
+    lines.append("")
+    lines.append("---")
+    lines.append("")
+    
+    return "\n".join(lines)
+
+
+def save_report(report_content: str, output_path: str) -> bool:
+    """
+    Save report content to a markdown file.
+    
+    Args:
+        report_content: Markdown report string
+        output_path: Path to save the report
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(report_content)
+        print(f"✓ Report saved to: {output_path}")
+        return True
+    except Exception as e:
+        print(f"✗ Error saving report: {e}")
+        return False
+
+
 def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
     """
     Compare extracted ballot data with official ECT API data.
@@ -1403,6 +1744,8 @@ def main():
     parser.add_argument("--output", "-o", help="Output JSON file", default="ballot_data.json")
     parser.add_argument("--verify", action="store_true", help="Verify against ECT API")
     parser.add_argument("--batch", "-b", action="store_true", help="Process directory of images")
+    parser.add_argument("--reports", "-r", action="store_true", help="Generate markdown reports")
+    parser.add_argument("--report-dir", default="reports", help="Directory to save reports")
 
     args = parser.parse_args()
 
@@ -1428,9 +1771,15 @@ def main():
     else:
         images = [input_path]
 
+    # Create report directory if needed
+    if args.reports:
+        os.makedirs(args.report_dir, exist_ok=True)
+
     # Process each image
     results = []
-    for image_path in images:
+    ballot_data_list = []
+    
+    for i, image_path in enumerate(images, 1):
         print(f"\nProcessing: {image_path}")
         ballot_data = extract_ballot_data_with_ai(image_path)
 
@@ -1467,21 +1816,34 @@ def main():
                 if ballot_data.form_category == "party_list":
                     result["page_parties"] = ballot_data.page_parties
                     result["party_votes"] = ballot_data.party_votes
-                    # NEW: Include party info for party-list forms
                     if ballot_data.party_info:
                         result["party_info"] = ballot_data.party_info
                 else:
                     result["vote_counts"] = ballot_data.vote_counts
-                    # Include candidate info for constituency forms
                     if ballot_data.candidate_info:
                         result["candidate_info"] = ballot_data.candidate_info
                 results.append(result)
+            
+            ballot_data_list.append(ballot_data)
+            
+            # Generate individual report if requested
+            if args.reports:
+                report_filename = f"{args.report_dir}/ballot_{i:03d}.md"
+                report = generate_single_ballot_report(ballot_data)
+                save_report(report, report_filename)
 
     # Save results
     with open(args.output, "w") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(f"\nResults saved to: {args.output}")
+    
+    # Generate batch report if requested and multiple ballots
+    if args.reports and len(ballot_data_list) > 1:
+        batch_report_filename = f"{args.report_dir}/BATCH_SUMMARY.md"
+        batch_report = generate_batch_report(results, ballot_data_list)
+        save_report(batch_report, batch_report_filename)
+        print(f"Batch report saved to: {batch_report_filename}")
 
 
 if __name__ == "__main__":
