@@ -1,21 +1,29 @@
 # Project State
 
-## Status: PHASE_1_COMPLETE
+## Status: PHASE_2_IN_PROGRESS
 
 ## Last Updated: 2026-02-16
 
 ## Progress
 
-- [x] Codebase mapped (see `.planning/codebase/`)
+- [x] Codebase mapped
 - [x] PROJECT.md created
 - [x] Requirements documented
 - [x] Roadmap created
-- [x] Phase 1 planned
 - [x] Phase 1 COMPLETE
+- [x] Phase 2 planned
 
 ## Current Focus
 
-Ready for Phase 2: ECT Integration & Matching
+Phase 2: ECT Integration & Matching
+
+## Phase 2 Progress
+
+- [x] 2.1. Candidate Data Integration
+- [x] 2.2. Candidate Matching by Position
+- [ ] 2.3. Party Matching Enhancement
+- [ ] 2.4. Discrepancy Detection
+- [ ] 2.5. Comparison Reports
 
 ## Phase 1 Progress - COMPLETE ✓
 

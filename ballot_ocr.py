@@ -218,6 +218,8 @@ class BallotData:
     vote_details: dict[int, VoteEntry] = field(default_factory=dict)  # candidate_number -> VoteEntry (with Thai text)
     party_votes: dict[str, int] = field(default_factory=dict)  # party_number -> vote_count
     party_details: dict[str, VoteEntry] = field(default_factory=dict)  # party_number -> VoteEntry
+    candidate_info: dict[int, dict] = field(default_factory=dict)  # candidate_number -> {name, party}
+    party_info: dict[str, dict] = field(default_factory=dict)  # party_number -> {name, abbr}
     total_votes: int = 0
     valid_votes: int = 0
     invalid_votes: int = 0
@@ -930,6 +932,7 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
         vote_details = {}
         party_votes = {}
         party_details = {}
+        candidate_info = {}  # NEW: Store candidate details for constituency forms
 
         if is_party_list:
             # Party-list form: use party_votes
@@ -1007,6 +1010,29 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
                         break
             else:
                 print(f"  Province validated: {canonical}")
+
+        # NEW: Match candidates for constituency forms
+        if not is_party_list and ECT_AVAILABLE and province_name:
+            constituency_number = data.get("constituency_number", data.get("constituency", 0))
+            for position, vote_count in vote_counts.items():
+                candidate = ect_data.get_candidate_by_thai_province(province_name, constituency_number, position)
+                if candidate:
+                    party = ect_data.get_party_for_candidate(candidate)
+                    candidate_info[position] = {
+                        "name": candidate.mp_app_name,
+                        "party_id": candidate.mp_app_party_id,
+                        "party_name": party.name if party else "Unknown",
+                        "party_abbr": party.abbr if party else ""
+                    }
+                    print(f"  Position {position}: {candidate.mp_app_name} ({party.abbr if party else '?'}) - {vote_count} votes")
+                else:
+                    print(f"  WARNING: No candidate found for position {position}")
+                    candidate_info[position] = {
+                        "name": "Unknown",
+                        "party_id": None,
+                        "party_name": "Unknown",
+                        "party_abbr": ""
+                    }
 
         # Validate party numbers against ECT data (for party-list forms)
         if is_party_list and ECT_AVAILABLE:
@@ -1118,6 +1144,7 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
             vote_details=vote_details,
             party_votes=party_votes,
             party_details=party_details,
+            candidate_info=candidate_info,  # NEW: Include candidate info
             total_votes=reported_total or calculated_sum,
             valid_votes=reported_valid or calculated_sum,
             invalid_votes=reported_invalid,
@@ -1239,6 +1266,9 @@ def main():
                     result["party_votes"] = ballot_data.party_votes
                 else:
                     result["vote_counts"] = ballot_data.vote_counts
+                    # NEW: Include candidate info for constituency forms
+                    if ballot_data.candidate_info:
+                        result["candidate_info"] = ballot_data.candidate_info
                 results.append(result)
 
     # Save results
