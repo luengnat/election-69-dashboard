@@ -1,0 +1,59 @@
+[
+  {
+    "image": "bch_page-1.png",
+    "passed": true,
+    "checks": {
+      "form_type_pattern": {
+        "expected": "ส.ส. 5/.*\\(บช\\)",
+        "actual": "ส.ส. 5/16 (บช)",
+        "pass": true
+      },
+      "is_party_list": {
+        "expected": true,
+        "actual": true,
+        "pass": true
+      },
+      "form_category": {
+        "expected": "party_list",
+        "actual": "party_list",
+        "pass": true
+      }
+    },
+    "extraction": {
+      "form_type": "ส.ส. 5/16 (บช)",
+      "form_category": "party_list",
+      "province": "แพร่",
+      "constituency_number": 1,
+      "district": "เมืองแพร่",
+      "polling_unit": 2,
+      "vote_counts": {},
+      "party_votes": {
+        "1": 12,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 45,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0
+      },
+      "valid_votes": 57,
+      "invalid_votes": 0,
+      "blank_votes": 0,
+      "total_votes": 57
+    },
+    "errors": []
+  }
+]
