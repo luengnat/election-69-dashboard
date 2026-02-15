@@ -1,6 +1,6 @@
 # Project State
 
-## Status: PHASE_2_IN_PROGRESS
+## Status: PHASE_3_IN_PROGRESS
 
 ## Last Updated: 2026-02-16
 
@@ -66,39 +66,79 @@ Phase 2: ECT Integration & Matching
 6. `737b130` - STATE.md update
 7. `21fb74b` - Confidence scoring
 
-## Phase 2 Summary
+## Phase 2 Summary - COMPLETE ✓
 
-Phase 2 is now **100% COMPLETE** with the following deliverables:
+Phase 2 delivered end-to-end ballot verification with 5 features:
 
-### Core Features Implemented
 1. **Candidate Integration**: 3,491 candidates from ECT API
 2. **Vote Matching**: Automatic candidate name and party assignment
 3. **Party Enrichment**: Full party details (name, abbr, color)
 4. **Discrepancy Detection**: Variance analysis with severity levels
-5. **Report Generation**: Markdown reports for single ballots and batch summaries
+5. **Report Generation**: Markdown reports for ballots and batches
 
-### Report Capabilities
-- **Single Ballot Reports**: Detailed analysis per form with confidence metrics
-- **Batch Summary Reports**: Aggregate statistics across multiple ballots
-- **Severity Classification**: AUTO/MANUAL flagging based on variance
-- **Statistics**: Accuracy rates, form breakdown, province breakdown
+## Phase 3 Summary - IN PROGRESS (3/5 COMPLETE)
 
-### Command-Line Usage
+Phase 3 focuses on aggregating results across multiple polling stations:
 
-```bash
-# Extract votes with candidate matching
-python3 ballot_ocr.py test_images/ --batch -o results.json
+### Phase 3.1: Aggregation Engine - COMPLETE ✓
+- AggregatedResults dataclass created
+- aggregate_ballot_results() groups and sums votes by constituency
+- Supports both constituency and party-list forms
+- Tracks polling units and vote categories
 
-# Generate markdown reports
-python3 ballot_ocr.py test_images/ --batch -o results.json --reports -r ./reports
+### Phase 3.2: Constituency-Level Results - COMPLETE ✓
+- generate_constituency_report() creates detailed constituency reports
+- Shows aggregated vote totals with percentages
+- Determines winners and rankings
+- Includes polling data and source tracking
 
-# Process single image
-python3 ballot_ocr.py image.png --reports
+### Phase 3.3: Discrepancy Aggregation - COMPLETE ✓
+- analyze_constituency_discrepancies() detects patterns
+- Calculates aggregate discrepancy rates
+- Generates severity-based recommendations
+- generate_discrepancy_summary() summarizes across constituencies
+
+### Phase 3.4-3.5: PENDING
+- Statistical analysis (outlier detection)
+- Province-level summaries
+
+## Example Phase 3 Output
+
+### Aggregated Constituency Results
+```
+Province: แพร่
+Constituency: เมืองแพร่
+Ballots Processed: 3
+Polling Units Reporting: 3
+Total Valid Votes: 620
+
+Candidate Results:
+  Position 1: นางสาวชนกนันท์ ศุภศิริ - 300 votes (48.39%)
+  Position 2: นางภูวษา สินธุวงศ์ - 200 votes (32.26%)
+  Position 3: นายวิตติ แสงสุพรรณ - 120 votes (19.35%)
 ```
 
-## Next Steps for Future Phases
+## Command-Line Usage (Phase 3 Ready)
 
-1. **Phase 3**: Results Aggregation - Combine multiple ballots into constituency totals
-2. **Phase 4**: Statistical Analysis - Trend analysis and anomaly detection
-3. **Phase 5**: Public Reporting - Export findings to public format
-4. **Performance**: Optimize for large-scale batch processing
+```bash
+# Phase 2: Extract and report individual ballots
+python3 ballot_ocr.py images/ --batch -o results.json --reports
+
+# Phase 3: Aggregate and analyze (coming soon)
+python3 ballot_ocr.py images/ --batch --aggregate -o aggregated_results.json
+```
+
+## Next Steps
+
+1. **Phase 3.4**: Statistical Analysis
+   - Outlier detection using statistical methods
+   - Anomaly flagging for unusual patterns
+   
+2. **Phase 3.5**: Aggregate Reports
+   - Province-level summaries
+   - Executive summaries
+   
+3. **Phase 4**: Enhancements
+   - Real-time dashboard
+   - PDF exports
+   - Performance optimization
