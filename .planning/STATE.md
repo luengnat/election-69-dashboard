@@ -25,7 +25,11 @@ Phase 1: OCR Accuracy & Core Extraction
 - [ ] 1.2. Multi-Model Ensemble
 - [x] 1.3. Fix Party-List Extraction - COMPLETE (working)
 - [ ] 1.4. Confidence Scoring
-- [ ] 1.5. Batch Processing
+- [x] 1.5. Batch Processing - COMPLETE
+
+### Known Issues to Fix
+
+1. Thai numerals in party numbers (๑, ๒, ๓...) need conversion to Arabic (1, 2, 3...)
 
 ### Test Results
 
