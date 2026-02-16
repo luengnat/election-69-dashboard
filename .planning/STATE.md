@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 5 of 8 (Parallel Processing)
-Plan: 1 of 2 in current phase
+Plan: 2 of 2 in current phase
 Status: In progress
-Last activity: 2026-02-16 - Completed 05-01 BatchProcessor with rate limiting and retry
+Last activity: 2026-02-16 - Completed 05-02 Progress callback and memory cleanup
 
-Progress: [#####-----] 12% (Phase 5.01 complete)
+Progress: [######----] 15% (Phase 5.02 complete)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed (v1.0): 4
-- v1.1 plans completed: 1
-- Total execution time: 5 min (Phase 5.01)
+- v1.1 plans completed: 2
+- Total execution time: 27 min (Phase 5.01-5.02)
 
 **By Phase (v1.0):**
 
@@ -36,7 +36,7 @@ Progress: [#####-----] 12% (Phase 5.01 complete)
 
 | Phase | Plans | Requirements | Status |
 |-------|-------|--------------|--------|
-| 5. Parallel Processing | 1/2 | PARA-01 to PARA-07 | In progress |
+| 5. Parallel Processing | 2/2 | PARA-01 to PARA-07 | Complete |
 | 6. Web Interface | 0/2 | WEB-01 to WEB-07 | Not started |
 | 7. Metadata Inference | 0/2 | META-01 to META-05 | Not started |
 | 8. Executive Summary | 0/1 | PDF-01 to PDF-05 | Not started |
@@ -61,6 +61,8 @@ Progress: [#####-----] 12% (Phase 5.01 complete)
 | tenacity library for retry | Exponential backoff with minimal code, well-tested library | Phase 5.01 |
 | Sequential processing as default | Backward compatibility, parallel requires explicit --parallel flag | Phase 5.01 |
 | 2.0 req/sec rate limit | Stays under OpenRouter free tier limits (20 RPM, 50/day) | Phase 5.01 |
+| Protocol over ABC for callbacks | Duck-typed protocol enables any class with matching methods | Phase 5.02 |
+| 50 ballot memory cleanup interval | Balances overhead vs memory safety for large batches | Phase 5.02 |
 
 ### Pending Todos
 
@@ -74,5 +76,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Completed Phase 5.01 - BatchProcessor with rate limiting and retry
+Stopped at: Completed Phase 5.02 - Progress callback and memory cleanup
 Resume file: None
