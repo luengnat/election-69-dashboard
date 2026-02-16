@@ -164,10 +164,17 @@ python3 ballot_ocr.py images/ --batch --aggregate -o aggregated_results.json
 - Constituency and party-list report types
 - Implementation complete, requires `pip install reportlab`
 
+### Phase 4.2: Constituency Results PDF - COMPLETE ✓
+- generate_constituency_pdf() function for aggregated results
+- Professional formatting with constituency info, vote totals, quality metrics
+- Support for both candidate and party-list results
+- Top results/winners section
+- CLI integration with `--aggregate --pdf` flags
+- Automated per-constituency PDF generation during aggregation
+
 ## Remaining Work (Optional)
 
 Future enhancements could include:
-- Phase 4.2: Constituency Results PDF
 - Phase 4.3: Batch Summary PDF with Charts
 - Phase 4.4: Executive Summary PDF
 - Real-time dashboard for results

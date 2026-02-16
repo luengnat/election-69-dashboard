@@ -1210,7 +1210,7 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
             valid_votes=reported_valid or calculated_sum,
             invalid_votes=reported_invalid,
             blank_votes=reported_blank,
-            source_file=image_path,
+            source_file=str(image_path),
             confidence_score=confidence_score,
             confidence_details=confidence_details,
         )
@@ -1923,7 +1923,7 @@ def generate_ballot_pdf(ballot_data: BallotData, output_path: str) -> bool:
             'POOR': colors.HexColor('#e74c3c'),
         }.get(confidence_level, colors.grey)
         
-        quality_text = f"<font color='{quality_color.hexValue()}' size=12><b>✓ {confidence_level}</b></font> ({confidence_pct}%)"
+        quality_text = f"<font color='{quality_color.hexval()}' size=12><b>✓ {confidence_level}</b></font> ({confidence_pct}%)"
         story.append(Paragraph(quality_text, styles['Normal']))
         story.append(Spacer(1, 0.2*inch))
         
@@ -2142,6 +2142,245 @@ def generate_batch_pdf(aggregated_results: dict, ballot_data_list: list, output_
         return False
 
 
+def generate_constituency_pdf(agg: "AggregatedResults", output_path: str) -> bool:
+    """
+    Generate a professional PDF report for aggregated constituency results.
+
+    Args:
+        agg: AggregatedResults object with aggregated data
+        output_path: Path to save PDF
+
+    Returns:
+        True if successful, False otherwise
+    """
+    if not HAS_REPORTLAB:
+        print("✗ reportlab not installed. Install with: pip install reportlab")
+        return False
+
+    try:
+        doc = SimpleDocTemplate(output_path, pagesize=letter)
+        styles = getSampleStyleSheet()
+        story = []
+
+        # Title
+        title_style = ParagraphStyle(
+            'CustomTitle',
+            parent=styles['Heading1'],
+            fontSize=18,
+            textColor=colors.HexColor('#1f4788'),
+            spaceAfter=12,
+            alignment=TA_CENTER,
+        )
+        story.append(Paragraph("Constituency Results Report", title_style))
+        story.append(Spacer(1, 0.2*inch))
+
+        # Constituency Information Section
+        story.append(Paragraph("Constituency Information", styles['Heading2']))
+
+        info_data = [
+            ['Field', 'Value'],
+            ['Province', agg.province],
+            ['Constituency', agg.constituency],
+            ['Constituency #', str(agg.constituency_no)],
+        ]
+
+        info_table = Table(info_data, colWidths=[2*inch, 4*inch])
+        info_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+        ]))
+        story.append(info_table)
+        story.append(Spacer(1, 0.3*inch))
+
+        # Data Collection Status
+        story.append(Paragraph("Data Collection Status", styles['Heading2']))
+
+        status_data = [
+            ['Metric', 'Value'],
+            ['Ballots Processed', str(agg.ballots_processed)],
+            ['Polling Units Reporting', str(agg.polling_units_reporting)],
+            ['Reporting Rate', f"{float(agg.turnout_rate or 0):.1f}%"],
+            ['Form Types Used', ', '.join(agg.form_types) if agg.form_types else 'N/A'],
+        ]
+
+        status_table = Table(status_data, colWidths=[3*inch, 3*inch])
+        status_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+        ]))
+        story.append(status_table)
+        story.append(Spacer(1, 0.3*inch))
+
+        # Vote Totals
+        story.append(Paragraph("Vote Totals", styles['Heading2']))
+
+        vote_data = [
+            ['Category', 'Votes'],
+            ['Valid Votes', str(agg.valid_votes_total)],
+            ['Invalid Votes', str(agg.invalid_votes_total)],
+            ['Blank Votes', str(agg.blank_votes_total)],
+            ['Overall Total', f"<b>{agg.overall_total}</b>"],
+        ]
+
+        vote_table = Table(vote_data, colWidths=[3*inch, 3*inch])
+        vote_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 4), (-1, 4), colors.HexColor('#E8F0F8')),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ]))
+        story.append(vote_table)
+        story.append(Spacer(1, 0.3*inch))
+
+        # Quality Assessment
+        story.append(Paragraph("Data Quality", styles['Heading2']))
+
+        confidence_pct = int(agg.aggregated_confidence * 100)
+        if agg.aggregated_confidence >= 0.95:
+            confidence_level = 'EXCELLENT'
+            quality_color = colors.HexColor('#2ecc71')
+        elif agg.aggregated_confidence >= 0.85:
+            confidence_level = 'GOOD'
+            quality_color = colors.HexColor('#3498db')
+        elif agg.aggregated_confidence >= 0.70:
+            confidence_level = 'ACCEPTABLE'
+            quality_color = colors.HexColor('#f39c12')
+        else:
+            confidence_level = 'POOR'
+            quality_color = colors.HexColor('#e74c3c')
+
+        quality_text = f"<font color='{quality_color.hexval()}' size=12><b>✓ {confidence_level}</b></font> ({confidence_pct}%)"
+        story.append(Paragraph(quality_text, styles['Normal']))
+        story.append(Paragraph(f"Discrepancy Rate: {float(agg.discrepancy_rate or 0):.1%}", styles['Normal']))
+        story.append(Paragraph(f"Ballots with Issues: {agg.ballots_with_discrepancies}/{agg.ballots_processed}", styles['Normal']))
+        story.append(Spacer(1, 0.2*inch))
+
+        # Results table - determine if party-list or constituency
+        is_party_list = bool(agg.party_totals)
+
+        if is_party_list:
+            story.append(Paragraph("Party Results", styles['Heading2']))
+
+            party_data = [['Party #', 'Party Name', 'Abbr', 'Votes', 'Percentage']]
+            sorted_results = sorted(agg.party_totals.items(), key=lambda x: x[1], reverse=True)
+
+            for party_num_str, votes in sorted_results:
+                info = agg.party_info.get(party_num_str, {})
+                party_name = info.get("name", "Unknown")
+                abbr = info.get("abbr", "")
+                votes_int = int(votes) if votes else 0
+                percentage = (votes_int / agg.valid_votes_total * 100) if agg.valid_votes_total > 0 else 0
+                party_data.append([str(party_num_str), party_name[:25], abbr, str(votes_int), f"{percentage:.2f}%"])
+
+            if len(party_data) > 1:
+                party_table = Table(party_data, colWidths=[0.8*inch, 2.5*inch, 0.8*inch, 1*inch, 1*inch])
+                party_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('ALIGN', (1, 1), (1, -1), 'LEFT'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 9),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+                    ('FONTSIZE', (0, 1), (-1, -1), 8),
+                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+                ]))
+                story.append(party_table)
+        else:
+            story.append(Paragraph("Candidate Results", styles['Heading2']))
+
+            cand_data = [['Pos', 'Candidate Name', 'Party', 'Votes', 'Percentage']]
+            sorted_results = sorted(agg.candidate_totals.items(), key=lambda x: x[1], reverse=True)
+
+            for position, votes in sorted_results:
+                info = agg.candidate_info.get(position, {})
+                candidate_name = info.get("name", "Unknown")
+                party = info.get("party_abbr", "")
+                votes_int = int(votes) if votes else 0
+                percentage = (votes_int / agg.valid_votes_total * 100) if agg.valid_votes_total > 0 else 0
+                cand_data.append([str(position), candidate_name[:30], party, str(votes_int), f"{percentage:.2f}%"])
+
+            if len(cand_data) > 1:
+                cand_table = Table(cand_data, colWidths=[0.6*inch, 2.8*inch, 0.8*inch, 1*inch, 1*inch])
+                cand_table.setStyle(TableStyle([
+                    ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+                    ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                    ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                    ('ALIGN', (1, 1), (1, -1), 'LEFT'),
+                    ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                    ('FONTSIZE', (0, 0), (-1, 0), 9),
+                    ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                    ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+                    ('FONTSIZE', (0, 1), (-1, -1), 8),
+                    ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+                ]))
+                story.append(cand_table)
+
+        story.append(Spacer(1, 0.3*inch))
+
+        # Winners section
+        if agg.winners:
+            story.append(Paragraph("Top Results", styles['Heading2']))
+
+            for i, winner in enumerate(agg.winners[:3], 1):
+                if is_party_list:
+                    winner_text = f"<b>#{i}</b> {winner.get('name', 'N/A')} ({winner.get('abbr', '')})"
+                else:
+                    winner_text = f"<b>#{i}</b> {winner.get('name', 'N/A')} ({winner.get('party', '')})"
+                pct_val = winner.get('percentage', 0)
+                if isinstance(pct_val, str):
+                    pct_val = float(pct_val.rstrip('%'))
+                else:
+                    pct_val = float(pct_val or 0)
+                votes_text = f"Votes: {winner.get('votes', 0)} ({pct_val:.2f}%)"
+                story.append(Paragraph(winner_text, styles['Normal']))
+                story.append(Paragraph(f"    {votes_text}", styles['Normal']))
+
+            story.append(Spacer(1, 0.2*inch))
+
+        # Source Information
+        if agg.source_ballots:
+            story.append(Paragraph("Source Information", styles['Heading2']))
+            for source in agg.source_ballots[:10]:  # Limit to 10 sources
+                story.append(Paragraph(f"• {source}", styles['Normal']))
+            if len(agg.source_ballots) > 10:
+                story.append(Paragraph(f"<i>... and {len(agg.source_ballots) - 10} more</i>", styles['Normal']))
+
+        # Footer
+        story.append(Spacer(1, 0.3*inch))
+        footer_text = f"<i>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</i>"
+        story.append(Paragraph(footer_text, styles['Normal']))
+
+        doc.build(story)
+        print(f"✓ Constituency PDF report saved to: {output_path}")
+        return True
+
+    except Exception as e:
+        print(f"✗ Error generating constituency PDF: {e}")
+        return False
+
+
 def aggregate_ballot_results(ballot_data_list: list[BallotData]) -> dict[tuple, AggregatedResults]:
     """
     Aggregate ballot results by constituency.
@@ -2336,7 +2575,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     lines.append("|--------|-------|")
     lines.append(f"| Ballots Processed | {agg.ballots_processed} |")
     lines.append(f"| Polling Units Reporting | {agg.polling_units_reporting} |")
-    lines.append(f"| Reporting Rate | {agg.turnout_rate:.1f}% |")
+    lines.append(f"| Reporting Rate | {float(agg.turnout_rate or 0):.1f}% |")
     lines.append(f"| Form Types Used | {', '.join(agg.form_types)} |")
     lines.append("")
     
@@ -3391,6 +3630,7 @@ def main():
     parser.add_argument("--batch", "-b", action="store_true", help="Process directory of images")
     parser.add_argument("--reports", "-r", action="store_true", help="Generate markdown reports")
     parser.add_argument("--pdf", "-p", action="store_true", help="Generate PDF reports")
+    parser.add_argument("--aggregate", "-a", action="store_true", help="Aggregate results by constituency")
     parser.add_argument("--report-dir", default="reports", help="Directory to save reports")
 
     args = parser.parse_args()
@@ -3497,12 +3737,61 @@ def main():
         batch_report = generate_batch_report(results, ballot_data_list)
         save_report(batch_report, batch_report_filename)
         print(f"Batch report saved to: {batch_report_filename}")
-        
+
         # Also generate batch PDF if requested
         if args.pdf:
             aggregated = {}  # Empty aggregated results for batch PDF
             batch_pdf_filename = f"{args.report_dir}/BATCH_SUMMARY.pdf"
             generate_batch_pdf(aggregated, ballot_data_list, batch_pdf_filename)
+
+    # Aggregate results by constituency if requested
+    if args.aggregate and len(ballot_data_list) > 1:
+        print("\nAggregating results by constituency...")
+        aggregated_results = aggregate_ballot_results(ballot_data_list)
+
+        # Save aggregated results
+        aggregated_output = args.output.replace('.json', '_aggregated.json')
+        aggregated_data = {}
+        for (province, cons_no), agg in aggregated_results.items():
+            key = f"{province}_{cons_no}"
+            aggregated_data[key] = {
+                "province": agg.province,
+                "constituency": agg.constituency,
+                "constituency_no": agg.constituency_no,
+                "ballots_processed": agg.ballots_processed,
+                "polling_units_reporting": agg.polling_units_reporting,
+                "valid_votes_total": agg.valid_votes_total,
+                "invalid_votes_total": agg.invalid_votes_total,
+                "blank_votes_total": agg.blank_votes_total,
+                "overall_total": agg.overall_total,
+                "aggregated_confidence": agg.aggregated_confidence,
+                "discrepancy_rate": agg.discrepancy_rate,
+                "winners": agg.winners,
+            }
+            if agg.candidate_totals:
+                aggregated_data[key]["candidate_totals"] = agg.candidate_totals
+            if agg.party_totals:
+                aggregated_data[key]["party_totals"] = agg.party_totals
+
+        with open(aggregated_output, "w") as f:
+            json.dump(aggregated_data, f, indent=2, ensure_ascii=False)
+        print(f"Aggregated results saved to: {aggregated_output}")
+
+        # Generate constituency reports and PDFs
+        for (province, cons_no), agg in aggregated_results.items():
+            cons_key = f"{province}_{cons_no}"
+
+            if args.reports:
+                # Markdown report
+                cons_report = generate_constituency_report(agg)
+                cons_report_filename = f"{args.report_dir}/constituency_{cons_key}.md"
+                save_report(cons_report, cons_report_filename)
+                print(f"Constituency report saved to: {cons_report_filename}")
+
+            if args.pdf:
+                # PDF report
+                cons_pdf_filename = f"{args.report_dir}/constituency_{cons_key}.pdf"
+                generate_constituency_pdf(agg, cons_pdf_filename)
 
 
 if __name__ == "__main__":
