@@ -1,6 +1,11 @@
 # Project State
 
-## Status: MILESTONE_V1.0_COMPLETE
+## Current Position
+
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-02-16 — Milestone v1.1 started
 
 ## Last Updated: 2026-02-16
 
@@ -9,7 +14,7 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Automated ballot verification with 100% OCR accuracy
-**Current focus:** Ready for next milestone planning
+**Current focus:** v1.1 Scale & Web — parallel processing, web UI, exec summary PDF
 
 ## Progress
 
@@ -17,40 +22,30 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 - [x] PROJECT.md created
 - [x] Requirements documented
 - [x] Roadmap created
-- [x] Phase 1 COMPLETE
-- [x] Phase 2 COMPLETE
-- [x] Phase 3 COMPLETE
-- [x] Phase 4 COMPLETE
+- [x] Phase 1 COMPLETE (v1.0)
+- [x] Phase 2 COMPLETE (v1.0)
+- [x] Phase 3 COMPLETE (v1.0)
+- [x] Phase 4 COMPLETE (v1.0)
 - [x] Milestone v1.0 ARCHIVED
+- [ ] v1.1 Requirements defined
+- [ ] v1.1 Roadmap created
 
-## Milestone v1.0 Summary - SHIPPED ✓
+## Accumulated Context
 
-### Phase 1: OCR Accuracy & Core Extraction
-- 100% OCR accuracy on test images
-- Confidence scoring, batch processing, Thai numerals
-- Test suite with ground truth validation
+### v1.0 Lessons Learned
+- Single model (Gemma 3 12B IT) achieved 100% accuracy on test images
+- Claude Vision fallback provides reliability
+- IQR-based outlier detection statistically sound
+- reportlab sufficient for PDF generation
+- CLI workflow is functional but limited for non-technical users
 
-### Phase 2: ECT Integration & Matching
-- 3,491 candidates from ECT API
-- Automatic vote matching, party enrichment
-- Discrepancy detection with severity levels
-
-### Phase 3: Results Aggregation & Analysis
-- Aggregation engine with constituency totals
-- Statistical analysis with outlier detection
-- Executive summary reports
-
-### Phase 4: PDF Export Implementation
-- PDF generation with reportlab
-- Constituency reports, batch summaries with charts
-- CLI integration with --pdf flag
+### Key Files
+- `ballot_ocr.py` — Core OCR engine
+- `ect_api.py` — ECT data integration
+- `reports/` — PDF generation modules
 
 ## Archives
 
 - `.planning/milestones/v1.0-ROADMAP.md`
 - `.planning/milestones/v1.0-REQUIREMENTS.md`
 - `.planning/MILESTONES.md`
-
-## Next Steps
-
-Run `/gsd:new-milestone` to start planning v1.1

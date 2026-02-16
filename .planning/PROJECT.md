@@ -10,6 +10,17 @@ Automated ballot verification with 100% OCR accuracy on test images and ECT data
 
 ---
 
+## Current Milestone: v1.1 Scale & Web
+
+**Goal:** Scale batch processing to 100-500 ballots with parallel execution and add a minimal web interface for upload and results viewing.
+
+**Target features:**
+- Parallel OCR processing with progress tracking
+- Minimal web UI (upload ballots, view results)
+- Executive Summary PDF (complete deferred Phase 4.5)
+
+---
+
 ## Requirements
 
 ### Validated
@@ -26,7 +37,10 @@ Automated ballot verification with 100% OCR accuracy on test images and ECT data
 
 ### Active
 
-(To be defined for next milestone)
+- [ ] Parallel OCR processing for medium batches (100-500 ballots)
+- [ ] Progress tracking with real-time feedback
+- [ ] Web interface: upload ballots and view results
+- [ ] Executive Summary PDF generation
 
 ### Out of Scope
 
@@ -52,8 +66,8 @@ Automated ballot verification with 100% OCR accuracy on test images and ECT data
 | Quality ratings (4 levels) | Clear quality assessment | ✓ Good |
 
 **Known Technical Debt:**
-- Executive Summary PDF (Phase 4.5) not implemented
-- Web interface not implemented
+- Executive Summary PDF (Phase 4.5) — planned for v1.1
+- Web interface — planned for v1.1
 
 ---
 
@@ -71,4 +85,4 @@ Automated ballot verification with 100% OCR accuracy on test images and ECT data
 
 ---
 
-*Last updated: 2026-02-16 after v1.0 milestone*
+*Last updated: 2026-02-16 after v1.1 milestone started*
