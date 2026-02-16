@@ -27,11 +27,12 @@ import csv
 from pathlib import Path
 from dataclasses import asdict
 
-from batch_processor import BatchProcessor, BallotData
+from batch_processor import BatchProcessor, BallotData, BatchResult
 from ballot_ocr import (
     aggregate_ballot_results,
     generate_constituency_pdf,
     generate_batch_pdf,
+    generate_one_page_executive_summary_pdf,
     AggregatedResults
 )
 
@@ -412,6 +413,49 @@ def download_constituency_pdf(ballot_results: list[BallotData]) -> Optional[str]
     return constituency_path
 
 
+def download_executive_summary_pdf(ballot_results: list[BallotData]) -> Optional[str]:
+    """
+    Download handler for one-page executive summary PDF.
+
+    Args:
+        ballot_results: List of BallotData objects from state
+
+    Returns:
+        Path to executive summary PDF file or None if no results
+    """
+    if not ballot_results:
+        logger.warning("No ballot results available for executive summary PDF")
+        return None
+
+    try:
+        # Create temp directory
+        pdf_dir = tempfile.mkdtemp(prefix="exec_summary_")
+
+        # Aggregate results
+        aggregated = aggregate_ballot_results(ballot_results)
+        all_results = list(aggregated.values())
+
+        # Create BatchResult from ballot_results metadata
+        batch_result = BatchResult(
+            results=ballot_results,
+            processed=len(ballot_results),
+            total=len(ballot_results),
+            duration_seconds=0.0  # Will be populated if available
+        )
+
+        # Generate executive summary
+        pdf_path = os.path.join(pdf_dir, "executive_summary.pdf")
+        if generate_one_page_executive_summary_pdf(all_results, batch_result, pdf_path):
+            logger.info(f"Generated executive summary PDF: {pdf_path}")
+            return pdf_path
+        else:
+            logger.error("Failed to generate executive summary PDF")
+            return None
+    except Exception as e:
+        logger.exception(f"Error generating executive summary: {e}")
+        return None
+
+
 def export_json(ballot_results: list[BallotData]) -> Optional[str]:
     """
     Export ballot results to JSON file.
@@ -547,7 +591,7 @@ def clear_results():
         Tuple of empty values for all outputs
     """
     logger.info("Clearing results")
-    return [], "", None, None, None, None, None, None
+    return [], "", None, None, None, None, None, None, None
 
 
 # Create Gradio interface with Thai text support
@@ -595,10 +639,12 @@ Upload ballot images to extract vote counts.
     with gr.Row():
         batch_pdf_btn = gr.Button("Batch Summary PDF / สรุปผลการประมวลผล", variant="secondary")
         constituency_pdf_btn = gr.Button("Constituency Report PDF / รายงานเขตเลือกตั้ง", variant="secondary")
+        exec_summary_btn = gr.Button("Executive Summary (1 page) / สรุปผู้บริหาร", variant="secondary")
 
     with gr.Row():
         batch_pdf_output = gr.File(label="Batch Summary PDF / สรุปผลการประมวลผล", visible=True)
         constituency_pdf_output = gr.File(label="Constituency Report PDF / รายงานเขตเลือกตั้ง", visible=True)
+        exec_summary_output = gr.File(label="Executive Summary / สรุปผู้บริหาร", visible=True)
 
     # Export section - JSON and CSV
     gr.Markdown("### Export Data / ส่งออกข้อมูล")
@@ -641,6 +687,12 @@ Powered by AI vision models for accurate ballot data extraction.
         outputs=[constituency_pdf_output]
     )
 
+    exec_summary_btn.click(
+        fn=download_executive_summary_pdf,
+        inputs=[ballot_state],
+        outputs=[exec_summary_output]
+    )
+
     json_btn.click(
         fn=export_json,
         inputs=[ballot_state],
@@ -656,7 +708,7 @@ Powered by AI vision models for accurate ballot data extraction.
     clear_btn.click(
         fn=clear_results,
         inputs=[],
-        outputs=[results_table, error_output, ballot_state, batch_pdf_output, constituency_pdf_output, json_output, csv_output, file_input]
+        outputs=[results_table, error_output, ballot_state, batch_pdf_output, constituency_pdf_output, exec_summary_output, json_output, csv_output, file_input]
     )
 
 
