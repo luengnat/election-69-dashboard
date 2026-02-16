@@ -63,6 +63,16 @@ class PathMetadataParser:
     POLLING_UNIT_PATTERN = re.compile(r'หน่วยเลือกตั้งที่\s*(\d+)')
     PROVINCE_IN_PATH_PATTERN = re.compile(r'จังหวัด([^/]+)')
 
+    def __init__(self):
+        """
+        Initialize parser with ECT data reference.
+
+        Loads the ECT province list for validation of extracted province names.
+        """
+        from ect_api import ect_data
+        ect_data.load()  # Ensure province list is available
+        self._ect_data = ect_data
+
     def normalize_thai(self, text: str) -> str:
         """
         Apply NFC normalization for consistent Thai character comparison.
@@ -105,6 +115,16 @@ class PathMetadataParser:
         # Normalize the path for consistent parsing
         normalized_path = self.normalize_thai(file_path)
 
+        # Extract province from path (จังหวัด prefix)
+        prov_match = self.PROVINCE_IN_PATH_PATTERN.search(normalized_path)
+        if prov_match:
+            potential_province = prov_match.group(1).strip()
+            # Validate against ECT list
+            is_valid, canonical = self._ect_data.validate_province_name(potential_province)
+            if is_valid and canonical:
+                metadata.province = canonical
+                metadata.confidence += 0.3
+
         # Extract constituency number
         cons_match = self.CONSTITUENCY_PATTERN.search(normalized_path)
         if cons_match:
@@ -139,3 +159,26 @@ class PathMetadataParser:
             metadata.confidence += 0.1
 
         return metadata
+
+    def extract_province_from_parent_dir(self, file_path: str) -> Optional[str]:
+        """
+        Extract province from immediate parent directory name.
+
+        Google Drive folders are often named after provinces (e.g., "Phrae" or "แพร่").
+        This method validates the parent directory name against the ECT province list.
+
+        Args:
+            file_path: Path to the ballot file
+
+        Returns:
+            Canonical Thai province name if valid, None otherwise
+        """
+        parent_dir = Path(file_path).parent.name
+        normalized = self.normalize_thai(parent_dir)
+
+        # Try direct match against ECT province list
+        is_valid, canonical = self._ect_data.validate_province_name(normalized)
+        if is_valid and canonical:
+            return canonical
+
+        return None
