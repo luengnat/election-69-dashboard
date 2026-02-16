@@ -2871,7 +2871,7 @@ def _format_discrepancy_summary_inline(all_results: list["AggregatedResults"]) -
     ))
 
 
-def _create_top_parties_chart(all_results: list["AggregatedResults"], width: float = 5*inch, height: float = 2*inch) -> "Drawing":
+def _create_top_parties_chart(all_results: list["AggregatedResults"], width: float = None, height: float = None) -> "Drawing":
     """
     Create a compact horizontal bar chart for top 5 parties by total votes.
 
@@ -2885,6 +2885,12 @@ def _create_top_parties_chart(all_results: list["AggregatedResults"], width: flo
     """
     if not HAS_REPORTLAB:
         return None
+
+    # Set defaults after HAS_REPORTLAB check so inch is defined
+    if width is None:
+        width = 5*inch
+    if height is None:
+        height = 2*inch
 
     # Aggregate all party votes
     party_totals = {}
