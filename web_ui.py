@@ -22,7 +22,10 @@ from typing import Optional
 import tempfile
 import os
 import logging
+import json
+import csv
 from pathlib import Path
+from dataclasses import asdict
 
 from batch_processor import BatchProcessor, BallotData
 from ballot_ocr import (
@@ -409,19 +412,157 @@ def download_constituency_pdf(ballot_results: list[BallotData]) -> Optional[str]
     return constituency_path
 
 
+def export_json(ballot_results: list[BallotData]) -> Optional[str]:
+    """
+    Export ballot results to JSON file.
+
+    Args:
+        ballot_results: List of BallotData objects from state
+
+    Returns:
+        Path to JSON file or None if no results
+    """
+    if not ballot_results:
+        logger.warning("No ballot results available for JSON export")
+        return None
+
+    try:
+        # Create temp file for JSON
+        json_path = tempfile.mktemp(suffix="_ballot_results.json")
+
+        # Convert BallotData to dict for JSON serialization
+        data = []
+        for ballot in ballot_results:
+            ballot_dict = {
+                "source_file": ballot.source_file,
+                "form_type": ballot.form_type,
+                "form_category": ballot.form_category,
+                "province": ballot.province,
+                "constituency_number": ballot.constituency_number,
+                "district": ballot.district,
+                "polling_station_id": ballot.polling_station_id,
+                "polling_unit": ballot.polling_unit,
+                "vote_counts": ballot.vote_counts,
+                "party_votes": ballot.party_votes,
+                "candidate_info": ballot.candidate_info,
+                "party_info": ballot.party_info,
+                "valid_votes": ballot.valid_votes,
+                "invalid_votes": ballot.invalid_votes,
+                "blank_votes": ballot.blank_votes,
+                "total_votes": ballot.total_votes,
+                "confidence_score": ballot.confidence_score,
+            }
+            data.append(ballot_dict)
+
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+
+        logger.info(f"Exported JSON to: {json_path}")
+        return json_path
+
+    except Exception as e:
+        logger.exception(f"Error exporting JSON: {e}")
+        return None
+
+
+def export_csv(ballot_results: list[BallotData]) -> Optional[str]:
+    """
+    Export ballot results to CSV file.
+
+    Args:
+        ballot_results: List of BallotData objects from state
+
+    Returns:
+        Path to CSV file or None if no results
+    """
+    if not ballot_results:
+        logger.warning("No ballot results available for CSV export")
+        return None
+
+    try:
+        # Create temp file for CSV
+        csv_path = tempfile.mktemp(suffix="_ballot_results.csv")
+
+        with open(csv_path, "w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+
+            # Write header
+            writer.writerow([
+                "Source File",
+                "Form Type",
+                "Form Category",
+                "Province",
+                "Constituency Number",
+                "District",
+                "Polling Station ID",
+                "Valid Votes",
+                "Invalid Votes",
+                "Blank Votes",
+                "Total Votes",
+                "Confidence Score",
+                "Vote Details"
+            ])
+
+            # Write data rows
+            for ballot in ballot_results:
+                # Format vote details as readable string
+                if ballot.form_category == "party_list":
+                    vote_details = "; ".join(
+                        f"Party {p}: {v}" for p, v in sorted(ballot.party_votes.items())
+                    )
+                else:
+                    vote_details = "; ".join(
+                        f"Candidate {c}: {v}" for c, v in sorted(ballot.vote_counts.items())
+                    )
+
+                writer.writerow([
+                    ballot.source_file,
+                    ballot.form_type,
+                    ballot.form_category,
+                    ballot.province,
+                    ballot.constituency_number,
+                    ballot.district,
+                    ballot.polling_station_id,
+                    ballot.valid_votes,
+                    ballot.invalid_votes,
+                    ballot.blank_votes,
+                    ballot.total_votes,
+                    ballot.confidence_score,
+                    vote_details
+                ])
+
+        logger.info(f"Exported CSV to: {csv_path}")
+        return csv_path
+
+    except Exception as e:
+        logger.exception(f"Error exporting CSV: {e}")
+        return None
+
+
+def clear_results():
+    """
+    Clear all results and reset the interface.
+
+    Returns:
+        Tuple of empty values for all outputs
+    """
+    logger.info("Clearing results")
+    return [], "", None, None, None, None, None, None
+
+
 # Create Gradio interface with Thai text support
 with gr.Blocks(title="Thai Election Ballot OCR") as demo:
-    gr.Markdown("# Thai Election Ballot OCR")
+    gr.Markdown("# Thai Election Ballot OCR / ระบบอ่านบัตรลงคะแนนเลือกตั้ง")
     gr.Markdown("""
 Upload ballot images to extract vote counts.
 
 **รองรับภาษาไทย** - Thai text is fully supported in filenames and results.
 
-**Instructions:**
-1. Upload ballot images (supports PNG, JPG, JPEG)
-2. Click "Process Ballots" to start OCR
-3. View results in the table below
-4. Any errors will be shown in the Errors box
+**Instructions / วิธีใช้:**
+1. Upload ballot images / อัปโหลดรูปภาพบัตรเลือกตั้ง (supports PNG, JPG, JPEG)
+2. Click "Process Ballots" to start OCR / คลิก "ประมวลผลบัตร" เพื่อเริ่มอ่านข้อมูล
+3. View results in the table / ดูผลลัพธ์ในตารางด้านล่าง
+4. Download reports as PDF, JSON, or CSV / ดาวน์โหลดรายงานเป็น PDF, JSON หรือ CSV
 """)
 
     with gr.Row():
@@ -432,7 +573,8 @@ Upload ballot images to extract vote counts.
         )
 
     with gr.Row():
-        process_btn = gr.Button("Process Ballots / ประมวลผลบัตร", variant="primary")
+        process_btn = gr.Button("Process Ballots / ประมวลผลบัตร", variant="primary", size="lg")
+        clear_btn = gr.Button("Clear / ล้างข้อมูล", variant="secondary", size="lg")
 
     with gr.Row():
         results_table = gr.Dataframe(
@@ -447,20 +589,40 @@ Upload ballot images to extract vote counts.
     with gr.Row():
         error_output = gr.Textbox(label="Errors / ข้อผิดพลาด", lines=5, placeholder="Any errors will be shown here...")
 
-    # Download section
+    # Download section - PDF reports
     gr.Markdown("### Download Reports / ดาวน์โหลดรายงาน")
 
     with gr.Row():
-        batch_pdf_btn = gr.Button("Download Batch Summary PDF / ดาวน์โหลดสรุปผลการประมวลผล", variant="secondary")
-        constituency_pdf_btn = gr.Button("Download Constituency Report PDF / ดาวน์โหลดรายงานเขตเลือกตั้ง", variant="secondary")
+        batch_pdf_btn = gr.Button("Batch Summary PDF / สรุปผลการประมวลผล", variant="secondary")
+        constituency_pdf_btn = gr.Button("Constituency Report PDF / รายงานเขตเลือกตั้ง", variant="secondary")
 
     with gr.Row():
         batch_pdf_output = gr.File(label="Batch Summary PDF / สรุปผลการประมวลผล", visible=True)
         constituency_pdf_output = gr.File(label="Constituency Report PDF / รายงานเขตเลือกตั้ง", visible=True)
 
+    # Export section - JSON and CSV
+    gr.Markdown("### Export Data / ส่งออกข้อมูล")
+
+    with gr.Row():
+        json_btn = gr.Button("Export JSON / ส่งออก JSON", variant="secondary")
+        csv_btn = gr.Button("Export CSV / ส่งออก CSV", variant="secondary")
+
+    with gr.Row():
+        json_output = gr.File(label="JSON Export / ส่งออก JSON", visible=True)
+        csv_output = gr.File(label="CSV Export / ส่งออก CSV", visible=True)
+
+    # Footer
+    gr.Markdown("""
+---
+**Thai Election Ballot OCR** - v1.1
+
+Powered by AI vision models for accurate ballot data extraction.
+""")
+
     # State to store ballot results for PDF generation
     ballot_state = gr.State(value=None)
 
+    # Wire up event handlers
     process_btn.click(
         fn=process_ballots,
         inputs=[file_input],
@@ -477,6 +639,24 @@ Upload ballot images to extract vote counts.
         fn=download_constituency_pdf,
         inputs=[ballot_state],
         outputs=[constituency_pdf_output]
+    )
+
+    json_btn.click(
+        fn=export_json,
+        inputs=[ballot_state],
+        outputs=[json_output]
+    )
+
+    csv_btn.click(
+        fn=export_csv,
+        inputs=[ballot_state],
+        outputs=[csv_output]
+    )
+
+    clear_btn.click(
+        fn=clear_results,
+        inputs=[],
+        outputs=[results_table, error_output, ballot_state, batch_pdf_output, constituency_pdf_output, json_output, csv_output, file_input]
     )
 
 
