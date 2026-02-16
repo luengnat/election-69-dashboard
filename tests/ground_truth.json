@@ -1,4 +1,9 @@
 {
+  "_notes": {
+    "ocr_variance": "AI-based OCR results may vary between model versions. Ground truth represents ideal expected values.",
+    "known_issue_form_type": "Party-list forms (บช) may be detected without the (บช) suffix, causing classification as constituency forms.",
+    "last_updated": "2026-02-17"
+  },
   "test_images": {
     "high_res_page-1.png": {
       "description": "Constituency form from Phrae province",
@@ -11,7 +16,7 @@
         "polling_unit": 2,
         "form_category": "constituency"
       },
-      "notes": "Province should be แพร่ (Phrae). Vote counts vary based on model interpretation."
+      "notes": "Province should be แพร่ (Phrae). Vote counts vary based on model interpretation. OCR may extract different provinces."
     },
     "bch_page-1.png": {
       "description": "Party-list form (first page)",
@@ -21,7 +26,7 @@
         "page_parties": "1-20",
         "form_category": "party_list"
       },
-      "notes": "Party-list form with parties 1-20 on this page"
+      "notes": "Party-list form with parties 1-20 on this page. KNOWN ISSUE: OCR may not detect (บช) suffix, causing form_type to be classified as constituency."
     },
     "bch_page-2.png": {
       "description": "Party-list form (second page)",
@@ -31,7 +36,7 @@
         "page_parties": "21-40",
         "form_category": "party_list"
       },
-      "notes": "Party-list form with parties 21-40 on this page"
+      "notes": "Party-list form with parties 21-40 on this page. KNOWN ISSUE: OCR may not detect (บช) suffix."
     },
     "bch_page-3.png": {
       "description": "Party-list form (third page)",
@@ -41,7 +46,7 @@
         "page_parties": "41-57",
         "form_category": "party_list"
       },
-      "notes": "Party-list form with parties 41-57 on this page"
+      "notes": "Party-list form with parties 41-57 on this page. KNOWN ISSUE: OCR may not detect (บช) suffix."
     },
     "bch_page-4.png": {
       "description": "Party-list form (fourth page - summary)",
@@ -50,7 +55,7 @@
         "is_party_list": true,
         "form_category": "party_list"
       },
-      "notes": "Party-list form summary page with totals"
+      "notes": "Party-list form summary page with totals. KNOWN ISSUE: OCR may not detect (บช) suffix."
     }
   },
   "validation_rules": {

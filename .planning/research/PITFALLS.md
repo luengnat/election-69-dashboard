@@ -326,6 +326,16 @@ Generating PDF reports (especially batch summaries with charts) using reportlab 
 
 ---
 
+## Known Issues (v1.1)
+
+| Issue | Impact | Status | Workaround |
+|-------|--------|--------|------------|
+| Form type detection for party-list forms | OCR may not detect `(บช)` suffix correctly, classifying party-list forms as constituency | Open | Manual review of forms with many entries (>10) |
+| Ground truth test failures | Test suite expects specific form types that may differ from current OCR output | Documented | Update ground truth to match current behavior or improve detection |
+| Province extraction variance | Different AI models may extract different provinces for same image | Monitored | Use ECT validation to catch invalid provinces |
+
+---
+
 ## "Looks Done But Isn't" Checklist
 
 - [ ] **Parallel Processing:** Often missing rate limiting - verify Token Bucket + Semaphore implemented
