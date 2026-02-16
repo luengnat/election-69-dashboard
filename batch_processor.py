@@ -335,6 +335,21 @@ class BatchProcessor:
             if not ballot_data.polling_unit and path_metadata.polling_unit:
                 ballot_data.polling_unit = path_metadata.polling_unit
 
+            # Track metadata source for auditing (Phase 7)
+            ballot_data.confidence_details["metadata_source"] = {
+                "province": "path" if path_metadata.province and not ballot_data.province else "ocr",
+                "constituency": "path" if path_metadata.constituency_number and not ballot_data.constituency_number else "ocr",
+                "path_confidence": path_metadata.confidence,
+            }
+
+            # Log any mismatches between path and OCR for debugging
+            if (path_metadata.province and ballot_data.province and
+                path_metadata.province != ballot_data.province):
+                ballot_data.confidence_details["province_mismatch"] = {
+                    "path": path_metadata.province,
+                    "ocr": ballot_data.province
+                }
+
         return ballot_data
 
     def process_batch(
