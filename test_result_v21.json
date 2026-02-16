@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/16",
+    "form_category": "constituency",
+    "polling_station": "แพร่-เขต 1 เมืองแพร่-2",
+    "total_votes": 649,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 614,
+      "2": 4,
+      "3": 28
+    }
+  }
+]

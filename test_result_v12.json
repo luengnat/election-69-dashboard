@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/16",
+    "form_category": "constituency",
+    "polling_station": "ชลบุรี-เขต 3-1/12",
+    "total_votes": 220,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 156,
+      "2": 41,
+      "3": 18
+    }
+  }
+]

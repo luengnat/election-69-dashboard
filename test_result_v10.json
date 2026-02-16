@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/17",
+    "form_category": "constituency",
+    "polling_station": "นนทบุรี-เขต 2-70106",
+    "total_votes": 139,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 52,
+      "2": 59,
+      "3": 20
+    }
+  }
+]

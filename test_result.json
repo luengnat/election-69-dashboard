@@ -1,0 +1,16 @@
+[
+  {
+    "form_type": "สส.5/17",
+    "polling_station": "สมุทรปราการ-เขตเลือกตั้งที่ 6-1",
+    "vote_counts": {
+      "1": 82,
+      "2": 6,
+      "3": 25,
+      "4": 11,
+      "5": 12,
+      "6": 10
+    },
+    "total_votes": 155,
+    "source_file": "test_images/page-1.png"
+  }
+]

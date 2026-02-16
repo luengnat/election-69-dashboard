@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/16",
+    "form_category": "constituency",
+    "polling_station": "แพร่-เมือง-2",
+    "total_votes": 255,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 153,
+      "2": 4,
+      "3": 95
+    }
+  }
+]

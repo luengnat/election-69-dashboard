@@ -1,0 +1,19 @@
+[
+  {
+    "form_type": "ส.ส. 5/16",
+    "form_category": "constituency",
+    "polling_station": "บุรีรัมย์-เขตเลือกตั้ง 1-None",
+    "total_votes": 671,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 614,
+      "2": 4,
+      "3": 24,
+      "4": 1,
+      "5": 1,
+      "6": 1,
+      "7": 1,
+      "8": 1
+    }
+  }
+]

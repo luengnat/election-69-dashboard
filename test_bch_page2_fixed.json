@@ -1,0 +1,39 @@
+[
+  {
+    "form_type": "ส.ส. 5/16 (บช)",
+    "form_category": "party_list",
+    "province": "แพร่",
+    "constituency_number": 1,
+    "district": "เมืองแพร่",
+    "polling_unit": 2,
+    "polling_station": "แพร่-เขต 1 เมืองแพร่-2",
+    "valid_votes": 0,
+    "invalid_votes": 0,
+    "blank_votes": 0,
+    "total_votes": 0,
+    "source_file": "test_images/bch_page-2.png",
+    "page_parties": "1-20",
+    "party_votes": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "16": 0,
+      "17": 0,
+      "18": 0,
+      "19": 0,
+      "20": 0
+    }
+  }
+]

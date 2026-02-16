@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/18",
+    "form_category": "constituency",
+    "polling_station": "สุโขทัย-เขต 2 อำเภอคีรีมาศ-None",
+    "total_votes": 323,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 153,
+      "2": 57,
+      "3": 108
+    }
+  }
+]

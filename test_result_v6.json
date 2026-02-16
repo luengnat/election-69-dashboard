@@ -1,0 +1,22 @@
+[
+  {
+    "form_type": "ส.ส. 5/17",
+    "form_category": "constituency",
+    "polling_station": "ลำพูน-เขต 1 อำเภอเมืองลำพูน-5/17",
+    "total_votes": 381,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 145,
+      "2": 107,
+      "3": 108,
+      "4": 8,
+      "5": 5,
+      "6": 4,
+      "7": 1,
+      "8": 2,
+      "9": 0,
+      "10": 0,
+      "11": 1
+    }
+  }
+]

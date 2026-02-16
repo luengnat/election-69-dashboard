@@ -1,0 +1,21 @@
+[
+  {
+    "form_type": "ส.ส. 5/17",
+    "form_category": "constituency",
+    "province": "สุโขทัย",
+    "constituency_number": 3,
+    "district": "คีรีมาศ",
+    "polling_unit": 2,
+    "polling_station": "สุโขทัย-เขต 3 คีรีมาศ-2",
+    "valid_votes": 387,
+    "invalid_votes": 3,
+    "blank_votes": 1,
+    "total_votes": 391,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 153,
+      "2": 129,
+      "3": 105
+    }
+  }
+]

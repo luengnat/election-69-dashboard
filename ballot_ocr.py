@@ -28,6 +28,19 @@ from pathlib import Path
 from dataclasses import dataclass, field
 from typing import Optional
 from enum import Enum
+from datetime import datetime
+from io import StringIO
+
+try:
+    from reportlab.lib.pagesizes import letter, A4
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import inch
+    from reportlab.lib import colors
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak, Image
+    from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+    HAS_REPORTLAB = True
+except ImportError:
+    HAS_REPORTLAB = False
 
 # Import ECT API for validation
 try:
@@ -1739,6 +1752,372 @@ def save_report(report_content: str, output_path: str) -> bool:
         return False
 
 
+def markdown_table_to_pdf_table(markdown_table: str) -> tuple[list, list]:
+    """
+    Convert markdown table to PDF table format.
+    
+    Args:
+        markdown_table: Markdown table string with | separators
+        
+    Returns:
+        (data_rows, table_style) for reportlab Table
+    """
+    lines = [line.strip() for line in markdown_table.strip().split('\n') if line.strip()]
+    if len(lines) < 2:
+        return [], []
+    
+    # Parse header
+    header = [cell.strip() for cell in lines[0].split('|')[1:-1]]
+    
+    # Skip separator line
+    data_rows = [header]
+    
+    # Parse data rows
+    for line in lines[2:]:
+        if not line.strip():
+            continue
+        cells = [cell.strip() for cell in line.split('|')[1:-1]]
+        if cells:
+            data_rows.append(cells)
+    
+    # Create table style
+    table_style = [
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#E0E0E0')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+        ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F5F5F5')]),
+    ]
+    
+    return data_rows, table_style
+
+
+def generate_ballot_pdf(ballot_data: BallotData, output_path: str) -> bool:
+    """
+    Generate a professional PDF report for a single ballot.
+    
+    Args:
+        ballot_data: Extracted ballot data
+        output_path: Path to save PDF
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    if not HAS_REPORTLAB:
+        print("✗ reportlab not installed. Install with: pip install reportlab")
+        return False
+    
+    try:
+        doc = SimpleDocTemplate(output_path, pagesize=letter)
+        styles = getSampleStyleSheet()
+        story = []
+        
+        # Title
+        title_style = ParagraphStyle(
+            'CustomTitle',
+            parent=styles['Heading1'],
+            fontSize=18,
+            textColor=colors.HexColor('#1f4788'),
+            spaceAfter=12,
+            alignment=TA_CENTER,
+        )
+        story.append(Paragraph("Ballot Verification Report", title_style))
+        story.append(Spacer(1, 0.2*inch))
+        
+        # Form Information Section
+        story.append(Paragraph("Form Information", styles['Heading2']))
+        
+        form_data = [
+            ['Field', 'Value'],
+            ['Form Type', ballot_data.form_type],
+            ['Category', ballot_data.form_category.title()],
+            ['Province', ballot_data.province],
+            ['Constituency', str(ballot_data.constituency_number)],
+            ['District', ballot_data.district or 'N/A'],
+            ['Polling Unit', str(ballot_data.polling_unit)],
+            ['Polling Station', ballot_data.polling_station_id or 'N/A'],
+            ['Source File', ballot_data.source_file],
+        ]
+        
+        form_table = Table(form_data, colWidths=[2*inch, 4*inch])
+        form_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+            ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+        ]))
+        story.append(form_table)
+        story.append(Spacer(1, 0.3*inch))
+        
+        # Vote Summary Section
+        story.append(Paragraph("Vote Summary", styles['Heading2']))
+        
+        vote_data = [
+            ['Metric', 'Count'],
+            ['Valid Votes', str(ballot_data.valid_votes)],
+            ['Invalid Votes', str(ballot_data.invalid_votes)],
+            ['Blank Votes', str(ballot_data.blank_votes)],
+            ['Total Votes', f"<b>{ballot_data.total_votes}</b>"],
+        ]
+        
+        vote_table = Table(vote_data, colWidths=[3*inch, 3*inch])
+        vote_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, 1), colors.HexColor('#E8F0F8')),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ]))
+        story.append(vote_table)
+        story.append(Spacer(1, 0.3*inch))
+        
+        # Quality Assessment
+        story.append(Paragraph("Extraction Quality", styles['Heading2']))
+        
+        confidence_pct = int(ballot_data.confidence_score * 100)
+        confidence_level = ballot_data.confidence_details.get('level', 'UNKNOWN')
+        
+        quality_color = {
+            'EXCELLENT': colors.HexColor('#2ecc71'),
+            'GOOD': colors.HexColor('#3498db'),
+            'ACCEPTABLE': colors.HexColor('#f39c12'),
+            'POOR': colors.HexColor('#e74c3c'),
+        }.get(confidence_level, colors.grey)
+        
+        quality_text = f"<font color='{quality_color.hexValue()}' size=12><b>✓ {confidence_level}</b></font> ({confidence_pct}%)"
+        story.append(Paragraph(quality_text, styles['Normal']))
+        story.append(Spacer(1, 0.2*inch))
+        
+        # Candidate votes (if applicable)
+        if ballot_data.form_category == 'constituency' and ballot_data.candidate_info:
+            story.append(Paragraph("Candidate Votes", styles['Heading2']))
+            
+            cand_data = [['Position', 'Candidate Name', 'Party', 'Votes']]
+            for pos, info in sorted(ballot_data.candidate_info.items()):
+                votes = ballot_data.vote_counts.get(int(pos), 0)
+                party = info.get('party_abbr', '?')
+                cand_data.append([str(pos), info['name'], party, str(votes)])
+            
+            cand_table = Table(cand_data, colWidths=[1*inch, 2.5*inch, 1.2*inch, 1.3*inch])
+            cand_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('ALIGN', (1, 1), (1, -1), 'LEFT'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 9),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+                ('FONTSIZE', (0, 1), (-1, -1), 8),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+            ]))
+            story.append(cand_table)
+            story.append(Spacer(1, 0.3*inch))
+        
+        # Party votes (if applicable)
+        elif ballot_data.form_category == 'party_list' and ballot_data.party_votes:
+            story.append(Paragraph("Party Votes", styles['Heading2']))
+            
+            party_data = [['Party', 'Votes', 'Percentage']]
+            total_pv = sum(ballot_data.party_votes.values())
+            for party_no, votes in sorted(ballot_data.party_votes.items()):
+                pct = (votes / total_pv * 100) if total_pv > 0 else 0
+                party_data.append([str(party_no), str(votes), f"{pct:.1f}%"])
+            
+            party_table = Table(party_data, colWidths=[2*inch, 2*inch, 2*inch])
+            party_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 9),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+                ('FONTSIZE', (0, 1), (-1, -1), 8),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+            ]))
+            story.append(party_table)
+            story.append(Spacer(1, 0.3*inch))
+        
+        # Footer
+        story.append(Spacer(1, 0.3*inch))
+        footer_text = f"<i>Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</i>"
+        story.append(Paragraph(footer_text, styles['Normal']))
+        
+        doc.build(story)
+        print(f"✓ PDF report saved to: {output_path}")
+        return True
+        
+    except Exception as e:
+        print(f"✗ Error generating PDF: {e}")
+        return False
+
+
+def generate_batch_pdf(aggregated_results: dict, ballot_data_list: list, output_path: str) -> bool:
+    """
+    Generate a PDF batch summary report.
+    
+    Args:
+        aggregated_results: Dictionary of aggregated results by constituency
+        ballot_data_list: List of all BallotData objects
+        output_path: Path to save PDF
+        
+    Returns:
+        True if successful, False otherwise
+    """
+    if not HAS_REPORTLAB:
+        print("✗ reportlab not installed. Install with: pip install reportlab")
+        return False
+    
+    try:
+        doc = SimpleDocTemplate(output_path, pagesize=letter)
+        styles = getSampleStyleSheet()
+        story = []
+        
+        # Title
+        title_style = ParagraphStyle(
+            'CustomTitle',
+            parent=styles['Heading1'],
+            fontSize=18,
+            textColor=colors.HexColor('#1f4788'),
+            spaceAfter=12,
+            alignment=TA_CENTER,
+        )
+        story.append(Paragraph("Batch Ballot Verification Report", title_style))
+        story.append(Paragraph(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", styles['Normal']))
+        story.append(Spacer(1, 0.3*inch))
+        
+        # Overall Statistics
+        story.append(Paragraph("Overall Statistics", styles['Heading2']))
+        
+        total_ballots = len(ballot_data_list)
+        verified_count = len([b for b in ballot_data_list if b.confidence_score >= 0.90])
+        
+        stats_data = [
+            ['Metric', 'Count', 'Percentage'],
+            ['Total Ballots', str(total_ballots), '100%'],
+            ['Verified (High Confidence)', str(verified_count), f"{verified_count/total_ballots*100:.1f}%"],
+        ]
+        
+        stats_table = Table(stats_data, colWidths=[3*inch, 1.5*inch, 1.5*inch])
+        stats_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ]))
+        story.append(stats_table)
+        story.append(Spacer(1, 0.3*inch))
+        
+        # Form Type Breakdown
+        story.append(Paragraph("Form Type Breakdown", styles['Heading2']))
+        
+        form_types = {}
+        for ballot in ballot_data_list:
+            form_types[ballot.form_type] = form_types.get(ballot.form_type, 0) + 1
+        
+        form_data = [['Form Type', 'Count']]
+        for form_type, count in sorted(form_types.items()):
+            form_data.append([form_type, str(count)])
+        
+        form_table = Table(form_data, colWidths=[3*inch, 3*inch])
+        form_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ]))
+        story.append(form_table)
+        story.append(Spacer(1, 0.3*inch))
+        
+        # Province Breakdown
+        story.append(Paragraph("Province Breakdown", styles['Heading2']))
+        
+        provinces = {}
+        for ballot in ballot_data_list:
+            provinces[ballot.province] = provinces.get(ballot.province, 0) + 1
+        
+        prov_data = [['Province', 'Count']]
+        for province, count in sorted(provinces.items()):
+            prov_data.append([province, str(count)])
+        
+        prov_table = Table(prov_data, colWidths=[3*inch, 3*inch])
+        prov_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, 0), 10),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+            ('FONTSIZE', (0, 1), (-1, -1), 9),
+        ]))
+        story.append(prov_table)
+        story.append(Spacer(1, 0.3*inch))
+        
+        # Ballot Details (per page if many)
+        if len(ballot_data_list) > 0 and len(ballot_data_list) <= 10:
+            story.append(PageBreak())
+            story.append(Paragraph("Ballot Details", styles['Heading2']))
+            
+            ballot_data = [['#', 'Form Type', 'Province', 'Station', 'Valid Votes', 'Confidence']]
+            for i, ballot in enumerate(ballot_data_list, 1):
+                confidence_level = ballot.confidence_details.get('level', 'UNKNOWN')
+                ballot_data.append([
+                    str(i),
+                    ballot.form_type,
+                    ballot.province,
+                    ballot.polling_station_id or 'N/A',
+                    str(ballot.valid_votes),
+                    confidence_level
+                ])
+            
+            ballot_table = Table(ballot_data, colWidths=[0.5*inch, 1.2*inch, 1*inch, 1.5*inch, 1*inch, 1.2*inch])
+            ballot_table.setStyle(TableStyle([
+                ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1f4788')),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                ('FONTSIZE', (0, 0), (-1, 0), 8),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('GRID', (0, 0), (-1, -1), 1, colors.grey),
+                ('FONTSIZE', (0, 1), (-1, -1), 7),
+                ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, colors.HexColor('#F9F9F9')]),
+            ]))
+            story.append(ballot_table)
+        
+        doc.build(story)
+        print(f"✓ Batch PDF report saved to: {output_path}")
+        return True
+        
+    except Exception as e:
+        print(f"✗ Error generating batch PDF: {e}")
+        return False
+
+
 def aggregate_ballot_results(ballot_data_list: list[BallotData]) -> dict[tuple, AggregatedResults]:
     """
     Aggregate ballot results by constituency.
@@ -2770,6 +3149,7 @@ def main():
     parser.add_argument("--verify", action="store_true", help="Verify against ECT API")
     parser.add_argument("--batch", "-b", action="store_true", help="Process directory of images")
     parser.add_argument("--reports", "-r", action="store_true", help="Generate markdown reports")
+    parser.add_argument("--pdf", "-p", action="store_true", help="Generate PDF reports")
     parser.add_argument("--report-dir", default="reports", help="Directory to save reports")
 
     args = parser.parse_args()
@@ -2856,6 +3236,11 @@ def main():
                 report_filename = f"{args.report_dir}/ballot_{i:03d}.md"
                 report = generate_single_ballot_report(ballot_data)
                 save_report(report, report_filename)
+                
+                # Also generate PDF if requested
+                if args.pdf:
+                    pdf_filename = f"{args.report_dir}/ballot_{i:03d}.pdf"
+                    generate_ballot_pdf(ballot_data, pdf_filename)
 
     # Save results
     with open(args.output, "w") as f:
@@ -2869,6 +3254,12 @@ def main():
         batch_report = generate_batch_report(results, ballot_data_list)
         save_report(batch_report, batch_report_filename)
         print(f"Batch report saved to: {batch_report_filename}")
+        
+        # Also generate batch PDF if requested
+        if args.pdf:
+            aggregated = {}  # Empty aggregated results for batch PDF
+            batch_pdf_filename = f"{args.report_dir}/BATCH_SUMMARY.pdf"
+            generate_batch_pdf(aggregated, ballot_data_list, batch_pdf_filename)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,17 @@
+[
+  {
+    "form_type": "ส.ส. 5/17",
+    "form_category": "constituency",
+    "polling_station": "ปทุมธานี-เขตเลือกตั้งที่ 3-เลขที่ 21/12",
+    "total_votes": 184,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 11,
+      "2": 76,
+      "3": 64,
+      "4": 20,
+      "5": 9,
+      "6": 2
+    }
+  }
+]

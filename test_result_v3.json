@@ -1,0 +1,16 @@
+[
+  {
+    "form_type": "Thai election ballot counting form",
+    "polling_station": "เชียงราย-เมืองเชียงราย-None",
+    "vote_counts": {
+      "1": 108,
+      "2": 54,
+      "3": 15,
+      "4": 424,
+      "5": 8,
+      "6": 5
+    },
+    "total_votes": 614,
+    "source_file": "test_images/high_res_page-1.png"
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "form_type": "ส.ส. 5/18",
+    "form_category": "constituency",
+    "province": "นครราชสีมา",
+    "constituency_number": 4,
+    "district": "เฉลิมพระเกียรติ",
+    "polling_unit": 3,
+    "polling_station": "นครราชสีมา-เขต 4 เฉลิมพระเกียรติ-3",
+    "valid_votes": 192,
+    "invalid_votes": 4,
+    "blank_votes": 3,
+    "total_votes": 199,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 166,
+      "2": 16,
+      "3": 10
+    }
+  }
+]

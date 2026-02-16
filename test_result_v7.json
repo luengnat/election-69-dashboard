@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": null,
+    "form_category": "constituency",
+    "polling_station": "ประจวบคีรีขันธ์-เขต 5 ประจวบคีรีขันธ์-4/5",
+    "total_votes": 294,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 154,
+      "2": 119,
+      "3": 11
+    }
+  }
+]

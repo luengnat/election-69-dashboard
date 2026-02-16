@@ -1,0 +1,21 @@
+[
+  {
+    "form_type": "ส.ส. 5/17",
+    "form_category": "constituency",
+    "province": "อุดรธานี",
+    "constituency_number": 2,
+    "district": "หนองหาน",
+    "polling_unit": 1,
+    "polling_station": "อุดรธานี-เขต 2 หนองหาน-1",
+    "valid_votes": 112,
+    "invalid_votes": 3,
+    "blank_votes": 1,
+    "total_votes": 116,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 13,
+      "2": 89,
+      "3": 10
+    }
+  }
+]

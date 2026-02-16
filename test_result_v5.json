@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/17",
+    "form_category": "constituency",
+    "polling_station": "พระนครศรีอยุธยา-เขต 3 อยุธยา-1/8",
+    "total_votes": 212,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "8": 50,
+      "9": 154,
+      "10": 8
+    }
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "form_type": "ส.ส. 5/18",
+    "form_category": "constituency",
+    "polling_station": "ลำปาง-เขต 4 อ.เมือง จ.ลำปาง-4/28",
+    "total_votes": 227,
+    "source_file": "test_images/high_res_page-1.png",
+    "vote_counts": {
+      "1": 71,
+      "2": 129,
+      "3": 22
+    }
+  }
+]

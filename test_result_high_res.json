@@ -1,0 +1,16 @@
+[
+  {
+    "form_type": "สน.5/17",
+    "polling_station": "อำนาจเจริญ-อำเภอเมืองอำนาจเจริญ เขตเลือกตั้งที่ 1-110/1",
+    "vote_counts": {
+      "1": 55,
+      "2": 44,
+      "3": 93,
+      "4": 0,
+      "5": 8,
+      "6": 0
+    },
+    "total_votes": 200,
+    "source_file": "test_images/high_res_page-1.png"
+  }
+]
