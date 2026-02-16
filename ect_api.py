@@ -201,7 +201,11 @@ class ECTData:
         Returns (is_valid, canonical_name).
         """
         self.load()
-        prov = self._provinces.get(thai_name)
+        # Strip "จังหวัด" prefix if present (common in OCR extraction)
+        normalized_name = thai_name
+        if thai_name.startswith("จังหวัด"):
+            normalized_name = thai_name[7:]  # Remove "จังหวัด" (7 chars)
+        prov = self._provinces.get(thai_name) or self._provinces.get(normalized_name)
         if prov:
             return True, prov.name
         return False, None
@@ -209,7 +213,11 @@ class ECTData:
     def get_province_abbr(self, thai_name: str) -> Optional[str]:
         """Get province abbreviation (prov_id) from Thai name."""
         self.load()
-        prov = self._provinces.get(thai_name)
+        # Strip "จังหวัด" prefix if present (common in OCR extraction)
+        normalized_name = thai_name
+        if thai_name.startswith("จังหวัด"):
+            normalized_name = thai_name[7:]  # Remove "จังหวัด" (7 chars)
+        prov = self._provinces.get(thai_name) or self._provinces.get(normalized_name)
         if prov:
             return prov.prov_id
         return None

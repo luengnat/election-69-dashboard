@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated test outputs
+reports_test/*.pdf
+reports_test/*.json
+reports_test/constituency_*.pdf
+reports_test/constituency_*.md
+reports_test/ballot_*.md
+
+# Generated data files
+ballot_data*.json
+test_*.json
+ballots/
+
+# Local config
+.planning/config.json
