@@ -218,18 +218,40 @@ class RateLimiter:
 @dataclass
 class BatchResult:
     """
-    Results from batch processing.
+    Results from batch processing with timing and performance statistics.
 
     Attributes:
         results: List of successfully processed BallotData objects
         errors: List of error dicts with 'path' and 'error' keys
         total: Total number of images attempted
         processed: Number of images successfully processed
+        start_time: Unix timestamp when processing started
+        end_time: Unix timestamp when processing completed
+        duration_seconds: Total processing duration in seconds
+        requests_per_second: Actual achieved rate (processed / duration)
+        memory_cleanups: Number of gc.collect() calls made
+        retries: Total retry attempts (from tenacity statistics)
     """
     results: list[BallotData] = field(default_factory=list)
     errors: list[dict] = field(default_factory=list)
     total: int = 0
     processed: int = 0
+    start_time: float = 0.0
+    end_time: float = 0.0
+    duration_seconds: float = 0.0
+    requests_per_second: float = 0.0
+    memory_cleanups: int = 0
+    retries: int = 0
+
+    def __str__(self) -> str:
+        """Human-readable summary."""
+        success_rate = (self.processed / self.total * 100) if self.total > 0 else 0
+        return (
+            f"BatchResult(processed={self.processed}/{self.total}, "
+            f"success={success_rate:.1f}%, "
+            f"duration={self.duration_seconds:.1f}s, "
+            f"rate={self.requests_per_second:.2f}/s)"
+        )
 
 
 class BatchProcessor:
@@ -241,6 +263,7 @@ class BatchProcessor:
     - Rate limiting to stay under API limits
     - Automatic retry with exponential backoff for transient failures
     - Memory cleanup for large batches to prevent OOM
+    - Progress callbacks for UI integration
 
     Example:
         processor = BatchProcessor(max_workers=5, rate_limit=2.0)
@@ -252,7 +275,8 @@ class BatchProcessor:
         self,
         max_workers: int = 5,
         rate_limit: float = 2.0,
-        enable_memory_cleanup: bool = True
+        enable_memory_cleanup: bool = True,
+        verbose: bool = False
     ):
         """
         Initialize batch processor.
@@ -261,11 +285,13 @@ class BatchProcessor:
             max_workers: Maximum concurrent threads (default 5)
             rate_limit: Requests per second limit (default 2.0 for OpenRouter)
             enable_memory_cleanup: Run gc.collect() every 50 ballots (default True)
+            verbose: Enable verbose logging for debugging (default False)
         """
         self.max_workers = max_workers
         self.rate_limit = rate_limit
         self.rate_limiter = RateLimiter(requests_per_second=rate_limit)
         self.enable_memory_cleanup = enable_memory_cleanup
+        self.verbose = verbose
 
     @retry(
         stop=stop_after_attempt(3),
@@ -310,7 +336,12 @@ class BatchProcessor:
         callback = progress_callback if progress_callback else NullProgressCallback()
         total = len(image_paths)
 
-        result = BatchResult(total=total)
+        # Initialize result with timing
+        start_time = time.time()
+        result = BatchResult(total=total, start_time=start_time)
+
+        # Track metrics
+        memory_cleanups = 0
 
         # Notify callback that batch is starting
         callback.on_start(total)
@@ -352,6 +383,19 @@ class BatchProcessor:
                 # Memory cleanup every N ballots to prevent OOM
                 if self.enable_memory_cleanup and current % MEMORY_CLEANUP_INTERVAL == 0:
                     gc.collect()
+                    memory_cleanups += 1
+                    if self.verbose:
+                        print(f"\n[Memory cleanup #{memory_cleanups}]")
+
+        # Calculate final timing and metrics
+        end_time = time.time()
+        duration = end_time - start_time
+        result.end_time = end_time
+        result.duration_seconds = duration
+        result.requests_per_second = result.processed / duration if duration > 0 else 0.0
+        result.memory_cleanups = memory_cleanups
+        # Note: retries tracked by tenacity internally, we don't have easy access here
+        # Could be added via a custom callback if needed in future
 
         # Notify callback that batch is complete
         callback.on_complete(result.results, result.errors)
@@ -380,7 +424,12 @@ class BatchProcessor:
         callback = progress_callback if progress_callback else NullProgressCallback()
         total = len(image_paths)
 
-        result = BatchResult(total=total)
+        # Initialize result with timing
+        start_time = time.time()
+        result = BatchResult(total=total, start_time=start_time)
+
+        # Track metrics
+        memory_cleanups = 0
 
         # Notify callback that batch is starting
         callback.on_start(total)
@@ -410,6 +459,17 @@ class BatchProcessor:
             # Memory cleanup every N ballots to prevent OOM
             if self.enable_memory_cleanup and idx % MEMORY_CLEANUP_INTERVAL == 0:
                 gc.collect()
+                memory_cleanups += 1
+                if self.verbose:
+                    print(f"\n[Memory cleanup #{memory_cleanups}]")
+
+        # Calculate final timing and metrics
+        end_time = time.time()
+        duration = end_time - start_time
+        result.end_time = end_time
+        result.duration_seconds = duration
+        result.requests_per_second = result.processed / duration if duration > 0 else 0.0
+        result.memory_cleanups = memory_cleanups
 
         # Notify callback that batch is complete
         callback.on_complete(result.results, result.errors)
