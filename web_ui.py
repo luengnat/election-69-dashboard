@@ -70,3 +70,135 @@ class GradioProgressCallback:
     def errors(self) -> list[dict]:
         """Return list of errors encountered during processing."""
         return self._errors
+
+
+def format_results(results: list[BallotData]) -> list[list]:
+    """
+    Format BallotData results for Gradio Dataframe display.
+
+    Args:
+        results: List of BallotData objects from batch processing
+
+    Returns:
+        List of rows for gr.Dataframe, sorted by filename
+    """
+    if not results:
+        return []
+
+    rows = []
+    for ballot in results:
+        # Get filename from source_file
+        filename = os.path.basename(ballot.source_file) if ballot.source_file else "unknown"
+
+        # Determine confidence based on data completeness
+        has_province = bool(ballot.province)
+        has_constituency = ballot.constituency_number > 0
+        has_votes = bool(ballot.vote_counts) or bool(ballot.party_votes)
+
+        if has_province and has_constituency and has_votes:
+            confidence = "High"
+        elif has_province or has_constituency:
+            confidence = "Medium"
+        else:
+            confidence = "Low"
+
+        row = [
+            filename,
+            ballot.province or "-",
+            str(ballot.constituency_number) if ballot.constituency_number > 0 else "-",
+            ballot.polling_station_id or "-",
+            ballot.form_type or "-",
+            confidence
+        ]
+        rows.append(row)
+
+    # Sort by filename for predictable display
+    rows.sort(key=lambda x: x[0])
+    return rows
+
+
+def process_ballots(files, progress=gr.Progress()):
+    """
+    Process uploaded ballot images and return results.
+
+    Args:
+        files: List of uploaded file paths from gr.File
+        progress: Gradio progress tracker
+
+    Returns:
+        Tuple of (results_dataframe, error_messages)
+    """
+    # Handle empty upload
+    if not files:
+        return [], "Please upload at least one ballot image."
+
+    # Ensure files is a list
+    if isinstance(files, str):
+        files = [files]
+
+    # Create progress callback
+    callback = GradioProgressCallback(progress)
+
+    # Create batch processor
+    processor = BatchProcessor(max_workers=5, rate_limit=2.0)
+
+    # Process the batch
+    try:
+        result = processor.process_batch(files, progress_callback=callback)
+
+        # Format results for display
+        results_df = format_results(result.results)
+
+        # Format errors for display
+        if result.errors:
+            error_lines = []
+            for i, err in enumerate(result.errors, 1):
+                filename = os.path.basename(err.get("path", "unknown"))
+                error_msg = err.get("error", "Unknown error")
+                # Truncate long error messages
+                if len(error_msg) > 200:
+                    error_msg = error_msg[:200] + "..."
+                error_lines.append(f"{i}. {filename}: {error_msg}")
+            error_text = "\n".join(error_lines)
+        else:
+            error_text = ""
+
+        return results_df, error_text
+
+    except Exception as e:
+        return [], f"Processing error: {str(e)}"
+
+
+# Create Gradio interface
+with gr.Blocks(title="Thai Election Ballot OCR") as demo:
+    gr.Markdown("# Thai Election Ballot OCR")
+    gr.Markdown("Upload ballot images to extract vote counts")
+
+    with gr.Row():
+        file_input = gr.File(
+            file_count="multiple",
+            label="Upload Ballot Images (100-500)",
+            file_types=["image"]
+        )
+
+    with gr.Row():
+        process_btn = gr.Button("Process Ballots", variant="primary")
+
+    with gr.Row():
+        results_table = gr.Dataframe(
+            headers=["Image", "Province", "Constituency", "Station", "Form Type", "Confidence"],
+            label="Extracted Results"
+        )
+
+    with gr.Row():
+        error_output = gr.Textbox(label="Errors", lines=5)
+
+    process_btn.click(
+        fn=process_ballots,
+        inputs=[file_input],
+        outputs=[results_table, error_output]
+    )
+
+
+if __name__ == "__main__":
+    demo.launch(server_name="0.0.0.0", server_port=7860)
