@@ -283,7 +283,36 @@ class AggregatedResults:
 
 
 def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 150) -> list[str]:
-    """Convert PDF to PNG images using pdftoppm."""
+    """
+    Convert PDF to PNG images using pdftoppm.
+
+    Args:
+        pdf_path: Path to the PDF file
+        output_dir: Directory to save output images
+        dpi: Resolution for conversion (default 150)
+
+    Returns:
+        List of paths to generated PNG images
+
+    Raises:
+        FileNotFoundError: If PDF file or output directory doesn't exist
+        ValueError: If dpi is out of range
+        RuntimeError: If pdftoppm is not available
+    """
+    import shutil
+
+    # Input validation
+    if not os.path.isfile(pdf_path):
+        raise FileNotFoundError(f"PDF file not found: {pdf_path}")
+    if not os.path.isdir(output_dir):
+        raise NotADirectoryError(f"Output directory not found: {output_dir}")
+    if not 50 <= dpi <= 600:
+        raise ValueError(f"DPI must be between 50 and 600, got {dpi}")
+
+    # Check pdftoppm is available
+    if not shutil.which("pdftoppm"):
+        raise RuntimeError("pdftoppm not found. Install poppler-utils.")
+
     output_prefix = "page"
     cmd = [
         "pdftoppm", "-png", "-r", str(dpi),
@@ -711,7 +740,8 @@ def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] =
                         }
                     ],
                     "max_tokens": 2048
-                }
+                },
+                timeout=60  # 60 second timeout
             )
 
             if response.status_code == 200:

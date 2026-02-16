@@ -43,6 +43,68 @@ logger = logging.getLogger(__name__)
 # Maximum number of results to display (to avoid UI overload)
 MAX_DISPLAY_RESULTS = 100
 
+# File upload validation settings
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB per file
+MAX_BATCH_SIZE = 500  # Maximum files per batch
+ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.pdf'}
+
+
+def validate_file(file_path: str) -> tuple[bool, str]:
+    """
+    Validate an uploaded file for security and size constraints.
+
+    Args:
+        file_path: Path to the uploaded file
+
+    Returns:
+        Tuple of (is_valid, error_message)
+    """
+    import re
+
+    if not file_path:
+        return False, "No file path provided"
+
+    # Check file exists
+    if not os.path.isfile(file_path):
+        return False, "File not found"
+
+    # Check extension
+    ext = Path(file_path).suffix.lower()
+    if ext not in ALLOWED_EXTENSIONS:
+        return False, f"Invalid file type: {ext}. Allowed: {', '.join(ALLOWED_EXTENSIONS)}"
+
+    # Check file size
+    try:
+        size = os.path.getsize(file_path)
+        if size > MAX_FILE_SIZE:
+            return False, f"File too large: {size // (1024*1024)}MB (max {MAX_FILE_SIZE // (1024*1024)}MB)"
+        if size == 0:
+            return False, "File is empty"
+    except OSError as e:
+        return False, f"Cannot read file: {e}"
+
+    return True, "OK"
+
+
+def sanitize_filename(name: str) -> str:
+    """
+    Sanitize a string for safe use in filenames.
+    Removes path traversal attempts and special characters.
+
+    Args:
+        name: Input string to sanitize
+
+    Returns:
+        Sanitized string safe for use in filenames
+    """
+    import re
+    # Remove any path components
+    name = os.path.basename(name)
+    # Keep only alphanumeric, spaces, underscores, hyphens, and Thai characters
+    sanitized = re.sub(r'[^\w\s\-\u0E00-\u0E7F]', '_', name)
+    # Limit length
+    return sanitized[:100]
+
 
 class GradioProgressCallback:
     """
@@ -275,7 +337,7 @@ def generate_pdfs(ballot_results: list[BallotData]) -> tuple[Optional[str], Opti
         for key, agg in aggregated.items():
             province, cons_no = key
             # Create safe filename from constituency info
-            safe_province = "".join(c if c.isalnum() or c in " _-" else "_" for c in province)
+            safe_province = sanitize_filename(province)
             cons_pdf_path = os.path.join(pdf_dir, f"constituency_{safe_province}_{cons_no}.pdf")
             if generate_constituency_pdf(agg, cons_pdf_path):
                 constituency_pdf_path = cons_pdf_path
@@ -322,6 +384,26 @@ def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, lis
         logger.info(f"  File: {filename}")
     if len(files) > 5:
         logger.info(f"  ... and {len(files) - 5} more files")
+
+    # Validate batch size
+    if len(files) > MAX_BATCH_SIZE:
+        logger.warning(f"Batch too large: {len(files)} files (max {MAX_BATCH_SIZE})")
+        return [], f"Too many files: {len(files)}. Maximum is {MAX_BATCH_SIZE}.", []
+
+    # Validate all files before processing
+    invalid_files = []
+    for f in files:
+        is_valid, error_msg = validate_file(f)
+        if not is_valid:
+            filename = os.path.basename(f) if f else "unknown"
+            invalid_files.append(f"{filename}: {error_msg}")
+
+    if invalid_files:
+        error_list = "\n".join(invalid_files[:10])  # Show first 10 errors
+        if len(invalid_files) > 10:
+            error_list += f"\n... and {len(invalid_files) - 10} more invalid files"
+        logger.warning(f"Found {len(invalid_files)} invalid files")
+        return [], f"Invalid files:\n{error_list}", []
 
     # Create progress callback
     callback = GradioProgressCallback(progress)
@@ -713,4 +795,15 @@ Powered by AI vision models for accurate ballot data extraction.
 
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
+    import os
+
+    # Default to localhost for security. Set WEB_UI_HOST=0.0.0.0 to allow external access.
+    server_name = os.environ.get("WEB_UI_HOST", "127.0.0.1")
+    server_port = int(os.environ.get("WEB_UI_PORT", "7860"))
+
+    if server_name == "0.0.0.0":
+        logger.warning("Web UI binding to all network interfaces. This may expose the application.")
+        logger.warning("Set WEB_UI_HOST=127.0.0.1 for local-only access.")
+
+    logger.info(f"Starting web UI on http://{server_name}:{server_port}")
+    demo.launch(server_name=server_name, server_port=server_port)
