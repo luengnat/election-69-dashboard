@@ -22,8 +22,15 @@ from typing import Optional
 import tempfile
 import os
 import logging
+from pathlib import Path
 
 from batch_processor import BatchProcessor, BallotData
+from ballot_ocr import (
+    aggregate_ballot_results,
+    generate_constituency_pdf,
+    generate_batch_pdf,
+    AggregatedResults
+)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -227,6 +234,60 @@ def format_results(results: list[BallotData]) -> tuple[list[list], str]:
     return display_rows, status_msg
 
 
+def generate_pdfs(ballot_results: list[BallotData]) -> tuple[Optional[str], Optional[str]]:
+    """
+    Generate constituency and batch PDFs from results.
+
+    Args:
+        ballot_results: List of BallotData objects from batch processing
+
+    Returns:
+        Tuple of (batch_pdf_path, constituency_pdf_path)
+        Returns (None, None) if no results to process
+    """
+    if not ballot_results:
+        logger.warning("No ballot results to generate PDFs from")
+        return None, None
+
+    try:
+        # Create temp directory for PDFs
+        pdf_dir = tempfile.mkdtemp(prefix="ballot_pdfs_")
+        logger.info(f"Created temp PDF directory: {pdf_dir}")
+
+        # Aggregate results by constituency
+        aggregated = aggregate_ballot_results(ballot_results)
+        logger.info(f"Aggregated {len(aggregated)} constituencies")
+
+        # Generate batch summary PDF
+        batch_pdf_path = os.path.join(pdf_dir, "batch_summary.pdf")
+        if generate_batch_pdf(aggregated, ballot_results, batch_pdf_path):
+            logger.info(f"Generated batch PDF: {batch_pdf_path}")
+        else:
+            logger.error("Failed to generate batch PDF")
+            batch_pdf_path = None
+
+        # Generate first constituency PDF (for demo - user can generate others later)
+        constituency_pdf_path = None
+        for key, agg in aggregated.items():
+            province, cons_no = key
+            # Create safe filename from constituency info
+            safe_province = "".join(c if c.isalnum() or c in " _-" else "_" for c in province)
+            cons_pdf_path = os.path.join(pdf_dir, f"constituency_{safe_province}_{cons_no}.pdf")
+            if generate_constituency_pdf(agg, cons_pdf_path):
+                constituency_pdf_path = cons_pdf_path
+                logger.info(f"Generated constituency PDF: {cons_pdf_path}")
+                break  # Just use first one for now
+
+        if not constituency_pdf_path:
+            logger.warning("No constituency PDF generated")
+
+        return batch_pdf_path, constituency_pdf_path
+
+    except Exception as e:
+        logger.exception(f"Error generating PDFs: {e}")
+        return None, None
+
+
 def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, list]:
     """
     Process uploaded ballot images and return results.
@@ -312,6 +373,42 @@ def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, lis
         return [], f"Processing error: {error_msg}", []
 
 
+def download_batch_pdf(ballot_results: list[BallotData]) -> Optional[str]:
+    """
+    Download handler for batch summary PDF.
+
+    Args:
+        ballot_results: List of BallotData objects from state
+
+    Returns:
+        Path to batch PDF file or None if no results
+    """
+    if not ballot_results:
+        logger.warning("No ballot results available for batch PDF")
+        return None
+
+    batch_path, _ = generate_pdfs(ballot_results)
+    return batch_path
+
+
+def download_constituency_pdf(ballot_results: list[BallotData]) -> Optional[str]:
+    """
+    Download handler for constituency report PDF.
+
+    Args:
+        ballot_results: List of BallotData objects from state
+
+    Returns:
+        Path to constituency PDF file or None if no results
+    """
+    if not ballot_results:
+        logger.warning("No ballot results available for constituency PDF")
+        return None
+
+    _, constituency_path = generate_pdfs(ballot_results)
+    return constituency_path
+
+
 # Create Gradio interface with Thai text support
 with gr.Blocks(title="Thai Election Ballot OCR") as demo:
     gr.Markdown("# Thai Election Ballot OCR")
@@ -350,6 +447,17 @@ Upload ballot images to extract vote counts.
     with gr.Row():
         error_output = gr.Textbox(label="Errors / ข้อผิดพลาด", lines=5, placeholder="Any errors will be shown here...")
 
+    # Download section
+    gr.Markdown("### Download Reports / ดาวน์โหลดรายงาน")
+
+    with gr.Row():
+        batch_pdf_btn = gr.Button("Download Batch Summary PDF / ดาวน์โหลดสรุปผลการประมวลผล", variant="secondary")
+        constituency_pdf_btn = gr.Button("Download Constituency Report PDF / ดาวน์โหลดรายงานเขตเลือกตั้ง", variant="secondary")
+
+    with gr.Row():
+        batch_pdf_output = gr.File(label="Batch Summary PDF / สรุปผลการประมวลผล", visible=True)
+        constituency_pdf_output = gr.File(label="Constituency Report PDF / รายงานเขตเลือกตั้ง", visible=True)
+
     # State to store ballot results for PDF generation
     ballot_state = gr.State(value=None)
 
@@ -357,6 +465,18 @@ Upload ballot images to extract vote counts.
         fn=process_ballots,
         inputs=[file_input],
         outputs=[results_table, error_output, ballot_state]
+    )
+
+    batch_pdf_btn.click(
+        fn=download_batch_pdf,
+        inputs=[ballot_state],
+        outputs=[batch_pdf_output]
+    )
+
+    constituency_pdf_btn.click(
+        fn=download_constituency_pdf,
+        inputs=[ballot_state],
+        outputs=[constituency_pdf_output]
     )
 
 
