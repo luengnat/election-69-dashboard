@@ -278,17 +278,29 @@ class BatchProcessor:
         with self.rate_limiter:
             return extract_ballot_data_with_ai(image_path)
 
-    def process_batch(self, image_paths: list[str]) -> BatchResult:
+    def process_batch(
+        self,
+        image_paths: list[str],
+        progress_callback: Optional[ProgressCallback] = None
+    ) -> BatchResult:
         """
         Process multiple ballot images concurrently.
 
         Args:
             image_paths: List of paths to ballot images
+            progress_callback: Optional callback for progress updates (default: None)
 
         Returns:
             BatchResult with results, errors, total, and processed count
         """
-        result = BatchResult(total=len(image_paths))
+        # Use NullProgressCallback if no callback provided
+        callback = progress_callback if progress_callback else NullProgressCallback()
+        total = len(image_paths)
+
+        result = BatchResult(total=total)
+
+        # Notify callback that batch is starting
+        callback.on_start(total)
 
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             # Submit all tasks
@@ -297,29 +309,43 @@ class BatchProcessor:
                 for path in image_paths
             }
 
-            # Collect results as they complete
+            # Collect results as they complete (track current count)
+            current = 0
             for future in as_completed(future_to_path):
                 path = future_to_path[future]
+                current += 1  # 1-indexed for user display
                 try:
                     ballot_data = future.result()
                     if ballot_data:
                         result.results.append(ballot_data)
                         result.processed += 1
+                        callback.on_progress(current, total, str(path), ballot_data)
                     else:
                         # Extraction returned None (no data extracted)
-                        result.errors.append({
+                        error_info = {
                             "path": str(path),
                             "error": "No data extracted from image"
-                        })
+                        }
+                        result.errors.append(error_info)
+                        callback.on_error(current, total, str(path), error_info["error"])
                 except Exception as e:
-                    result.errors.append({
+                    error_info = {
                         "path": str(path),
                         "error": str(e)
-                    })
+                    }
+                    result.errors.append(error_info)
+                    callback.on_error(current, total, str(path), error_info["error"])
+
+        # Notify callback that batch is complete
+        callback.on_complete(result.results, result.errors)
 
         return result
 
-    def process_batch_sequential(self, image_paths: list[str]) -> BatchResult:
+    def process_batch_sequential(
+        self,
+        image_paths: list[str],
+        progress_callback: Optional[ProgressCallback] = None
+    ) -> BatchResult:
         """
         Process ballot images sequentially (for comparison testing).
 
@@ -328,28 +354,44 @@ class BatchProcessor:
 
         Args:
             image_paths: List of paths to ballot images
+            progress_callback: Optional callback for progress updates (default: None)
 
         Returns:
             BatchResult with results, errors, total, and processed count
         """
-        result = BatchResult(total=len(image_paths))
+        # Use NullProgressCallback if no callback provided
+        callback = progress_callback if progress_callback else NullProgressCallback()
+        total = len(image_paths)
 
-        for path in image_paths:
+        result = BatchResult(total=total)
+
+        # Notify callback that batch is starting
+        callback.on_start(total)
+
+        for idx, path in enumerate(image_paths, start=1):  # 1-indexed
             try:
                 ballot_data = self.process_single(path)
                 if ballot_data:
                     result.results.append(ballot_data)
                     result.processed += 1
+                    callback.on_progress(idx, total, str(path), ballot_data)
                 else:
-                    result.errors.append({
+                    error_info = {
                         "path": str(path),
                         "error": "No data extracted from image"
-                    })
+                    }
+                    result.errors.append(error_info)
+                    callback.on_error(idx, total, str(path), error_info["error"])
             except Exception as e:
-                result.errors.append({
+                error_info = {
                     "path": str(path),
                     "error": str(e)
-                })
+                }
+                result.errors.append(error_info)
+                callback.on_error(idx, total, str(path), error_info["error"])
+
+        # Notify callback that batch is complete
+        callback.on_complete(result.results, result.errors)
 
         return result
 
