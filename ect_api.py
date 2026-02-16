@@ -271,12 +271,22 @@ class ECTData:
         """Load official election results from ECT statistics API."""
         if hasattr(self, '_results_loaded') and self._results_loaded:
             return
-        
-        # Note: ECT stats endpoints return aggregate results
-        # This is a placeholder for future implementation
-        # when we understand the exact structure of ECT stats data
+
+        stats_cons = fetch_json(ECT_ENDPOINTS["stats_cons"])
+        stats_party = fetch_json(ECT_ENDPOINTS["stats_party"])
+
+        self._stats_cons_raw = stats_cons if isinstance(stats_cons, dict) else {}
+        self._stats_party_raw = stats_party if isinstance(stats_party, dict) else {}
+        self._stats_cons_by_id: dict[str, dict] = {}
+
+        for province in self._stats_cons_raw.get("result_province", []):
+            for constituency in province.get("constituencies", []):
+                cons_id = constituency.get("cons_id")
+                if cons_id:
+                    self._stats_cons_by_id[cons_id] = constituency
+
         self._results_loaded = True
-        print("Official results loading placeholder (structure to be determined)")
+        print(f"Loaded official stats for {len(self._stats_cons_by_id)} constituencies")
 
     def get_official_constituency_results(self, cons_id: str) -> Optional[dict]:
         """
@@ -288,8 +298,61 @@ class ECTData:
         Returns:
             Dictionary with official vote counts by candidate position, or None
         """
-        # This will be implemented once ECT stats structure is understood
-        return None
+        self.load_official_results()
+
+        constituency = self._stats_cons_by_id.get(cons_id)
+        if not constituency:
+            return None
+
+        # Build candidate vote map by candidate position from mp_app_id format:
+        # {prov_abbr}_{cons_no}_{position}
+        vote_counts: dict[int, int] = {}
+        for candidate in constituency.get("candidates", []):
+            mp_app_id = candidate.get("mp_app_id", "")
+            if not mp_app_id:
+                continue
+            parts = mp_app_id.split("_")
+            if len(parts) < 3:
+                continue
+            try:
+                position = int(parts[2])
+            except ValueError:
+                continue
+            vote_counts[position] = int(candidate.get("mp_app_vote", 0) or 0)
+
+        # Build party-list vote map keyed by party ballot number.
+        # stats_cons uses party_id; map it back to party.party_no.
+        party_votes: dict[int, int] = {}
+        self.load()
+        party_id_to_no = {
+            int(party.id): int(party.party_no)
+            for party in self._parties.values()
+            if isinstance(party, Party) and str(party.id).isdigit() and str(party.party_no).isdigit()
+        }
+        for party_result in constituency.get("result_party", []):
+            party_id = party_result.get("party_id")
+            if party_id is None:
+                continue
+            try:
+                party_id_int = int(party_id)
+            except (TypeError, ValueError):
+                continue
+            party_no = party_id_to_no.get(party_id_int)
+            if party_no is None:
+                continue
+            party_votes[party_no] = int(party_result.get("party_list_vote", 0) or 0)
+
+        return {
+            "cons_id": cons_id,
+            "vote_counts": vote_counts,
+            "party_votes": party_votes,
+            "valid_votes": int(constituency.get("valid_votes", 0) or 0),
+            "invalid_votes": int(constituency.get("invalid_votes", 0) or 0),
+            "blank_votes": int(constituency.get("blank_votes", 0) or 0),
+            "total": int(constituency.get("turn_out", 0) or 0),
+            "counted_vote_stations": int(constituency.get("counted_vote_stations", 0) or 0),
+            "percent_count": constituency.get("percent_count", 0),
+        }
 
     def get_official_party_results(self, party_no: int) -> Optional[dict]:
         """
@@ -301,7 +364,33 @@ class ECTData:
         Returns:
             Dictionary with official vote counts by polling station, or None
         """
-        # This will be implemented once ECT stats structure is understood
+        self.load_official_results()
+        party_no = int(party_no)
+
+        self.load()
+        party_id: Optional[int] = None
+        party_obj = self.get_party_by_number(party_no)
+        if party_obj and str(party_obj.id).isdigit():
+            party_id = int(party_obj.id)
+        if party_id is None:
+            return None
+
+        for party in self._stats_party_raw.get("result_party", []):
+            try:
+                current_party_id = int(party.get("party_id", -1))
+            except (TypeError, ValueError):
+                continue
+            if current_party_id != party_id:
+                continue
+            return {
+                "party_id": party_id,
+                "party_no": party_no,
+                "party_vote": int(party.get("party_vote", 0) or 0),
+                "party_vote_percent": party.get("party_vote_percent", 0),
+                "party_list_count": int(party.get("party_list_count", 0) or 0),
+                "mp_app_vote": int(party.get("mp_app_vote", 0) or 0),
+                "mp_app_vote_percent": party.get("mp_app_vote_percent", 0),
+            }
         return None
 
     def get_candidate_by_thai_province(self, thai_province: str, constituency_no: int, position: int) -> Optional[Candidate]:

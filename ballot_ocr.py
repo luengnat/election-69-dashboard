@@ -1532,6 +1532,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
             "discrepancies_found_low": "⚠",
             "discrepancies_found_medium": "⚠⚠",
             "discrepancies_found_high": "✗",
+            "pending_ect_data": "?",
             "pending_official_data": "?"
         }.get(status, "?")
         
@@ -1540,6 +1541,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
             "discrepancies_found_low": "LOW SEVERITY discrepancies found",
             "discrepancies_found_medium": "MEDIUM SEVERITY discrepancies found",
             "discrepancies_found_high": "HIGH SEVERITY discrepancies found",
+            "pending_ect_data": "ECT reference unavailable",
             "pending_official_data": "Waiting for official results"
         }.get(status, "Unknown status")
         
@@ -1563,10 +1565,21 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
             for disc in discrepancy_report["discrepancies"]:
                 if disc["type"] == "candidate_vote":
                     item = f"Pos {disc['position']}: {disc['candidate_name']}"
-                else:
+                    extracted = disc.get("extracted", "")
+                    official = disc.get("official", "")
+                    variance = disc.get("variance_pct", "")
+                elif disc["type"] == "party_vote":
                     item = f"Party #{disc['party_number']}: {disc['party_name']}"
+                    extracted = disc.get("extracted", "")
+                    official = disc.get("official", "")
+                    variance = disc.get("variance_pct", "")
+                else:
+                    item = disc["type"]
+                    extracted = disc.get("extracted", disc.get("position", disc.get("party_number", "")))
+                    official = disc.get("official", disc.get("expected", ""))
+                    variance = disc.get("variance_pct", "N/A")
                 
-                lines.append(f"| {item} | {disc['extracted']} | {disc['official']} | {disc['variance_pct']} | {disc['severity']} |")
+                lines.append(f"| {item} | {extracted} | {official} | {variance} | {disc.get('severity', '')} |")
             
             lines.append("")
     
@@ -1692,10 +1705,21 @@ def generate_batch_report(results: list[dict], ballot_data_list: list[BallotData
             disc = item["discrepancy"]
             if disc["type"] == "candidate_vote":
                 item_name = f"Pos {disc['position']}: {disc['candidate_name']}"
-            else:
+                extracted = disc.get("extracted", "")
+                official = disc.get("official", "")
+                variance = disc.get("variance_pct", "")
+            elif disc["type"] == "party_vote":
                 item_name = f"Party #{disc['party_number']}: {disc['party_name']}"
+                extracted = disc.get("extracted", "")
+                official = disc.get("official", "")
+                variance = disc.get("variance_pct", "")
+            else:
+                item_name = disc["type"]
+                extracted = disc.get("extracted", disc.get("position", disc.get("party_number", "")))
+                official = disc.get("official", disc.get("expected", ""))
+                variance = disc.get("variance_pct", "N/A")
             
-            lines.append(f"| {item['station']} | {item_name} | {disc['extracted']} | {disc['official']} | {disc['variance_pct']} |")
+            lines.append(f"| {item['station']} | {item_name} | {extracted} | {official} | {variance} |")
         
         if len(high_severity_items) > 10:
             lines.append(f"| ... | *{len(high_severity_items) - 10} more issues* | | | |")
@@ -3110,23 +3134,67 @@ def generate_executive_summary(
 def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
     """
     Compare extracted ballot data with official ECT API data.
-
-    TODO: Implement ECT API integration.
-    For now, return a placeholder structure.
     """
+
+    def add_discrepancy(result_obj: dict, severity: str, disc_type: str, **payload) -> None:
+        """Append discrepancy and update severity summary counters."""
+        result_obj["discrepancies"].append({
+            "type": disc_type,
+            "severity": severity,
+            **payload,
+        })
+        counter_key = f"{severity.lower()}_severity"
+        if counter_key in result_obj["summary"]:
+            result_obj["summary"][counter_key] += 1
+
+    def finalize_status(result_obj: dict, official_checked: bool) -> None:
+        """Set overall status based on discrepancy severity."""
+        if result_obj["summary"]["high_severity"] > 0:
+            result_obj["status"] = "discrepancies_found_high"
+        elif result_obj["summary"]["medium_severity"] > 0:
+            result_obj["status"] = "discrepancies_found_medium"
+        elif result_obj["summary"]["low_severity"] > 0:
+            result_obj["status"] = "discrepancies_found_low"
+        elif official_checked:
+            result_obj["status"] = "verified"
+        else:
+            result_obj["status"] = "pending_official_data"
+
+    def get_candidate_info(position: int) -> dict:
+        """Fetch candidate metadata regardless of int/str key format."""
+        return ballot_data.candidate_info.get(position) or ballot_data.candidate_info.get(str(position), {})
+
     result = {
+        "form_type": ballot_data.form_type,
+        "polling_station": ballot_data.polling_station_id,
         "ballot_data": {
             "form_type": ballot_data.form_type,
             "form_category": ballot_data.form_category,
             "polling_station": ballot_data.polling_station_id,
+            "province": ballot_data.province,
+            "constituency_number": ballot_data.constituency_number,
+            "polling_unit": ballot_data.polling_unit,
             "total_votes": ballot_data.total_votes,
         },
         "ect_data": {
-            # Will be populated from ECT API
+            "province": None,
+            "province_abbr": None,
+            "constituency_id": None,
+            "constituency_vote_stations": None,
             "vote_counts": {},
-            "total_votes": 0,
+            "party_votes": {},
+            "total_votes": None,
+            "official_results_available": False,
+            "candidate_info": {},
+            "party_info": {},
         },
         "discrepancies": [],
+        "summary": {
+            "high_severity": 0,
+            "medium_severity": 0,
+            "low_severity": 0,
+            "matches": 0,
+        },
         "status": "pending_ect_data",
     }
 
@@ -3135,6 +3203,179 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
         result["ballot_data"]["party_votes"] = ballot_data.party_votes
     else:
         result["ballot_data"]["vote_counts"] = ballot_data.vote_counts
+
+    if not ECT_AVAILABLE:
+        return result
+
+    try:
+        official_checked = False
+        cons_id = None
+        province_valid, canonical_province = ect_data.validate_province_name(ballot_data.province)
+        if province_valid and canonical_province:
+            result["ect_data"]["province"] = canonical_province
+            result["summary"]["matches"] += 1
+        else:
+            add_discrepancy(
+                result,
+                "HIGH",
+                "province_reference",
+                extracted=ballot_data.province,
+                expected="valid ECT province",
+            )
+
+        province_for_lookup = canonical_province or ballot_data.province
+        province_abbr = ect_data.get_province_abbr(province_for_lookup)
+        if province_abbr:
+            result["ect_data"]["province_abbr"] = province_abbr
+            result["summary"]["matches"] += 1
+        else:
+            add_discrepancy(
+                result,
+                "HIGH",
+                "province_abbr_lookup",
+                extracted=province_for_lookup,
+                expected="valid province abbreviation",
+            )
+
+        # Constituency-level structural checks for forms that contain constituency ID.
+        if ballot_data.constituency_number and province_abbr:
+            cons_id = f"{province_abbr}_{ballot_data.constituency_number}"
+            constituency = ect_data.get_constituency(cons_id)
+            result["ect_data"]["constituency_id"] = cons_id
+            if constituency:
+                result["summary"]["matches"] += 1
+                result["ect_data"]["constituency_vote_stations"] = constituency.total_vote_stations
+                if ballot_data.polling_unit > 0 and constituency.total_vote_stations > 0:
+                    if ballot_data.polling_unit <= constituency.total_vote_stations:
+                        result["summary"]["matches"] += 1
+                    else:
+                        add_discrepancy(
+                            result,
+                            "HIGH",
+                            "polling_unit_range",
+                            extracted=ballot_data.polling_unit,
+                            expected=f"1-{constituency.total_vote_stations}",
+                        )
+            else:
+                add_discrepancy(
+                    result,
+                    "HIGH",
+                    "constituency_reference",
+                    extracted=cons_id,
+                    expected="existing ECT constituency",
+                )
+
+        # If official constituency results are available, compare extracted votes directly.
+        if cons_id:
+            official_results = ect_data.get_official_constituency_results(cons_id)
+            if official_results:
+                official_checked = True
+                result["ect_data"]["official_results_available"] = True
+                result["ect_data"]["vote_counts"] = official_results.get("vote_counts", {})
+                result["ect_data"]["party_votes"] = official_results.get("party_votes", {})
+                result["ect_data"]["total_votes"] = official_results.get("total")
+
+                vote_report = detect_discrepancies(ballot_data, official_results)
+                result["summary"]["matches"] += vote_report.get("summary", {}).get("matches", 0)
+                for discrepancy in vote_report.get("discrepancies", []):
+                    result["discrepancies"].append(discrepancy)
+                    severity = discrepancy.get("severity", "LOW")
+                    counter_key = f"{severity.lower()}_severity"
+                    if counter_key in result["summary"]:
+                        result["summary"][counter_key] += 1
+
+        if ballot_data.form_category == "party_list":
+            for party_no_str, extracted_votes in ballot_data.party_votes.items():
+                if not str(party_no_str).isdigit():
+                    add_discrepancy(
+                        result,
+                        "MEDIUM",
+                        "party_number_format",
+                        extracted=party_no_str,
+                        expected="numeric party number",
+                    )
+                    continue
+
+                party = ect_data.get_party_by_number(int(party_no_str))
+                if party:
+                    result["summary"]["matches"] += 1
+                    result["ect_data"]["party_info"][str(party_no_str)] = {
+                        "name": party.name,
+                        "abbr": party.abbr,
+                        "extracted_votes": extracted_votes,
+                    }
+                else:
+                    add_discrepancy(
+                        result,
+                        "MEDIUM",
+                        "party_reference_missing",
+                        party_number=int(party_no_str),
+                        extracted_votes=extracted_votes,
+                        expected="known ECT party",
+                    )
+        else:
+            for position, extracted_votes in ballot_data.vote_counts.items():
+                candidate = ect_data.get_candidate_by_thai_province(
+                    ballot_data.province,
+                    ballot_data.constituency_number,
+                    int(position),
+                )
+                if not candidate:
+                    add_discrepancy(
+                        result,
+                        "MEDIUM",
+                        "candidate_reference_missing",
+                        position=int(position),
+                        extracted_votes=extracted_votes,
+                        expected="known ECT candidate",
+                    )
+                    continue
+
+                result["summary"]["matches"] += 1
+                party = ect_data.get_party_for_candidate(candidate)
+                party_abbr = party.abbr if party else ""
+                result["ect_data"]["candidate_info"][str(position)] = {
+                    "name": candidate.mp_app_name,
+                    "party_abbr": party_abbr,
+                    "extracted_votes": extracted_votes,
+                }
+
+                extracted_candidate = get_candidate_info(int(position))
+                extracted_name = extracted_candidate.get("name")
+                if extracted_name and extracted_name != candidate.mp_app_name:
+                    add_discrepancy(
+                        result,
+                        "LOW",
+                        "candidate_name_mismatch",
+                        position=int(position),
+                        extracted=extracted_name,
+                        expected=candidate.mp_app_name,
+                    )
+                elif extracted_name:
+                    result["summary"]["matches"] += 1
+
+                extracted_party_abbr = extracted_candidate.get("party_abbr")
+                if extracted_party_abbr and party_abbr and extracted_party_abbr != party_abbr:
+                    add_discrepancy(
+                        result,
+                        "LOW",
+                        "candidate_party_mismatch",
+                        position=int(position),
+                        extracted=extracted_party_abbr,
+                        expected=party_abbr,
+                    )
+                elif extracted_party_abbr and party_abbr:
+                    result["summary"]["matches"] += 1
+
+        finalize_status(result, official_checked)
+    except Exception as exc:
+        add_discrepancy(
+            result,
+            "HIGH",
+            "ect_verification_error",
+            message=str(exc),
+        )
+        finalize_status(result, official_checked=False)
 
     return result
 
@@ -3189,6 +3430,7 @@ def main():
         ballot_data = extract_ballot_data_with_ai(image_path)
 
         if ballot_data:
+            discrepancy_report = None
             print(f"  Form type: {ballot_data.form_type}")
             print(f"  Category: {ballot_data.form_category}")
             print(f"  Station: {ballot_data.polling_station_id}")
@@ -3201,6 +3443,7 @@ def main():
             if args.verify:
                 verification = verify_with_ect_data(ballot_data, "")
                 results.append(verification)
+                discrepancy_report = verification
             else:
                 result = {
                     "form_type": ballot_data.form_type,
@@ -3234,7 +3477,7 @@ def main():
             # Generate individual report if requested
             if args.reports:
                 report_filename = f"{args.report_dir}/ballot_{i:03d}.md"
-                report = generate_single_ballot_report(ballot_data)
+                report = generate_single_ballot_report(ballot_data, discrepancy_report=discrepancy_report)
                 save_report(report, report_filename)
                 
                 # Also generate PDF if requested
