@@ -16,7 +16,7 @@ import time
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
-from typing import Optional, Any
+from typing import Optional, Any, Protocol, runtime_checkable
 
 # Import the existing OCR function
 from ballot_ocr import BallotData, extract_ballot_data_with_ai
@@ -30,6 +30,130 @@ from tenacity import (
 )
 
 import requests
+import sys
+
+
+@runtime_checkable
+class ProgressCallback(Protocol):
+    """
+    Protocol for progress callbacks during batch processing.
+
+    Any class with these methods can be used as a progress callback,
+    enabling integration with CLI, GUI, or web interfaces.
+
+    Example:
+        class MyCallback:
+            def on_start(self, total: int) -> None:
+                print(f"Starting batch of {total} images")
+
+            def on_progress(self, current: int, total: int, path: str, result: Optional[BallotData]) -> None:
+                print(f"[{current}/{total}] Processed: {path}")
+
+            def on_error(self, current: int, total: int, path: str, error: str) -> None:
+                print(f"[{current}/{total}] Error on {path}: {error}")
+
+            def on_complete(self, results: list, errors: list) -> None:
+                print(f"Done: {len(results)} succeeded, {len(errors)} failed")
+    """
+
+    def on_start(self, total: int) -> None:
+        """Called when batch processing starts."""
+        ...
+
+    def on_progress(self, current: int, total: int, path: str, result: Optional["BallotData"]) -> None:
+        """Called after each ballot is successfully processed."""
+        ...
+
+    def on_error(self, current: int, total: int, path: str, error: str) -> None:
+        """Called when a ballot processing fails."""
+        ...
+
+    def on_complete(self, results: list, errors: list) -> None:
+        """Called when batch processing completes."""
+        ...
+
+
+class ConsoleProgressCallback:
+    """
+    Console-based progress callback for terminal output.
+
+    Displays progress as "[X/Y] Processing: filename.png" with in-place updates.
+    Shows summary on completion.
+
+    Args:
+        verbose: If True, print additional details like retries and memory cleanups
+    """
+
+    def __init__(self, verbose: bool = False):
+        self.verbose = verbose
+        self._start_time: Optional[float] = None
+        self._errors_seen = 0
+
+    def on_start(self, total: int) -> None:
+        """Print start message and begin timing."""
+        self._start_time = time.time()
+        self._errors_seen = 0
+        print(f"Starting batch processing of {total} images...")
+
+    def on_progress(self, current: int, total: int, path: str, result: Optional["BallotData"]) -> None:
+        """Print progress with in-place update (overwrites current line)."""
+        # Get filename from path for cleaner display
+        filename = path.split("/")[-1] if "/" in path else path
+
+        # Calculate percentage
+        percent = (current / total * 100) if total > 0 else 0
+
+        # Use \r for in-place update (works in terminals)
+        sys.stdout.write(f"\r[{current}/{total}] ({percent:.0f}%) Processing: {filename}")
+        sys.stdout.flush()
+
+        # Newline after last item
+        if current == total:
+            print()  # Newline after progress complete
+
+    def on_error(self, current: int, total: int, path: str, error: str) -> None:
+        """Print error message on new line."""
+        self._errors_seen += 1
+        filename = path.split("/")[-1] if "/" in path else path
+        # Print on new line (don't overwrite progress)
+        print(f"\n[{current}/{total}] Error on {filename}: {error}")
+
+    def on_complete(self, results: list, errors: list) -> None:
+        """Print completion summary with timing."""
+        elapsed = time.time() - self._start_time if self._start_time else 0
+        success_count = len(results)
+        error_count = len(errors)
+
+        print(f"\nBatch complete: {success_count} succeeded, {error_count} failed")
+        if elapsed > 0:
+            rate = success_count / elapsed if success_count > 0 else 0
+            print(f"Duration: {elapsed:.1f}s ({rate:.2f} images/sec)")
+
+        if self.verbose and error_count > 0:
+            print("Errors:")
+            for err in errors:
+                print(f"  - {err.get('path', 'unknown')}: {err.get('error', 'unknown error')}")
+
+
+class NullProgressCallback:
+    """
+    No-op progress callback for when progress tracking is not needed.
+
+    Useful for testing, non-interactive use, or when progress is handled elsewhere.
+    All methods do nothing.
+    """
+
+    def on_start(self, total: int) -> None:
+        pass
+
+    def on_progress(self, current: int, total: int, path: str, result: Optional["BallotData"]) -> None:
+        pass
+
+    def on_error(self, current: int, total: int, path: str, error: str) -> None:
+        pass
+
+    def on_complete(self, results: list, errors: list) -> None:
+        pass
 
 
 class RateLimiter:
