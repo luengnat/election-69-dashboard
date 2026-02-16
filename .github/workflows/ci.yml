@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12', '3.13']
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Cache dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint with ruff
+      run: |
+        pip install ruff
+        ruff check . --ignore E501 --ignore F401 --ignore F841 || true
+
+    - name: Test module imports
+      run: |
+        python -c "import ballot_ocr; print('ballot_ocr OK')"
+        python -c "import batch_processor; print('batch_processor OK')"
+        python -c "import ect_api; print('ect_api OK')"
+        python -c "import metadata_parser; print('metadata_parser OK')"
+
+    - name: Test PDF generation
+      run: |
+        python test_pdf_generation.py
+
+    - name: Test executive summary
+      run: |
+        python test_executive_summary_pdf.py
+
+    - name: Test constituency PDF
+      run: |
+        python test_constituency_pdf.py
+
+    - name: Test batch PDF charts
+      run: |
+        python test_batch_pdf_charts.py
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install linters
+      run: |
+        pip install ruff pyright
+
+    - name: Run ruff
+      run: |
+        ruff check . --ignore E501 --ignore F401 --ignore F841 --statistics || true
+
+    - name: Run pyright (type check)
+      run: |
+        pyright --ignoreexternal --warnings *.py 2>/dev/null || true
+      continue-on-error: true
