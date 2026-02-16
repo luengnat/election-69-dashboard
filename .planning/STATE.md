@@ -1,34 +1,45 @@
 # Project State
 
-## Current Position
-
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-02-16 — Milestone v1.1 started
-
-## Last Updated: 2026-02-16
-
 ## Project Reference
 
 See: .planning/PROJECT.md (updated 2026-02-16)
 
-**Core value:** Automated ballot verification with 100% OCR accuracy
-**Current focus:** v1.1 Scale & Web — parallel processing, web UI, exec summary PDF
+**Core value:** Automated ballot verification with 100% OCR accuracy on test images and ECT data cross-validation
+**Current focus:** v1.1 Scale & Web - Phase 5: Parallel Processing
 
-## Progress
+## Current Position
 
-- [x] Codebase mapped
-- [x] PROJECT.md created
-- [x] Requirements documented
-- [x] Roadmap created
-- [x] Phase 1 COMPLETE (v1.0)
-- [x] Phase 2 COMPLETE (v1.0)
-- [x] Phase 3 COMPLETE (v1.0)
-- [x] Phase 4 COMPLETE (v1.0)
-- [x] Milestone v1.0 ARCHIVED
-- [ ] v1.1 Requirements defined
-- [ ] v1.1 Roadmap created
+Phase: 5 of 8 (Parallel Processing)
+Plan: 0 of 2 in current phase
+Status: Ready to plan
+Last activity: 2026-02-16 - v1.1 roadmap updated with 24 requirements across 4 phases
+
+Progress: [----------] 0% (v1.1 just started)
+
+## Performance Metrics
+
+**Velocity:**
+- Total plans completed (v1.0): 4
+- v1.1 plans completed: 0
+- Total execution time: tracked per phase
+
+**By Phase (v1.0):**
+
+| Phase | Plans | Status |
+|-------|-------|--------|
+| 1. OCR Accuracy | 1 | Complete |
+| 2. ECT Integration | 1 | Complete |
+| 3. Aggregation | 1 | Complete |
+| 4. PDF Export | 1 | Complete |
+
+**v1.1 Progress:**
+
+| Phase | Plans | Requirements | Status |
+|-------|-------|--------------|--------|
+| 5. Parallel Processing | 0/2 | PARA-01 to PARA-07 | Not started |
+| 6. Web Interface | 0/2 | WEB-01 to WEB-07 | Not started |
+| 7. Metadata Inference | 0/2 | META-01 to META-05 | Not started |
+| 8. Executive Summary | 0/1 | PDF-01 to PDF-05 | Not started |
 
 ## Accumulated Context
 
@@ -39,13 +50,26 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 - reportlab sufficient for PDF generation
 - CLI workflow is functional but limited for non-technical users
 
-### Key Files
-- `ballot_ocr.py` — Core OCR engine
-- `ect_api.py` — ECT data integration
-- `reports/` — PDF generation modules
+### Key Technical Decisions (v1.1)
 
-## Archives
+| Decision | Rationale | Source |
+|----------|-----------|--------|
+| ThreadPoolExecutor for parallelism | I/O-bound API calls benefit from threads under GIL | Research |
+| Gradio for web UI | Fastest implementation (10-20 lines vs 100+ for FastAPI) | Research |
+| Semaphore rate limiting | Prevents API quota exhaustion (OpenRouter 20 RPM, 50/day) | Research |
+| Path-based metadata | Reduces OCR burden by pre-filling province/constituency | Research |
 
-- `.planning/milestones/v1.0-ROADMAP.md`
-- `.planning/milestones/v1.0-REQUIREMENTS.md`
-- `.planning/MILESTONES.md`
+### Pending Todos
+
+None yet.
+
+### Blockers/Concerns
+
+- **API Rate Limits:** OpenRouter free tier has 20 RPM, 50 req/day. Must implement rate limiting from Phase 5 start.
+- **Google Drive Path Conventions:** Path-based metadata assumes specific naming patterns - needs validation during Phase 7.
+
+## Session Continuity
+
+Last session: 2026-02-16
+Stopped at: Roadmap updated for v1.1 with full requirement coverage (24/24), ready to plan Phase 5
+Resume file: None
