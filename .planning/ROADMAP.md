@@ -112,7 +112,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 08-01: Enhance existing executive summary with party vote bar chart, discrepancy summary, and timestamp
+- [ ] 08-01: Create one-page executive summary with compact layout, top 5 parties chart, and web UI download
 
 ## Progress
 
