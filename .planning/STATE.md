@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 5 of 8 (Parallel Processing)
-Plan: 0 of 2 in current phase
-Status: Ready to plan
-Last activity: 2026-02-16 - v1.1 roadmap updated with 24 requirements across 4 phases
+Plan: 1 of 2 in current phase
+Status: In progress
+Last activity: 2026-02-16 - Completed 05-01 BatchProcessor with rate limiting and retry
 
-Progress: [----------] 0% (v1.1 just started)
+Progress: [#####-----] 12% (Phase 5.01 complete)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed (v1.0): 4
-- v1.1 plans completed: 0
-- Total execution time: tracked per phase
+- v1.1 plans completed: 1
+- Total execution time: 5 min (Phase 5.01)
 
 **By Phase (v1.0):**
 
@@ -36,7 +36,7 @@ Progress: [----------] 0% (v1.1 just started)
 
 | Phase | Plans | Requirements | Status |
 |-------|-------|--------------|--------|
-| 5. Parallel Processing | 0/2 | PARA-01 to PARA-07 | Not started |
+| 5. Parallel Processing | 1/2 | PARA-01 to PARA-07 | In progress |
 | 6. Web Interface | 0/2 | WEB-01 to WEB-07 | Not started |
 | 7. Metadata Inference | 0/2 | META-01 to META-05 | Not started |
 | 8. Executive Summary | 0/1 | PDF-01 to PDF-05 | Not started |
@@ -58,6 +58,9 @@ Progress: [----------] 0% (v1.1 just started)
 | Gradio for web UI | Fastest implementation (10-20 lines vs 100+ for FastAPI) | Research |
 | Semaphore rate limiting | Prevents API quota exhaustion (OpenRouter 20 RPM, 50/day) | Research |
 | Path-based metadata | Reduces OCR burden by pre-filling province/constituency | Research |
+| tenacity library for retry | Exponential backoff with minimal code, well-tested library | Phase 5.01 |
+| Sequential processing as default | Backward compatibility, parallel requires explicit --parallel flag | Phase 5.01 |
+| 2.0 req/sec rate limit | Stays under OpenRouter free tier limits (20 RPM, 50/day) | Phase 5.01 |
 
 ### Pending Todos
 
@@ -65,11 +68,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- **API Rate Limits:** OpenRouter free tier has 20 RPM, 50 req/day. Must implement rate limiting from Phase 5 start.
+- ~~**API Rate Limits:** OpenRouter free tier has 20 RPM, 50 req/day. Must implement rate limiting from Phase 5 start.~~ (RESOLVED - RateLimiter implemented in Phase 5.01)
 - **Google Drive Path Conventions:** Path-based metadata assumes specific naming patterns - needs validation during Phase 7.
 
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Roadmap updated for v1.1 with full requirement coverage (24/24), ready to plan Phase 5
+Stopped at: Completed Phase 5.01 - BatchProcessor with rate limiting and retry
 Resume file: None
