@@ -5,24 +5,24 @@
 See: .planning/PROJECT.md (updated 2026-02-16)
 
 **Core value:** Automated ballot verification with 100% OCR accuracy on test images and ECT data cross-validation
-**Current focus:** v1.1 Scale & Web - Phase 6: Web Interface (Planning Complete)
+**Current focus:** v1.1 Scale & Web - Phase 7: Metadata Inference (In Progress)
 
 ## Current Position
 
-Phase: 6 of 8 (Web Interface)
-Plan: 2 of 2 in current phase
-Status: Phase 6 complete - Web interface with results table and PDF downloads
-Last activity: 2026-02-16 - Completed 06-02 (Results display and downloads)
+Phase: 7 of 8 (Metadata Inference)
+Plan: 1 of 2 in current phase
+Status: Phase 7 started - PathMetadataParser for path-based metadata extraction
+Last activity: 2026-02-16 - Completed 07-01 (PathMetadataParser class)
 
-Progress: [########--] 60% (Phase 6 complete)
+Progress: [########--] 67% (Phase 7 in progress)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed (v1.0): 4
-- v1.1 plans completed: 4 (Phase 5: 2, Phase 6: 2)
+- v1.1 plans completed: 5 (Phase 5: 2, Phase 6: 2, Phase 7: 1)
 - v1.1 plans created: 4 (Phase 6: 2, Phase 7: 2)
-- Total execution time: 52 min (Phase 5.01-5.02: 27min, Phase 6.01-6.02: 25min)
+- Total execution time: 55.5 min (Phase 5.01-5.02: 27min, Phase 6.01-6.02: 25min, Phase 7.01: 3.5min)
 
 **By Phase (v1.0):**
 
@@ -39,7 +39,7 @@ Progress: [########--] 60% (Phase 6 complete)
 |-------|-------|--------------|--------|
 | 5. Parallel Processing | 2/2 | PARA-01 to PARA-07 | Complete |
 | 6. Web Interface | 2/2 | WEB-01 to WEB-07 | Complete |
-| 7. Metadata Inference | 0/2 | META-01 to META-05 | Not started |
+| 7. Metadata Inference | 1/2 | META-01 to META-05 | In progress |
 | 8. Executive Summary | 0/1 | PDF-01 to PDF-05 | Not started |
 
 ## Accumulated Context
@@ -70,6 +70,9 @@ Progress: [########--] 60% (Phase 6 complete)
 | gr.State for ballot results | Persist results between process and download actions | Phase 6.02 |
 | Separate export buttons | PDF, JSON, and CSV exports for different use cases | Phase 6.02 |
 | Compact vote summary in table | Shows key info without expanding full details | Phase 6.02 |
+| NFC Unicode normalization | Consistent Thai character comparison for path parsing | Phase 7.01 |
+| Confidence scoring for metadata | Province (+0.3), constituency (+0.2), district (+0.1) | Phase 7.01 |
+| ECT province validation | Only valid Thai provinces (77 official) stored | Phase 7.01 |
 
 ### Pending Todos
 
@@ -83,5 +86,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Phase 6 complete (Web interface with results table and downloads)
+Stopped at: Phase 7 Plan 1 complete (PathMetadataParser class)
 Resume file: None
