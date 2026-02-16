@@ -31,6 +31,11 @@ from tenacity import (
 
 import requests
 import sys
+import gc
+
+
+# Memory cleanup interval - run gc.collect() every N ballots
+MEMORY_CLEANUP_INTERVAL = 50
 
 
 @runtime_checkable
@@ -235,6 +240,7 @@ class BatchProcessor:
     - Thread pool for concurrent processing (I/O-bound API calls)
     - Rate limiting to stay under API limits
     - Automatic retry with exponential backoff for transient failures
+    - Memory cleanup for large batches to prevent OOM
 
     Example:
         processor = BatchProcessor(max_workers=5, rate_limit=2.0)
@@ -242,17 +248,24 @@ class BatchProcessor:
         print(f"Processed {result.processed}/{result.total} images")
     """
 
-    def __init__(self, max_workers: int = 5, rate_limit: float = 2.0):
+    def __init__(
+        self,
+        max_workers: int = 5,
+        rate_limit: float = 2.0,
+        enable_memory_cleanup: bool = True
+    ):
         """
         Initialize batch processor.
 
         Args:
             max_workers: Maximum concurrent threads (default 5)
             rate_limit: Requests per second limit (default 2.0 for OpenRouter)
+            enable_memory_cleanup: Run gc.collect() every 50 ballots (default True)
         """
         self.max_workers = max_workers
         self.rate_limit = rate_limit
         self.rate_limiter = RateLimiter(requests_per_second=rate_limit)
+        self.enable_memory_cleanup = enable_memory_cleanup
 
     @retry(
         stop=stop_after_attempt(3),
@@ -336,6 +349,10 @@ class BatchProcessor:
                     result.errors.append(error_info)
                     callback.on_error(current, total, str(path), error_info["error"])
 
+                # Memory cleanup every N ballots to prevent OOM
+                if self.enable_memory_cleanup and current % MEMORY_CLEANUP_INTERVAL == 0:
+                    gc.collect()
+
         # Notify callback that batch is complete
         callback.on_complete(result.results, result.errors)
 
@@ -389,6 +406,10 @@ class BatchProcessor:
                 }
                 result.errors.append(error_info)
                 callback.on_error(idx, total, str(path), error_info["error"])
+
+            # Memory cleanup every N ballots to prevent OOM
+            if self.enable_memory_cleanup and idx % MEMORY_CLEANUP_INTERVAL == 0:
+                gc.collect()
 
         # Notify callback that batch is complete
         callback.on_complete(result.results, result.errors)
