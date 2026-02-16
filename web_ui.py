@@ -8,14 +8,29 @@ Usage:
     python web_ui.py
 
 Then open http://localhost:7860 in your browser.
+
+Features:
+- Multi-file upload (100-500 images supported)
+- Real-time progress bar during processing
+- Thai text support (UTF-8 throughout)
+- Clear error messages with filename context
+- Results sorted by filename, limited to 100 for display
 """
 
 import gradio as gr
 from typing import Optional
 import tempfile
 import os
+import logging
 
 from batch_processor import BatchProcessor, BallotData
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Maximum number of results to display (to avoid UI overload)
+MAX_DISPLAY_RESULTS = 100
 
 
 class GradioProgressCallback:
@@ -72,7 +87,7 @@ class GradioProgressCallback:
         return self._errors
 
 
-def format_results(results: list[BallotData]) -> list[list]:
+def format_results(results: list[BallotData]) -> tuple[list[list], str]:
     """
     Format BallotData results for Gradio Dataframe display.
 
@@ -80,10 +95,11 @@ def format_results(results: list[BallotData]) -> list[list]:
         results: List of BallotData objects from batch processing
 
     Returns:
-        List of rows for gr.Dataframe, sorted by filename
+        Tuple of (rows for gr.Dataframe, status message)
+        Status message indicates if results were truncated.
     """
     if not results:
-        return []
+        return [], ""
 
     rows = []
     for ballot in results:
@@ -114,7 +130,18 @@ def format_results(results: list[BallotData]) -> list[list]:
 
     # Sort by filename for predictable display
     rows.sort(key=lambda x: x[0])
-    return rows
+
+    # Limit display and generate status message
+    total_count = len(rows)
+    if total_count > MAX_DISPLAY_RESULTS:
+        display_rows = rows[:MAX_DISPLAY_RESULTS]
+        status_msg = f"Showing {MAX_DISPLAY_RESULTS} of {total_count} results"
+        logger.info(f"Results truncated: {total_count} total, showing {MAX_DISPLAY_RESULTS}")
+    else:
+        display_rows = rows
+        status_msg = f"Showing {total_count} results"
+
+    return display_rows, status_msg
 
 
 def process_ballots(files, progress=gr.Progress()):
@@ -128,70 +155,114 @@ def process_ballots(files, progress=gr.Progress()):
     Returns:
         Tuple of (results_dataframe, error_messages)
     """
+    logger.info(f"process_ballots called with {len(files) if files else 0} files")
+
     # Handle empty upload
     if not files:
+        logger.warning("No files uploaded")
         return [], "Please upload at least one ballot image."
 
-    # Ensure files is a list
+    # Ensure files is a list (Gradio can return single file as string)
     if isinstance(files, str):
         files = [files]
+        logger.info("Converted single file to list")
+
+    # Log file info (including Thai filenames)
+    for f in files[:5]:  # Log first 5 files
+        filename = os.path.basename(f) if f else "unknown"
+        logger.info(f"  File: {filename}")
+    if len(files) > 5:
+        logger.info(f"  ... and {len(files) - 5} more files")
 
     # Create progress callback
     callback = GradioProgressCallback(progress)
 
-    # Create batch processor
+    # Create batch processor with rate limiting
     processor = BatchProcessor(max_workers=5, rate_limit=2.0)
 
     # Process the batch
     try:
+        logger.info("Starting batch processing...")
         result = processor.process_batch(files, progress_callback=callback)
+        logger.info(f"Batch complete: {result.processed} processed, {len(result.errors)} errors")
 
         # Format results for display
-        results_df = format_results(result.results)
+        results_df, status_msg = format_results(result.results)
 
-        # Format errors for display
+        # Format errors for display (numbered list, truncated messages)
+        error_parts = []
         if result.errors:
-            error_lines = []
             for i, err in enumerate(result.errors, 1):
                 filename = os.path.basename(err.get("path", "unknown"))
                 error_msg = err.get("error", "Unknown error")
-                # Truncate long error messages
+                # Truncate long error messages to 200 chars
                 if len(error_msg) > 200:
                     error_msg = error_msg[:200] + "..."
-                error_lines.append(f"{i}. {filename}: {error_msg}")
-            error_text = "\n".join(error_lines)
+                # Handle Thai text in error messages (UTF-8 safe)
+                error_parts.append(f"{i}. {filename}: {error_msg}")
+
+            # Add error summary
+            error_text = f"Errors ({len(result.errors)}):\n" + "\n".join(error_parts)
+            logger.warning(f"Batch had {len(result.errors)} errors")
         else:
-            error_text = ""
+            error_text = status_msg  # Show status when no errors
 
         return results_df, error_text
 
+    except FileNotFoundError as e:
+        logger.error(f"File not found: {e}")
+        return [], f"File error: Could not find uploaded file. Please try again."
+    except PermissionError as e:
+        logger.error(f"Permission error: {e}")
+        return [], f"Permission error: Cannot read uploaded files."
+    except ConnectionError as e:
+        logger.error(f"Connection error: {e}")
+        return [], f"API connection error: Could not reach OCR service. Please check your internet connection."
     except Exception as e:
-        return [], f"Processing error: {str(e)}"
+        logger.exception(f"Unexpected error during processing: {e}")
+        # Return user-friendly error message
+        error_msg = str(e)
+        if len(error_msg) > 200:
+            error_msg = error_msg[:200] + "..."
+        return [], f"Processing error: {error_msg}"
 
 
-# Create Gradio interface
+# Create Gradio interface with Thai text support
 with gr.Blocks(title="Thai Election Ballot OCR") as demo:
     gr.Markdown("# Thai Election Ballot OCR")
-    gr.Markdown("Upload ballot images to extract vote counts")
+    gr.Markdown("""
+Upload ballot images to extract vote counts.
+
+**รองรับภาษาไทย** - Thai text is fully supported in filenames and results.
+
+**Instructions:**
+1. Upload ballot images (supports PNG, JPG, JPEG)
+2. Click "Process Ballots" to start OCR
+3. View results in the table below
+4. Any errors will be shown in the Errors box
+""")
 
     with gr.Row():
         file_input = gr.File(
             file_count="multiple",
-            label="Upload Ballot Images (100-500)",
+            label="Upload Ballot Images / อัปโหลดรูปภาพบัตรลงคะแนน (100-500)",
             file_types=["image"]
         )
 
     with gr.Row():
-        process_btn = gr.Button("Process Ballots", variant="primary")
+        process_btn = gr.Button("Process Ballots / ประมวลผลบัตร", variant="primary")
 
     with gr.Row():
         results_table = gr.Dataframe(
-            headers=["Image", "Province", "Constituency", "Station", "Form Type", "Confidence"],
-            label="Extracted Results"
+            headers=["Image / รูปภาพ", "Province / จังหวัด", "Constituency / เขต", "Station / หน่วย", "Form Type / ประเภท", "Confidence / ความมั่นใจ"],
+            label="Extracted Results / ผลลัพธ์"
         )
 
     with gr.Row():
-        error_output = gr.Textbox(label="Errors", lines=5)
+        status_output = gr.Textbox(label="Status / สถานะ", lines=2, placeholder="Processing status will appear here...")
+
+    with gr.Row():
+        error_output = gr.Textbox(label="Errors / ข้อผิดพลาด", lines=5, placeholder="Any errors will be shown here...")
 
     process_btn.click(
         fn=process_ballots,
