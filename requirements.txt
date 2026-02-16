@@ -1,1 +1,19 @@
+# Core dependencies
 reportlab>=4.0.0
+requests>=2.28.0
+tenacity>=8.0.0
+
+# Web interface
+gradio>=4.0.0
+
+# Image processing
+Pillow>=9.0.0
+pytesseract>=0.3.10
+
+# Google Drive integration
+google-api-python-client>=2.0.0
+google-auth-oauthlib>=1.0.0
+gdown>=5.0.0
+
+# Optional: Anthropic Claude API (for fallback OCR)
+# anthropic>=0.18.0
