@@ -317,9 +317,25 @@ class BatchProcessor:
             requests.HTTPError: After 3 failed retries
             ConnectionError: After 3 failed retries
         """
+        # Pre-extract metadata from file path (Phase 7)
+        path_metadata = self.metadata_parser.parse_path(image_path)
+
         # Acquire rate limit slot before API call
         with self.rate_limiter:
-            return extract_ballot_data_with_ai(image_path)
+            ballot_data = extract_ballot_data_with_ai(image_path)
+
+        if ballot_data:
+            # Pre-fill from path if OCR missed these fields (path is NOT authoritative)
+            if not ballot_data.province and path_metadata.province:
+                ballot_data.province = path_metadata.province
+            if not ballot_data.constituency_number and path_metadata.constituency_number:
+                ballot_data.constituency_number = path_metadata.constituency_number
+            if not ballot_data.district and path_metadata.district:
+                ballot_data.district = path_metadata.district
+            if not ballot_data.polling_unit and path_metadata.polling_unit:
+                ballot_data.polling_unit = path_metadata.polling_unit
+
+        return ballot_data
 
     def process_batch(
         self,
