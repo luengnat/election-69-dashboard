@@ -10,19 +10,19 @@ See: .planning/PROJECT.md (updated 2026-02-16)
 ## Current Position
 
 Phase: 6 of 8 (Web Interface)
-Plan: 1 of 2 in current phase
-Status: Phase 6.01 complete - Web interface with progress bar
-Last activity: 2026-02-16 - Completed 06-01 (Gradio web UI)
+Plan: 2 of 2 in current phase
+Status: Phase 6 complete - Web interface with results table and PDF downloads
+Last activity: 2026-02-16 - Completed 06-02 (Results display and downloads)
 
-Progress: [#######---] 30% (Phase 6.01 complete)
+Progress: [########--] 60% (Phase 6 complete)
 
 ## Performance Metrics
 
 **Velocity:**
 - Total plans completed (v1.0): 4
-- v1.1 plans completed: 3 (Phase 5: 2, Phase 6: 1)
+- v1.1 plans completed: 4 (Phase 5: 2, Phase 6: 2)
 - v1.1 plans created: 4 (Phase 6: 2, Phase 7: 2)
-- Total execution time: 42 min (Phase 5.01-5.02: 27min, Phase 6.01: 15min)
+- Total execution time: 52 min (Phase 5.01-5.02: 27min, Phase 6.01-6.02: 25min)
 
 **By Phase (v1.0):**
 
@@ -38,7 +38,7 @@ Progress: [#######---] 30% (Phase 6.01 complete)
 | Phase | Plans | Requirements | Status |
 |-------|-------|--------------|--------|
 | 5. Parallel Processing | 2/2 | PARA-01 to PARA-07 | Complete |
-| 6. Web Interface | 1/2 | WEB-01 to WEB-07 | In Progress |
+| 6. Web Interface | 2/2 | WEB-01 to WEB-07 | Complete |
 | 7. Metadata Inference | 0/2 | META-01 to META-05 | Not started |
 | 8. Executive Summary | 0/1 | PDF-01 to PDF-05 | Not started |
 
@@ -67,6 +67,9 @@ Progress: [#######---] 30% (Phase 6.01 complete)
 | gr.Progress() for progress bar | Built-in Gradio progress tracking with minimal code | Phase 6.01 |
 | 100 result display limit | Prevents UI overload for large batches | Phase 6.01 |
 | Bilingual UI labels | Thai + English for accessibility | Phase 6.01 |
+| gr.State for ballot results | Persist results between process and download actions | Phase 6.02 |
+| Separate export buttons | PDF, JSON, and CSV exports for different use cases | Phase 6.02 |
+| Compact vote summary in table | Shows key info without expanding full details | Phase 6.02 |
 
 ### Pending Todos
 
@@ -80,5 +83,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-02-16
-Stopped at: Phase 6.01 complete (Gradio web UI with progress bar)
+Stopped at: Phase 6 complete (Web interface with results table and downloads)
 Resume file: None
