@@ -39,7 +39,7 @@ try:
     from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak, Image
     from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
     from reportlab.graphics.shapes import Drawing, Rect, String
-    from reportlab.graphics.charts.barcharts import VerticalBarChart
+    from reportlab.graphics.charts.barcharts import VerticalBarChart, HorizontalBarChart
     from reportlab.graphics.charts.piecharts import Pie
     from reportlab.graphics import renderPDF
     HAS_REPORTLAB = True
@@ -2784,6 +2784,270 @@ def generate_executive_summary_pdf(
         return False
 
 
+# =============================================================================
+# One-Page Executive Summary PDF Generation (Phase 8)
+# =============================================================================
+
+def _create_compact_stats_table(all_results: list["AggregatedResults"], ballots_processed: int, duration_seconds: float) -> "Table":
+    """
+    Create a compact 2-column stats table for one-page executive summary.
+
+    Args:
+        all_results: List of AggregatedResults
+        ballots_processed: Total number of ballots processed
+        duration_seconds: Processing duration in seconds
+
+    Returns:
+        Formatted Table with compact stats
+    """
+    if not all_results:
+        # Empty state
+        stats_data = [
+            ['Total Ballots', '0', 'Total Provinces', '0'],
+            ['Valid Votes', '0', 'Avg Confidence', '0%'],
+            ['Invalid Votes', '0', 'Processing Time', '0.0s'],
+        ]
+    else:
+        total_valid = sum(r.valid_votes_total for r in all_results)
+        total_invalid = sum(r.invalid_votes_total for r in all_results)
+        avg_confidence = sum(r.aggregated_confidence for r in all_results) / len(all_results)
+        provinces = len(set(r.province for r in all_results))
+
+        stats_data = [
+            ['Total Ballots', str(ballots_processed), 'Total Provinces', str(provinces)],
+            ['Valid Votes', f"{total_valid:,}", 'Avg Confidence', f"{avg_confidence:.1%}"],
+            ['Invalid Votes', f"{total_invalid:,}", 'Processing Time', f"{duration_seconds:.1f}s"],
+        ]
+
+    table = Table(stats_data, colWidths=[1.3*inch, 1.2*inch, 1.3*inch, 1.2*inch])
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#f0f0f0')),
+        ('BACKGROUND', (2, 0), (2, -1), colors.HexColor('#f0f0f0')),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+        ('FONTSIZE', (0, 0), (-1, -1), 8),
+        ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+        ('ALIGN', (3, 0), (3, -1), 'RIGHT'),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.HexColor('#cccccc')),
+    ]))
+    return table
+
+
+def _format_discrepancy_summary_inline(all_results: list["AggregatedResults"]) -> "Paragraph":
+    """
+    Format discrepancy summary as inline color-coded text.
+
+    Args:
+        all_results: List of AggregatedResults with discrepancy_rate field
+
+    Returns:
+        Paragraph with color-coded discrepancy counts
+    """
+    if not all_results:
+        text = (
+            "<font color='#2ecc71'><b>NONE: 0</b></font>"
+        )
+    else:
+        # Count by severity
+        critical = sum(1 for r in all_results if r.discrepancy_rate > 0.5)
+        medium = sum(1 for r in all_results if 0.25 < r.discrepancy_rate <= 0.5)
+        low = sum(1 for r in all_results if 0 < r.discrepancy_rate <= 0.25)
+        none = sum(1 for r in all_results if r.discrepancy_rate == 0)
+
+        # Color-coded inline format
+        text = (
+            f"<font color='#e74c3c'><b>CRITICAL: {critical}</b></font> | "
+            f"<font color='#f39c12'><b>MEDIUM: {medium}</b></font> | "
+            f"<font color='#3498db'><b>LOW: {low}</b></font> | "
+            f"<font color='#2ecc71'><b>NONE: {none}</b></font>"
+        )
+
+    return Paragraph(f"Discrepancy Summary: {text}", ParagraphStyle(
+        'DiscrepancyStyle',
+        fontSize=9,
+        spaceAfter=6,
+        spaceBefore=6
+    ))
+
+
+def _create_top_parties_chart(all_results: list["AggregatedResults"], width: float = 5*inch, height: float = 2*inch) -> "Drawing":
+    """
+    Create a compact horizontal bar chart for top 5 parties by total votes.
+
+    Args:
+        all_results: List of AggregatedResults with party_totals
+        width: Chart width (default 5 inches)
+        height: Chart height (default 2 inches)
+
+    Returns:
+        Drawing with horizontal bar chart, or None if no party data
+    """
+    if not HAS_REPORTLAB:
+        return None
+
+    # Aggregate all party votes
+    party_totals = {}
+    for result in all_results:
+        for party_num, votes in result.party_totals.items():
+            party_totals[party_num] = party_totals.get(party_num, 0) + votes
+
+    # Sort and take top 5
+    sorted_parties = sorted(party_totals.items(), key=lambda x: x[1], reverse=True)[:5]
+    if not sorted_parties:
+        return None
+
+    drawing = Drawing(width, height)
+
+    bc = HorizontalBarChart()
+    bc.x = 80  # Space for labels
+    bc.y = 20
+    bc.height = height - 40
+    bc.width = width - 100
+    bc.data = [[v for _, v in sorted_parties]]
+    bc.strokeColor = colors.black
+    bc.valueAxis.valueMin = 0
+    bc.valueAxis.valueMax = max(v for _, v in sorted_parties) * 1.1
+    bc.categoryAxis.categoryNames = [f"Party {p}" for p, _ in sorted_parties]
+    bc.bars[0].fillColor = colors.HexColor('#1f4788')
+
+    drawing.add(bc)
+
+    # Title
+    title = String(width / 2, height - 10, 'Top 5 Parties by Total Votes', fontSize=10, fillColor=colors.black, textAnchor='middle')
+    drawing.add(title)
+
+    return drawing
+
+
+def generate_one_page_executive_summary_pdf(
+    all_results: list["AggregatedResults"],
+    batch_result: "BatchResult",
+    output_path: str
+) -> bool:
+    """
+    Generate a one-page executive summary PDF with key batch statistics.
+
+    This function creates a compact, single-page PDF summary with:
+    - Compact 2-column stats table
+    - Color-coded discrepancy summary by severity
+    - Top 5 parties horizontal bar chart
+    - Batch metadata footer
+
+    Args:
+        all_results: List of AggregatedResults from all constituencies
+        batch_result: BatchResult with timing and metadata
+        output_path: Path to save PDF
+
+    Returns:
+        True if successful, False otherwise
+    """
+    if not HAS_REPORTLAB:
+        print("reportlab not installed. Install with: pip install reportlab")
+        return False
+
+    if not all_results:
+        print("No results to summarize")
+        return False
+
+    try:
+        # Document setup with tight margins for one-page layout
+        doc = SimpleDocTemplate(
+            output_path,
+            pagesize=letter,
+            leftMargin=0.5*inch,
+            rightMargin=0.5*inch,
+            topMargin=0.5*inch,
+            bottomMargin=0.5*inch
+        )
+        styles = getSampleStyleSheet()
+        story = []
+
+        # Title (compact, 14pt)
+        title_style = ParagraphStyle(
+            'CompactTitle',
+            parent=styles['Heading1'],
+            fontSize=14,
+            textColor=colors.HexColor('#1f4788'),
+            spaceAfter=6,
+            alignment=TA_CENTER,
+        )
+        story.append(Paragraph("Electoral Results - Executive Summary", title_style))
+
+        # Timestamp line
+        timestamp_style = ParagraphStyle(
+            'Timestamp',
+            parent=styles['Normal'],
+            fontSize=8,
+            textColor=colors.grey,
+            alignment=TA_CENTER,
+            spaceAfter=8
+        )
+        story.append(Paragraph(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}", timestamp_style))
+
+        # Small spacer
+        story.append(Spacer(1, 0.1*inch))
+
+        # Compact stats table
+        stats_table = _create_compact_stats_table(
+            all_results,
+            batch_result.processed if hasattr(batch_result, 'processed') else len(all_results),
+            batch_result.duration_seconds if hasattr(batch_result, 'duration_seconds') else 0.0
+        )
+        story.append(stats_table)
+
+        # Small spacer
+        story.append(Spacer(1, 0.1*inch))
+
+        # Discrepancy summary (inline, color-coded)
+        discrepancy_para = _format_discrepancy_summary_inline(all_results)
+        story.append(discrepancy_para)
+
+        # Small spacer
+        story.append(Spacer(1, 0.1*inch))
+
+        # Top 5 parties horizontal bar chart
+        chart = _create_top_parties_chart(all_results)
+        if chart:
+            story.append(chart)
+        else:
+            # Fallback message if no party data
+            no_chart_style = ParagraphStyle(
+                'NoChart',
+                parent=styles['Normal'],
+                fontSize=9,
+                textColor=colors.grey,
+                alignment=TA_CENTER
+            )
+            story.append(Paragraph("(No party-list data available)", no_chart_style))
+
+        # Small spacer
+        story.append(Spacer(1, 0.1*inch))
+
+        # Footer with batch metadata (smaller font, 7pt italic)
+        footer_style = ParagraphStyle(
+            'Footer',
+            parent=styles['Normal'],
+            fontSize=7,
+            textColor=colors.grey,
+            alignment=TA_CENTER,
+            fontName='Helvetica-Oblique'
+        )
+        processed_count = batch_result.processed if hasattr(batch_result, 'processed') else len(all_results)
+        duration = batch_result.duration_seconds if hasattr(batch_result, 'duration_seconds') else 0.0
+        footer_text = f"Batch processed: {processed_count} ballots in {duration:.1f}s"
+        story.append(Paragraph(footer_text, footer_style))
+
+        # Build the PDF (NO PageBreak() - single page constraint)
+        doc.build(story)
+        print(f"One-page Executive Summary PDF saved to: {output_path}")
+        return True
+
+    except Exception as e:
+        print(f"Error generating one-page executive summary PDF: {e}")
+        return False
+
+
 def aggregate_ballot_results(ballot_data_list: list[BallotData]) -> dict[tuple, AggregatedResults]:
     """
     Aggregate ballot results by constituency.
@@ -4044,14 +4308,40 @@ def main():
 
     # Determine what to process
     if os.path.isdir(input_path) or args.batch:
-        # Process directory of images
+        # Process directory of images and/or PDFs
         images = []
+        pdfs = []
+
+        # Find all images
         for ext in ["*.png", "*.jpg", "*.jpeg"]:
             images.extend(sorted(Path(input_path).glob(ext)))
-        if not images:
-            print(f"No images found in {input_path}")
+
+        # Find all PDFs recursively
+        for root, dirs, files in os.walk(input_path):
+            for f in files:
+                if f.lower().endswith('.pdf'):
+                    pdfs.append(os.path.join(root, f))
+
+        if not images and not pdfs:
+            print(f"No images or PDFs found in {input_path}")
             return
-        print(f"Found {len(images)} images in {input_path}")
+
+        print(f"Found {len(images)} images and {len(pdfs)} PDFs in {input_path}")
+
+        # Convert PDFs to images
+        if pdfs:
+            temp_dir = "/tmp/ballot_images"
+            os.makedirs(temp_dir, exist_ok=True)
+            print(f"\nConverting {len(pdfs)} PDFs to images...")
+            for pdf_path in pdfs:
+                try:
+                    pdf_images = pdf_to_images(pdf_path, temp_dir)
+                    images.extend([Path(img) for img in pdf_images])
+                    print(f"  {os.path.basename(pdf_path)}: {len(pdf_images)} pages")
+                except Exception as e:
+                    print(f"  {os.path.basename(pdf_path)}: ERROR - {e}")
+
+        print(f"\nTotal images to process: {len(images)}")
     elif input_path.lower().endswith(".pdf"):
         # Create temp directory for images if PDF
         temp_dir = "/tmp/ballot_images"
