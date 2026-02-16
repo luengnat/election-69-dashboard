@@ -21,6 +21,9 @@ from typing import Optional, Any, Protocol, runtime_checkable
 # Import the existing OCR function
 from ballot_ocr import BallotData, extract_ballot_data_with_ai
 
+# Import path metadata parser (Phase 7)
+from metadata_parser import PathMetadataParser
+
 # Import tenacity for retry logic
 from tenacity import (
     retry,
@@ -290,6 +293,7 @@ class BatchProcessor:
         self.max_workers = max_workers
         self.rate_limit = rate_limit
         self.rate_limiter = RateLimiter(requests_per_second=rate_limit)
+        self.metadata_parser = PathMetadataParser()  # Phase 7: Path-based metadata extraction
         self.enable_memory_cleanup = enable_memory_cleanup
         self.verbose = verbose
 
