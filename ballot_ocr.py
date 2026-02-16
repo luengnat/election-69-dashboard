@@ -38,6 +38,10 @@ try:
     from reportlab.lib import colors
     from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak, Image
     from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
+    from reportlab.graphics.shapes import Drawing, Rect, String
+    from reportlab.graphics.charts.barcharts import VerticalBarChart
+    from reportlab.graphics.charts.piecharts import Pie
+    from reportlab.graphics import renderPDF
     HAS_REPORTLAB = True
 except ImportError:
     HAS_REPORTLAB = False
@@ -1986,10 +1990,152 @@ def generate_ballot_pdf(ballot_data: BallotData, output_path: str) -> bool:
         doc.build(story)
         print(f"✓ PDF report saved to: {output_path}")
         return True
-        
+
     except Exception as e:
         print(f"✗ Error generating PDF: {e}")
         return False
+
+
+def _create_confidence_chart(ballot_data_list: list) -> "Drawing":
+    """Create a bar chart showing confidence level distribution."""
+    # Count by confidence level
+    levels = {"EXCELLENT": 0, "GOOD": 0, "ACCEPTABLE": 0, "POOR": 0, "VERY_LOW": 0}
+    for ballot in ballot_data_list:
+        level = ballot.confidence_details.get("level", "POOR")
+        if level in levels:
+            levels[level] += 1
+        else:
+            levels["POOR"] += 1
+
+    drawing = Drawing(400, 200)
+
+    bc = VerticalBarChart()
+    bc.x = 50
+    bc.y = 50
+    bc.height = 125
+    bc.width = 300
+    bc.data = [[levels["EXCELLENT"], levels["GOOD"], levels["ACCEPTABLE"], levels["POOR"], levels["VERY_LOW"]]]
+    bc.strokeColor = colors.black
+    bc.valueAxis.valueMin = 0
+    bc.valueAxis.valueMax = max(levels.values()) + 1 if max(levels.values()) > 0 else 5
+    bc.valueAxis.valueStep = 1
+    bc.categoryAxis.labels.boxAnchor = 'ne'
+    bc.categoryAxis.labels.dx = 8
+    bc.categoryAxis.labels.dy = -2
+    bc.categoryAxis.labels.angle = 30
+    bc.categoryAxis.categoryNames = ['Excellent', 'Good', 'Acceptable', 'Poor', 'Very Low']
+
+    # Color the bars
+    bc.bars[0].fillColor = colors.HexColor('#1f4788')
+
+    drawing.add(bc)
+
+    # Title
+    title = String(200, 180, 'Confidence Distribution', fontSize=12, fillColor=colors.black, textAnchor='middle')
+    drawing.add(title)
+
+    return drawing
+
+
+def _create_province_pie_chart(ballot_data_list: list) -> "Drawing":
+    """Create a pie chart showing ballot distribution by province."""
+    # Count by province
+    provinces = {}
+    for ballot in ballot_data_list:
+        prov = ballot.province or "Unknown"
+        provinces[prov] = provinces.get(prov, 0) + 1
+
+    # Sort and take top 8, group rest as "Other"
+    sorted_provs = sorted(provinces.items(), key=lambda x: x[1], reverse=True)
+    if len(sorted_provs) > 8:
+        top_provs = sorted_provs[:8]
+        other_count = sum(c for _, c in sorted_provs[8:])
+        if other_count > 0:
+            top_provs.append(("Other", other_count))
+    else:
+        top_provs = sorted_provs
+
+    drawing = Drawing(400, 250)
+
+    pie = Pie()
+    pie.x = 100
+    pie.y = 50
+    pie.width = 150
+    pie.height = 150
+    pie.data = [c for _, c in top_provs]
+    pie.labels = [p[:15] for p, _ in top_provs]  # Truncate long names
+
+    # Colors for pie slices
+    pie_colors = [
+        colors.HexColor('#1f4788'),
+        colors.HexColor('#3498db'),
+        colors.HexColor('#2ecc71'),
+        colors.HexColor('#f39c12'),
+        colors.HexColor('#e74c3c'),
+        colors.HexColor('#9b59b6'),
+        colors.HexColor('#1abc9c'),
+        colors.HexColor('#34495e'),
+        colors.HexColor('#95a5a6'),
+    ]
+    for i in range(len(top_provs)):
+        pie.slices[i].fillColor = pie_colors[i % len(pie_colors)]
+
+    pie.slices.strokeWidth = 0.5
+
+    drawing.add(pie)
+
+    # Title
+    title = String(200, 220, 'Ballots by Province', fontSize=12, fillColor=colors.black, textAnchor='middle')
+    drawing.add(title)
+
+    return drawing
+
+
+def _create_votes_bar_chart(aggregated_results: dict) -> "Drawing":
+    """Create a bar chart showing total votes by constituency."""
+    if not aggregated_results:
+        return None
+
+    # Get vote totals per constituency
+    constituencies = []
+    for (province, cons_no), agg in aggregated_results.items():
+        cons_name = f"{province[:10]}-{cons_no}"
+        constituencies.append((cons_name, agg.valid_votes_total))
+
+    # Sort by votes and take top 10
+    constituencies.sort(key=lambda x: x[1], reverse=True)
+    top_cons = constituencies[:10]
+
+    if not top_cons:
+        return None
+
+    drawing = Drawing(450, 220)
+
+    bc = VerticalBarChart()
+    bc.x = 50
+    bc.y = 50
+    bc.height = 125
+    bc.width = 350
+    bc.data = [[v for _, v in top_cons]]
+    bc.strokeColor = colors.black
+    bc.valueAxis.valueMin = 0
+    bc.valueAxis.valueMax = max(v for _, v in top_cons) + 50
+    bc.categoryAxis.labels.boxAnchor = 'ne'
+    bc.categoryAxis.labels.dx = 8
+    bc.categoryAxis.labels.dy = -2
+    bc.categoryAxis.labels.angle = 45
+    bc.categoryAxis.labels.fontSize = 7
+    bc.categoryAxis.categoryNames = [name for name, _ in top_cons]
+
+    bc.bars[0].fillColor = colors.HexColor('#2ecc71')
+
+    drawing.add(bc)
+
+    # Title
+    title = String(225, 195, 'Valid Votes by Constituency (Top 10)', fontSize=11, fillColor=colors.black, textAnchor='middle')
+    drawing.add(title)
+
+    return drawing
 
 
 def generate_batch_pdf(aggregated_results: dict, ballot_data_list: list, output_path: str) -> bool:
@@ -2101,7 +2247,34 @@ def generate_batch_pdf(aggregated_results: dict, ballot_data_list: list, output_
         ]))
         story.append(prov_table)
         story.append(Spacer(1, 0.3*inch))
-        
+
+        # Charts Section
+        story.append(PageBreak())
+        story.append(Paragraph("Visual Analysis", styles['Heading2']))
+        story.append(Spacer(1, 0.2*inch))
+
+        # Confidence Distribution Chart
+        if len(ballot_data_list) > 0:
+            story.append(Paragraph("Confidence Level Distribution", styles['Heading3']))
+            conf_chart = _create_confidence_chart(ballot_data_list)
+            story.append(conf_chart)
+            story.append(Spacer(1, 0.3*inch))
+
+        # Province Pie Chart
+        if len(ballot_data_list) > 1:
+            story.append(Paragraph("Ballot Distribution by Province", styles['Heading3']))
+            prov_chart = _create_province_pie_chart(ballot_data_list)
+            story.append(prov_chart)
+            story.append(Spacer(1, 0.3*inch))
+
+        # Votes by Constituency Chart (if aggregated data available)
+        if aggregated_results:
+            story.append(Paragraph("Valid Votes by Constituency", styles['Heading3']))
+            votes_chart = _create_votes_bar_chart(aggregated_results)
+            if votes_chart:
+                story.append(votes_chart)
+            story.append(Spacer(1, 0.3*inch))
+
         # Ballot Details (per page if many)
         if len(ballot_data_list) > 0 and len(ballot_data_list) <= 10:
             story.append(PageBreak())
@@ -3730,21 +3903,9 @@ def main():
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(f"\nResults saved to: {args.output}")
-    
-    # Generate batch report if requested and multiple ballots
-    if args.reports and len(ballot_data_list) > 1:
-        batch_report_filename = f"{args.report_dir}/BATCH_SUMMARY.md"
-        batch_report = generate_batch_report(results, ballot_data_list)
-        save_report(batch_report, batch_report_filename)
-        print(f"Batch report saved to: {batch_report_filename}")
 
-        # Also generate batch PDF if requested
-        if args.pdf:
-            aggregated = {}  # Empty aggregated results for batch PDF
-            batch_pdf_filename = f"{args.report_dir}/BATCH_SUMMARY.pdf"
-            generate_batch_pdf(aggregated, ballot_data_list, batch_pdf_filename)
-
-    # Aggregate results by constituency if requested
+    # Aggregate results by constituency if requested (do this first so batch PDF can use it)
+    aggregated_results = {}
     if args.aggregate and len(ballot_data_list) > 1:
         print("\nAggregating results by constituency...")
         aggregated_results = aggregate_ballot_results(ballot_data_list)
@@ -3792,6 +3953,18 @@ def main():
                 # PDF report
                 cons_pdf_filename = f"{args.report_dir}/constituency_{cons_key}.pdf"
                 generate_constituency_pdf(agg, cons_pdf_filename)
+
+    # Generate batch report if requested and multiple ballots
+    if args.reports and len(ballot_data_list) > 1:
+        batch_report_filename = f"{args.report_dir}/BATCH_SUMMARY.md"
+        batch_report = generate_batch_report(results, ballot_data_list)
+        save_report(batch_report, batch_report_filename)
+        print(f"Batch report saved to: {batch_report_filename}")
+
+        # Also generate batch PDF if requested (with charts if aggregated data available)
+        if args.pdf:
+            batch_pdf_filename = f"{args.report_dir}/BATCH_SUMMARY.pdf"
+            generate_batch_pdf(aggregated_results, ballot_data_list, batch_pdf_filename)
 
 
 if __name__ == "__main__":
