@@ -26,7 +26,10 @@ import subprocess
 import base64
 from pathlib import Path
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from batch_processor import BatchResult
 from enum import Enum
 from datetime import datetime
 from io import StringIO
@@ -201,7 +204,7 @@ def thai_text_to_number(thai_text: str) -> Optional[int]:
     return result if result > 0 else None
 
 
-def validate_vote_entry(numeric: int, thai_text: str) -> VoteEntry:
+def validate_vote_entry(numeric: int, thai_text: str) -> "VoteEntry":
     """Create a VoteEntry with validation of numeric vs Thai text."""
     thai_value = thai_text_to_number(thai_text)
     is_validated = thai_value is not None and thai_value == numeric
@@ -1071,14 +1074,14 @@ def process_extracted_data(data: dict, image_path: str, form_type: Optional[Form
         if reported_valid and calculated_sum != reported_valid:
             print(f"  WARNING: Sum != Valid votes! Sum: {calculated_sum}, Valid: {reported_valid}")
         elif reported_valid:
-            print(f"  ✓ Sum matches valid votes")
+            print("  ✓ Sum matches valid votes")
 
         if reported_total and reported_valid:
             expected_total = reported_valid + reported_invalid + reported_blank
             if reported_total != expected_total:
                 print(f"  WARNING: Total mismatch! Expected: {expected_total} (valid+invalid+blank), Reported: {reported_total}")
             else:
-                print(f"  ✓ Total = Valid + Invalid + Blank")
+                print("  ✓ Total = Valid + Invalid + Blank")
 
         # Validate province name against ECT data
         province_name = data.get("province", "")
@@ -1416,7 +1419,7 @@ def format_discrepancy_report(discrepancy_report: dict) -> str:
     
     # Summary
     summary = discrepancy_report['summary']
-    lines.append(f"\nVerification Summary:")
+    lines.append("\nVerification Summary:")
     lines.append(f"  Verified matches: {summary['matches']}")
     lines.append(f"  Low severity issues: {summary['low_severity']}")
     lines.append(f"  Medium severity issues: {summary['medium_severity']}")
@@ -1438,7 +1441,7 @@ def format_discrepancy_report(discrepancy_report: dict) -> str:
             lines.append(f"  Variance:  {disc['variance']} votes ({disc['variance_pct']})")
             lines.append(f"  Severity:  {disc['severity']}")
     else:
-        lines.append(f"\n✓ All votes verified successfully!")
+        lines.append("\n✓ All votes verified successfully!")
     
     lines.append("\n" + "=" * 70)
     
@@ -1467,7 +1470,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
     # Header section
     lines.append("## Form Information")
     lines.append("")
-    lines.append(f"| Field | Value |")
+    lines.append("| Field | Value |")
     lines.append("|-------|-------|")
     lines.append(f"| Form Type | {ballot_data.form_type} |")
     lines.append(f"| Category | {ballot_data.form_category.title()} |")
@@ -1481,7 +1484,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
     # Vote totals
     lines.append("## Vote Summary")
     lines.append("")
-    lines.append(f"| Metric | Count |")
+    lines.append("| Metric | Count |")
     lines.append("|--------|-------|")
     lines.append(f"| Valid Votes | {ballot_data.valid_votes} |")
     lines.append(f"| Invalid Votes | {ballot_data.invalid_votes} |")
@@ -1529,7 +1532,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
         lines.append("## Party Votes")
         lines.append("")
         if ballot_data.party_votes:
-            lines.append(f"| Party # | Party Name | Abbr | Votes |")
+            lines.append("| Party # | Party Name | Abbr | Votes |")
             lines.append("|---------|-----------|------|-------|")
             for party_num_str in sorted(ballot_data.party_votes.keys(), key=lambda x: int(x)):
                 votes = ballot_data.party_votes[party_num_str]
@@ -1545,7 +1548,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
         lines.append("## Candidate Votes")
         lines.append("")
         if ballot_data.vote_counts:
-            lines.append(f"| Pos | Candidate Name | Party | Votes |")
+            lines.append("| Pos | Candidate Name | Party | Votes |")
             lines.append("|-----|----------------|-------|-------|")
             for position in sorted(ballot_data.vote_counts.keys()):
                 votes = ballot_data.vote_counts[position]
@@ -1583,7 +1586,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
         lines.append("")
         
         summary = discrepancy_report["summary"]
-        lines.append(f"**Summary:**")
+        lines.append("**Summary:**")
         lines.append(f"- Verified matches: {summary['matches']}")
         lines.append(f"- Low severity issues: {summary['low_severity']}")
         lines.append(f"- Medium severity issues: {summary['medium_severity']}")
@@ -1593,7 +1596,7 @@ def generate_single_ballot_report(ballot_data: BallotData, discrepancy_report: O
         if discrepancy_report["discrepancies"]:
             lines.append("### Discrepancies Detected")
             lines.append("")
-            lines.append(f"| Item | Extracted | Official | Variance | Severity |")
+            lines.append("| Item | Extracted | Official | Variance | Severity |")
             lines.append("|------|-----------|----------|----------|----------|")
             
             for disc in discrepancy_report["discrepancies"]:
@@ -1655,7 +1658,7 @@ def generate_batch_report(results: list[dict], ballot_data_list: list[BallotData
     
     lines.append("## Overall Statistics")
     lines.append("")
-    lines.append(f"| Metric | Count | Percentage |")
+    lines.append("| Metric | Count | Percentage |")
     lines.append("|--------|-------|-----------|")
     lines.append(f"| Total Ballots | {total_ballots} | 100% |")
     lines.append(f"| Verified (No Issues) | {verified} | {verified/total_ballots*100:.1f}% |")
@@ -1701,7 +1704,7 @@ def generate_batch_report(results: list[dict], ballot_data_list: list[BallotData
         if form_types:
             lines.append("## Form Type Breakdown")
             lines.append("")
-            lines.append(f"| Form Type | Count |")
+            lines.append("| Form Type | Count |")
             lines.append("|-----------|-------|")
             for form_type, count in sorted(form_types.items()):
                 lines.append(f"| {form_type} | {count} |")
@@ -1710,7 +1713,7 @@ def generate_batch_report(results: list[dict], ballot_data_list: list[BallotData
         if provinces:
             lines.append("## Province Breakdown")
             lines.append("")
-            lines.append(f"| Province | Count |")
+            lines.append("| Province | Count |")
             lines.append("|----------|-------|")
             for province, count in sorted(provinces.items()):
                 lines.append(f"| {province} | {count} |")
@@ -1733,7 +1736,7 @@ def generate_batch_report(results: list[dict], ballot_data_list: list[BallotData
         lines.append("")
         lines.append(f"> **⚠ {len(high_severity_items)} high-severity discrepancies detected across batch**")
         lines.append("")
-        lines.append(f"| Polling Station | Item | Extracted | Official | Variance |")
+        lines.append("| Polling Station | Item | Extracted | Official | Variance |")
         lines.append("|-----------------|------|-----------|----------|----------|")
         for item in high_severity_items[:10]:  # Show top 10
             disc = item["discrepancy"]
@@ -2802,7 +2805,7 @@ def generate_executive_summary_pdf(
 
         # Footer
         story.append(Spacer(1, 0.5*inch))
-        footer_text = f"<i>Report generated automatically by Thai Election Ballot OCR</i>"
+        footer_text = "<i>Report generated automatically by Thai Election Ballot OCR</i>"
         story.append(Paragraph(footer_text, styles['Normal']))
 
         doc.build(story)
@@ -3264,7 +3267,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     # Header
     lines.append("## Constituency Information")
     lines.append("")
-    lines.append(f"| Field | Value |")
+    lines.append("| Field | Value |")
     lines.append("|-------|-------|")
     lines.append(f"| Province | {agg.province} |")
     lines.append(f"| Constituency | {agg.constituency} |")
@@ -3274,7 +3277,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     # Data collection status
     lines.append("## Data Collection Status")
     lines.append("")
-    lines.append(f"| Metric | Value |")
+    lines.append("| Metric | Value |")
     lines.append("|--------|-------|")
     lines.append(f"| Ballots Processed | {agg.ballots_processed} |")
     lines.append(f"| Polling Units Reporting | {agg.polling_units_reporting} |")
@@ -3285,7 +3288,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     # Vote totals
     lines.append("## Vote Totals")
     lines.append("")
-    lines.append(f"| Category | Votes |")
+    lines.append("| Category | Votes |")
     lines.append("|----------|-------|")
     lines.append(f"| Valid Votes | {agg.valid_votes_total} |")
     lines.append(f"| Invalid Votes | {agg.invalid_votes_total} |")
@@ -3312,7 +3315,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     if is_party_list:
         lines.append("## Party Results")
         lines.append("")
-        lines.append(f"| Party # | Party Name | Abbr | Votes | Percentage |")
+        lines.append("| Party # | Party Name | Abbr | Votes | Percentage |")
         lines.append("|---------|-----------|------|-------|-----------|")
         
         # Sort by votes descending
@@ -3328,7 +3331,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     else:
         lines.append("## Candidate Results")
         lines.append("")
-        lines.append(f"| Pos | Candidate Name | Party | Votes | Percentage |")
+        lines.append("| Pos | Candidate Name | Party | Votes | Percentage |")
         lines.append("|-----|----------------|-------|-------|-----------|")
         
         # Sort by votes descending
@@ -3360,7 +3363,7 @@ def generate_constituency_report(agg: AggregatedResults) -> str:
     # Source information
     lines.append("## Source Information")
     lines.append("")
-    lines.append(f"**Ballots Included:**")
+    lines.append("**Ballots Included:**")
     for source in agg.source_ballots:
         lines.append(f"- {source}")
     lines.append("")
@@ -3492,7 +3495,7 @@ def generate_discrepancy_summary(analyses: list[dict]) -> str:
     
     lines.append("## Overall Statistics")
     lines.append("")
-    lines.append(f"| Category | Count | Percentage |")
+    lines.append("| Category | Count | Percentage |")
     lines.append("|----------|-------|-----------|")
     lines.append(f"| Constituencies Analyzed | {total_constituencies} | 100% |")
     lines.append(f"| No Discrepancies | {no_discrepancy} | {no_discrepancy/total_constituencies*100:.1f}% |")
@@ -3737,7 +3740,7 @@ def generate_anomaly_report(anomalies: list[dict]) -> str:
         lines.append("")
         return "\n".join(lines)
     
-    lines.append(f"## Summary")
+    lines.append("## Summary")
     lines.append("")
     lines.append(f"**Constituencies with Anomalies:** {len(anomalies)}")
     lines.append("")
@@ -3747,7 +3750,7 @@ def generate_anomaly_report(anomalies: list[dict]) -> str:
     medium_severity = sum(1 for a in anomalies if a["severity"] == "MEDIUM")
     low_severity = sum(1 for a in anomalies if a["severity"] == "LOW")
     
-    lines.append(f"| Severity | Count |")
+    lines.append("| Severity | Count |")
     lines.append("|----------|-------|")
     lines.append(f"| HIGH | {high_severity} |")
     lines.append(f"| MEDIUM | {medium_severity} |")
@@ -3768,7 +3771,7 @@ def generate_anomaly_report(anomalies: list[dict]) -> str:
         # Vote distribution stats
         if stats["vote_distribution"]:
             dist = stats["vote_distribution"]
-            lines.append(f"**Vote Distribution:**")
+            lines.append("**Vote Distribution:**")
             lines.append(f"- Mean: {dist['mean']} votes")
             lines.append(f"- Median: {dist['median']} votes")
             lines.append(f"- Std Dev: {dist['std_dev']}")
@@ -3777,7 +3780,7 @@ def generate_anomaly_report(anomalies: list[dict]) -> str:
         
         # Outliers
         if stats["outliers"]:
-            lines.append(f"**Outliers Detected:**")
+            lines.append("**Outliers Detected:**")
             for outlier in stats["outliers"]:
                 if "party_number" in outlier:
                     lines.append(f"- Party #{outlier['party_number']}: {outlier['votes']} votes ({outlier['type']})")
@@ -3787,14 +3790,14 @@ def generate_anomaly_report(anomalies: list[dict]) -> str:
         
         # Anomalies
         if stats["anomalies"]:
-            lines.append(f"**Pattern Anomalies:**")
+            lines.append("**Pattern Anomalies:**")
             for anomaly_item in stats["anomalies"]:
                 lines.append(f"- [{anomaly_item['severity']}] {anomaly_item['description']}")
             lines.append("")
         
         # Recommendations
         if stats["recommendations"]:
-            lines.append(f"**Recommendations:**")
+            lines.append("**Recommendations:**")
             for rec in stats["recommendations"]:
                 lines.append(f"- {rec}")
             lines.append("")
@@ -3850,7 +3853,7 @@ def generate_province_report(province_results: list[AggregatedResults], anomalie
     # Overview
     lines.append("## Overview")
     lines.append("")
-    lines.append(f"| Metric | Value |")
+    lines.append("| Metric | Value |")
     lines.append("|--------|-------|")
     lines.append(f"| Constituencies Reporting | {len(province_results)} |")
     lines.append(f"| Total Valid Votes | {sum(r.valid_votes_total for r in province_results)} |")
@@ -3866,7 +3869,7 @@ def generate_province_report(province_results: list[AggregatedResults], anomalie
     med_conf = sum(1 for r in province_results if 0.85 <= r.aggregated_confidence < 0.95)
     low_conf = sum(1 for r in province_results if r.aggregated_confidence < 0.85)
     
-    lines.append(f"**Confidence Levels:**")
+    lines.append("**Confidence Levels:**")
     lines.append(f"- High (95%+): {high_conf} constituencies")
     lines.append(f"- Medium (85-95%): {med_conf} constituencies")
     lines.append(f"- Low (<85%): {low_conf} constituencies")
@@ -3881,7 +3884,7 @@ def generate_province_report(province_results: list[AggregatedResults], anomalie
     # Constituency breakdown
     lines.append("## Constituency Results")
     lines.append("")
-    lines.append(f"| # | Constituency | Valid Votes | Invalid | Confidence | Status |")
+    lines.append("| # | Constituency | Valid Votes | Invalid | Confidence | Status |")
     lines.append("|---|--------------|------------|---------|-----------|--------|")
     
     for i, result in enumerate(province_results, 1):
@@ -3960,7 +3963,7 @@ def generate_executive_summary(
     
     lines.append("## Key Statistics")
     lines.append("")
-    lines.append(f"| Metric | Value |")
+    lines.append("| Metric | Value |")
     lines.append("|--------|-------|")
     lines.append(f"| Total Constituencies | {len(all_results)} |")
     lines.append(f"| Total Provinces | {len(provinces)} |")
@@ -3995,7 +3998,7 @@ def generate_executive_summary(
     # Province summary
     lines.append("## By Province")
     lines.append("")
-    lines.append(f"| Province | Constituencies | Valid Votes | Avg Confidence |")
+    lines.append("| Province | Constituencies | Valid Votes | Avg Confidence |")
     lines.append("|----------|---|---|---|")
     
     for province in provinces:
@@ -4027,7 +4030,7 @@ def generate_executive_summary(
         # Sort by votes
         top_winners = sorted(all_winners, key=lambda x: x["votes"], reverse=True)[:10]
         
-        lines.append(f"| Rank | Candidate | Province | Votes | Percentage |")
+        lines.append("| Rank | Candidate | Province | Votes | Percentage |")
         lines.append("|------|-----------|----------|-------|-----------|")
         
         for i, winner in enumerate(top_winners, 1):
@@ -4382,7 +4385,7 @@ def main():
         # Create temp directory for images if PDF
         temp_dir = "/tmp/ballot_images"
         os.makedirs(temp_dir, exist_ok=True)
-        print(f"Converting PDF to images...")
+        print("Converting PDF to images...")
         images = pdf_to_images(input_path, temp_dir)
         print(f"Created {len(images)} images")
     else:

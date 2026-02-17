@@ -238,7 +238,7 @@ class GDriveDL(object):
                 now = datetime.utcnow()
                 modified = datetime.strptime(modified, "%b %d")
                 modified = modified.replace(year=now.year)
-        except:
+        except Exception:
             logging.debug("Failed to convert mtime: {}".format(modified))
             return None
 
@@ -250,7 +250,7 @@ class GDriveDL(object):
 
         try:
             os.utime(file_path, (timestamp, timestamp))
-        except:
+        except Exception:
             logging.debug("Failed to set mtime")
 
     def _exists(self, file_path, modified):
@@ -260,7 +260,7 @@ class GDriveDL(object):
         if modified:
             try:
                 return int(os.path.getmtime(file_path)) == modified
-            except:
+            except Exception:
                 logging.debug("Failed to get mtime")
 
         return True
