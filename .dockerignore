@@ -1,0 +1,42 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+.venv
+venv
+ENV
+
+# IDE
+.vscode
+.idea
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test and generated files
+reports_test/
+ballots/
+*.pdf
+*.json
+test_*.json
+ballot_data*.json
+
+# Planning and docs (not needed in container)
+.planning/
+*.md
+!README.md
+
+# CI/CD
+.github/
+.pre-commit-config.yaml
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
