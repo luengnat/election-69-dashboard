@@ -35,18 +35,17 @@ from ballot_ocr import (
     generate_one_page_executive_summary_pdf,
     AggregatedResults
 )
+from config import config
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=getattr(logging, config.log_level, logging.INFO))
 logger = logging.getLogger(__name__)
 
 # Maximum number of results to display (to avoid UI overload)
 MAX_DISPLAY_RESULTS = 100
 
-# File upload validation settings
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB per file
-MAX_BATCH_SIZE = 500  # Maximum files per batch
-ALLOWED_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.pdf'}
+# File upload validation settings (from config)
+ALLOWED_EXTENSIONS = set(config.allowed_extensions)
 
 
 def validate_file(file_path: str) -> tuple[bool, str]:
@@ -76,8 +75,8 @@ def validate_file(file_path: str) -> tuple[bool, str]:
     # Check file size
     try:
         size = os.path.getsize(file_path)
-        if size > MAX_FILE_SIZE:
-            return False, f"File too large: {size // (1024*1024)}MB (max {MAX_FILE_SIZE // (1024*1024)}MB)"
+        if size > config.max_file_size:
+            return False, f"File too large: {size // (1024*1024)}MB (max {config.max_file_size // (1024*1024)}MB)"
         if size == 0:
             return False, "File is empty"
     except OSError as e:
@@ -386,9 +385,9 @@ def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, lis
         logger.info(f"  ... and {len(files) - 5} more files")
 
     # Validate batch size
-    if len(files) > MAX_BATCH_SIZE:
-        logger.warning(f"Batch too large: {len(files)} files (max {MAX_BATCH_SIZE})")
-        return [], f"Too many files: {len(files)}. Maximum is {MAX_BATCH_SIZE}.", []
+    if len(files) > config.max_batch_size:
+        logger.warning(f"Batch too large: {len(files)} files (max {config.max_batch_size})")
+        return [], f"Too many files: {len(files)}. Maximum is {config.max_batch_size}.", []
 
     # Validate all files before processing
     invalid_files = []
@@ -795,15 +794,11 @@ Powered by AI vision models for accurate ballot data extraction.
 
 
 if __name__ == "__main__":
-    import os
-
-    # Default to localhost for security. Set WEB_UI_HOST=0.0.0.0 to allow external access.
-    server_name = os.environ.get("WEB_UI_HOST", "127.0.0.1")
-    server_port = int(os.environ.get("WEB_UI_PORT", "7860"))
-
-    if server_name == "0.0.0.0":
+    # Use config module for server settings
+    if config.web_ui_host == "0.0.0.0":
         logger.warning("Web UI binding to all network interfaces. This may expose the application.")
         logger.warning("Set WEB_UI_HOST=127.0.0.1 for local-only access.")
 
-    logger.info(f"Starting web UI on http://{server_name}:{server_port}")
-    demo.launch(server_name=server_name, server_port=server_port)
+    logger.info(f"Starting web UI on http://{config.web_ui_host}:{config.web_ui_port}")
+    demo.launch(server_name=config.web_ui_host, server_port=config.web_ui_port)
+
