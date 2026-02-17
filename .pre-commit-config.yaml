@@ -1,0 +1,40 @@
+# Pre-commit hooks configuration
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Python code formatting
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.0
+    hooks:
+      - id: ruff
+        args: [--fix, --ignore, E501, --ignore, F401, --ignore, F841]
+      - id: ruff-format
+
+  # Check for common mistakes
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: forbid-submodules
+
+  # Type checking (optional, may have false positives)
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.14.0
+  #   hooks:
+  #     - id: mypy
+  #       additional_dependencies: [types-requests]
+  #       args: [--ignore-missing-imports]
+
+# CI configuration
+ci:
+  autofix_commit_msg: "style: auto-fix pre-commit issues"
+  autoupdate_commit_msg: "chore: pre-commit autoupdate"
