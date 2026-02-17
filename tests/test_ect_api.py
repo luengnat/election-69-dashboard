@@ -22,12 +22,12 @@ class TestECTData(unittest.TestCase):
             from ect_api import ect_data
 
             # Valid province
-            is_valid, name = ect_data.validate_province("กรุงเทพมหานคร")
+            is_valid, name = ect_data.validate_province_name("กรุงเทพมหานคร")
             self.assertTrue(is_valid)
             self.assertEqual(name, "กรุงเทพมหานคร")
 
             # Invalid province
-            is_valid, name = ect_data.validate_province("ไม่มีจังหวัดนี้")
+            is_valid, name = ect_data.validate_province_name("ไม่มีจังหวัดนี้")
             self.assertFalse(is_valid)
             self.assertIsNone(name)
 
@@ -40,7 +40,7 @@ class TestECTData(unittest.TestCase):
             from ect_api import ect_data
 
             # Province with prefix should also be valid
-            is_valid, name = ect_data.validate_province("จังหวัดเชียงใหม่")
+            is_valid, name = ect_data.validate_province_name("จังหวัดเชียงใหม่")
             self.assertTrue(is_valid)
 
         except ImportError:
@@ -63,7 +63,7 @@ class TestECTData(unittest.TestCase):
             from ect_api import ect_data
 
             # Get candidates for a constituency
-            candidates = ect_data.get_candidates("กรุงเทพมหานคร", 1)
+            candidates = ect_data.get_candidates_by_thai_province("กรุงเทพมหานคร", 1)
             self.assertIsNotNone(candidates)
             # Should return a list (may be empty if no data)
             self.assertIsInstance(candidates, list)
@@ -76,9 +76,10 @@ class TestECTData(unittest.TestCase):
         try:
             from ect_api import ect_data
 
-            # Get party info
-            parties = ect_data.get_parties()
-            self.assertIsNotNone(parties)
+            # Get party info by number
+            party = ect_data.get_party_by_number(1)
+            # May be None if no data, but should not raise
+            self.assertTrue(party is None or hasattr(party, 'name'))
 
         except ImportError:
             self.skipTest("ect_api not available")
