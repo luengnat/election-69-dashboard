@@ -9,6 +9,10 @@ ENV/
 env/
 .venv/
 
+# Environment variables
+.env
+.env.local
+
 # IDE
 .vscode/
 .idea/
