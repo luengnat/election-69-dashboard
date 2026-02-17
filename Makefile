@@ -1,37 +1,70 @@
 # Thai Election Ballot OCR - Makefile
 # Common development tasks
 
-.PHONY: help install test lint run clean
+.PHONY: help install test lint run clean coverage
 
 # Default target
 help:
 	@echo "Available targets:"
-	@echo "  install    - Install dependencies"
-	@echo "  test       - Run all tests"
-	@echo "  lint       - Run linters (ruff)"
-	@echo "  run        - Start the web UI"
-	@echo "  clean      - Remove generated files"
-	@echo "  ci         - Run CI checks (lint + test)"
+	@echo "  install       - Install dependencies"
+	@echo "  test          - Run all tests"
+	@echo "  test-unit     - Run unit tests only"
+	@echo "  test-pdf      - Run PDF generation tests"
+	@echo "  test-accuracy - Run accuracy tests (requires API keys)"
+	@echo "  coverage      - Run tests with coverage report"
+	@echo "  lint          - Run linters (ruff)"
+	@echo "  format        - Format code with ruff"
+	@echo "  typecheck     - Run type checker (pyright)"
+	@echo "  run           - Start the web UI (localhost)"
+	@echo "  run-external  - Start web UI with external access"
+	@echo "  clean         - Remove generated files"
+	@echo "  ci            - Run CI checks (lint + test)"
 
 # Install dependencies
 install:
 	pip install -r requirements.txt
 
-# Run all tests
-test:
+# Install development dependencies
+install-dev:
+	pip install -r requirements.txt
+	pip install pytest pytest-cov ruff pyright pre-commit
+	@echo "Development environment ready!"
+
+# Run unit tests
+test-unit:
+	python tests/test_unit.py -v
+
+# Run PDF generation tests
+test-pdf:
 	python test_executive_summary_pdf.py
 	python test_constituency_pdf.py
 	python test_batch_pdf_charts.py
 	python test_pdf_generation.py
 
+# Run all tests
+test: test-unit test-pdf
+	@echo "All tests passed!"
+
 # Run accuracy tests (requires API keys)
 test-accuracy:
 	python tests/test_accuracy.py --all
 
+# Run tests with coverage
+coverage:
+	@which pytest > /dev/null || pip install pytest pytest-cov
+	pytest tests/ -v --cov=. --cov-report=term-missing --cov-report=html
+	@echo "Coverage report generated in htmlcov/"
+
 # Run linters
 lint:
 	@which ruff > /dev/null || pip install ruff
-	ruff check . --ignore E501 --ignore F401 --ignore F841 --statistics || true
+	ruff check . --statistics || true
+
+# Format code
+format:
+	@which ruff > /dev/null || pip install ruff
+	ruff format .
+	ruff check . --fix || true
 
 # Run type checker
 typecheck:
@@ -53,6 +86,8 @@ clean:
 	rm -rf __pycache__
 	rm -rf .pytest_cache
 	rm -rf .ruff_cache
+	rm -rf htmlcov
+	rm -rf .coverage
 	find . -name "*.pyc" -delete
 	find . -name "__pycache__" -type d -delete
 
@@ -60,12 +95,6 @@ clean:
 ci: lint test
 	@echo "CI checks passed!"
 
-# Format code
-format:
-	@which ruff > /dev/null || pip install ruff
-	ruff format .
-
 # Development setup
-dev: install
-	pip install ruff pyright
-	@echo "Development environment ready!"
+dev: install-dev
+	@echo "Run 'pre-commit install' to set up git hooks"
