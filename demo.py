@@ -106,11 +106,7 @@ def demo_ect_data():
     print_header("ECT Data Validation")
 
     try:
-        from ect_api import ect_data, ECT_AVAILABLE
-
-        if not ECT_AVAILABLE:
-            print("\n  ECT API not available (offline mode)")
-            return
+        from ect_api import ect_data
 
         print("\nValidating provinces:")
         test_provinces = ["กรุงเทพมหานคร", "เชียงใหม่", "ไม่มีจังหวัดนี้"]
