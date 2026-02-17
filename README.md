@@ -9,10 +9,28 @@ Automated ballot verification system for Thai elections using AI Vision OCR. Ext
 - **Web interface** for non-technical users
 - **PDF reports** with charts and constituency summaries
 - **ECT data validation** against 3,491 official candidates
+- **Docker support** for easy deployment
 
 ## Quick Start
 
-### Installation
+### Option 1: Docker (Recommended)
+
+```bash
+# Clone and configure
+git clone https://github.com/yourusername/election.git
+cd election
+
+# Set environment variables
+cp .env.example .env
+# Edit .env with your API keys
+
+# Run with Docker Compose
+docker-compose up -d
+
+# Open http://localhost:7860
+```
+
+### Option 2: Native Installation
 
 ```bash
 # Create virtual environment
@@ -22,18 +40,22 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Install Tesseract OCR (required for image processing)
+# Install Tesseract OCR (required for PDF processing)
 # macOS:
-brew install tesseract tesseract-lang
+brew install tesseract tesseract-lang poppler
 
 # Ubuntu/Debian:
-sudo apt-get install tesseract-ocr tesseract-ocr-tha
+sudo apt-get install tesseract-ocr tesseract-ocr-tha poppler-utils
 ```
 
 ### Run Web Interface
 
 ```bash
+# Local only (default, secure)
 python web_ui.py
+
+# Allow external access (use with caution)
+WEB_UI_HOST=0.0.0.0 python web_ui.py
 ```
 
 Open http://localhost:7860 in your browser to:
@@ -66,9 +88,24 @@ python download_ballots.py --province "กรุงเทพมหานคร" 
 ├── metadata_parser.py   # Path-based metadata extraction
 ├── download_ballots.py  # Google Drive ballot downloader
 ├── province_folders.py  # Province folder URLs
-└── tests/               # Test suite
-    ├── test_accuracy.py
-    └── ground_truth.json
+├── tests/               # Test suite
+│   ├── test_unit.py     # Unit tests
+│   ├── test_accuracy.py # Accuracy tests
+│   └── ground_truth.json
+├── Dockerfile           # Docker image
+├── docker-compose.yml   # Docker Compose config
+└── Makefile            # Common tasks
+```
+
+## Common Tasks (Makefile)
+
+```bash
+make install     # Install dependencies
+make test        # Run all tests
+make lint        # Run linters
+make run         # Start web UI (localhost)
+make ci          # Run CI checks (lint + test)
+make clean       # Remove generated files
 ```
 
 ## Ballot Form Types Supported
@@ -85,12 +122,18 @@ python download_ballots.py --province "กรุงเทพมหานคร" 
 Set environment variables for API access:
 
 ```bash
-# OpenRouter API (primary OCR)
+# Required: OpenRouter API (primary OCR)
 export OPENROUTER_API_KEY="your-key-here"
 
-# Anthropic Claude (fallback OCR)
+# Optional: Anthropic Claude (fallback OCR)
 export ANTHROPIC_API_KEY="your-key-here"
+
+# Optional: Web UI configuration
+export WEB_UI_HOST=127.0.0.1  # Default: localhost only
+export WEB_UI_PORT=7860       # Default port
 ```
+
+See `.env.example` for all configuration options.
 
 ## API Rate Limits
 
@@ -99,6 +142,15 @@ The system respects OpenRouter rate limits:
 - 50 requests/day (free tier)
 
 Parallel processing includes automatic retry with exponential backoff.
+
+## Security
+
+- **Default**: Web UI binds to localhost only (127.0.0.1)
+- **File validation**: Max 10MB per file, 500 files per batch
+- **Input sanitization**: All paths and filenames sanitized
+- **API keys**: Never committed, loaded from environment
+
+See [SECURITY.md](SECURITY.md) for full security policy.
 
 ## Reports Generated
 
@@ -109,17 +161,24 @@ Parallel processing includes automatic retry with exponential backoff.
 
 ## Development
 
+### Setup
+
+```bash
+make dev  # Install deps + dev tools
+```
+
 ### Run Tests
 
 ```bash
-# Accuracy tests
-python tests/test_accuracy.py --all
+make test        # Run all tests
+make test-accuracy  # Run accuracy tests (requires API keys)
+```
 
-# PDF generation tests
-python test_pdf_generation.py
+### Pre-commit Hooks
 
-# Executive summary tests
-python test_executive_summary_pdf.py
+```bash
+pip install pre-commit
+pre-commit install
 ```
 
 ### Project Phases
@@ -129,6 +188,14 @@ python test_executive_summary_pdf.py
 | v1.0 | 1-4 | OCR, ECT integration, aggregation, PDF | Complete |
 | v1.1 | 5-8 | Parallel processing, web UI, metadata, executive summary | Complete |
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
 ## License
 
-MIT License
+[MIT License](LICENSE)
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history.
