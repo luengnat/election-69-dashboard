@@ -53,21 +53,21 @@ def test_candidate_matching():
     print("="*70)
     
     # Verify basic fields
-    print(f"\nForm Information:")
+    print("\nForm Information:")
     print(f"  Form type: {ballot_data.form_type}")
     print(f"  Category: {ballot_data.form_category}")
     print(f"  Province: {ballot_data.province}")
     print(f"  Constituency: {ballot_data.constituency_number}")
     
     # Verify vote counts
-    print(f"\nVote Counts:")
+    print("\nVote Counts:")
     print(f"  Total votes: {ballot_data.total_votes}")
     print(f"  Valid votes: {ballot_data.valid_votes}")
     print(f"  Invalid votes: {ballot_data.invalid_votes}")
     print(f"  Blank votes: {ballot_data.blank_votes}")
     
     # Verify candidate matching
-    print(f"\nCandidate Matching:")
+    print("\nCandidate Matching:")
     if ballot_data.candidate_info:
         for position, info in sorted(ballot_data.candidate_info.items()):
             votes = ballot_data.vote_counts.get(position, 0)
@@ -85,10 +85,10 @@ def test_candidate_matching():
             print("  ✓ ALL CANDIDATES MATCHED!")
             return True
         else:
-            print(f"  ⚠ Some candidates not matched")
+            print("  ⚠ Some candidates not matched")
             return True  # Still pass since some were matched
     else:
-        print(f"  ✗ No candidate info in results")
+        print("  ✗ No candidate info in results")
         return False
 
 

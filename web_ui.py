@@ -443,13 +443,13 @@ def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, lis
 
     except FileNotFoundError as e:
         logger.error(f"File not found: {e}")
-        return [], f"File error: Could not find uploaded file. Please try again.", []
+        return [], "File error: Could not find uploaded file. Please try again.", []
     except PermissionError as e:
         logger.error(f"Permission error: {e}")
-        return [], f"Permission error: Cannot read uploaded files.", []
+        return [], "Permission error: Cannot read uploaded files.", []
     except ConnectionError as e:
         logger.error(f"Connection error: {e}")
-        return [], f"API connection error: Could not reach OCR service. Please check your internet connection.", []
+        return [], "API connection error: Could not reach OCR service. Please check your internet connection.", []
     except Exception as e:
         logger.exception(f"Unexpected error during processing: {e}")
         # Return user-friendly error message
