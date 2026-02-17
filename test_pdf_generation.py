@@ -32,9 +32,6 @@ def test_pdf_generation():
         district="เมืองแพร่",
         polling_unit=2,
         polling_station_id="แพร่-เขต 1 เมืองแพร่-2",
-        form_code="5/16",
-        image_encoding="",
-        ai_response="test",
         source_file="test.png",
         vote_counts={1: 100, 2: 50, 3: 30},
         valid_votes=180,
@@ -50,19 +47,19 @@ def test_pdf_generation():
             "details": []
         },
         candidate_info={
-            "1": {
+            1: {
                 "name": "นางสาวชนกนันท์ ศุภศิริ",
                 "party_name": "ภูมิใจไทย",
                 "party_abbr": "ภท.",
                 "party_number": "1"
             },
-            "2": {
+            2: {
                 "name": "นางภูวษา สินธุวงศ์",
                 "party_name": "ภูมิใจไทย",
                 "party_abbr": "ภท.",
                 "party_number": "1"
             },
-            "3": {
+            3: {
                 "name": "นายวิตติ แสงสุพรรณ",
                 "party_name": "เพื่อไทย",
                 "party_abbr": "เพท.",
@@ -71,8 +68,7 @@ def test_pdf_generation():
         },
         party_votes={},
         party_info={},
-        page_parties=[],
-        discrepancies={},
+        page_parties="",
     )
     
     # Test single ballot PDF
@@ -123,9 +119,6 @@ def test_pdf_generation():
         district="",
         polling_unit=1,
         polling_station_id="นนทบุรี-ปทุมธานี",
-        form_code="5/16",
-        image_encoding="",
-        ai_response="test",
         source_file="party_list.png",
         vote_counts={},
         valid_votes=150,
@@ -146,8 +139,7 @@ def test_pdf_generation():
             "1": {"name": "ภูมิใจไทย", "abbr": "ภท.", "color": "#FF0000"},
             "2": {"name": "เพื่อไทย", "abbr": "เพท.", "color": "#FF6600"},
         },
-        page_parties=[1, 2, 3, 4, 5],
-        discrepancies={},
+        page_parties="1-5",
     )
     
     party_output = "test_reports/test_party_list.pdf"
