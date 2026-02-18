@@ -20,7 +20,7 @@ from ballot_types import (
 )
 
 try:
-    from crop_utils import detect_form_type_from_path, crop_page_image, CROP_REGIONS
+    from crop_utils import detect_form_type_from_path, crop_page_image, FORM_TEMPLATES, _DEFAULT_TEMPLATE
     CROP_UTILS_AVAILABLE = True
 except ImportError:
     CROP_UTILS_AVAILABLE = False
@@ -79,6 +79,43 @@ def encode_image(image_path: str) -> str:
     """Encode image to base64."""
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode("utf-8")
+
+
+# Model used for OpenRouter vision calls. Override via OPENROUTER_MODEL env var.
+# Good alternatives (free): google/gemma-3-27b-it:free, google/gemini-2.0-flash-lite:free
+# Good alternatives (paid): google/gemini-flash-1.5, anthropic/claude-haiku
+_OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "google/gemma-3-12b-it:free")
+
+
+def _preprocess_image(image_path: str) -> bytes:
+    """
+    Preprocess a ballot image to improve OCR accuracy.
+
+    Enhances contrast and sharpens the image, making handwritten Thai
+    numbers and text more legible for vision models.
+
+    Returns PNG bytes of the enhanced image, or the original file bytes
+    if Pillow is unavailable or preprocessing fails.
+    """
+    try:
+        from PIL import Image, ImageEnhance, ImageFilter
+        import io
+
+        with Image.open(image_path) as img:
+            if img.mode != "RGB":
+                img = img.convert("RGB")
+            # Boost contrast so handwritten ink stands out from paper
+            img = ImageEnhance.Contrast(img).enhance(1.8)
+            # Sharpen edges to make digit strokes crisper
+            img = img.filter(ImageFilter.SHARPEN)
+            buf = io.BytesIO()
+            img.save(buf, format="PNG", optimize=True)
+            return buf.getvalue()
+    except Exception:
+        pass
+
+    with open(image_path, "rb") as f:
+        return f.read()
 
 
 def detect_form_type(image_path: str) -> tuple[Optional[FormType], str]:
@@ -208,7 +245,17 @@ Each row contains:
 │     2      │     [hand]       │ [Thai words]                     │
 └────────────┴──────────────────┴─────────────────────────────────┘
 
-CRITICAL: Look at EACH handwritten digit individually. Read the COMPLETE number.
+READING STRATEGY FOR VOTE COUNTS:
+The Thai TEXT column (right side) is your PRIMARY source.
+Thai words are more reliably read than handwritten digits.
+1. Read Thai text → convert to number  (see reference below)
+2. Verify against the handwritten numeric column
+3. If both agree → use that value. If they differ → trust the Thai text.
+
+THAI NUMBER WORD REFERENCE:
+  ศูนย์=0  หนึ่ง=1  สอง=2  สาม=3  สี่=4  ห้า=5  หก=6  เจ็ด=7  แปด=8  เก้า=9
+  สิบ=10  ร้อย=100  พัน=1,000  หมื่น=10,000
+  Examples: หนึ่งร้อยห้าสิบสาม=153 | สี่สิบห้า=45 | สิบสอง=12 | ศูนย์=0
 
 ═══════════════════════════════════════════════════════════════════
 PART 4: TOTALS SECTION (Look at BOTTOM of the form)
@@ -282,6 +329,18 @@ Each row contains:
 │    ...     │     [hand]       │ [Thai words]                     │
 │    57      │     [hand]       │ [Thai words]                     │
 └────────────┴──────────────────┴─────────────────────────────────┘
+
+READING STRATEGY FOR VOTE COUNTS:
+The Thai TEXT column (right side) is your PRIMARY source.
+Thai words are more reliably read than handwritten digits.
+1. Read Thai text → convert to number  (see reference below)
+2. Verify against the handwritten numeric column
+3. If both agree → use that value. If they differ → trust the Thai text.
+
+THAI NUMBER WORD REFERENCE:
+  ศูนย์=0  หนึ่ง=1  สอง=2  สาม=3  สี่=4  ห้า=5  หก=6  เจ็ด=7  แปด=8  เก้า=9
+  สิบ=10  ร้อย=100  พัน=1,000  หมื่น=10,000
+  Examples: หนึ่งร้อยห้าสิบสาม=153 | สี่สิบห้า=45 | สิบสอง=12 | ศูนย์=0
 
 IMPORTANT:
 - There are 57 political parties numbered 1-57
@@ -444,108 +503,16 @@ def _strip_json_fences(text: str) -> str:
 
 def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] = None) -> Optional[BallotData]:
     """
-    Use OpenRouter with Gemma 3 12B IT to extract ballot data from an image.
+    Extract ballot data using the configured ensemble of OCR backends.
 
-    IMPORTANT: We extract vote counts BY POSITION, not by name.
-    AI vision often hallucinates handwritten names, but numbers are easier to read.
-
-    When Pillow is available and the form type can be determined from the file path,
-    the function crops each image to just the vote-count column (~34% of page area)
-    and summary section before sending to the AI, reducing token cost by ~70%.
+    Backends run in parallel; per-position consensus voting resolves
+    disagreements. Configure via the EXTRACTION_BACKENDS env var.
     """
-    import requests
-
-    # Step 1: Path-based form type detection (free — no API call).
-    if form_type is None and CROP_UTILS_AVAILABLE:
-        detected = detect_form_type_from_path(image_path)
-        if detected is not None:
-            form_type = detected
-            print(f"  Form type from path: {form_type.value}")
-
-    # Validate API key (strip whitespace and check for non-empty)
-    openrouter_api_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
-    if not openrouter_api_key:
-        openrouter_api_key = None
-
-    # Step 2: Crop-aware extraction for cost reduction (~70% savings).
-    if form_type is not None and CROP_UTILS_AVAILABLE and openrouter_api_key:
-        print("  Trying crop-aware extraction (~70% token reduction)...")
-        result = _extract_with_crops(image_path, form_type, openrouter_api_key)
-        if result is not None:
-            print("  Crop-aware extraction succeeded!")
-            return result
-        print("  Crop extraction failed, falling back to full-image...")
-
-    # Step 3: Full-image extraction.
-    # Read and encode image
-    with open(image_path, "rb") as f:
-        image_data = base64.b64encode(f.read()).decode("utf-8")
-
-    if openrouter_api_key:
-        try:
-            print("  Using OpenRouter with Gemma 3 12B IT (full image)...")
-
-            # Use appropriate prompt based on form type
-            if form_type is not None:
-                if form_type.is_party_list:
-                    prompt = get_party_list_prompt()
-                else:
-                    prompt = get_constituency_prompt()
-            else:
-                # Combined prompt for auto-detection
-                prompt = get_combined_prompt()
-
-            # OpenRouter API call (OpenAI-compatible)
-            response = requests.post(
-                url="https://openrouter.ai/api/v1/chat/completions",
-                headers={
-                    "Authorization": f"Bearer {openrouter_api_key}",
-                    "Content-Type": "application/json",
-                    "HTTP-Referer": "https://github.com/election-verification",
-                    "X-Title": "Thai Election Ballot OCR",
-                },
-                json={
-                    "model": "google/gemma-3-12b-it:free",
-                    "messages": [{
-                        "role": "user",
-                        "content": [
-                            {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image_data}"}},
-                            {"type": "text", "text": prompt},
-                        ],
-                    }],
-                    "max_tokens": 2048,
-                },
-                timeout=60,
-            )
-
-            if response.status_code == 200:
-                result = response.json()
-                response_text = result["choices"][0]["message"]["content"]
-                print(f"  Gemma 3 response received ({len(response_text)} chars)")
-
-                # Parse JSON from response
-                response_text = _strip_json_fences(response_text)
-                data = json.loads(response_text)
-                return process_extracted_data(data, image_path, form_type)
-            else:
-                print(f"  OpenRouter error: {response.status_code} - {response.text}")
-                print("  Falling back to Claude Vision...")
-
-        except Exception as e:
-            print(f"  OpenRouter failed: {e}")
-            print("  Falling back to Claude Vision...")
-
-    # Fallback to Claude Vision
-    result = extract_with_claude_vision(image_path, form_type)
-    if result is not None:
-        return result
-
-    # Final fallback: Local Tesseract OCR
-    print("  Cloud AI failed. Trying local Tesseract OCR...")
-    return extract_with_tesseract(image_path, form_type)
+    from model_backends import EnsembleExtractor, build_backends_from_env
+    return EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
 
 
-def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> Optional[BallotData]:
+def _extract_with_crops(image_path: str, form_type: FormType, api_key: str, model_id: str = _OPENROUTER_MODEL, base_url: str = "https://openrouter.ai/api/v1", timeout: int = 30) -> Optional[BallotData]:
     """
     Crop-aware extraction that sends only relevant regions to the API.
 
@@ -563,7 +530,7 @@ def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> O
     import requests
 
     try:
-        from crop_utils import crop_page_image, CROP_REGIONS
+        from crop_utils import crop_page_image, FORM_TEMPLATES, _DEFAULT_TEMPLATE
     except ImportError:
         print("  crop_utils not available for crop-aware extraction")
         return None
@@ -574,24 +541,44 @@ def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> O
         print("  Pillow not available for crop-aware extraction")
         return None
 
+    # Select template based on form type
+    template = FORM_TEMPLATES.get(form_type, _DEFAULT_TEMPLATE)
+
+    # Determine if this is page 1 or a continuation page
+    # Heuristic: check filename for "page-1" or similar patterns
+    is_page_1 = True
+    filename = os.path.basename(image_path).lower()
+    if "page-" in filename and "page-1" not in filename and "page-01" not in filename:
+        # e.g. "page-2.png", "page-02.png"
+        import re
+        match = re.search(r'page-(\d+)', filename)
+        if match and int(match.group(1)) > 1:
+            is_page_1 = False
+    
+    # Select appropriate region from template
+    crop_region = template.vote_numbers_p1 if is_page_1 else template.vote_numbers_cont
+
+    print(f"  Using crop template for {form_type.value}: Page 1={is_page_1}, Region={crop_region}")
+
     # Crop the vote-count column region
     try:
-        vote_crop_path = crop_page_image(image_path, CROP_REGIONS["vote_numbers"])
+        vote_crop_path = crop_page_image(image_path, crop_region)
     except Exception as e:
         print(f"  Failed to crop vote region: {e}")
         return None
 
     try:
-        # Encode the cropped image
-        with open(vote_crop_path, "rb") as f:
-            cropped_image_data = base64.b64encode(f.read()).decode("utf-8")
+        # Preprocess and encode the cropped image for better OCR
+        cropped_image_data = base64.b64encode(
+            _preprocess_image(vote_crop_path)
+        ).decode("utf-8")
 
         # Use a focused prompt for the cropped vote-count region
         prompt = get_vote_numbers_prompt()
 
         # Make API call with cropped image
         response = requests.post(
-            url="https://openrouter.ai/api/v1/chat/completions",
+            url=f"{base_url.rstrip('/')}/chat/completions",
             headers={
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
@@ -599,7 +586,7 @@ def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> O
                 "X-Title": "Thai Election Ballot OCR",
             },
             json={
-                "model": "google/gemma-3-12b-it:free",
+                "model": model_id,
                 "messages": [{
                     "role": "user",
                     "content": [
@@ -609,7 +596,7 @@ def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> O
                 }],
                 "max_tokens": 1024,
             },
-            timeout=30,
+            timeout=timeout,
         )
 
         if response.status_code != 200:
@@ -682,20 +669,48 @@ def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> O
 
 
 def get_vote_numbers_prompt() -> str:
-    """Prompt for extracting just vote numbers from a cropped region."""
-    return """
-Extract vote counts from this Thai ballot image section.
-Return ONLY a JSON array where each entry has:
-- "position": candidate/party number (integer)
-- "numeric": vote count as Arabic numerals (integer)
-- "thai": vote count as Thai text (string)
+    """Prompt for extracting vote numbers from a cropped ballot region."""
+    return """You are reading a CROPPED section of a Thai election ballot tally form.
 
-Example:
+This section shows the VOTE COUNT COLUMNS only. Each visible row has:
+  LEFT:   position/candidate number (printed, e.g. 1, 2, 3…)
+  MIDDLE: vote count as handwritten Arabic numerals
+  RIGHT:  vote count written in Thai words (handwritten)
+
+READING STRATEGY — follow this order for accuracy:
+1. Read the Thai WORDS column (rightmost) FIRST — Thai text is more
+   reliable than handwritten digits for AI vision.
+2. Convert the Thai words to an integer using the reference below.
+3. Cross-check against the handwritten numeric column (middle).
+4. If both agree → use that value.
+5. If they differ → trust the Thai words value.
+
+THAI NUMBER WORDS (building blocks):
+  ศูนย์=0  หนึ่ง=1  สอง=2  สาม=3  สี่=4  ห้า=5  หก=6  เจ็ด=7  แปด=8  เก้า=9
+  สิบ=10  ร้อย=100  พัน=1,000  หมื่น=10,000  แสน=100,000
+
+EXAMPLES:
+  หนึ่งร้อยห้าสิบสาม = 153
+  สี่สิบห้า           = 45
+  สิบสอง              = 12
+  สอง                 = 2
+  ศูนย์               = 0
+  สองพันสามร้อยสิบสอง = 2,312
+
+THAI NUMERAL DIGITS (if any appear in the numeric column):
+  ๐=0  ๑=1  ๒=2  ๓=3  ๔=4  ๕=5  ๖=6  ๗=7  ๘=8  ๙=9
+
+IMPORTANT:
+- Include EVERY row visible, even rows where the count is 0 (ศูนย์).
+- Do not skip any position number.
+- Return numeric values as plain integers (e.g. 153, not "153").
+
+Return ONLY a JSON array — no markdown, no explanations, no code fences:
 [
-    {"position": 1, "numeric": 100, "thai": "หนึ่งร้อย"},
-    {"position": 2, "numeric": 50, "thai": "ห้าสิบ"}
-]
-"""
+    {"position": 1, "numeric": 153, "thai": "หนึ่งร้อยห้าสิบสาม"},
+    {"position": 2, "numeric": 45,  "thai": "สี่สิบห้า"},
+    {"position": 3, "numeric": 0,   "thai": "ศูนย์"}
+]"""
 
 
 def get_summary_prompt() -> str:
@@ -812,14 +827,13 @@ Return ONLY valid JSON with NO markdown formatting:
         return None
 
 
-def extract_with_claude_vision(image_path: str, form_type: Optional[FormType] = None) -> Optional[BallotData]:
+def extract_with_claude_vision(image_path: str, form_type: Optional[FormType] = None, model_id: str = "claude-sonnet-4-20250514") -> Optional[BallotData]:
     """Fallback to Claude Vision for extraction."""
     import anthropic
 
     client = anthropic.Anthropic()
 
-    with open(image_path, "rb") as f:
-        image_data = base64.b64encode(f.read()).decode("utf-8")
+    image_data = base64.b64encode(_preprocess_image(image_path)).decode("utf-8")
 
     # Detect form type if not provided - do this as part of extraction for consistency
     if form_type is None:
@@ -940,7 +954,7 @@ Return ONLY valid JSON with NO markdown formatting, NO code blocks:
 
     try:
         message = client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=model_id,
             max_tokens=2048,
             messages=[
                 {

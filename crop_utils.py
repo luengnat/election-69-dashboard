@@ -14,21 +14,57 @@ import os
 import tempfile
 from pathlib import Path
 from typing import Optional
+from dataclasses import dataclass
 
 from ballot_types import FormType
 
 # ---------------------------------------------------------------------------
 # Crop region definitions (left, top, right, bottom) as fractions of page
 # ---------------------------------------------------------------------------
+
+@dataclass
+class FormCropTemplate:
+    """Defines crop regions for a specific form type layout."""
+    form_code: tuple[float, float, float, float]
+    summary: tuple[float, float, float, float]
+    vote_numbers_p1: tuple[float, float, float, float]  # Page 1
+    vote_numbers_cont: tuple[float, float, float, float]  # Page 2+
+
+# Default regions (Constituency forms)
+# Candidates start ~55% down on page 1
+_DEFAULT_TEMPLATE = FormCropTemplate(
+    form_code=(0.76, 0.02, 1.00, 0.09),
+    summary=(0.45, 0.28, 1.00, 0.58),
+    vote_numbers_p1=(0.66, 0.55, 1.00, 0.97),
+    vote_numbers_cont=(0.66, 0.03, 1.00, 0.97),
+)
+
+# Party-List regions (Forms with (บช))
+# Table starts much higher (~25% down) to fit 20+ parties per page
+_PARTY_LIST_TEMPLATE = FormCropTemplate(
+    form_code=(0.76, 0.02, 1.00, 0.09),
+    summary=(0.45, 0.28, 1.00, 0.58),  # Summary is usually on last page, might need adjustment
+    vote_numbers_p1=(0.66, 0.25, 1.00, 0.97),
+    vote_numbers_cont=(0.66, 0.03, 1.00, 0.97),
+)
+
+FORM_TEMPLATES: dict[FormType, FormCropTemplate] = {
+    # Constituency
+    FormType.S5_16: _DEFAULT_TEMPLATE,
+    FormType.S5_17: _DEFAULT_TEMPLATE,
+    FormType.S5_18: _DEFAULT_TEMPLATE,
+    # Party-List
+    FormType.S5_16_BCH: _PARTY_LIST_TEMPLATE,
+    FormType.S5_17_BCH: _PARTY_LIST_TEMPLATE,
+    FormType.S5_18_BCH: _PARTY_LIST_TEMPLATE,
+}
+
+# For backward compatibility / generic access
 CROP_REGIONS = {
-    # Top-right box containing "ก.ส. ๕/๑๘" form code
-    "form_code":              (0.76, 0.02, 1.00, 0.09),
-    # Valid/invalid/blank ballot counts (first page only, mid-page)
-    "summary":                (0.45, 0.28, 1.00, 0.58),
-    # ได้คะแนน column: constituency first page (candidates start ~55% down)
-    "vote_numbers":           (0.66, 0.55, 1.00, 0.97),
-    # ได้คะแนน column: page 2+ where table fills whole page
-    "vote_numbers_continuation": (0.66, 0.03, 1.00, 0.97),
+    "form_code": _DEFAULT_TEMPLATE.form_code,
+    "summary": _DEFAULT_TEMPLATE.summary,
+    "vote_numbers": _DEFAULT_TEMPLATE.vote_numbers_p1,
+    "vote_numbers_continuation": _DEFAULT_TEMPLATE.vote_numbers_cont,
 }
 
 # Path signals that unambiguously identify a form type (checked in order)
@@ -148,18 +184,22 @@ def get_crops_for_ballot(
     if not image_paths:
         return result
 
+    # Select template based on form type
+    template = FORM_TEMPLATES.get(form_type, _DEFAULT_TEMPLATE)
+
     # Summary crop: first page only
     try:
-        summary_crop = crop_page_image(image_paths[0], CROP_REGIONS["summary"])
+        summary_crop = crop_page_image(image_paths[0], template.summary)
         result["summary"].append(summary_crop)
     except Exception:
         pass  # Non-fatal: fall back to full-page extraction
 
     # Vote-numbers crops: each page
     for i, page_path in enumerate(image_paths):
-        region_key = "vote_numbers" if i == 0 else "vote_numbers_continuation"
+        # Page 1 uses vote_numbers_p1, Page 2+ uses vote_numbers_cont
+        region = template.vote_numbers_p1 if i == 0 else template.vote_numbers_cont
         try:
-            vote_crop = crop_page_image(page_path, CROP_REGIONS[region_key])
+            vote_crop = crop_page_image(page_path, region)
             result["vote_numbers"].append(vote_crop)
         except Exception:
             pass  # Non-fatal: fall back to full-page extraction

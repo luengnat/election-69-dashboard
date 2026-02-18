@@ -17,3 +17,7 @@ gdown>=5.0.0
 
 # Optional: Anthropic Claude API (for fallback OCR)
 # anthropic>=0.18.0
+
+# Optional: local Thai TrOCR backend (no API cost, CER 0.12 on Thai handwriting)
+# transformers>=4.30.0
+# torch>=2.0.0
