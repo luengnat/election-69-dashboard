@@ -24,11 +24,9 @@ env/
 Thumbs.db
 
 # Generated test outputs
-reports_test/*.pdf
-reports_test/*.json
-reports_test/constituency_*.pdf
-reports_test/constituency_*.md
-reports_test/ballot_*.md
+reports_test/
+test_reports/
+*.preprocessed.png
 
 # Generated data files
 ballot_data*.json
