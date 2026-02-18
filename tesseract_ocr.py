@@ -45,6 +45,11 @@ except ImportError:
     pytesseract = None
     Image = None
 
+# Optimal Tesseract configuration for Thai ballot forms
+# PSM 3 = Fully automatic page segmentation (handles complex layouts best)
+# OEM 1 = LSTM neural net engine only (best for Thai script)
+DEFAULT_TESSERACT_CONFIG = "--psm 3 --oem 1"
+
 
 @dataclass
 class TesseractResult:
@@ -103,7 +108,7 @@ def check_thai_language_pack() -> bool:
 def extract_text(
     image_path: str,
     lang: str = "tha+eng",
-    config: str = "--psm 6"
+    config: str = DEFAULT_TESSERACT_CONFIG
 ) -> Optional[str]:
     """
     Extract text from an image using Tesseract OCR.
@@ -112,9 +117,9 @@ def extract_text(
         image_path: Path to the image file
         lang: Language(s) to use (default: Thai + English)
         config: Tesseract configuration string
+                --psm 3 --oem 1 = Fully automatic page segmentation with LSTM engine (recommended)
                 --psm 6 = Assume a single uniform block of text
                 --psm 4 = Assume a single column of text
-                --psm 3 = Fully automatic page segmentation
 
     Returns:
         Extracted text or None if extraction failed
@@ -139,7 +144,7 @@ def extract_text(
 def extract_with_confidence(
     image_path: str,
     lang: str = "tha+eng",
-    config: str = "--psm 6"
+    config: str = DEFAULT_TESSERACT_CONFIG
 ) -> Optional[TesseractResult]:
     """
     Extract text with confidence scores.
