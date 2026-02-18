@@ -133,13 +133,13 @@ Return ONLY valid JSON with NO markdown formatting:
             ],
         )
 
-        response_text = message.content[0].text.strip()
-        if response_text.startswith("```"):
-            response_text = response_text.split("```")[1]
-            if response_text.startswith("json"):
-                response_text = response_text[4:]
+        # Guard: Check for empty response
+        if not message.content:
+            print("Empty response from Claude API")
+            return FormType.S5_17, "Empty response"
 
-        data = json.loads(response_text)
+        response_text = message.content[0].text.strip()
+        data = json.loads(_strip_json_fences(response_text))
         form_code = data.get("form_code", "5/17")
         is_party_list = data.get("is_party_list", False)
 
@@ -156,6 +156,9 @@ Return ONLY valid JSON with NO markdown formatting:
         form_type = form_type_map.get((form_code, is_party_list), FormType.S5_17)
         return form_type, response_text
 
+    except json.JSONDecodeError as e:
+        print(f"JSON parse error detecting form type: {e}")
+        return FormType.S5_17, f"JSON error: {e}"
     except Exception as e:
         print(f"Error detecting form type: {e}")
         return FormType.S5_17, str(e)
@@ -459,17 +462,12 @@ def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] =
             form_type = detected
             print(f"  Form type from path: {form_type.value}")
 
-    openrouter_api_key = os.environ.get("OPENROUTER_API_KEY")
+    # Validate API key (strip whitespace and check for non-empty)
+    openrouter_api_key = os.environ.get("OPENROUTER_API_KEY", "").strip()
+    if not openrouter_api_key:
+        openrouter_api_key = None
 
-    # Step 2: Crop-aware extraction when conditions are met.
-    if form_type is not None and CROP_UTILS_AVAILABLE and openrouter_api_key:
-        print("  Using crop-aware extraction (~70% token reduction)...")
-        result = _extract_with_crops(image_path, form_type, openrouter_api_key)
-        if result is not None:
-            return result
-        print("  Crop extraction failed, falling back to full-image...")
-
-    # Step 3: Full-image extraction (original path).
+    # Step 2: Full-image extraction (crop-aware extraction not yet implemented).
     # Read and encode image
     with open(image_path, "rb") as f:
         image_data = base64.b64encode(f.read()).decode("utf-8")
@@ -671,12 +669,7 @@ Return ONLY valid JSON with NO markdown formatting:
         )
 
         response_text = message.content[0].text
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0]
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0]
-
-        data = json.loads(response_text.strip())
+        data = json.loads(_strip_json_fences(response_text))
 
         # Process the data (same logic as before)
         return process_extracted_data(data, image_path, form_type)
@@ -839,13 +832,7 @@ Return ONLY valid JSON with NO markdown formatting, NO code blocks:
 
         # Parse JSON response
         response_text = message.content[0].text
-        # Extract JSON from response (handle markdown code blocks)
-        if "```json" in response_text:
-            response_text = response_text.split("```json")[1].split("```")[0]
-        elif "```" in response_text:
-            response_text = response_text.split("```")[1].split("```")[0]
-
-        data = json.loads(response_text.strip())
+        data = json.loads(_strip_json_fences(response_text))
 
         # Use shared processing function
         return process_extracted_data(data, image_path, form_type)
