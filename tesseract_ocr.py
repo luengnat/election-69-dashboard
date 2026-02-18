@@ -387,16 +387,40 @@ class TesseractOCR:
 
         vote_counts = {}
         lines = result.lines
+        text = result.text
 
-        # Look for patterns like "1. 100" or "1 100" or "หมายเลข 1: 100"
+        # Pattern 1: Thai numeral position followed by number
+        # Example: "๑ ... 153" or "๑. 153"
+        thai_numeral_pattern = r'([๑๒๓๔๕๖๗๘๙๐]+)\s*[.\-:\s]*[^\d]*?(\d{1,5})'
+
         for line in lines:
-            # Try to match position and vote count
-            match = re.match(r'(\d+)\s*[:\.]?\s*(\d+)', line.strip())
+            # Try Thai numerals first
+            matches = re.findall(thai_numeral_pattern, line)
+            for thai_pos, count in matches:
+                position = thai_numeral_to_arabic(thai_pos)
+                votes = int(count)
+                if 1 <= position <= 57 and votes >= 0:
+                    vote_counts[position] = votes
+
+            # Pattern 2: Arabic position followed by vote count
+            # Example: "1 153" or "1. 153"
+            arabic_pattern = r'^\s*(\d{1,2})\s*[.\-:\s]+(\d{1,5})\s*$'
+            match = re.match(arabic_pattern, line.strip())
             if match:
                 position = int(match.group(1))
                 votes = int(match.group(2))
-                if 1 <= position <= 57:  # Valid position range
+                if 1 <= position <= 57 and position not in vote_counts:
                     vote_counts[position] = votes
+
+        # Pattern 3: Look for consecutive numbers in vote column format
+        # Find all multi-digit numbers that could be vote counts
+        if not vote_counts:
+            all_numbers = re.findall(r'\b(\d{2,5})\b', text)
+            # Filter likely vote counts (2+ digits, reasonable range)
+            likely_votes = [int(n) for n in all_numbers if 10 <= int(n) <= 9999]
+            # Assign to positions 1, 2, 3... based on order found
+            for i, votes in enumerate(likely_votes[:10], 1):
+                vote_counts[i] = votes
 
         return vote_counts
 
