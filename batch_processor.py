@@ -12,10 +12,14 @@ Usage:
     results, errors = processor.process_batch(image_paths)
 """
 
+import json
+import dataclasses
+import os
 import time
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Optional, Any, Protocol, runtime_checkable
 
 # Import the existing OCR function
@@ -297,6 +301,30 @@ class BatchProcessor:
         self.enable_memory_cleanup = enable_memory_cleanup
         self.verbose = verbose
 
+    def _load_checkpoint(self, checkpoint_file: str) -> dict[str, dict]:
+        """
+        Load a JSONL checkpoint file, returning {path -> entry} dict.
+
+        Silently skips truncated or malformed lines (handles mid-crash writes).
+        """
+        result: dict[str, dict] = {}
+        try:
+            with open(checkpoint_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        entry = json.loads(line)
+                        path = entry.get("path", "")
+                        if path:
+                            result[path] = entry
+                    except json.JSONDecodeError:
+                        pass  # Silently ignore truncated last line
+        except (IOError, OSError):
+            pass
+        return result
+
     @retry(
         stop=stop_after_attempt(3),
         wait=wait_exponential(multiplier=1, min=4, max=10),
@@ -355,7 +383,9 @@ class BatchProcessor:
     def process_batch(
         self,
         image_paths: list[str],
-        progress_callback: Optional[ProgressCallback] = None
+        progress_callback: Optional[ProgressCallback] = None,
+        checkpoint_file: Optional[str] = None,
+        retry_errors: bool = False,
     ) -> BatchResult:
         """
         Process multiple ballot images concurrently.
@@ -363,17 +393,58 @@ class BatchProcessor:
         Args:
             image_paths: List of paths to ballot images
             progress_callback: Optional callback for progress updates (default: None)
+            checkpoint_file: Optional path to a JSONL checkpoint file for resume support.
+                If the file exists, already-processed paths are skipped and their results
+                are loaded directly.  Each completed ballot is appended as a JSON line
+                immediately after processing so a crash can be resumed.
+            retry_errors: If True, re-process paths that previously errored.
+                Only meaningful when checkpoint_file is provided.
 
         Returns:
             BatchResult with results, errors, total, and processed count
         """
+        from ballot_types import BallotData as _BallotData
+
         # Use NullProgressCallback if no callback provided
         callback = progress_callback if progress_callback else NullProgressCallback()
         total = len(image_paths)
 
-        # Initialize result with timing
+        # ── Load checkpoint ──────────────────────────────────────────────────
+        checkpoint: dict[str, dict] = {}
+        if checkpoint_file and os.path.isfile(checkpoint_file):
+            checkpoint = self._load_checkpoint(checkpoint_file)
+
+        paths_to_skip: set[str] = set()
+        preloaded_results: list[_BallotData] = []
+        preloaded_errors: list[dict] = []
+
+        for path_str, entry in checkpoint.items():
+            if entry.get("status") == "ok":
+                try:
+                    ballot = _BallotData.from_dict(entry["result"])
+                    preloaded_results.append(ballot)
+                except Exception:
+                    pass  # Corrupted entry — reprocess
+                else:
+                    paths_to_skip.add(path_str)
+            elif entry.get("status") == "error" and not retry_errors:
+                preloaded_errors.append({"path": path_str, "error": entry.get("error", "previous error")})
+                paths_to_skip.add(path_str)
+
+        pending_paths = [p for p in image_paths if str(p) not in paths_to_skip]
+
+        # ── Open checkpoint file for appending ──────────────────────────────
+        checkpoint_fh = None
+        checkpoint_lock = threading.Lock()
+        if checkpoint_file:
+            checkpoint_fh = open(checkpoint_file, "a", encoding="utf-8")
+
+        # ── Initialise result pre-populated with checkpoint data ─────────────
         start_time = time.time()
         result = BatchResult(total=total, start_time=start_time)
+        result.results.extend(preloaded_results)
+        result.processed = len(preloaded_results)
+        result.errors.extend(preloaded_errors)
 
         # Track metrics
         memory_cleanups = 0
@@ -381,46 +452,68 @@ class BatchProcessor:
         # Notify callback that batch is starting
         callback.on_start(total)
 
-        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
-            # Submit all tasks
-            future_to_path = {
-                executor.submit(self.process_single, path): path
-                for path in image_paths
-            }
+        try:
+            with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
+                # Submit only pending (non-checkpointed) tasks
+                future_to_path = {
+                    executor.submit(self.process_single, path): path
+                    for path in pending_paths
+                }
 
-            # Collect results as they complete (track current count)
-            current = 0
-            for future in as_completed(future_to_path):
-                path = future_to_path[future]
-                current += 1  # 1-indexed for user display
-                try:
-                    ballot_data = future.result()
-                    if ballot_data:
-                        result.results.append(ballot_data)
-                        result.processed += 1
-                        callback.on_progress(current, total, str(path), ballot_data)
-                    else:
-                        # Extraction returned None (no data extracted)
-                        error_info = {
-                            "path": str(path),
-                            "error": "No data extracted from image"
-                        }
+                # Track current including already-skipped items
+                current = len(paths_to_skip)
+
+                for future in as_completed(future_to_path):
+                    path = future_to_path[future]
+                    current += 1  # 1-indexed for user display
+                    ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                    try:
+                        ballot_data = future.result()
+                        if ballot_data:
+                            result.results.append(ballot_data)
+                            result.processed += 1
+                            callback.on_progress(current, total, str(path), ballot_data)
+                            # Write success line to checkpoint
+                            if checkpoint_fh:
+                                entry = {
+                                    "path": str(path),
+                                    "status": "ok",
+                                    "ts": ts,
+                                    "result": dataclasses.asdict(ballot_data),
+                                }
+                                with checkpoint_lock:
+                                    checkpoint_fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                                    checkpoint_fh.flush()
+                        else:
+                            error_msg = "No data extracted from image"
+                            error_info = {"path": str(path), "error": error_msg}
+                            result.errors.append(error_info)
+                            callback.on_error(current, total, str(path), error_msg)
+                            if checkpoint_fh:
+                                entry = {"path": str(path), "status": "error", "ts": ts, "error": error_msg}
+                                with checkpoint_lock:
+                                    checkpoint_fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                                    checkpoint_fh.flush()
+                    except Exception as e:
+                        error_msg = str(e)
+                        error_info = {"path": str(path), "error": error_msg}
                         result.errors.append(error_info)
-                        callback.on_error(current, total, str(path), error_info["error"])
-                except Exception as e:
-                    error_info = {
-                        "path": str(path),
-                        "error": str(e)
-                    }
-                    result.errors.append(error_info)
-                    callback.on_error(current, total, str(path), error_info["error"])
+                        callback.on_error(current, total, str(path), error_msg)
+                        if checkpoint_fh:
+                            entry = {"path": str(path), "status": "error", "ts": ts, "error": error_msg}
+                            with checkpoint_lock:
+                                checkpoint_fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                                checkpoint_fh.flush()
 
-                # Memory cleanup every N ballots to prevent OOM
-                if self.enable_memory_cleanup and current % MEMORY_CLEANUP_INTERVAL == 0:
-                    gc.collect()
-                    memory_cleanups += 1
-                    if self.verbose:
-                        print(f"\n[Memory cleanup #{memory_cleanups}]")
+                    # Memory cleanup every N ballots to prevent OOM
+                    if self.enable_memory_cleanup and current % MEMORY_CLEANUP_INTERVAL == 0:
+                        gc.collect()
+                        memory_cleanups += 1
+                        if self.verbose:
+                            print(f"\n[Memory cleanup #{memory_cleanups}]")
+        finally:
+            if checkpoint_fh:
+                checkpoint_fh.close()
 
         # Calculate final timing and metrics
         end_time = time.time()
@@ -429,8 +522,6 @@ class BatchProcessor:
         result.duration_seconds = duration
         result.requests_per_second = result.processed / duration if duration > 0 else 0.0
         result.memory_cleanups = memory_cleanups
-        # Note: retries tracked by tenacity internally, we don't have easy access here
-        # Could be added via a custom callback if needed in future
 
         # Notify callback that batch is complete
         callback.on_complete(result.results, result.errors)
@@ -440,10 +531,12 @@ class BatchProcessor:
     def process_batch_sequential(
         self,
         image_paths: list[str],
-        progress_callback: Optional[ProgressCallback] = None
+        progress_callback: Optional[ProgressCallback] = None,
+        checkpoint_file: Optional[str] = None,
+        retry_errors: bool = False,
     ) -> BatchResult:
         """
-        Process ballot images sequentially (for comparison testing).
+        Process ballot images sequentially (for comparison testing or low-rate APIs).
 
         Uses the same rate limiting and retry logic as parallel processing,
         but processes one image at a time.
@@ -451,54 +544,103 @@ class BatchProcessor:
         Args:
             image_paths: List of paths to ballot images
             progress_callback: Optional callback for progress updates (default: None)
+            checkpoint_file: Optional JSONL checkpoint path for resume support.
+            retry_errors: If True, re-process paths that previously errored.
 
         Returns:
             BatchResult with results, errors, total, and processed count
         """
-        # Use NullProgressCallback if no callback provided
+        from ballot_types import BallotData as _BallotData
+
         callback = progress_callback if progress_callback else NullProgressCallback()
         total = len(image_paths)
 
-        # Initialize result with timing
+        # ── Load checkpoint ──────────────────────────────────────────────────
+        checkpoint: dict[str, dict] = {}
+        if checkpoint_file and os.path.isfile(checkpoint_file):
+            checkpoint = self._load_checkpoint(checkpoint_file)
+
+        paths_to_skip: set[str] = set()
+        preloaded_results: list[_BallotData] = []
+        preloaded_errors: list[dict] = []
+
+        for path_str, entry in checkpoint.items():
+            if entry.get("status") == "ok":
+                try:
+                    ballot = _BallotData.from_dict(entry["result"])
+                    preloaded_results.append(ballot)
+                except Exception:
+                    pass
+                else:
+                    paths_to_skip.add(path_str)
+            elif entry.get("status") == "error" and not retry_errors:
+                preloaded_errors.append({"path": path_str, "error": entry.get("error", "previous error")})
+                paths_to_skip.add(path_str)
+
+        # ── Open checkpoint for appending ────────────────────────────────────
+        checkpoint_fh = None
+        if checkpoint_file:
+            checkpoint_fh = open(checkpoint_file, "a", encoding="utf-8")
+
+        # ── Initialise result with checkpoint data ────────────────────────────
         start_time = time.time()
         result = BatchResult(total=total, start_time=start_time)
+        result.results.extend(preloaded_results)
+        result.processed = len(preloaded_results)
+        result.errors.extend(preloaded_errors)
 
-        # Track metrics
         memory_cleanups = 0
-
-        # Notify callback that batch is starting
         callback.on_start(total)
 
-        for idx, path in enumerate(image_paths, start=1):  # 1-indexed
-            try:
-                ballot_data = self.process_single(path)
-                if ballot_data:
-                    result.results.append(ballot_data)
-                    result.processed += 1
-                    callback.on_progress(idx, total, str(path), ballot_data)
-                else:
-                    error_info = {
-                        "path": str(path),
-                        "error": "No data extracted from image"
-                    }
-                    result.errors.append(error_info)
-                    callback.on_error(idx, total, str(path), error_info["error"])
-            except Exception as e:
-                error_info = {
-                    "path": str(path),
-                    "error": str(e)
-                }
-                result.errors.append(error_info)
-                callback.on_error(idx, total, str(path), error_info["error"])
+        # Offset idx by already-skipped items so on_progress counts are consistent
+        idx_offset = len(paths_to_skip)
 
-            # Memory cleanup every N ballots to prevent OOM
-            if self.enable_memory_cleanup and idx % MEMORY_CLEANUP_INTERVAL == 0:
-                gc.collect()
-                memory_cleanups += 1
-                if self.verbose:
-                    print(f"\n[Memory cleanup #{memory_cleanups}]")
+        try:
+            pending_paths = [(i, p) for i, p in enumerate(image_paths, start=1) if str(p) not in paths_to_skip]
+            for seq, (orig_idx, path) in enumerate(pending_paths, start=1):
+                idx = idx_offset + seq
+                ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+                try:
+                    ballot_data = self.process_single(path)
+                    if ballot_data:
+                        result.results.append(ballot_data)
+                        result.processed += 1
+                        callback.on_progress(idx, total, str(path), ballot_data)
+                        if checkpoint_fh:
+                            entry = {
+                                "path": str(path),
+                                "status": "ok",
+                                "ts": ts,
+                                "result": dataclasses.asdict(ballot_data),
+                            }
+                            checkpoint_fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                            checkpoint_fh.flush()
+                    else:
+                        error_msg = "No data extracted from image"
+                        result.errors.append({"path": str(path), "error": error_msg})
+                        callback.on_error(idx, total, str(path), error_msg)
+                        if checkpoint_fh:
+                            entry = {"path": str(path), "status": "error", "ts": ts, "error": error_msg}
+                            checkpoint_fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                            checkpoint_fh.flush()
+                except Exception as e:
+                    error_msg = str(e)
+                    result.errors.append({"path": str(path), "error": error_msg})
+                    callback.on_error(idx, total, str(path), error_msg)
+                    if checkpoint_fh:
+                        entry = {"path": str(path), "status": "error", "ts": ts, "error": error_msg}
+                        checkpoint_fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                        checkpoint_fh.flush()
 
-        # Calculate final timing and metrics
+                if self.enable_memory_cleanup and idx % MEMORY_CLEANUP_INTERVAL == 0:
+                    gc.collect()
+                    memory_cleanups += 1
+                    if self.verbose:
+                        print(f"\n[Memory cleanup #{memory_cleanups}]")
+        finally:
+            if checkpoint_fh:
+                checkpoint_fh.close()
+
         end_time = time.time()
         duration = end_time - start_time
         result.end_time = end_time
@@ -506,9 +648,7 @@ class BatchProcessor:
         result.requests_per_second = result.processed / duration if duration > 0 else 0.0
         result.memory_cleanups = memory_cleanups
 
-        # Notify callback that batch is complete
         callback.on_complete(result.results, result.errors)
-
         return result
 
 
