@@ -467,7 +467,16 @@ def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] =
     if not openrouter_api_key:
         openrouter_api_key = None
 
-    # Step 2: Full-image extraction (crop-aware extraction not yet implemented).
+    # Step 2: Crop-aware extraction for cost reduction (~70% savings).
+    if form_type is not None and CROP_UTILS_AVAILABLE and openrouter_api_key:
+        print("  Trying crop-aware extraction (~70% token reduction)...")
+        result = _extract_with_crops(image_path, form_type, openrouter_api_key)
+        if result is not None:
+            print("  Crop-aware extraction succeeded!")
+            return result
+        print("  Crop extraction failed, falling back to full-image...")
+
+    # Step 3: Full-image extraction.
     # Read and encode image
     with open(image_path, "rb") as f:
         image_data = base64.b64encode(f.read()).decode("utf-8")
@@ -542,10 +551,134 @@ def _extract_with_crops(image_path: str, form_type: FormType, api_key: str) -> O
 
     This reduces token costs by ~70% by cropping to just the vote-count column
     and summary section instead of sending the full page.
+
+    Args:
+        image_path: Path to the ballot image
+        form_type: The detected form type
+        api_key: OpenRouter API key
+
+    Returns:
+        BallotData if extraction successful, None otherwise
     """
-    # Implementation placeholder - crop-aware extraction was removed due to code issues
-    # TODO: Re-implement crop-aware extraction with proper error handling
-    return None
+    import requests
+
+    try:
+        from crop_utils import crop_page_image, CROP_REGIONS
+    except ImportError:
+        print("  crop_utils not available for crop-aware extraction")
+        return None
+
+    try:
+        from PIL import Image
+    except ImportError:
+        print("  Pillow not available for crop-aware extraction")
+        return None
+
+    # Crop the vote-count column region
+    try:
+        vote_crop_path = crop_page_image(image_path, CROP_REGIONS["vote_numbers"])
+    except Exception as e:
+        print(f"  Failed to crop vote region: {e}")
+        return None
+
+    try:
+        # Encode the cropped image
+        with open(vote_crop_path, "rb") as f:
+            cropped_image_data = base64.b64encode(f.read()).decode("utf-8")
+
+        # Use a focused prompt for the cropped vote-count region
+        prompt = get_vote_numbers_prompt()
+
+        # Make API call with cropped image
+        response = requests.post(
+            url="https://openrouter.ai/api/v1/chat/completions",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+                "HTTP-Referer": "https://github.com/election-verification",
+                "X-Title": "Thai Election Ballot OCR",
+            },
+            json={
+                "model": "google/gemma-3-12b-it:free",
+                "messages": [{
+                    "role": "user",
+                    "content": [
+                        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{cropped_image_data}"}},
+                        {"type": "text", "text": prompt},
+                    ],
+                }],
+                "max_tokens": 1024,
+            },
+            timeout=30,
+        )
+
+        if response.status_code != 200:
+            print(f"  Crop API error: {response.status_code}")
+            return None
+
+        result = response.json()
+        response_text = result["choices"][0]["message"]["content"]
+
+        # Parse the vote counts from the cropped region
+        vote_data = json.loads(_strip_json_fences(response_text))
+
+        # Build minimal ballot data from the extracted votes
+        if isinstance(vote_data, list) and len(vote_data) > 0:
+            vote_counts = {}
+            vote_details = {}
+
+            for entry in vote_data:
+                position = entry.get("position", 0)
+                numeric = entry.get("numeric", 0)
+                thai_text = entry.get("thai", "")
+
+                if position > 0:
+                    vote_counts[position] = numeric
+                    if thai_text:
+                        from ballot_types import validate_vote_entry
+                        vote_details[position] = validate_vote_entry(numeric, thai_text)
+
+            # Calculate total from vote counts
+            total_votes = sum(vote_counts.values())
+
+            # Build polling station ID from form type
+            station_id = f"Constituency-{form_type.value}"
+
+            return BallotData(
+                form_type=form_type.value,
+                form_category="party_list" if form_type.is_party_list else "constituency",
+                province="",  # Would need additional crops to extract
+                constituency_number=0,
+                district="",
+                polling_unit=0,
+                polling_station_id=station_id,
+                vote_counts=vote_counts,
+                vote_details=vote_details,
+                party_votes={},
+                party_details={},
+                total_votes=total_votes,
+                valid_votes=total_votes,
+                invalid_votes=0,
+                blank_votes=0,
+                source_file=image_path,
+                confidence_score=0.7,  # Lower confidence due to missing metadata
+                confidence_details={"level": "MEDIUM", "crop_based": True},
+            )
+
+        return None
+
+    except json.JSONDecodeError as e:
+        print(f"  Crop extraction JSON error: {e}")
+        return None
+    except Exception as e:
+        print(f"  Crop extraction failed: {e}")
+        return None
+    finally:
+        # Clean up temporary crop file
+        try:
+            os.unlink(vote_crop_path)
+        except (OSError, NameError):
+            pass
 
 
 def get_vote_numbers_prompt() -> str:
