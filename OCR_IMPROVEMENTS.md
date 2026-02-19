@@ -169,6 +169,22 @@ Created `digit_recognizer.py` with:
 - Manual annotation or synthetic data generation
 - GPU recommended for training
 
+### Research from Klaijan/th-election-2026
+
+Learned from: https://github.com/Klaijan/th-election-2026
+
+| Feature | Their Approach | Our Implementation |
+|---------|---------------|-------------------|
+| PDF DPI | 400 (CV) / 200 (Vision LLM) | Native resolution |
+| Vote Column | Extract last column only | ✅ `vote_extractor.py` |
+| Grid Removal | Morphological operations | ✅ `remove_grid_lines()` |
+| Digit OCR | Character whitelist | ✅ `DIGIT_ONLY_CONFIG` |
+| Thai Numerals | ๐๑๒๓๔๕๖๗๘๙ → 0123456789 | ✅ `thai_to_arabic()` |
+| Primary OCR | Google Cloud Vision | Tesseract (fallback) |
+| Vision LLM | Gemini/Ollama | Not implemented |
+
+**Key finding**: Vision LLM (Gemini/Ollama) is recommended for full form extraction in one shot.
+
 ## Commits Made
 
 ```
