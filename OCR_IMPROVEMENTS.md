@@ -26,8 +26,22 @@ This document summarizes the OCR accuracy improvements made to the Thai Election
 
 | Metric | Before | After | Improvement |
 |--------|--------|-------|-------------|
-| Tesseract confidence | 85.7% | 89.6% | **+3.9%** |
+| Tesseract confidence | 85.7% | 89.8% | **+4.1%** |
+| Form category detection | 14.3% | **100%** | **+85.7%** (with fuzzy matching) |
 | Thai TrOCR model | openthaigpt/thai-trocr | kkatiz/thai-trocr-thaigov-v2 | **~15% expected** |
+
+### Ground Truth Validation (2026-02-19)
+
+Tested against `tests/ground_truth.json`:
+
+| Detection Task | Accuracy | Method |
+|----------------|----------|--------|
+| Form category (constituency vs party_list) | **100%** | Fuzzy regex for "บัญชีรายชื่อ" |
+| is_party_list flag | **100%** | Pattern matching with OCR error tolerance |
+| Province name | **0%** | Handwritten - use path-based detection |
+| Vote counts | Partial | Handwritten - use AI Vision for accuracy |
+
+**Key insight**: OCR misreads Thai characters (ช↔ซ), requiring fuzzy matching.
 
 ## Files Created/Modified
 
@@ -91,16 +105,36 @@ PSM11_OEM1:   77.8%
 
 ### Per-Image Results
 
-| Image | Confidence | Vote Extraction |
-|-------|------------|-----------------|
-| bch_page-1.png | 90.3% | Partial |
-| bch_page-2.png | 90.0% | None |
-| bch_page-3.png | 91.8% | Partial |
-| bch_page-4.png | 84.0% | Partial |
-| high_res_page-1.png | 89.0% | Partial |
-| high_res_page-2.png | 91.6% | Partial |
-| page-1.png | 91.8% | Partial |
-| page-2.png | 88.3% | Partial |
+| Image | Confidence | Form Category | Vote Extraction |
+|-------|------------|---------------|-----------------|
+| bch_page-1.png | 90.3% | party_list ✓ | Partial |
+| bch_page-2.png | 90.0% | party_list ✓ | None |
+| bch_page-3.png | 91.8% | party_list ✓ | Partial |
+| bch_page-4.png | 84.0% | party_list ✓ | Partial |
+| high_res_page-1.png | 89.0% | constituency ✓ | Partial |
+| high_res_page-2.png | 91.6% | constituency ✓ | Partial |
+| page-1.png | 91.8% | constituency ✓ | Partial |
+| page-2.png | 88.3% | constituency ✓ | Partial |
+
+### PDF Processing Results
+
+| Form Type | Count | Avg Confidence | Notes |
+|-----------|-------|----------------|-------|
+| ส.ส. 5/16 | 4 | 89.3% | Constituency form |
+| ส.ส. 5/17 | 76 | 88.9% | Constituency form |
+| ส.ส. 5/18 | 28 | 91.7% | Party list summary |
+
+**Total PDFs available**: 108 (mostly Phrae province)
+
+### Preprocessing Comparison
+
+| Strategy | Avg Confidence | Notes |
+|----------|---------------|-------|
+| No preprocessing | 90.9% | Good quality PDFs |
+| Adaptive preprocessing | 90.9% | No improvement on clean images |
+| Aggressive preprocessing | ~55% | **HURTS** low-res images |
+
+**Recommendation**: Skip preprocessing for clean images. Only use for low-quality scans.
 
 ## Commits Made
 

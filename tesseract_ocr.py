@@ -431,6 +431,54 @@ class TesseractOCR:
 
         return vote_counts
 
+    def detect_form_category(self, image_path: str) -> dict:
+        """
+        Detect form category and type from a ballot image.
+
+        Uses fuzzy pattern matching to handle OCR character confusions
+        (e.g., ช <-> ซ in Thai text).
+
+        Args:
+            image_path: Path to the ballot image
+
+        Returns:
+            Dictionary with 'is_party_list', 'form_category', and confidence
+        """
+        result = self.process_ballot(image_path)
+        if not result:
+            return {'is_party_list': None, 'form_category': 'unknown', 'confidence': 0}
+
+        text = result.text
+
+        # Fuzzy patterns for party list detection
+        # Handle OCR misreads: ช <-> ซ, ื่ <-> ื
+        party_list_patterns = [
+            r'บัญชีราย[ชซ]ื่อ',  # บัญชีรายชื่อ or บัญชีรายซื่อ
+            r'แบบบัญชี',         # แบบบัญชี
+            r'\(บช\)',           # (บช)
+            r'บช\)',             # บช) without opening paren
+        ]
+
+        is_party_list = False
+        for pattern in party_list_patterns:
+            if re.search(pattern, text):
+                is_party_list = True
+                break
+
+        # Determine form category
+        if is_party_list:
+            form_category = 'party_list'
+        elif 'แบ่งเขตเลือกตั้ง' in text:
+            form_category = 'constituency'
+        else:
+            form_category = 'unknown'
+
+        return {
+            'is_party_list': is_party_list,
+            'form_category': form_category,
+            'confidence': result.confidence
+        }
+
 
 # Module-level convenience functions
 def is_available() -> bool:
