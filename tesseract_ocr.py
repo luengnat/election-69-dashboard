@@ -194,6 +194,63 @@ def extract_with_confidence(
         return None
 
 
+# Tesseract config for digit-only extraction (learned from Klaijan/th-election-2026)
+# Uses character whitelist to only recognize digits and decimal points
+DIGIT_ONLY_CONFIG = "--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789."
+
+
+def extract_digits_only(
+    image_path: str,
+    allow_decimal: bool = True
+) -> list[str]:
+    """
+    Extract only digits from an image using Tesseract with character whitelist.
+
+    This is more accurate for handwritten numbers because it forces Tesseract
+    to only output digit characters, reducing misrecognition of similar-looking
+    letters (e.g., O→0, I→1, S→5).
+
+    Learned from: https://github.com/Klaijan/th-election-2026
+
+    Args:
+        image_path: Path to the image file
+        allow_decimal: Whether to allow decimal points in output
+
+    Returns:
+        List of digit strings found
+    """
+    if not TESSERACT_AVAILABLE:
+        return []
+
+    if not os.path.exists(image_path):
+        return []
+
+    # Build config with appropriate whitelist
+    if allow_decimal:
+        config = DIGIT_ONLY_CONFIG
+    else:
+        config = "--oem 3 --psm 6 -c tessedit_char_whitelist=0123456789"
+
+    try:
+        img = Image.open(image_path)
+        text = pytesseract.image_to_string(img, lang="eng", config=config)
+        # Split and filter
+        parts = text.strip().split()
+        # Filter valid numbers
+        results = []
+        for part in parts:
+            if allow_decimal:
+                if re.match(r'^\d+\.?\d*$', part):
+                    results.append(part)
+            else:
+                if part.isdigit():
+                    results.append(part)
+        return results
+    except Exception as e:
+        print(f"Digit extraction failed: {e}")
+        return []
+
+
 def extract_numbers(
     image_path: str,
     lang: str = "tha+eng"
