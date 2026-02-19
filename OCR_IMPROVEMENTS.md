@@ -148,6 +148,27 @@ PSM11_OEM1:   77.8%
 
 **Key finding**: Tesseract cannot reliably read handwritten vote counts. AI Vision APIs are required for accurate vote extraction.
 
+### Alternative OCR Methods Tested
+
+| Method | Confidence | Result |
+|--------|------------|--------|
+| EasyOCR | 0.05 | Failed on handwritten numbers |
+| Thai TrOCR | N/A | Designed for text lines, not digits |
+| Microsoft TrOCR | N/A | English only, wrong language |
+| MNIST models | N/A | Trained on isolated digits, not ballot crops |
+
+### Fine-tuning Options
+
+Created `digit_recognizer.py` with:
+- SimpleDigitCNN: Basic CNN for single digit classification
+- CRNN: CNN+RNN for multi-digit sequences
+- Training pipeline for custom data
+
+**Requirements for fine-tuning:**
+- 100-500 labeled ballot regions with vote counts
+- Manual annotation or synthetic data generation
+- GPU recommended for training
+
 ## Commits Made
 
 ```
