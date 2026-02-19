@@ -268,10 +268,8 @@ def preprocess_for_numbers(image_path: str, output_path: Optional[str] = None) -
     """
     Preprocess an image to improve number extraction.
 
-    Applies:
-    - Grayscale conversion
-    - Thresholding
-    - Noise reduction
+    Uses adaptive preprocessing to apply optimal filters based on image
+    characteristics (resolution, contrast, noise).
 
     Args:
         image_path: Path to the input image
@@ -281,32 +279,41 @@ def preprocess_for_numbers(image_path: str, output_path: Optional[str] = None) -
         Path to preprocessed image or None if failed
     """
     try:
-        from PIL import Image, ImageFilter, ImageOps
+        import adaptive_ocr
+        processed_path, _ = adaptive_ocr.adaptive_preprocess(image_path, output_path=output_path)
+        return processed_path
+    except ImportError:
+        # Fallback to static preprocessing if adaptive_ocr is missing
+        try:
+            from PIL import Image, ImageFilter, ImageOps
 
-        img = Image.open(image_path)
+            img = Image.open(image_path)
 
-        # Convert to grayscale
-        img = img.convert('L')
+            # Convert to grayscale
+            img = img.convert('L')
 
-        # Increase contrast
-        img = ImageOps.autocontrast(img)
+            # Increase contrast
+            img = ImageOps.autocontrast(img)
 
-        # Apply threshold (binary image)
-        threshold = 128
-        img = img.point(lambda x: 255 if x > threshold else 0, '1')
+            # Apply threshold (binary image)
+            threshold = 128
+            img = img.point(lambda x: 255 if x > threshold else 0, '1')
 
-        # Convert back to grayscale for Tesseract
-        img = img.convert('L')
+            # Convert back to grayscale for Tesseract
+            img = img.convert('L')
 
-        # Save preprocessed image
-        if output_path is None:
-            output_path = str(image_path) + ".preprocessed.png"
+            # Save preprocessed image
+            if output_path is None:
+                output_path = str(image_path) + ".preprocessed.png"
 
-        img.save(output_path)
-        return output_path
+            img.save(output_path)
+            return output_path
 
+        except Exception as e:
+            print(f"Preprocessing fallback failed: {e}")
+            return None
     except Exception as e:
-        print(f"Preprocessing failed: {e}")
+        print(f"Adaptive preprocessing failed: {e}")
         return None
 
 
