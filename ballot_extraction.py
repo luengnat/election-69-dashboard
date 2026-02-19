@@ -31,6 +31,68 @@ try:
 except ImportError:
     ECT_AVAILABLE = False
 
+try:
+    import fitz  # PyMuPDF
+    PYMUPDF_AVAILABLE = True
+except ImportError:
+    PYMUPDF_AVAILABLE = False
+
+
+def pdf_to_images_native(pdf_path: str, output_dir: str) -> list[str]:
+    """
+    Extract images from PDF at native resolution using PyMuPDF.
+
+    This is more efficient than pdftoppm and maintains original quality.
+    Best for PDFs that contain embedded scanned images.
+
+    Args:
+        pdf_path: Path to the PDF file
+        output_dir: Directory to save output images
+
+    Returns:
+        List of paths to generated PNG images
+    """
+    if not PYMUPDF_AVAILABLE:
+        raise ImportError("PyMuPDF not installed. Run: pip install PyMuPDF")
+
+    if not os.path.isfile(pdf_path):
+        raise FileNotFoundError(f"PDF file not found: {pdf_path}")
+    if not os.path.isdir(output_dir):
+        raise NotADirectoryError(f"Output directory not found: {output_dir}")
+
+    from PIL import Image
+    import io
+
+    doc = fitz.open(pdf_path)
+    output_paths = []
+
+    for page_num, page in enumerate(doc):
+        # Get embedded images
+        images = page.get_images()
+
+        if images:
+            # Extract the first (usually main) image at native resolution
+            xref = images[0][0]
+            base_image = doc.extract_image(xref)
+            img_data = base_image["image"]
+
+            # Save directly - no resampling
+            img = Image.open(io.BytesIO(img_data))
+            output_path = os.path.join(output_dir, f"page-{page_num + 1}.png")
+            img.save(output_path, "PNG")
+            output_paths.append(output_path)
+        else:
+            # No embedded image - render page at 150 DPI (reasonable default)
+            mat = fitz.Matrix(150 / 72, 150 / 72)
+            pix = page.get_pixmap(matrix=mat)
+            output_path = os.path.join(output_dir, f"page-{page_num + 1}.png")
+            pix.save(output_path)
+            output_paths.append(output_path)
+
+    doc.close()
+    return output_paths
+
+
 def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 300) -> list[str]:
     """
     Convert PDF to PNG images using pdftoppm.
@@ -91,27 +153,51 @@ def _preprocess_image(image_path: str) -> bytes:
     """
     Preprocess a ballot image to improve OCR accuracy.
 
-    Enhances contrast and sharpens the image, making handwritten Thai
-    numbers and text more legible for vision models.
+    Uses adaptive preprocessing if available, analyzing the image to apply
+    optimal filters (contrast, sharpening, binarization) based on its
+    characteristics (resolution, noise, contrast).
 
     Returns PNG bytes of the enhanced image, or the original file bytes
     if Pillow is unavailable or preprocessing fails.
     """
     try:
-        from PIL import Image, ImageEnhance, ImageFilter
+        from PIL import Image
         import io
-
+        import adaptive_ocr
+        
         with Image.open(image_path) as img:
             if img.mode != "RGB":
                 img = img.convert("RGB")
-            # Boost contrast so handwritten ink stands out from paper
-            img = ImageEnhance.Contrast(img).enhance(1.8)
-            # Sharpen edges to make digit strokes crisper
-            img = img.filter(ImageFilter.SHARPEN)
+                
+            # Apply adaptive preprocessing
+            # This analyzes the image and applies the best filter chain
+            processed_img = adaptive_ocr.adaptive_preprocess_image(img)
+            
             buf = io.BytesIO()
-            img.save(buf, format="PNG", optimize=True)
+            processed_img.save(buf, format="PNG", optimize=True)
             return buf.getvalue()
-    except Exception:
+            
+    except ImportError:
+        # Fallback to static processing if adaptive_ocr is missing
+        try:
+            from PIL import Image, ImageEnhance, ImageFilter
+            import io
+
+            with Image.open(image_path) as img:
+                if img.mode != "RGB":
+                    img = img.convert("RGB")
+                # Boost contrast so handwritten ink stands out from paper
+                img = ImageEnhance.Contrast(img).enhance(1.8)
+                # Sharpen edges to make digit strokes crisper
+                img = img.filter(ImageFilter.SHARPEN)
+                buf = io.BytesIO()
+                img.save(buf, format="PNG", optimize=True)
+                return buf.getvalue()
+        except Exception:
+            pass
+            
+    except Exception as e:
+        print(f"  Preprocessing error: {e}")
         pass
 
     with open(image_path, "rb") as f:
@@ -501,15 +587,102 @@ def _strip_json_fences(text: str) -> str:
     return text.strip()
 
 
-def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] = None) -> Optional[BallotData]:
+def is_ballot_consistent(data: BallotData) -> bool:
+    """
+    Check if the extracted ballot data is internally consistent.
+    
+    v2.1 Update: Prioritizes numeric consistency (sum check).
+    Metadata like province is secondary.
+    """
+    if not data:
+        return False
+        
+    # 1. Sum Check (HIGHEST PRIORITY)
+    # If the handwritten numbers sum up to the reported total, 
+    # the extraction is likely perfect regardless of metadata.
+    calculated_sum = sum(data.vote_counts.values()) if data.form_category == "constituency" else sum(data.party_votes.values())
+    sum_matches = (data.valid_votes > 0 and calculated_sum == data.valid_votes)
+    
+    if sum_matches:
+        return True # Perfect numeric consistency
+        
+    # 2. Thai Text Validation Rate (Secondary)
+    thai_val = data.confidence_details.get("thai_text_validation", {})
+    if isinstance(thai_val, dict):
+        # If we have a very low validation rate, it's risky
+        if thai_val.get("rate", 1.0) < 0.5:
+            return False
+            
+    # 3. Sum Mismatch (Trigger retry if sum doesn't match and we aren't highly confident)
+    if data.valid_votes > 0 and calculated_sum != data.valid_votes:
+        return False
+        
+    return True
+
+
+def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] = None, is_retry: bool = False) -> Optional[BallotData]:
     """
     Extract ballot data using the configured ensemble of OCR backends.
 
     Backends run in parallel; per-position consensus voting resolves
     disagreements. Configure via the EXTRACTION_BACKENDS env var.
+    
+    v2.0: Includes a self-correction loop that retries once with aggressive
+    preprocessing if the first pass is inconsistent.
     """
     from model_backends import EnsembleExtractor, build_backends_from_env
-    return EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
+    
+    # First Pass
+    result = EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
+    
+    # Check consistency
+    if result and not is_retry and not is_ballot_consistent(result):
+        filename = os.path.basename(image_path)
+        print(f"  [Self-Correction] Pass 1 inconsistent for {filename}. Analying structure...")
+        
+        # Phase 19: VLM Layout Verification
+        try:
+            import layout_verifier
+            from ballot_types import FormType
+            
+            layout = layout_verifier.verifier.verify(image_path)
+            if layout:
+                print(f"  [Self-Correction] VLM Analysis: {layout}")
+                
+                # Check for form type mismatch
+                # Map string code (e.g. "5/18") to FormType enum if possible
+                # This is a simplified mapping logic
+                if layout.form_type_code:
+                    for ft in FormType:
+                        if layout.form_type_code in ft.value:
+                            if form_type != ft:
+                                print(f"  [Self-Correction] Updating FormType from {form_type} to {ft}")
+                                form_type = ft
+                            break
+        except Exception as e:
+            print(f"  [Self-Correction] Layout verification skipped: {e}")
+
+        print(f"  [Self-Correction] Retrying with aggressive vision...")
+        
+        # Trigger aggressive preprocessing in adaptive_ocr via env var hint
+        os.environ["ADAPTIVE_OCR_FORCE_AGGRESSIVE"] = "1"
+        try:
+            # Second Pass
+            retry_result = EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
+            
+            if retry_result:
+                # If retry is better (more consistent), use it
+                if is_ballot_consistent(retry_result) or retry_result.confidence_score > result.confidence_score:
+                    print(f"  [Self-Correction] Retry successful. Confidence improved: {result.confidence_score:.2f} -> {retry_result.confidence_score:.2f}")
+                    return retry_result
+                else:
+                    print(f"  [Self-Correction] Retry did not improve results. Keeping pass 1.")
+        finally:
+            # Cleanup hint
+            if "ADAPTIVE_OCR_FORCE_AGGRESSIVE" in os.environ:
+                del os.environ["ADAPTIVE_OCR_FORCE_AGGRESSIVE"]
+                
+    return result
 
 
 def _extract_with_crops(image_path: str, form_type: FormType, api_key: str, model_id: str = _OPENROUTER_MODEL, base_url: str = "https://openrouter.ai/api/v1", timeout: int = 30) -> Optional[BallotData]:

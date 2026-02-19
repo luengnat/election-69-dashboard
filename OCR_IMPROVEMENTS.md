@@ -133,8 +133,20 @@ PSM11_OEM1:   77.8%
 | No preprocessing | 90.9% | Good quality PDFs |
 | Adaptive preprocessing | 90.9% | No improvement on clean images |
 | Aggressive preprocessing | ~55% | **HURTS** low-res images |
+| **Native resolution** | 88-91% | Best for embedded images |
 
-**Recommendation**: Skip preprocessing for clean images. Only use for low-quality scans.
+**Recommendation**: Use `pdf_to_images_native()` for PDFs with embedded scans. No upscaling needed.
+
+### Vote Extraction Challenge
+
+| Content Type | Tesseract Confidence | Recommendation |
+|--------------|---------------------|----------------|
+| Printed Thai text | 88-92% | ✅ Use Tesseract |
+| Form category labels | 88-92% | ✅ Use Tesseract + fuzzy matching |
+| Handwritten votes | **0-55%** | ❌ Use AI Vision |
+| Handwritten province | 0% | ❌ Use path-based detection |
+
+**Key finding**: Tesseract cannot reliably read handwritten vote counts. AI Vision APIs are required for accurate vote extraction.
 
 ## Commits Made
 
