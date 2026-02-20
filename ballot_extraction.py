@@ -594,12 +594,17 @@ def get_minimal_prompt() -> str:
     This prompt is shorter and more direct to avoid truncation with less capable models.
     Focus only on vote counts since text extraction is unreliable with these models.
     """
-    return """Read the handwritten numbers in the vote column of this ballot.
+    return """OCR task: Read handwritten numbers from ballot table.
 
-Output ONLY JSON with vote counts for each row you can see:
-{"vote_counts":{"1":657,"2":657,"3":657,"4":657,"5":614,"6":7,"7":26,"8":5}}
+Instructions:
+1. Look at the column with handwritten numbers (right side of table)
+2. Each row has a position number (left) and vote count (right)
+3. Read the VOTE COUNT numbers only
 
-Replace the numbers with the actual handwritten values from the image."""
+Output format (JSON only, no explanation):
+{"vote_counts":{"1":NUM,"2":NUM,"3":NUM,...}}
+
+Replace NUM with actual handwritten numbers you see. Include all rows visible."""
 
 
 def _strip_json_fences(text: str) -> str:
@@ -618,7 +623,8 @@ def _try_parse_lenient_json(text: str) -> Optional[dict]:
     # First try standard parsing
     text = text.strip()
     try:
-        return json.loads(text)
+        data = json.loads(text)
+        return _convert_string_numbers(data)
     except json.JSONDecodeError:
         pass
 
@@ -635,7 +641,8 @@ def _try_parse_lenient_json(text: str) -> Optional[dict]:
     fixed = re.sub(r'(\d+):', r'"\1":', fixed)
 
     try:
-        return json.loads(fixed)
+        data = json.loads(fixed)
+        return _convert_string_numbers(data)
     except json.JSONDecodeError:
         pass
 
@@ -644,11 +651,31 @@ def _try_parse_lenient_json(text: str) -> Optional[dict]:
     end = fixed.rfind('}')
     if start != -1 and end > start:
         try:
-            return json.loads(fixed[start:end+1])
+            data = json.loads(fixed[start:end+1])
+            return _convert_string_numbers(data)
         except json.JSONDecodeError:
             pass
 
     return None
+
+
+def _convert_string_numbers(data):
+    """Convert string numbers to integers in nested dicts."""
+    if isinstance(data, dict):
+        result = {}
+        for k, v in data.items():
+            if isinstance(v, str) and v.strip().isdigit():
+                result[k] = int(v)
+            elif isinstance(v, str) and v.strip() == "":
+                continue  # Skip empty strings
+            elif isinstance(v, dict):
+                result[k] = _convert_string_numbers(v)
+            else:
+                result[k] = v
+        return result
+    elif isinstance(data, list):
+        return [_convert_string_numbers(item) for item in data]
+    return data
 
 
 def is_ballot_consistent(data: BallotData) -> bool:
