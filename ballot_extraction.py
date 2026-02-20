@@ -37,6 +37,79 @@ try:
 except ImportError:
     PYMUPDF_AVAILABLE = False
 
+_DRIVE_MAP_CACHE: Optional[dict] = None
+
+
+def _load_drive_mapping() -> dict:
+    """Load drive_file_mapping.json once for provenance linking."""
+    global _DRIVE_MAP_CACHE
+    if _DRIVE_MAP_CACHE is not None:
+        return _DRIVE_MAP_CACHE
+    mapping_path = Path("drive_file_mapping.json")
+    if not mapping_path.exists():
+        _DRIVE_MAP_CACHE = {}
+        return _DRIVE_MAP_CACHE
+    try:
+        payload = json.loads(mapping_path.read_text(encoding="utf-8"))
+        files = payload.get("files", {}) if isinstance(payload, dict) else {}
+        _DRIVE_MAP_CACHE = files if isinstance(files, dict) else {}
+    except Exception:
+        _DRIVE_MAP_CACHE = {}
+    return _DRIVE_MAP_CACHE
+
+
+def _resolve_path(path: str) -> str:
+    """Safely resolve a path to its absolute form."""
+    try:
+        return str(Path(path).expanduser().resolve())
+    except Exception:
+        return path
+
+
+def _lookup_drive_source_for_pdf(pdf_path: str) -> dict:
+    """Best-effort lookup from local PDF path to Drive source metadata."""
+    pdf_abs = _resolve_path(pdf_path)
+    files = _load_drive_mapping()
+    by_name_match = None
+    
+    for drive_id, entry in files.items():
+        if not isinstance(entry, dict):
+            continue
+            
+        local_path = str(entry.get("local_path", "")).strip()
+        if local_path and _resolve_path(local_path) == pdf_abs:
+            return {
+                "drive_id": drive_id,
+                "drive_url": entry.get("drive_url", ""),
+                "drive_name": entry.get("name", ""),
+            }
+            
+        if entry.get("name") and Path(str(entry["name"])).name == Path(pdf_abs).name:
+            by_name_match = {
+                "drive_id": drive_id,
+                "drive_url": entry.get("drive_url", ""),
+                "drive_name": entry.get("name", ""),
+            }
+            
+    return by_name_match or {}
+
+
+def _write_image_provenance(image_path: str, pdf_path: str, page_number: int) -> None:
+    """Write sidecar provenance for each generated PNG."""
+    try:
+        payload = {
+            "source_pdf": str(Path(pdf_path).expanduser().resolve()),
+            "source_pdf_name": Path(pdf_path).name,
+            "pdf_page_number": int(page_number),
+            "generated_image": str(Path(image_path).expanduser().resolve()),
+        }
+        payload.update(_lookup_drive_source_for_pdf(pdf_path))
+        sidecar = f"{image_path}.source.json"
+        Path(sidecar).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        # Provenance sidecar is best-effort; conversion should still succeed.
+        pass
+
 
 def pdf_to_images_native(pdf_path: str, output_dir: str) -> list[str]:
     """
@@ -81,6 +154,7 @@ def pdf_to_images_native(pdf_path: str, output_dir: str) -> list[str]:
             output_path = os.path.join(output_dir, f"page-{page_num + 1}.png")
             img.save(output_path, "PNG")
             output_paths.append(output_path)
+            _write_image_provenance(output_path, pdf_path, page_num + 1)
         else:
             # No embedded image - render page at 150 DPI (reasonable default)
             mat = fitz.Matrix(150 / 72, 150 / 72)
@@ -88,6 +162,7 @@ def pdf_to_images_native(pdf_path: str, output_dir: str) -> list[str]:
             output_path = os.path.join(output_dir, f"page-{page_num + 1}.png")
             pix.save(output_path)
             output_paths.append(output_path)
+            _write_image_provenance(output_path, pdf_path, page_num + 1)
 
     doc.close()
     return output_paths
@@ -134,7 +209,10 @@ def pdf_to_images(pdf_path: str, output_dir: str, dpi: int = 300) -> list[str]:
 
     # Return list of generated images
     images = sorted(Path(output_dir).glob("page-*.png"))
-    return [str(img) for img in images]
+    output_paths = [str(img) for img in images]
+    for idx, path in enumerate(output_paths, start=1):
+        _write_image_provenance(path, pdf_path, idx)
+    return output_paths
 
 
 def encode_image(image_path: str) -> str:
@@ -193,15 +271,13 @@ def _preprocess_image(image_path: str) -> bytes:
                 buf = io.BytesIO()
                 img.save(buf, format="PNG", optimize=True)
                 return buf.getvalue()
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"  Static preprocessing fallback failed: {e}")
             
     except Exception as e:
-        print(f"  Preprocessing error: {e}")
-        pass
-
-    with open(image_path, "rb") as f:
-        return f.read()
+        print(f"  Preprocessing failed: {e}")
+    
+    return image_path
 
 
 def detect_form_type(image_path: str) -> tuple[Optional[FormType], str]:
@@ -472,110 +548,58 @@ OUTPUT FORMAT - Return ONLY valid JSON, NO markdown:
 
 
 def get_combined_prompt() -> str:
-    """Combined prompt that auto-detects form type (constituency or party-list)."""
-    return """IMPORTANT: This document is in THAI language. All text on this form is in Thai.
+    """Combined prompt that auto-detects form type - optimized to prevent hallucination."""
+    return """You are analyzing a Thai election ballot counting form.
 
-You are analyzing a THAI ELECTION BALLOT COUNTING FORM from Thailand's Election Commission.
+CRITICAL INSTRUCTION: Extract ONLY the data you actually see in this image. Do NOT invent or copy example values.
 
-═══════════════════════════════════════════════════════════════════
-PART 1: DETERMINE FORM TYPE (Look at TOP-RIGHT CORNER)
-═══════════════════════════════════════════════════════════════════
+STEP 1 - Identify the form:
+- Find the form code in the top-right box (e.g., ส.ส. 5/16, ส.ส. 5/17, ส.ส. 5/18)
+- If it has (บช) suffix, set is_party_list to true
 
-Find the SQUARE BOX in the top-right area. Inside is the form code:
+STEP 2 - Extract location:
+- Province after "จังหวัด" (read the actual province name from the image)
+- District after "อำเภอ"
+- Constituency number after "เขตเลือกตั้งที่"
 
-CONSTITUENCY forms (แบ่งเขตเลือกตั้ง):
-- "ส.ส. 5/16" - Early voting
-- "ส.ส. 5/17" - Out-of-district
-- "ส.ส. 5/18" - By polling unit
+STEP 3 - Read the vote table carefully:
+- Each row has: position number, handwritten vote count, Thai text
+- Read EVERY row you can see
+- Write the EXACT numbers you see handwritten
+- Do NOT guess or estimate
 
-PARTY-LIST forms (บัญชีรายชื่อ - บช):
-- "ส.ส. 5/16 (บช)" - Early voting, party-list
-- "ส.ส. 5/17 (บช)" - Out-of-district, party-list
-- "ส.ส. 5/18 (บช)" - By polling unit, party-list
+STEP 4 - Find totals at bottom if present:
+- Valid votes, Invalid votes, Blank votes, Total
 
-KEY: If you see "(บช)" or "บัญชีรายชื่อ" in the form title → it's a PARTY-LIST form.
-     If you see "แบ่งเขตเลือกตั้ง" without "(บช)" → it's a CONSTITUENCY form.
-
-NOTE: Thai numerals: ๑=1, ๒=2, ๓=3, ๔=4, ๕=5, ๖=6, ๗=7, ๘=8, ๙=9, ๐=0
-
-═══════════════════════════════════════════════════════════════════
-PART 2: LOCATION INFORMATION
-═══════════════════════════════════════════════════════════════════
-
-1. PROVINCE (จังหวัด): Look for "จังหวัด" followed by the province name.
-2. CONSTITUENCY NUMBER: Look for "เขตเลือกตั้งที่" followed by a number.
-3. DISTRICT (อำเภอ): Look for "อำเภอ" followed by the district name.
-4. POLLING UNIT: Look for "หน่วยเลือกตั้งที่" followed by a number.
-
-═══════════════════════════════════════════════════════════════════
-PART 3: VOTE TABLE
-═══════════════════════════════════════════════════════════════════
-
-FOR CONSTITUENCY forms:
-- Table has numbered rows (1, 2, 3...) with HANDWRITTEN vote counts
-- Each row: number | numeric vote | Thai text for the number
-- Typically 2-10 candidates per district
-
-FOR PARTY-LIST forms:
-- Table has party numbers (1-57) with HANDWRITTEN vote counts
-- Each row: party number | numeric vote | Thai text for the number
-- This page may show only SOME parties (e.g., 1-20, 21-40)
-- Many parties may have 0 votes
-- Note which party numbers are on this page
-
-CRITICAL: Read each handwritten digit carefully. Look at the COMPLETE number.
-
-═══════════════════════════════════════════════════════════════════
-PART 4: TOTALS (bottom of form)
-═══════════════════════════════════════════════════════════════════
-
-1. บัตรดี / คะแนนเสียงที่ถูกต้อง = VALID votes
-2. บัตรเสีย = INVALID votes
-3. บัตรไม่ประสงค์ลงคะแนน = BLANK votes
-4. รวม = TOTAL
-
-═══════════════════════════════════════════════════════════════════
-OUTPUT FORMAT - Return ONLY valid JSON, NO markdown:
-═══════════════════════════════════════════════════════════════════
-
-For CONSTITUENCY form:
+Return ONLY valid JSON (no markdown, no explanation):
 {
-    "form_type": "ส.ส. 5/16",
-    "is_party_list": false,
-    "province": "แพร่",
-    "constituency_number": 1,
-    "district": "เมืองแพร่",
-    "polling_unit": 2,
-    "vote_counts": {
-        "1": {"numeric": 153, "thai_text": "หนึ่งร้อยห้าสิบสาม"},
-        "2": {"numeric": 4, "thai_text": "สี่"}
-    },
-    "valid_votes": 157,
-    "invalid_votes": 3,
-    "blank_votes": 0,
-    "total_votes": 160
+    "form_type": "the actual form code you see",
+    "is_party_list": true or false,
+    "province": "the actual province name you see",
+    "constituency_number": the number you see,
+    "district": "the actual district name you see",
+    "vote_counts": {"N": {"numeric": X, "thai_text": "..."}},
+    "valid_votes": number or null,
+    "invalid_votes": number or null,
+    "blank_votes": number or null,
+    "total_votes": number or null
 }
 
-For PARTY-LIST form:
-{
-    "form_type": "ส.ส. 5/16 (บช)",
-    "is_party_list": true,
-    "province": "แพร่",
-    "constituency_number": 1,
-    "district": "เมืองแพร่",
-    "polling_unit": 2,
-    "page_parties": "1-20",
-    "party_votes": {
-        "1": {"numeric": 12, "thai_text": "สิบสอง"},
-        "2": {"numeric": 0, "thai_text": "ศูนย์"},
-        "8": {"numeric": 45, "thai_text": "สี่สิบห้า"}
-    },
-    "valid_votes": null,
-    "invalid_votes": null,
-    "blank_votes": null,
-    "total_votes": null
-}
-"""
+REMEMBER: Extract real data from THIS image only."""
+
+
+def get_minimal_prompt() -> str:
+    """Minimal prompt for simpler vision models (e.g., LM Studio glm-ocr).
+
+    This prompt is shorter and more direct to avoid truncation with less capable models.
+    Focus only on vote counts since text extraction is unreliable with these models.
+    """
+    return """Read the handwritten numbers in the vote column of this ballot.
+
+Output ONLY JSON with vote counts for each row you can see:
+{"vote_counts":{"1":657,"2":657,"3":657,"4":657,"5":614,"6":7,"7":26,"8":5}}
+
+Replace the numbers with the actual handwritten values from the image."""
 
 
 def _strip_json_fences(text: str) -> str:
@@ -585,6 +609,46 @@ def _strip_json_fences(text: str) -> str:
     elif "```" in text:
         text = text.split("```")[1].split("```")[0]
     return text.strip()
+
+
+def _try_parse_lenient_json(text: str) -> Optional[dict]:
+    """Try to parse JSON that may have minor syntax errors (missing quotes on keys)."""
+    import re
+
+    # First try standard parsing
+    text = text.strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Try to fix common issues:
+    # 1. Missing opening quotes on property names: form_type": -> "form_type":
+    # 2. Unquoted property names: total_votes: -> "total_votes":
+    # 3. Unquoted numeric keys: 1: -> "1":
+
+    # Add quotes to unquoted property names (word followed by : with or without quote after)
+    fixed = re.sub(r'(\w+)":', r'"\1":', text)  # word": -> "word":
+    fixed = re.sub(r'(\w+):', r'"\1":', fixed)   # word: -> "word":
+
+    # Add quotes to numeric keys
+    fixed = re.sub(r'(\d+):', r'"\1":', fixed)
+
+    try:
+        return json.loads(fixed)
+    except json.JSONDecodeError:
+        pass
+
+    # Last resort: try to extract the JSON object
+    start = fixed.find('{')
+    end = fixed.rfind('}')
+    if start != -1 and end > start:
+        try:
+            return json.loads(fixed[start:end+1])
+        except json.JSONDecodeError:
+            pass
+
+    return None
 
 
 def is_ballot_consistent(data: BallotData) -> bool:
@@ -620,225 +684,198 @@ def is_ballot_consistent(data: BallotData) -> bool:
     return True
 
 
-def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] = None, is_retry: bool = False) -> Optional[BallotData]:
-    """
-    Extract ballot data using the configured ensemble of OCR backends.
+def _verify_layout_and_update_form_type(image_path: str, form_type: Optional[FormType]) -> Optional[FormType]:
+    """Phase 19: Use VLM to verify layout and correct form type if mismatched."""
+    try:
+        import layout_verifier
+        from ballot_types import FormType
+        
+        layout = layout_verifier.verifier.verify(image_path)
+        if layout and layout.form_type_code:
+            for ft in FormType:
+                if layout.form_type_code in ft.value and form_type != ft:
+                    print(f"  [Self-Correction] Updating FormType to {ft}")
+                    return ft
+    except Exception as e:
+        print(f"  [Self-Correction] Layout verification skipped: {e}")
+    return form_type
 
-    Backends run in parallel; per-position consensus voting resolves
-    disagreements. Configure via the EXTRACTION_BACKENDS env var.
-    
-    v2.0: Includes a self-correction loop that retries once with aggressive
-    preprocessing if the first pass is inconsistent.
-    """
+
+def _retry_with_ensemble(image_path: str, form_type: Optional[FormType]) -> Optional[BallotData]:
+    """Execute a second pass with aggressive vision preprocessing."""
     from model_backends import EnsembleExtractor, build_backends_from_env
     
-    # First Pass
-    result = EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
-    
-    # Check consistency
-    if result and not is_retry and not is_ballot_consistent(result):
-        filename = os.path.basename(image_path)
-        print(f"  [Self-Correction] Pass 1 inconsistent for {filename}. Analying structure...")
-        
-        # Phase 19: VLM Layout Verification
-        try:
-            import layout_verifier
-            from ballot_types import FormType
-            
-            layout = layout_verifier.verifier.verify(image_path)
-            if layout:
-                print(f"  [Self-Correction] VLM Analysis: {layout}")
-                
-                # Check for form type mismatch
-                # Map string code (e.g. "5/18") to FormType enum if possible
-                # This is a simplified mapping logic
-                if layout.form_type_code:
-                    for ft in FormType:
-                        if layout.form_type_code in ft.value:
-                            if form_type != ft:
-                                print(f"  [Self-Correction] Updating FormType from {form_type} to {ft}")
-                                form_type = ft
-                            break
-        except Exception as e:
-            print(f"  [Self-Correction] Layout verification skipped: {e}")
+    os.environ["ADAPTIVE_OCR_FORCE_AGGRESSIVE"] = "1"
+    try:
+        return EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
+    finally:
+        if "ADAPTIVE_OCR_FORCE_AGGRESSIVE" in os.environ:
+            del os.environ["ADAPTIVE_OCR_FORCE_AGGRESSIVE"]
 
-        print(f"  [Self-Correction] Retrying with aggressive vision...")
+
+def extract_ballot_data_with_ai(image_path: str, form_type: Optional[FormType] = None, is_retry: bool = False, backend_spec: Optional[str] = None) -> Optional[BallotData]:
+    """Extract ballot data with an automatic self-correction loop for inconsistent results."""
+    from model_backends import EnsembleExtractor, build_backends_from_env
+    
+    orig_backends = os.environ.get("EXTRACTION_BACKENDS")
+    if backend_spec:
+        os.environ["EXTRACTION_BACKENDS"] = backend_spec
+    elif not is_retry and not orig_backends:
+        # Pass 1: Only use fast local models
+        os.environ["EXTRACTION_BACKENDS"] = "trocr,tesseract"
         
-        # Trigger aggressive preprocessing in adaptive_ocr via env var hint
-        os.environ["ADAPTIVE_OCR_FORCE_AGGRESSIVE"] = "1"
-        try:
-            # Second Pass
-            retry_result = EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
-            
-            if retry_result:
-                # If retry is better (more consistent), use it
-                if is_ballot_consistent(retry_result) or retry_result.confidence_score > result.confidence_score:
-                    print(f"  [Self-Correction] Retry successful. Confidence improved: {result.confidence_score:.2f} -> {retry_result.confidence_score:.2f}")
-                    return retry_result
-                else:
-                    print(f"  [Self-Correction] Retry did not improve results. Keeping pass 1.")
-        finally:
-            # Cleanup hint
-            if "ADAPTIVE_OCR_FORCE_AGGRESSIVE" in os.environ:
-                del os.environ["ADAPTIVE_OCR_FORCE_AGGRESSIVE"]
-                
+    try:
+        result = EnsembleExtractor(build_backends_from_env()).extract(image_path, form_type)
+    finally:
+        if backend_spec or (not is_retry and not orig_backends):
+            if orig_backends is not None:
+                os.environ["EXTRACTION_BACKENDS"] = orig_backends
+            elif "EXTRACTION_BACKENDS" in os.environ:
+                del os.environ["EXTRACTION_BACKENDS"]
+    
+    if is_retry or (result and is_ballot_consistent(result)):
+        return result
+
+    # Self-Correction Pass
+    filename = os.path.basename(image_path)
+    reason = "missing result" if not result else "inconsistent result"
+    print(f"  [Self-Correction] Pass 1 failed for {filename} ({reason}).")
+    
+    form_type = _verify_layout_and_update_form_type(image_path, form_type)
+    print("  [Self-Correction] Retrying with aggressive vision...")
+    
+    retry_result = _retry_with_ensemble(image_path, form_type)
+    
+    if not retry_result:
+        return result
+        
+    if not result or is_ballot_consistent(retry_result) or retry_result.confidence_score > result.confidence_score:
+        improvement = f" (improved confidence: {result.confidence_score:.2f} -> {retry_result.confidence_score:.2f})" if result else ""
+        print(f"  [Self-Correction] Retry successful{improvement}")
+        return retry_result
+    
+    print("  [Self-Correction] Retry did not improve results. Keeping pass 1.")
     return result
 
 
-def _extract_with_crops(image_path: str, form_type: FormType, api_key: str, model_id: str = _OPENROUTER_MODEL, base_url: str = "https://openrouter.ai/api/v1", timeout: int = 30) -> Optional[BallotData]:
-    """
-    Crop-aware extraction that sends only relevant regions to the API.
-
-    This reduces token costs by ~70% by cropping to just the vote-count column
-    and summary section instead of sending the full page.
-
-    Args:
-        image_path: Path to the ballot image
-        form_type: The detected form type
-        api_key: OpenRouter API key
-
-    Returns:
-        BallotData if extraction successful, None otherwise
-    """
-    import requests
-
-    try:
-        from crop_utils import crop_page_image, FORM_TEMPLATES, _DEFAULT_TEMPLATE
-    except ImportError:
-        print("  crop_utils not available for crop-aware extraction")
-        return None
-
-    try:
-        from PIL import Image
-    except ImportError:
-        print("  Pillow not available for crop-aware extraction")
-        return None
-
-    # Select template based on form type
+def _get_crop_region(image_path: str, form_type: FormType) -> tuple[Any, bool]:
+    """Determine the crop region based on form type and page number."""
+    from crop_utils import FORM_TEMPLATES, _DEFAULT_TEMPLATE
     template = FORM_TEMPLATES.get(form_type, _DEFAULT_TEMPLATE)
-
-    # Determine if this is page 1 or a continuation page
-    # Heuristic: check filename for "page-1" or similar patterns
+    
     is_page_1 = True
     filename = os.path.basename(image_path).lower()
-    if "page-" in filename and "page-1" not in filename and "page-01" not in filename:
-        # e.g. "page-2.png", "page-02.png"
+    if "page-" in filename and not any(p in filename for p in ["page-1", "page-01"]):
         import re
         match = re.search(r'page-(\d+)', filename)
         if match and int(match.group(1)) > 1:
             is_page_1 = False
-    
-    # Select appropriate region from template
-    crop_region = template.vote_numbers_p1 if is_page_1 else template.vote_numbers_cont
+            
+    region = template.vote_numbers_p1 if is_page_1 else template.vote_numbers_cont
+    return region, is_page_1
 
-    print(f"  Using crop template for {form_type.value}: Page 1={is_page_1}, Region={crop_region}")
 
-    # Crop the vote-count column region
-    try:
-        vote_crop_path = crop_page_image(image_path, crop_region)
-    except Exception as e:
-        print(f"  Failed to crop vote region: {e}")
+def _call_crop_api(api_key: str, image_data: str, model_id: str, base_url: str, timeout: int):
+    """Make the API call to OpenRouter with the cropped image."""
+    import requests
+    response = requests.post(
+        url=f"{base_url.rstrip('/')}/chat/completions",
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/election-verification",
+            "X-Title": "Thai Election Ballot OCR",
+        },
+        json={
+            "model": model_id,
+            "messages": [{
+                "role": "user",
+                "content": [
+                    {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{image_data}"}},
+                    {"type": "text", "text": get_vote_numbers_prompt()},
+                ],
+            }],
+            "max_tokens": 1024,
+        },
+        timeout=timeout,
+    )
+    if response.status_code != 200:
         return None
+    return response.json()
 
+
+def _build_ballot_from_crop(vote_counts: dict, vote_details: dict, form_type: FormType, image_path: str, provenance_images: Optional[dict] = None) -> BallotData:
+    """Build a BallotData object from extracted crop data."""
+    total = sum(vote_counts.values())
+    return BallotData(
+        form_type=form_type.value,
+        form_category="party_list" if form_type.is_party_list else "constituency",
+        province="", constituency_number=0, district="", polling_unit=0,
+        polling_station_id=f"Constituency-{form_type.value}",
+        vote_counts=vote_counts, vote_details=vote_details,
+        party_votes={}, party_details={},
+        total_votes=total, valid_votes=total, invalid_votes=0, blank_votes=0,
+        source_file=image_path, confidence_score=0.7,
+        confidence_details={"level": "MEDIUM", "crop_based": True},
+        provenance_images=provenance_images or {},
+    )
+
+
+def _extract_with_crops(image_path: str, form_type: FormType, api_key: str, model_id: str = _OPENROUTER_MODEL, base_url: str = "https://openrouter.ai/api/v1", timeout: int = 30) -> Optional[BallotData]:
+    """Perform crop-aware extraction to reduce token costs and improve accuracy."""
     try:
-        # Preprocess and encode the cropped image for better OCR
-        cropped_image_data = base64.b64encode(
-            _preprocess_image(vote_crop_path)
-        ).decode("utf-8")
+        from crop_utils import crop_page_image, deskew_image, extract_vote_cells
+        import base64
+        
+        region, _ = _get_crop_region(image_path, form_type)
+        vote_crop_path = crop_page_image(image_path, region)
+        
+        # Apply OpenCV deskewing for better OCR alignment
+        deskewed_path = deskew_image(vote_crop_path)
+        
+        # Note: cell_paths = extract_vote_cells(deskewed_path) 
+        # is ready for Phase 2 (Local TrOCR) integration. For the VLM fallback, 
+        # we pass the full deskewed column so it retains candidate number context.
+        
+        try:
+            image_data = base64.b64encode(_preprocess_image(deskewed_path)).decode("utf-8")
+            result = _call_crop_api(api_key, image_data, model_id, base_url, timeout)
+            
+            if not result:
+                return None
 
-        # Use a focused prompt for the cropped vote-count region
-        prompt = get_vote_numbers_prompt()
-
-        # Make API call with cropped image
-        response = requests.post(
-            url=f"{base_url.rstrip('/')}/chat/completions",
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://github.com/election-verification",
-                "X-Title": "Thai Election Ballot OCR",
-            },
-            json={
-                "model": model_id,
-                "messages": [{
-                    "role": "user",
-                    "content": [
-                        {"type": "image_url", "image_url": {"url": f"data:image/png;base64,{cropped_image_data}"}},
-                        {"type": "text", "text": prompt},
-                    ],
-                }],
-                "max_tokens": 1024,
-            },
-            timeout=timeout,
-        )
-
-        if response.status_code != 200:
-            print(f"  Crop API error: {response.status_code}")
-            return None
-
-        result = response.json()
-        response_text = result["choices"][0]["message"]["content"]
-
-        # Parse the vote counts from the cropped region
-        vote_data = json.loads(_strip_json_fences(response_text))
-
-        # Build minimal ballot data from the extracted votes
-        if isinstance(vote_data, list) and len(vote_data) > 0:
-            vote_counts = {}
-            vote_details = {}
-
+            vote_data = json.loads(_strip_json_fences(result["choices"][0]["message"]["content"]))
+            if not isinstance(vote_data, list) or len(vote_data) == 0:
+                return None
+                
+            counts, details = {}, {}
             for entry in vote_data:
-                position = entry.get("position", 0)
-                numeric = entry.get("numeric", 0)
-                thai_text = entry.get("thai", "")
+                pos, num, thai = entry.get("position", 0), entry.get("numeric", 0), entry.get("thai", "")
+                if pos > 0:
+                    counts[pos] = num
+                    if thai: details[pos] = validate_vote_entry(num, thai)
 
-                if position > 0:
-                    vote_counts[position] = numeric
-                    if thai_text:
-                        from ballot_types import validate_vote_entry
-                        vote_details[position] = validate_vote_entry(numeric, thai_text)
+            # Harvest persistent provenance
+            from crop_utils import save_crop_persistently
+            provenance = {
+                "vote_column": save_crop_persistently(deskewed_path, image_path, "vote_column")
+            }
 
-            # Calculate total from vote counts
-            total_votes = sum(vote_counts.values())
-
-            # Build polling station ID from form type
-            station_id = f"Constituency-{form_type.value}"
-
-            return BallotData(
-                form_type=form_type.value,
-                form_category="party_list" if form_type.is_party_list else "constituency",
-                province="",  # Would need additional crops to extract
-                constituency_number=0,
-                district="",
-                polling_unit=0,
-                polling_station_id=station_id,
-                vote_counts=vote_counts,
-                vote_details=vote_details,
-                party_votes={},
-                party_details={},
-                total_votes=total_votes,
-                valid_votes=total_votes,
-                invalid_votes=0,
-                blank_votes=0,
-                source_file=image_path,
-                confidence_score=0.7,  # Lower confidence due to missing metadata
-                confidence_details={"level": "MEDIUM", "crop_based": True},
-            )
-
-        return None
-
-    except json.JSONDecodeError as e:
-        print(f"  Crop extraction JSON error: {e}")
-        return None
+            return _build_ballot_from_crop(counts, details, form_type, image_path, provenance_images=provenance)
+        finally:
+            _cleanup_paths([vote_crop_path, deskewed_path])
     except Exception as e:
         print(f"  Crop extraction failed: {e}")
-        return None
-    finally:
-        # Clean up temporary crop file
-        try:
-            os.unlink(vote_crop_path)
-        except (OSError, NameError):
-            pass
+    return None
+
+def _cleanup_paths(paths: list[str]) -> None:
+    """Helper to cleanly remove temporary files."""
+    for p in set(paths):
+        if p and os.path.exists(p):
+            try:
+                os.unlink(p)
+            except Exception:
+                pass
 
 
 def get_vote_numbers_prompt() -> str:
@@ -1162,256 +1199,255 @@ Return ONLY valid JSON with NO markdown formatting, NO code blocks:
         return None
 
 
+def _parse_party_votes(raw_votes: dict) -> tuple[dict, dict]:
+    """Parse raw party-list vote data."""
+    votes, details = {}, {}
+    for party_num, vote_data in raw_votes.items():
+        if vote_data is None:
+            continue
+        party_num = convert_thai_numerals(str(party_num))
+        if isinstance(vote_data, dict):
+            numeric = vote_data.get("numeric", 0)
+            votes[str(party_num)] = numeric
+            details[str(party_num)] = validate_vote_entry(numeric, vote_data.get("thai_text", ""))
+        else:
+            votes[str(party_num)] = int(vote_data)
+    return votes, details
+
+
+def _parse_candidate_votes(raw_votes: dict) -> tuple[dict, dict]:
+    """Parse raw constituency candidate vote data."""
+    votes, details = {}, {}
+    for cand_num, vote_data in raw_votes.items():
+        if vote_data is None:
+            continue
+        cand_num = convert_thai_numerals(str(cand_num))
+        if isinstance(vote_data, dict):
+            numeric = vote_data.get("numeric", 0)
+            votes[int(cand_num)] = numeric
+            details[int(cand_num)] = validate_vote_entry(numeric, vote_data.get("thai_text", ""))
+        else:
+            votes[int(cand_num)] = int(vote_data)
+    return votes, details
+
+
+def _parse_votes(data: dict, is_party_list: bool) -> tuple[dict, dict, dict, dict]:
+    """Parse raw vote data into structured counts and details."""
+    if is_party_list:
+        p_votes, p_details = _parse_party_votes(data.get("party_votes", {}))
+        return {}, {}, p_votes, p_details
+    
+    c_votes, c_details = _parse_candidate_votes(data.get("vote_counts", {}))
+    return c_votes, c_details, {}, {}
+
+
+def _validate_sums(calculated_sum: int, data: dict):
+    """Log and validate vote sums and totals."""
+    reported_valid = data.get("valid_votes", 0) or 0
+    reported_invalid = data.get("invalid_votes", 0) or 0
+    reported_blank = data.get("blank_votes", 0) or 0
+    reported_total = data.get("total_votes", 0) or 0
+
+    print(f"  Sum check: calculated={calculated_sum}, valid={reported_valid}, invalid={reported_invalid}, blank={reported_blank}, total={reported_total}")
+
+    if reported_valid and calculated_sum != reported_valid:
+        print(f"  WARNING: Sum != Valid votes! Sum: {calculated_sum}, Valid: {reported_valid}")
+    elif reported_valid:
+        print("  ✓ Sum matches valid votes")
+
+    expected_total = reported_valid + reported_invalid + reported_blank
+    if reported_total and reported_valid:
+        if reported_total != expected_total:
+            print(f"  WARNING: Total mismatch! Expected: {expected_total}, Reported: {reported_total}")
+        else:
+            print("  ✓ Total = Valid + Invalid + Blank")
+
+
+def _validate_province_metadata(province_name: str):
+    """Validate province name and print suggestions if invalid."""
+    is_valid, canonical = ect_data.validate_province_name(province_name)
+    if not is_valid:
+        print(f"  WARNING: Province '{province_name}' not found")
+        for prov in ect_data.list_provinces():
+            if province_name in prov or prov in province_name:
+                print(f"  SUGGESTION: Did you mean '{prov}'?")
+                break
+    else:
+        print(f"  Province validated: {canonical}")
+    return canonical if is_valid else province_name
+
+
+def _enrich_candidate_metadata(province: str, constituency: int, counts: dict) -> dict:
+    """Enrich candidate info for constituency ballots."""
+    info = {}
+    for pos, count in counts.items():
+        candidate = ect_data.get_candidate_by_thai_province(province, constituency, pos)
+        if candidate:
+            party = ect_data.get_party_for_candidate(candidate)
+            info[pos] = {
+                "name": candidate.mp_app_name,
+                "party_id": candidate.mp_app_party_id,
+                "party_name": party.name if party else "Unknown",
+                "party_abbr": party.abbr if party else ""
+            }
+            print(f"  Position {pos}: {candidate.mp_app_name} ({party.abbr if party else '?'}) - {count} votes")
+        else:
+            info[pos] = {"name": "Unknown", "party_id": None, "party_name": "Unknown", "party_abbr": ""}
+    return info
+
+
+def _enrich_party_metadata(votes: dict) -> dict:
+    """Enrich party info for party-list ballots."""
+    info = {}
+    for party_num in votes.keys():
+        party = ect_data.get_party(party_num)
+        if party:
+            info[str(party_num)] = {"name": party.name, "abbr": party.abbr, "color": party.color}
+            print(f"  Party #{party_num}: {party.name} ({party.abbr})")
+        else:
+            info[str(party_num)] = {"name": "Unknown", "abbr": "", "color": ""}
+    return info
+
+
+def _enrich_metadata(is_party_list: bool, province: str, data: dict, votes: dict, p_votes: dict):
+    """Enrich ballot data with ECT metadata."""
+    if not ECT_AVAILABLE or not province:
+        return {}, {}
+        
+    province = _validate_province_metadata(province)
+    constituency = data.get("constituency_number", data.get("constituency", 0))
+    
+    if is_party_list:
+        return {}, _enrich_party_metadata(p_votes)
+        
+    return _enrich_candidate_metadata(province, constituency, votes), {}
+
+
+def _score_thai_text(vote_details: dict, party_details: dict) -> tuple[float, dict]:
+    """Score confidence based on Thai text cross-validation."""
+    all_details = vote_details or party_details
+    if not all_details:
+        return 0.0, {}
+    validated_count = sum(1 for e in all_details.values() if e.is_validated)
+    rate = validated_count / len(all_details)
+    return rate * 0.4, {"weight": 0.4, "validated": validated_count, "total": len(all_details), "rate": rate, "score": rate * 0.4}
+
+
+def _score_sums(calculated_sum: int, data: dict) -> tuple[float, dict]:
+    """Score confidence based on sum consistency."""
+    reported_valid = data.get("valid_votes", 0) or 0
+    match = (calculated_sum == reported_valid) if reported_valid else False
+    return (0.3 if match else 0.0), {"weight": 0.3, "match": match, "score": 0.3 if match else 0.0}
+
+
+def _score_geography(province: str, data: dict) -> tuple[float, dict]:
+    """Score confidence based on geographic metadata completion."""
+    points = 0.0
+    if province: points += 0.1
+    if data.get("constituency_number") or data.get("constituency"): points += 0.1
+    if data.get("district"): points += 0.1
+    return points, {"weight": 0.3, "province": bool(province), "constituency": bool(data.get("constituency")), "district": bool(data.get("district")), "score": points}
+
+
+def _calculate_confidence(vote_details: dict, party_details: dict, calculated_sum: int, data: dict, province: str) -> tuple[float, dict]:
+    """Calculate extraction confidence score based on various factors."""
+    score = 0.0
+    details = {}
+    
+    s_thai, d_thai = _score_thai_text(vote_details, party_details)
+    score += s_thai
+    details["thai_text_validation"] = d_thai
+    
+    s_sum, d_sum = _score_sums(calculated_sum, data)
+    score += s_sum
+    details["sum_validation"] = d_sum
+    
+    s_geo, d_geo = _score_geography(province, data)
+    score += s_geo
+    details["geography_validation"] = d_geo
+    
+    if score >= 0.8: level = "HIGH"
+    elif score >= 0.5: level = "MEDIUM"
+    else: level = "LOW"
+    details["level"] = level
+    
+    return score, details
+
+
+def _get_form_identifier(form_type: Optional[FormType], is_party_list: bool, data: dict) -> str:
+    """Determine the simplified form identifier (e.g. 5/17 BCH)."""
+    raw_code = data.get("form_code", data.get("form_type", "5/17"))
+    code = "5/17"
+    for c in ["5/16", "5/17", "5/18"]:
+        if c in str(raw_code):
+            code = c
+            break
+            
+    output = str(form_type.value) if form_type else data.get("form_type", f"ส.ส. {code}")
+    if is_party_list and "(บช)" not in output:
+        output += " (บช)"
+    return output
+
+
+def _get_polling_station_id(province: str, data: dict) -> str:
+    """Construct a descriptive polling station ID."""
+    constituency = data.get("constituency_number", data.get("constituency", 0))
+    station_id = f"{province}-เขต {constituency}"
+    district = data.get("district", "")
+    if district:
+        station_id += f" {district}"
+    polling_unit = data.get("polling_unit", 0)
+    if polling_unit:
+        station_id += f"-{polling_unit}"
+    return station_id
+
+
 def process_extracted_data(data: dict, image_path: str, form_type: Optional[FormType] = None) -> Optional[BallotData]:
     """Process extracted data into a BallotData object with validation."""
     try:
-        # Determine if party-list from either form_type or response data
-        if form_type is not None:
-            is_party_list = form_type.is_party_list
-        else:
-            is_party_list = data.get("is_party_list", False)
+        is_party_list = form_type.is_party_list if form_type else data.get("is_party_list", False)
+        
+        # 1. Parse votes
+        counts, details, p_votes, p_details = _parse_votes(data, is_party_list)
+        calc_sum = sum(counts.values()) if counts else sum(p_votes.values())
 
-        # Handle constituency vs party-list forms differently
-        vote_counts = {}
-        vote_details = {}
-        party_votes = {}
-        party_details = {}
-        candidate_info = {}  # NEW: Store candidate details for constituency forms
-
-        if is_party_list:
-            # Party-list form: use party_votes
-            raw_party_votes = data.get("party_votes", {})
-            for party_num, vote_data in raw_party_votes.items():
-                if vote_data is None:
-                    continue
-                # Convert Thai numerals to Arabic (๑๒๓ -> 123)
-                party_num = convert_thai_numerals(str(party_num))
-                if isinstance(vote_data, dict):
-                    numeric = vote_data.get("numeric", 0)
-                    thai_text = vote_data.get("thai_text", "")
-                    entry = validate_vote_entry(numeric, thai_text)
-                    party_votes[str(party_num)] = numeric
-                    party_details[str(party_num)] = entry
-                else:
-                    party_votes[str(party_num)] = int(vote_data)
-        else:
-            # Constituency form: use vote_counts
-            raw_vote_counts = data.get("vote_counts", {})
-            for candidate_num, vote_data in raw_vote_counts.items():
-                if vote_data is None:
-                    continue
-                # Convert Thai numerals to Arabic
-                candidate_num = convert_thai_numerals(str(candidate_num))
-                if isinstance(vote_data, dict):
-                    numeric = vote_data.get("numeric", 0)
-                    thai_text = vote_data.get("thai_text", "")
-                    entry = validate_vote_entry(numeric, thai_text)
-                    vote_counts[int(candidate_num)] = numeric
-                    vote_details[int(candidate_num)] = entry
-                else:
-                    vote_counts[int(candidate_num)] = int(vote_data)
-
-        # Calculate sum for validation
-        calculated_sum = sum(vote_counts.values()) if vote_counts else sum(party_votes.values())
-        reported_valid = data.get("valid_votes", 0) or 0
-        reported_invalid = data.get("invalid_votes", 0) or 0
-        reported_blank = data.get("blank_votes", 0) or 0
-        reported_total = data.get("total_votes", 0) or 0
-
-        # Log validation results
-        if vote_details:
-            validated_count = sum(1 for e in vote_details.values() if e.is_validated)
-            print(f"  Validated {validated_count}/{len(vote_details)} entries (numeric vs Thai text)")
-        if party_details:
-            validated_count = sum(1 for e in party_details.values() if e.is_validated)
-            print(f"  Validated {validated_count}/{len(party_details)} entries (numeric vs Thai text)")
-
-        # Check sum validation
-        print(f"  Sum check: calculated={calculated_sum}, valid={reported_valid}, invalid={reported_invalid}, blank={reported_blank}, total={reported_total}")
-
-        if reported_valid and calculated_sum != reported_valid:
-            print(f"  WARNING: Sum != Valid votes! Sum: {calculated_sum}, Valid: {reported_valid}")
-        elif reported_valid:
-            print("  ✓ Sum matches valid votes")
-
-        if reported_total and reported_valid:
-            expected_total = reported_valid + reported_invalid + reported_blank
-            if reported_total != expected_total:
-                print(f"  WARNING: Total mismatch! Expected: {expected_total} (valid+invalid+blank), Reported: {reported_total}")
-            else:
-                print("  ✓ Total = Valid + Invalid + Blank")
-
-        # Validate province name against ECT data
-        province_name = data.get("province", "")
-        if ECT_AVAILABLE and province_name:
-            is_valid, canonical = ect_data.validate_province_name(province_name)
-            if not is_valid:
-                print(f"  WARNING: Province '{province_name}' not found in ECT data")
-                all_provinces = ect_data.list_provinces()
-                for prov in all_provinces:
-                    if province_name in prov or prov in province_name:
-                        print(f"  SUGGESTION: Did you mean '{prov}'?")
-                        break
-            else:
-                print(f"  Province validated: {canonical}")
-
-        # NEW: Match candidates for constituency forms
-        if not is_party_list and ECT_AVAILABLE and province_name:
-            constituency_number = data.get("constituency_number", data.get("constituency", 0))
-            for position, vote_count in vote_counts.items():
-                candidate = ect_data.get_candidate_by_thai_province(province_name, constituency_number, position)
-                if candidate:
-                    party = ect_data.get_party_for_candidate(candidate)
-                    candidate_info[position] = {
-                        "name": candidate.mp_app_name,
-                        "party_id": candidate.mp_app_party_id,
-                        "party_name": party.name if party else "Unknown",
-                        "party_abbr": party.abbr if party else ""
-                    }
-                    print(f"  Position {position}: {candidate.mp_app_name} ({party.abbr if party else '?'}) - {vote_count} votes")
-                else:
-                    print(f"  WARNING: No candidate found for position {position}")
-                    candidate_info[position] = {
-                        "name": "Unknown",
-                        "party_id": None,
-                        "party_name": "Unknown",
-                        "party_abbr": ""
-                    }
-
-        # NEW: Enrich party information for party-list forms
-        party_info = {}  # NEW: Store party details for party-list forms
-        if is_party_list and ECT_AVAILABLE:
-            for party_num in party_votes.keys():
-                party = ect_data.get_party(party_num)
-                if party:
-                    party_info[str(party_num)] = {
-                        "name": party.name,
-                        "abbr": party.abbr,
-                        "color": party.color
-                    }
-                    print(f"  Party #{party_num}: {party.name} ({party.abbr})")
-                else:
-                    print(f"  WARNING: Party #{party_num} not found in ECT data")
-                    party_info[str(party_num)] = {
-                        "name": "Unknown",
-                        "abbr": "",
-                        "color": ""
-                    }
-
-        # Determine form_type string for output
-        if form_type is not None:
-            form_type_output = str(form_type.value)
-        else:
-            form_code = data.get("form_code", data.get("form_type", "5/17"))
-            # Extract form code from form_type if it contains the full name
-            if "5/16" in form_code:
-                form_code = "5/16"
-            elif "5/17" in form_code:
-                form_code = "5/17"
-            elif "5/18" in form_code:
-                form_code = "5/18"
-            form_type_output = data.get("form_type", f"ส.ส. {form_code}")
-            if is_party_list and "(บช)" not in form_type_output:
-                form_type_output += " (บช)"
-
-        # Extract location info with new field names
+        # 2. Validation and Enrichment
+        _validate_sums(calc_sum, data)
         province = data.get("province", "")
-        constituency_number = data.get("constituency_number", data.get("constituency", 0))
-        district = data.get("district", "")
-        polling_unit = data.get("polling_unit", 0)
-        page_parties = data.get("page_parties", data.get("page_info", ""))
+        cand_info, p_info = _enrich_metadata(is_party_list, province, data, counts, p_votes)
 
-        # Build polling_station_id
-        polling_station_id = f"{province}-เขต {constituency_number}"
-        if district:
-            polling_station_id += f" {district}"
-        if polling_unit:
-            polling_station_id += f"-{polling_unit}"
+        # 3. Metadata and Identity
+        form_id = _get_form_identifier(form_type, is_party_list, data)
+        station_id = _get_polling_station_id(province, data)
 
-        # Calculate confidence score
-        confidence_details = {}
-        confidence_score = 0.0
-
-        # Factor 1: Thai text validation (40% weight)
-        all_details = vote_details if vote_details else party_details
-        if all_details:
-            validated_count = sum(1 for e in all_details.values() if e.is_validated)
-            validation_rate = validated_count / len(all_details)
-            confidence_details["thai_text_validation"] = {
-                "weight": 0.4,
-                "validated": validated_count,
-                "total": len(all_details),
-                "rate": validation_rate,
-                "score": validation_rate * 0.4
-            }
-            confidence_score += validation_rate * 0.4
-
-        # Factor 2: Sum validation (30% weight)
-        sum_valid = (calculated_sum == reported_valid) if reported_valid else False
-        confidence_details["sum_validation"] = {
-            "weight": 0.3,
-            "calculated_sum": calculated_sum,
-            "reported_valid": reported_valid,
-            "match": sum_valid,
-            "score": 0.3 if sum_valid else 0.0
-        }
-        confidence_score += 0.3 if sum_valid else 0.0
-
-        # Factor 3: Province validation (30% weight)
-        province_valid = False
-        if ECT_AVAILABLE and province:
-            is_valid, _ = ect_data.validate_province_name(province)
-            province_valid = is_valid
-        confidence_details["province_validation"] = {
-            "weight": 0.3,
-            "province": province,
-            "valid": province_valid,
-            "score": 0.3 if province_valid else 0.0
-        }
-        confidence_score += 0.3 if province_valid else 0.0
-
-        confidence_details["overall_score"] = confidence_score
-
-        # Determine confidence level
-        if confidence_score >= 0.9:
-            confidence_level = "HIGH"
-        elif confidence_score >= 0.7:
-            confidence_level = "MEDIUM"
-        elif confidence_score >= 0.5:
-            confidence_level = "LOW"
-        else:
-            confidence_level = "VERY_LOW"
-
-        confidence_details["level"] = confidence_level
-
-        print(f"  Confidence: {confidence_level} ({confidence_score:.1%})")
+        # 4. Confidence
+        score, c_details = _calculate_confidence(details, p_details, calc_sum, data, province)
+        print(f"  Confidence: {c_details['level']} ({score:.1%})")
 
         return BallotData(
-            form_type=form_type_output,
+            form_type=form_id,
             form_category="party_list" if is_party_list else "constituency",
             province=province,
-            constituency_number=constituency_number if isinstance(constituency_number, int) else 0,
-            district=district,
-            polling_unit=polling_unit if isinstance(polling_unit, int) else 0,
-            page_parties=page_parties,
-            polling_station_id=polling_station_id,
-            vote_counts=vote_counts,
-            vote_details=vote_details,
-            party_votes=party_votes,
-            party_details=party_details,
-            candidate_info=candidate_info,  # Include candidate info
-            party_info=party_info,  # NEW: Include party info for party-list forms
-            total_votes=reported_total or calculated_sum,
-            valid_votes=reported_valid or calculated_sum,
-            invalid_votes=reported_invalid,
-            blank_votes=reported_blank,
+            constituency_number=data.get("constituency_number", data.get("constituency", 0)),
+            district=data.get("district", ""),
+            polling_unit=data.get("polling_unit", 0),
+            page_parties=data.get("page_parties", data.get("page_info", "")),
+            polling_station_id=station_id,
+            vote_counts=counts,
+            vote_details=details,
+            party_votes=p_votes,
+            party_details=p_details,
+            candidate_info=cand_info,
+            party_info=p_info,
+            total_votes=data.get("total_votes", 0) or calc_sum,
+            valid_votes=data.get("valid_votes", 0) or calc_sum,
+            invalid_votes=data.get("invalid_votes", 0),
+            blank_votes=data.get("blank_votes", 0),
             source_file=str(image_path),
-            confidence_score=confidence_score,
-            confidence_details=confidence_details,
+            confidence_score=score,
+            confidence_details=c_details,
         )
 
     except Exception as e:
         print(f"Error processing extracted data: {e}")
         return None
-
-
