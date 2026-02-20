@@ -1550,7 +1550,7 @@ def build_backends_from_env() -> list:
         elif kind == "llamacpp":
             backends.append(LlamaCppBackend())
         elif kind == "lmstudio":
-            backends.append(LMStudioBackend())
+            backends.append(LMStudioBackend(model_id=model_id) if model_id else LMStudioBackend())
         elif kind == "glm-ocr":
             # Shorthand for ollama:glm-ocr
             backends.append(OllamaBackend("glm-ocr:latest"))

@@ -622,6 +622,10 @@ def _try_parse_lenient_json(text: str) -> Optional[dict]:
 
     # First try standard parsing
     text = text.strip()
+
+    # Fix escaped underscores (llava outputs \_ instead of _)
+    text = text.replace('\\_', '_')
+
     try:
         data = json.loads(text)
         return _convert_string_numbers(data)
