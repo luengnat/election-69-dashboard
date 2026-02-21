@@ -387,6 +387,15 @@ function applyFilters() {
     if (!q) return true;
     const hay = `${r.name || ''} ${r.province || ''} ${r.district_number || ''} ${r.drive_id || ''}`.toLowerCase();
     return hay.includes(q);
+  }).sort((a, b) => {
+    const ap = String(a.province || '');
+    const bp = String(b.province || '');
+    const pcmp = ap.localeCompare(bp, 'th');
+    if (pcmp !== 0) return pcmp;
+    const ad = Number(a.district_number || 0);
+    const bd = Number(b.district_number || 0);
+    if (ad !== bd) return ad - bd;
+    return String(a.form_type || '').localeCompare(String(b.form_type || ''), 'en');
   });
 
   renderRows(state.filtered);
