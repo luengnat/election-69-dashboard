@@ -418,7 +418,8 @@ function setupTabs() {
 }
 
 async function init() {
-  const res = await fetch('./data/district_dashboard_data.json');
+  const dataVersion = '20260221-k3';
+  const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
   const data = await res.json();
   state.items = data.items || [];
 
