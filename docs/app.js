@@ -98,6 +98,10 @@ function renderRows(rows) {
     const form = node.querySelector('.form');
     form.append(makeChip(r.form_type === 'party_list' ? 'Party List' : 'Constituency', `form-chip ${r.form_type}`));
     node.querySelector('.valid').textContent = r.valid_votes_extracted ?? '-';
+    const dE = numOrNull((r.compare || {}).delta_valid_ect);
+    const dV = numOrNull((r.compare || {}).delta_valid_vote62);
+    node.querySelector('.dE').textContent = dE === null ? '-' : dE.toLocaleString();
+    node.querySelector('.dV').textContent = dV === null ? '-' : dV.toLocaleString();
 
     tr.addEventListener('click', () => {
       state.selected = r;
