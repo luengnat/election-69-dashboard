@@ -93,7 +93,7 @@ async function init() {
   const data = await res.json();
   state.items = data.items || [];
 
-  els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: Gemini + ECT + killernay OCR cross-check`;
+  els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: OCR extraction pipeline`;
   renderKPIs(data.summary || {});
 
   const provinces = [...new Set(state.items.map((x) => x.province).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
