@@ -121,6 +121,20 @@ input, select {
 .table-wrap-main { max-height: 68vh; }
 .table-wrap-detail { max-height: 68vh; }
 .detail-panel { position: sticky; top: 8px; align-self: start; }
+.compare-meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.meta-pill {
+  display: inline-block;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  padding: 4px 8px;
+  font-size: 11px;
+}
 
 table { width: 100%; border-collapse: collapse; min-width: 520px; }
 th, td {

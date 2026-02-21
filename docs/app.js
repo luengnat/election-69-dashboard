@@ -11,9 +11,12 @@ const els = {
   viewTabs: document.getElementById('viewTabs'),
   detailTitle: document.getElementById('detailTitle'),
   detailMeta: document.getElementById('detailMeta'),
+  detailCompareMeta: document.getElementById('detailCompareMeta'),
   detailBody: document.getElementById('detailBody'),
   skewBody: document.getElementById('skewBody'),
-  skewCount: document.getElementById('skewCount')
+  skewCount: document.getElementById('skewCount'),
+  mismatchBody: document.getElementById('mismatchBody'),
+  mismatchCount: document.getElementById('mismatchCount')
 };
 
 let state = { items: [], filtered: [], view: 'all', selected: null };
@@ -50,6 +53,10 @@ function makeChip(text, cls) {
 
 function renderKPIs(summary) {
   const skewRows = computeSkewRows(state.items);
+  const mismatchRows = computeMismatchRows(state.items);
+  const withEct = state.items.filter((r) => numOrNull(r?.sources?.ect?.valid_votes) !== null).length;
+  const withVote62 = state.items.filter((r) => numOrNull(r?.sources?.vote62?.valid_votes) !== null).length;
+  const withKillernay = state.items.filter((r) => numOrNull(r?.sources?.killernay?.valid_votes) !== null).length;
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
     kpi('Total Files', summary.total_files ?? 0),
@@ -57,7 +64,11 @@ function renderKPIs(summary) {
     kpi('Weak Summaries', summary.weak_summaries ?? 0),
     kpi('With Valid Votes', summary.with_valid_votes ?? 0),
     kpi('OCR Exact', summary.ocr_exact_matches ?? 0),
-    kpi('Skew Districts', skewRows.length)
+    kpi('Skew Districts', skewRows.length),
+    kpi('Top Mismatch Rows', mismatchRows.length),
+    kpi('With ECT', withEct),
+    kpi('With vote62', withVote62),
+    kpi('With killernay', withKillernay)
   );
 }
 
@@ -102,23 +113,58 @@ function renderDetail(row) {
   if (!row) {
     els.detailTitle.textContent = 'District Detail';
     els.detailMeta.textContent = 'Select a row';
+    if (els.detailCompareMeta) els.detailCompareMeta.innerHTML = '';
     els.detailBody.innerHTML = '';
     return;
   }
   const label = row.form_type === 'party_list' ? '(Party List)' : '(Constituency)';
   els.detailTitle.textContent = `${row.province || '-'} เขต ${row.district_number || '-'} ${label}`;
   els.detailMeta.textContent = `Valid votes: ${row.valid_votes_extracted ?? '-'}`;
+  if (els.detailCompareMeta) {
+    const readValid = numOrNull(row.valid_votes_extracted);
+    const ectValid = numOrNull(row?.sources?.ect?.valid_votes);
+    const vote62Valid = numOrNull(row?.sources?.vote62?.valid_votes);
+    const killernayValid = numOrNull(row?.sources?.killernay?.valid_votes);
+    const deltaEct = readValid !== null && ectValid !== null ? readValid - ectValid : null;
+    const deltaVote62 = readValid !== null && vote62Valid !== null ? readValid - vote62Valid : null;
+    const deltaKillernay = readValid !== null && killernayValid !== null ? readValid - killernayValid : null;
+    const pieces = [
+      `Read valid: <span class="mono">${readValid === null ? '-' : readValid.toLocaleString()}</span>`,
+      `ECT: <span class="mono">${ectValid === null ? '-' : ectValid.toLocaleString()}</span>`,
+      `ΔECT: <span class="mono">${deltaEct === null ? '-' : deltaEct.toLocaleString()}</span>`,
+      `vote62: <span class="mono">${vote62Valid === null ? '-' : vote62Valid.toLocaleString()}</span>`,
+      `Δvote62: <span class="mono">${deltaVote62 === null ? '-' : deltaVote62.toLocaleString()}</span>`,
+      `killernay: <span class="mono">${killernayValid === null ? '-' : killernayValid.toLocaleString()}</span>`,
+      `Δkillernay: <span class="mono">${deltaKillernay === null ? '-' : deltaKillernay.toLocaleString()}</span>`
+    ];
+    els.detailCompareMeta.innerHTML = pieces.map((x) => `<span class="meta-pill">${x}</span>`).join('');
+  }
   els.detailBody.innerHTML = '';
 
-  const votes = row.votes || {};
+  const readVotes = row.votes || {};
+  const ectVotes = row?.sources?.ect?.votes || {};
+  const vote62Votes = row?.sources?.vote62?.votes || {};
+  const killernayVotes = row?.sources?.killernay?.votes || {};
   const names = row.form_type === 'party_list' ? (row.party_names || {}) : (row.candidate_names || {});
   const parties = row.candidate_parties || {};
+  const allNumbers = new Set([
+    ...Object.keys(readVotes),
+    ...Object.keys(ectVotes),
+    ...Object.keys(vote62Votes),
+    ...Object.keys(killernayVotes)
+  ]);
 
-  const rows = Object.entries(votes)
-    .map(([number, score]) => ({ number, score: Number(score) || 0 }))
-    .sort((a, b) => b.score - a.score || Number(a.number) - Number(b.number));
+  const rows = [...allNumbers]
+    .map((number) => {
+      const read = numOrNull(readVotes[number]);
+      const ect = numOrNull(ectVotes[number]);
+      const vote62 = numOrNull(vote62Votes[number]);
+      const killernay = numOrNull(killernayVotes[number]);
+      return { number, read, ect, vote62, killernay };
+    })
+    .sort((a, b) => (b.read ?? -1) - (a.read ?? -1) || Number(a.number) - Number(b.number));
 
-  rows.forEach(({ number, score }) => {
+  rows.forEach(({ number, read, ect, vote62, killernay }) => {
     const tr = document.createElement('tr');
     const no = document.createElement('td');
     no.className = 'mono';
@@ -130,10 +176,19 @@ function renderDetail(row) {
     } else {
       nm.textContent = baseName;
     }
-    const sc = document.createElement('td');
-    sc.className = 'mono';
-    sc.textContent = score.toLocaleString();
-    tr.append(no, nm, sc);
+    const readCell = document.createElement('td');
+    readCell.className = 'mono';
+    readCell.textContent = read === null ? '-' : read.toLocaleString();
+    const ectCell = document.createElement('td');
+    ectCell.className = 'mono';
+    ectCell.textContent = ect === null ? '-' : ect.toLocaleString();
+    const v62Cell = document.createElement('td');
+    v62Cell.className = 'mono';
+    v62Cell.textContent = vote62 === null ? '-' : vote62.toLocaleString();
+    const kCell = document.createElement('td');
+    kCell.className = 'mono';
+    kCell.textContent = killernay === null ? '-' : killernay.toLocaleString();
+    tr.append(no, nm, readCell, ectCell, v62Cell, kCell);
     els.detailBody.append(tr);
   });
 }
@@ -242,6 +297,75 @@ function renderSkewTable(items) {
   els.skewCount.textContent = `${rows.length} rows`;
 }
 
+function computeMismatchRows(items) {
+  const out = [];
+  items.forEach((r) => {
+    const read = numOrNull(r.valid_votes_extracted);
+    const ect = numOrNull(r?.sources?.ect?.valid_votes);
+    const vote62 = numOrNull(r?.sources?.vote62?.valid_votes);
+    if (read === null) return;
+    const dE = ect === null ? null : read - ect;
+    const dV = vote62 === null ? null : read - vote62;
+    const score = Math.max(Math.abs(dE ?? 0), Math.abs(dV ?? 0));
+    if (score === 0) return;
+    out.push({
+      province: r.province,
+      district_number: r.district_number,
+      form_type: r.form_type,
+      drive_url: resolveDriveUrl(r),
+      read,
+      ect,
+      vote62,
+      delta_ect: dE,
+      delta_vote62: dV,
+      score
+    });
+  });
+  return out.sort((a, b) => b.score - a.score || a.province.localeCompare(b.province, 'th') || Number(a.district_number) - Number(b.district_number));
+}
+
+function renderMismatchTable(items, limit = 120) {
+  if (!els.mismatchBody || !els.mismatchCount) return;
+  const rows = computeMismatchRows(items).slice(0, limit);
+  els.mismatchBody.innerHTML = '';
+  rows.forEach((r) => {
+    const tr = document.createElement('tr');
+    const loc = document.createElement('td');
+    const text = `${r.province} เขต ${r.district_number}`;
+    if (r.drive_url) {
+      const a = document.createElement('a');
+      a.href = r.drive_url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'loc-link';
+      a.textContent = text;
+      loc.append(a);
+    } else {
+      loc.textContent = text;
+    }
+    const form = document.createElement('td');
+    form.textContent = r.form_type === 'party_list' ? 'Party List' : 'Constituency';
+    const read = document.createElement('td');
+    read.className = 'mono';
+    read.textContent = r.read.toLocaleString();
+    const ect = document.createElement('td');
+    ect.className = 'mono';
+    ect.textContent = r.ect === null ? '-' : r.ect.toLocaleString();
+    const de = document.createElement('td');
+    de.className = 'mono';
+    de.textContent = r.delta_ect === null ? '-' : r.delta_ect.toLocaleString();
+    const v62 = document.createElement('td');
+    v62.className = 'mono';
+    v62.textContent = r.vote62 === null ? '-' : r.vote62.toLocaleString();
+    const dv = document.createElement('td');
+    dv.className = 'mono';
+    dv.textContent = r.delta_vote62 === null ? '-' : r.delta_vote62.toLocaleString();
+    tr.append(loc, form, read, ect, de, v62, dv);
+    els.mismatchBody.append(tr);
+  });
+  els.mismatchCount.textContent = `${rows.length} rows`;
+}
+
 function applyFilters() {
   const q = (els.search.value || '').trim().toLowerCase();
   const province = els.province.value;
@@ -297,6 +421,7 @@ async function init() {
   els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: OCR extraction pipeline`;
   renderKPIs(data.summary || {});
   renderSkewTable(state.items);
+  renderMismatchTable(state.items);
 
   const provinces = [...new Set(state.items.map((x) => x.province).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
   provinces.forEach((p) => {

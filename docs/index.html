@@ -68,13 +68,17 @@
             <h2 id="detailTitle">District Detail</h2>
             <span id="detailMeta">Select a row</span>
           </div>
+          <div class="compare-meta" id="detailCompareMeta"></div>
           <div class="table-wrap table-wrap-detail">
             <table>
               <thead>
                 <tr>
                   <th>No.</th>
                   <th>Name</th>
-                  <th>Score</th>
+                  <th>Read</th>
+                  <th>ECT</th>
+                  <th>vote62</th>
+                  <th>killernay</th>
                 </tr>
               </thead>
               <tbody id="detailBody"></tbody>
@@ -103,6 +107,29 @@
               </tr>
             </thead>
             <tbody id="skewBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>Top Mismatch (Valid Votes)</h2>
+          <span id="mismatchCount">0 rows</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Province / District</th>
+                <th>Form</th>
+                <th>Read Valid</th>
+                <th>ECT Valid</th>
+                <th>ΔECT</th>
+                <th>vote62 Valid</th>
+                <th>Δvote62</th>
+              </tr>
+            </thead>
+            <tbody id="mismatchBody"></tbody>
           </table>
         </div>
       </section>
