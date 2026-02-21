@@ -50,6 +50,11 @@ h1 { margin: 10px 0 6px; font-size: clamp(1.6rem, 4vw, 2.4rem); }
 .sub { margin: 0; color: var(--muted); }
 
 main { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px 20px; }
+.split-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 14px;
+}
 .view-tabs {
   display: flex;
   gap: 8px;
@@ -113,6 +118,9 @@ input, select {
 }
 .table-head h2 { margin: 4px 0 10px; font-size: 1rem; }
 .table-wrap { overflow: auto; }
+.table-wrap-main { max-height: 68vh; }
+.table-wrap-detail { max-height: 68vh; }
+.detail-panel { position: sticky; top: 8px; align-self: start; }
 
 table { width: 100%; border-collapse: collapse; min-width: 860px; }
 th, td {
@@ -150,5 +158,8 @@ th { font-size: 12px; color: var(--muted); font-weight: 600; }
 
 @media (max-width: 860px) {
   .filters { grid-template-columns: 1fr; }
+  .split-grid { grid-template-columns: 1fr; }
+  .detail-panel { position: static; }
+  .table-wrap-main, .table-wrap-detail { max-height: none; }
   main, .hero { padding-left: 14px; padding-right: 14px; }
 }
