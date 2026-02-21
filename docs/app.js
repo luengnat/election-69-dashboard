@@ -129,12 +129,20 @@ function renderDetail(row) {
     const ectValid = numOrNull(row?.sources?.ect?.valid_votes);
     const vote62Valid = numOrNull(row?.sources?.vote62?.valid_votes);
     const killernayValid = numOrNull(row?.sources?.killernay?.valid_votes);
+    const readInvalid = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
+    const readBlank = numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes);
+    const ectInvalid = numOrNull(row?.sources?.ect?.invalid_votes);
+    const ectBlank = numOrNull(row?.sources?.ect?.blank_votes);
     const deltaEct = readValid !== null && ectValid !== null ? readValid - ectValid : null;
     const deltaVote62 = readValid !== null && vote62Valid !== null ? readValid - vote62Valid : null;
     const deltaKillernay = readValid !== null && killernayValid !== null ? readValid - killernayValid : null;
     const pieces = [
       `Read valid: <span class="mono">${readValid === null ? '-' : readValid.toLocaleString()}</span>`,
+      `Read invalid: <span class="mono">${readInvalid === null ? '-' : readInvalid.toLocaleString()}</span>`,
+      `Read blank: <span class="mono">${readBlank === null ? '-' : readBlank.toLocaleString()}</span>`,
       `ECT: <span class="mono">${ectValid === null ? '-' : ectValid.toLocaleString()}</span>`,
+      `ECT invalid: <span class="mono">${ectInvalid === null ? '-' : ectInvalid.toLocaleString()}</span>`,
+      `ECT blank: <span class="mono">${ectBlank === null ? '-' : ectBlank.toLocaleString()}</span>`,
       `ΔECT: <span class="mono">${deltaEct === null ? '-' : deltaEct.toLocaleString()}</span>`,
       `vote62: <span class="mono">${vote62Valid === null ? '-' : vote62Valid.toLocaleString()}</span>`,
       `Δvote62: <span class="mono">${deltaVote62 === null ? '-' : deltaVote62.toLocaleString()}</span>`,
@@ -199,8 +207,18 @@ function renderDetail(row) {
 
 function rowTotals(row) {
   const valid = numOrNull(row?.valid_votes_extracted ?? row?.valid_votes ?? row?.sources?.read?.valid_votes);
-  const invalid = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
-  const blank = numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes);
+  const invalid = numOrNull(
+    row?.invalid_votes ??
+    row?.sources?.read?.invalid_votes ??
+    row?.sources?.ect?.invalid_votes ??
+    row?.sources?.vote62?.invalid_votes
+  );
+  const blank = numOrNull(
+    row?.blank_votes ??
+    row?.sources?.read?.blank_votes ??
+    row?.sources?.ect?.blank_votes ??
+    row?.sources?.vote62?.blank_votes
+  );
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
