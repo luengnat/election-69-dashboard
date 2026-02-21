@@ -16,6 +16,16 @@ const els = {
 
 let state = { items: [], filtered: [], view: 'all', selected: null };
 
+function resolveDriveUrl(row) {
+  const raw = String(row?.drive_url || '').trim();
+  if (raw && raw !== '#' && raw.includes('drive.google.com')) return raw;
+  const did = String(row?.drive_id || '').trim();
+  if (/^[A-Za-z0-9_-]{20,}$/.test(did)) {
+    return `https://drive.google.com/file/d/${did}/view`;
+  }
+  return '';
+}
+
 function kpi(label, value) {
   const card = document.createElement('div');
   card.className = 'kpi';
@@ -46,9 +56,24 @@ function renderRows(rows) {
   rows.forEach((r) => {
     const node = els.rowTemplate.content.cloneNode(true);
     const tr = node.querySelector('tr');
+    const locCell = node.querySelector('.loc');
     tr.classList.add('clickable-row');
     if (state.selected && state.selected.drive_id === r.drive_id) tr.classList.add('selected');
-    node.querySelector('.loc').textContent = `${r.province || '-'} เขต ${r.district_number || '-'}`;
+    const locText = `${r.province || '-'} เขต ${r.district_number || '-'}`;
+    const driveUrl = resolveDriveUrl(r);
+    if (driveUrl) {
+      const a = document.createElement('a');
+      a.href = driveUrl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'loc-link';
+      a.textContent = locText;
+      a.title = 'Open source document on Google Drive';
+      a.addEventListener('click', (e) => e.stopPropagation());
+      locCell.append(a);
+    } else {
+      locCell.textContent = locText;
+    }
     const form = node.querySelector('.form');
     form.append(makeChip(r.form_type === 'party_list' ? 'Party List' : 'Constituency', `form-chip ${r.form_type}`));
     node.querySelector('.valid').textContent = r.valid_votes_extracted ?? '-';

@@ -134,6 +134,12 @@ th { font-size: 12px; color: var(--muted); font-weight: 600; }
 .clickable-row { cursor: pointer; }
 .clickable-row:hover { background: rgba(11, 116, 132, 0.08); }
 .clickable-row.selected { background: rgba(11, 116, 132, 0.14); }
+.loc-link {
+  color: #0b5e6b;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.loc-link:hover { color: #083f48; }
 .mono { font-family: "IBM Plex Mono", monospace; }
 .form-chip, .check-chip {
   display: inline-block;
