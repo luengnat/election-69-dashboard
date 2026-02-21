@@ -53,23 +53,6 @@ function renderRows(rows) {
     form.append(makeChip(r.form_type === 'party_list' ? 'Party List' : 'Constituency', `form-chip ${r.form_type}`));
     node.querySelector('.valid').textContent = r.valid_votes_extracted ?? '-';
 
-    const checks = node.querySelector('.checks');
-    checks.append(makeChip(r.weak_summary ? 'Weak summary' : 'Strong summary', `check-chip ${r.weak_summary ? 'warn' : 'ok'}`));
-    if (r.ocr_check) {
-      checks.append(makeChip(r.ocr_check.exact ? 'OCR exact' : `OCR delta ${r.ocr_check.delta}`, `check-chip ${r.ocr_check.exact ? 'ok' : 'bad'}`));
-    }
-
-    const preview = node.querySelector('.preview');
-    const a = document.createElement('a');
-    a.href = r.drive_url || '#';
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    a.textContent = r.name || r.drive_id;
-    preview.append(a);
-    const div = document.createElement('div');
-    div.textContent = r.summary_preview || '-';
-    preview.append(div);
-
     tr.addEventListener('click', () => {
       state.selected = r;
       renderRows(state.filtered);
