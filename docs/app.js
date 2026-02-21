@@ -11,10 +11,18 @@ const els = {
   viewTabs: document.getElementById('viewTabs'),
   detailTitle: document.getElementById('detailTitle'),
   detailMeta: document.getElementById('detailMeta'),
-  detailBody: document.getElementById('detailBody')
+  detailBody: document.getElementById('detailBody'),
+  skewBody: document.getElementById('skewBody'),
+  skewCount: document.getElementById('skewCount')
 };
 
 let state = { items: [], filtered: [], view: 'all', selected: null };
+
+function numOrNull(v) {
+  if (v === null || v === undefined || v === '') return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
 
 function resolveDriveUrl(row) {
   const raw = String(row?.drive_url || '').trim();
@@ -41,13 +49,15 @@ function makeChip(text, cls) {
 }
 
 function renderKPIs(summary) {
+  const skewRows = computeSkewRows(state.items);
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
     kpi('Total Files', summary.total_files ?? 0),
     kpi('Strong Summaries', (summary.total_files ?? 0) - (summary.weak_summaries ?? 0)),
     kpi('Weak Summaries', summary.weak_summaries ?? 0),
     kpi('With Valid Votes', summary.with_valid_votes ?? 0),
-    kpi('OCR Exact', summary.ocr_exact_matches ?? 0)
+    kpi('OCR Exact', summary.ocr_exact_matches ?? 0),
+    kpi('Skew Districts', skewRows.length)
   );
 }
 
@@ -128,6 +138,110 @@ function renderDetail(row) {
   });
 }
 
+function rowTotals(row) {
+  const valid = numOrNull(row?.valid_votes_extracted ?? row?.valid_votes ?? row?.sources?.read?.valid_votes);
+  const invalid = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
+  const blank = numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes);
+  if (valid === null || invalid === null || blank === null) {
+    return { valid, invalid, blank, total: null };
+  }
+  return { valid, invalid, blank, total: valid + invalid + blank };
+}
+
+function computeSkewRows(items) {
+  const byKey = new Map();
+  items.forEach((r) => {
+    const p = r.province || '';
+    const d = r.district_number;
+    const t = r.form_type;
+    if (!p || d === null || d === undefined || !t) return;
+    const key = `${p}||${d}`;
+    if (!byKey.has(key)) byKey.set(key, { province: p, district_number: d });
+    byKey.get(key)[t] = r;
+  });
+
+  const out = [];
+  byKey.forEach((g) => {
+    if (!g.constituency || !g.party_list) return;
+    const ct = rowTotals(g.constituency);
+    const pt = rowTotals(g.party_list);
+    if (ct.total === null || pt.total === null) return;
+    const diff = ct.total - pt.total;
+    if (diff === 0) return;
+    out.push({
+      province: g.province,
+      district_number: g.district_number,
+      c_total: ct.total,
+      p_total: pt.total,
+      diff,
+      c_invalid: ct.invalid,
+      c_blank: ct.blank,
+      p_invalid: pt.invalid,
+      p_blank: pt.blank,
+      c_url: resolveDriveUrl(g.constituency),
+      p_url: resolveDriveUrl(g.party_list)
+    });
+  });
+
+  return out.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff) || a.province.localeCompare(b.province, 'th') || Number(a.district_number) - Number(b.district_number));
+}
+
+function renderSkewTable(items) {
+  if (!els.skewBody || !els.skewCount) return;
+  const rows = computeSkewRows(items);
+  els.skewBody.innerHTML = '';
+  rows.forEach((r) => {
+    const tr = document.createElement('tr');
+    const loc = document.createElement('td');
+    const text = `${r.province} เขต ${r.district_number}`;
+    if (r.c_url || r.p_url) {
+      const c = document.createElement('a');
+      c.href = r.c_url || '#';
+      c.target = '_blank';
+      c.rel = 'noopener noreferrer';
+      c.className = 'loc-link';
+      c.textContent = text;
+      c.title = 'Open constituency source';
+      const sep = document.createElement('span');
+      sep.textContent = ' ';
+      const p = document.createElement('a');
+      p.href = r.p_url || '#';
+      p.target = '_blank';
+      p.rel = 'noopener noreferrer';
+      p.className = 'loc-link';
+      p.textContent = '[บช]';
+      p.title = 'Open party-list source';
+      loc.append(c, sep, p);
+    } else {
+      loc.textContent = text;
+    }
+    const cTotal = document.createElement('td');
+    cTotal.className = 'mono';
+    cTotal.textContent = r.c_total.toLocaleString();
+    const pTotal = document.createElement('td');
+    pTotal.className = 'mono';
+    pTotal.textContent = r.p_total.toLocaleString();
+    const diff = document.createElement('td');
+    diff.className = 'mono';
+    diff.textContent = r.diff.toLocaleString();
+    const cInv = document.createElement('td');
+    cInv.className = 'mono';
+    cInv.textContent = r.c_invalid.toLocaleString();
+    const cBlk = document.createElement('td');
+    cBlk.className = 'mono';
+    cBlk.textContent = r.c_blank.toLocaleString();
+    const pInv = document.createElement('td');
+    pInv.className = 'mono';
+    pInv.textContent = r.p_invalid.toLocaleString();
+    const pBlk = document.createElement('td');
+    pBlk.className = 'mono';
+    pBlk.textContent = r.p_blank.toLocaleString();
+    tr.append(loc, cTotal, pTotal, diff, cInv, cBlk, pInv, pBlk);
+    els.skewBody.append(tr);
+  });
+  els.skewCount.textContent = `${rows.length} rows`;
+}
+
 function applyFilters() {
   const q = (els.search.value || '').trim().toLowerCase();
   const province = els.province.value;
@@ -182,6 +296,7 @@ async function init() {
 
   els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: OCR extraction pipeline`;
   renderKPIs(data.summary || {});
+  renderSkewTable(state.items);
 
   const provinces = [...new Set(state.items.map((x) => x.province).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
   provinces.forEach((p) => {

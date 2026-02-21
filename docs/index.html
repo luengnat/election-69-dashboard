@@ -82,6 +82,30 @@
           </div>
         </section>
       </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>เขตที่คะแนนเขย่ง (รวมบัตรเสีย/ไม่เลือก)</h2>
+          <span id="skewCount">0 rows</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Province / District</th>
+                <th>เขต Total</th>
+                <th>บัญชีรายชื่อ Total</th>
+                <th>Diff</th>
+                <th>เขต Invalid</th>
+                <th>เขต Blank</th>
+                <th>บช Invalid</th>
+                <th>บช Blank</th>
+              </tr>
+            </thead>
+            <tbody id="skewBody"></tbody>
+          </table>
+        </div>
+      </section>
     </main>
 
     <template id="rowTemplate">
