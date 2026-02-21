@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Election 69 District Monitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+    <header class="hero">
+      <p class="eyebrow">Thailand Election 69</p>
+      <h1>District-Level Extraction Tracker</h1>
+      <p id="generatedAt" class="sub">Loading snapshot...</p>
+    </header>
+
+    <main>
+      <section class="kpis" id="kpiGrid"></section>
+
+      <section class="panel filters">
+        <input id="searchInput" placeholder="Search province / district / file" />
+        <select id="provinceSelect"><option value="">All provinces</option></select>
+        <select id="formSelect">
+          <option value="">All forms</option>
+          <option value="constituency">Constituency</option>
+          <option value="party_list">Party List</option>
+        </select>
+        <select id="qualitySelect">
+          <option value="">All quality</option>
+          <option value="strong">Strong summary</option>
+          <option value="weak">Weak summary</option>
+          <option value="ocr_exact">OCR exact match</option>
+        </select>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>District Records</h2>
+          <span id="rowCount">0 rows</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Province / District</th>
+                <th>Form</th>
+                <th>Extracted Valid</th>
+                <th>Checks</th>
+                <th>Preview</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <template id="rowTemplate">
+      <tr>
+        <td class="mono loc"></td>
+        <td class="form"></td>
+        <td class="mono valid"></td>
+        <td class="checks"></td>
+        <td class="preview"></td>
+      </tr>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
