@@ -50,6 +50,24 @@ h1 { margin: 10px 0 6px; font-size: clamp(1.6rem, 4vw, 2.4rem); }
 .sub { margin: 0; color: var(--muted); }
 
 main { max-width: 1100px; margin: 0 auto 24px; padding: 0 20px 20px; }
+.view-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+}
+.tab {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font: 600 13px "Sora", sans-serif;
+  cursor: pointer;
+}
+.tab.active {
+  background: #dff3ee;
+  border-color: #7fb9ad;
+}
 .panel {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -105,6 +123,9 @@ th, td {
   font-size: 13px;
 }
 th { font-size: 12px; color: var(--muted); font-weight: 600; }
+.clickable-row { cursor: pointer; }
+.clickable-row:hover { background: rgba(11, 116, 132, 0.08); }
+.clickable-row.selected { background: rgba(11, 116, 132, 0.14); }
 .mono { font-family: "IBM Plex Mono", monospace; }
 .preview { max-width: 420px; color: #20383d; }
 .form-chip, .check-chip {

@@ -7,10 +7,14 @@ const els = {
   province: document.getElementById('provinceSelect'),
   form: document.getElementById('formSelect'),
   quality: document.getElementById('qualitySelect'),
-  rowTemplate: document.getElementById('rowTemplate')
+  rowTemplate: document.getElementById('rowTemplate'),
+  viewTabs: document.getElementById('viewTabs'),
+  detailTitle: document.getElementById('detailTitle'),
+  detailMeta: document.getElementById('detailMeta'),
+  detailBody: document.getElementById('detailBody')
 };
 
-let state = { items: [], filtered: [] };
+let state = { items: [], filtered: [], view: 'all', selected: null };
 
 function kpi(label, value) {
   const card = document.createElement('div');
@@ -41,6 +45,9 @@ function renderRows(rows) {
   els.tableBody.innerHTML = '';
   rows.forEach((r) => {
     const node = els.rowTemplate.content.cloneNode(true);
+    const tr = node.querySelector('tr');
+    tr.classList.add('clickable-row');
+    if (state.selected && state.selected.drive_id === r.drive_id) tr.classList.add('selected');
     node.querySelector('.loc').textContent = `${r.province || '-'} เขต ${r.district_number || '-'}`;
     const form = node.querySelector('.form');
     form.append(makeChip(r.form_type === 'party_list' ? 'Party List' : 'Constituency', `form-chip ${r.form_type}`));
@@ -63,19 +70,66 @@ function renderRows(rows) {
     div.textContent = r.summary_preview || '-';
     preview.append(div);
 
+    tr.addEventListener('click', () => {
+      state.selected = r;
+      renderRows(state.filtered);
+      renderDetail(r);
+    });
     els.tableBody.append(node);
   });
   els.rowCount.textContent = `${rows.length} rows`;
+}
+
+function renderDetail(row) {
+  if (!row) {
+    els.detailTitle.textContent = 'District Detail';
+    els.detailMeta.textContent = 'Select a row';
+    els.detailBody.innerHTML = '';
+    return;
+  }
+  const label = row.form_type === 'party_list' ? '(Party List)' : '(Constituency)';
+  els.detailTitle.textContent = `${row.province || '-'} เขต ${row.district_number || '-'} ${label}`;
+  els.detailMeta.textContent = `Valid votes: ${row.valid_votes_extracted ?? '-'}`;
+  els.detailBody.innerHTML = '';
+
+  const votes = row.votes || {};
+  const names = row.form_type === 'party_list' ? (row.party_names || {}) : (row.candidate_names || {});
+  const parties = row.candidate_parties || {};
+
+  const rows = Object.entries(votes)
+    .map(([number, score]) => ({ number, score: Number(score) || 0 }))
+    .sort((a, b) => b.score - a.score || Number(a.number) - Number(b.number));
+
+  rows.forEach(({ number, score }) => {
+    const tr = document.createElement('tr');
+    const no = document.createElement('td');
+    no.className = 'mono';
+    no.textContent = number;
+    const nm = document.createElement('td');
+    const baseName = names[number] || '-';
+    if (row.form_type === 'constituency' && parties[number]) {
+      nm.textContent = `${baseName} (${parties[number]})`;
+    } else {
+      nm.textContent = baseName;
+    }
+    const sc = document.createElement('td');
+    sc.className = 'mono';
+    sc.textContent = score.toLocaleString();
+    tr.append(no, nm, sc);
+    els.detailBody.append(tr);
+  });
 }
 
 function applyFilters() {
   const q = (els.search.value || '').trim().toLowerCase();
   const province = els.province.value;
   const form = els.form.value;
+  const forcedForm = state.view === 'all' ? '' : state.view;
   const quality = els.quality.value;
 
   state.filtered = state.items.filter((r) => {
     if (province && r.province !== province) return false;
+    if (forcedForm && r.form_type !== forcedForm) return false;
     if (form && r.form_type !== form) return false;
     if (quality === 'strong' && r.weak_summary) return false;
     if (quality === 'weak' && !r.weak_summary) return false;
@@ -86,6 +140,31 @@ function applyFilters() {
   });
 
   renderRows(state.filtered);
+  if (state.selected) {
+    const selectedInView = state.filtered.find((x) => x.drive_id === state.selected.drive_id);
+    renderDetail(selectedInView || state.filtered[0] || null);
+    state.selected = selectedInView || state.filtered[0] || null;
+  } else {
+    state.selected = state.filtered[0] || null;
+    renderDetail(state.selected);
+  }
+}
+
+function setupTabs() {
+  if (!els.viewTabs) return;
+  const tabs = [...els.viewTabs.querySelectorAll('[data-view]')];
+  tabs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.view = btn.dataset.view || 'all';
+      tabs.forEach((x) => x.classList.toggle('active', x === btn));
+      if (state.view === 'all') {
+        els.form.value = '';
+      } else {
+        els.form.value = state.view;
+      }
+      applyFilters();
+    });
+  });
 }
 
 async function init() {
@@ -106,6 +185,7 @@ async function init() {
 
   [els.search, els.province, els.form, els.quality].forEach((el) => el.addEventListener('input', applyFilters));
   [els.province, els.form, els.quality].forEach((el) => el.addEventListener('change', applyFilters));
+  setupTabs();
   applyFilters();
 }
 

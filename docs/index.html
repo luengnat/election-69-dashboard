@@ -19,6 +19,12 @@
     </header>
 
     <main>
+      <section class="panel view-tabs" id="viewTabs">
+        <button class="tab active" data-view="all">All</button>
+        <button class="tab" data-view="party_list">Party List</button>
+        <button class="tab" data-view="constituency">Constituency</button>
+      </section>
+
       <section class="kpis" id="kpiGrid"></section>
 
       <section class="panel filters">
@@ -54,6 +60,25 @@
               </tr>
             </thead>
             <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="detailPanel">
+        <div class="table-head">
+          <h2 id="detailTitle">District Detail</h2>
+          <span id="detailMeta">Select a row</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody id="detailBody"></tbody>
           </table>
         </div>
       </section>
