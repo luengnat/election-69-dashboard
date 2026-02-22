@@ -220,6 +220,18 @@ function normalizePartyNo(row, sourceKey, num) {
   const ectKeys = new Set(Object.keys(ectVotes || {}).filter((k) => /^\d+$/.test(String(k))).map((k) => Number(k)));
   const srcKeys = Object.keys(srcVotes || {}).filter((k) => /^\d+$/.test(String(k))).map((k) => Number(k));
   if (!ectKeys.size || !srcKeys.length) return String(n);
+  const srcWinner = Number(winnerNumber(srcVotes));
+  const ectWinner = Number(winnerNumber(ectVotes));
+  if (
+    Number.isFinite(srcWinner) &&
+    Number.isFinite(ectWinner) &&
+    srcWinner === ectWinner + 1 &&
+    srcKeys.includes(58) &&
+    !ectKeys.has(58) &&
+    n > 1
+  ) {
+    return String(n - 1);
+  }
   const srcSet = new Set(srcKeys);
   const minSrc = Math.min(...srcKeys);
   const maxSrc = Math.max(...srcKeys);
