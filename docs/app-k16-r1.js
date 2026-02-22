@@ -39,9 +39,7 @@ const els = {
   closeRaceBody: document.getElementById('closeRaceBody'),
   closeRaceCount: document.getElementById('closeRaceCount'),
   qualityBody: document.getElementById('qualityBody'),
-  qualityCount: document.getElementById('qualityCount'),
-  auditBody: document.getElementById('auditBody'),
-  auditCount: document.getElementById('auditCount')
+  qualityCount: document.getElementById('qualityCount')
 };
 
 let state = { items: [], filtered: [], view: 'all', section: 'mismatch_ect', selected: null };
@@ -1207,48 +1205,12 @@ function renderQualityTable(limit = 400) {
   els.qualityCount.textContent = `${rows.length} รายการ`;
 }
 
-function renderAuditTrail(limit = 400) {
-  if (!els.auditBody || !els.auditCount) return;
-  const rows = state.filtered.slice(0, limit);
-  els.auditBody.innerHTML = '';
-  rows.forEach((row) => {
-    const tr = document.createElement('tr');
-    const loc = document.createElement('td');
-    loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
-    const form = document.createElement('td');
-    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
-    const evidence = document.createElement('td');
-    const durl = resolveDriveUrl(row);
-    if (durl) {
-      const a = document.createElement('a');
-      a.href = durl;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.className = 'loc-link';
-      a.textContent = 'Drive/PDF';
-      evidence.append(a);
-    } else {
-      evidence.textContent = '-';
-    }
-    const ts = document.createElement('td');
-    ts.textContent = row.totals_source || '-';
-    const by = document.createElement('td');
-    by.textContent = row.updated_by || '-';
-    const reason = document.createElement('td');
-    reason.textContent = row.update_reason || '-';
-    tr.append(loc, form, evidence, ts, by, reason);
-    els.auditBody.append(tr);
-  });
-  els.auditCount.textContent = `${rows.length} รายการ`;
-}
-
 function renderNewTabs() {
   renderWinnerMismatchTable('ect', els.winnerMismatchEctBody, els.winnerMismatchEctCount, false);
   renderWinnerMismatchTable('vote62', els.winnerMismatchVote62Body, els.winnerMismatchVote62Count, true);
   renderSeatSummary();
   renderCloseRaces();
   renderQualityTable();
-  renderAuditTrail();
 }
 
 function applyFilters() {

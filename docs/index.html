@@ -40,7 +40,6 @@
         <button class="tab" data-section="seat_summary">MP Seat Summary</button>
         <button class="tab" data-section="close_races">Close Races</button>
         <button class="tab" data-section="quality_confidence">Data Quality / Confidence</button>
-        <button class="tab" data-section="audit_trail">Audit Trail</button>
       </section>
 
       <section class="panel filters">
@@ -174,28 +173,6 @@
               </tr>
             </thead>
             <tbody id="qualityBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" data-section-pane="audit_trail">
-        <div class="table-head">
-          <h2>Audit Trail</h2>
-          <span id="auditCount">0 รายการ</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>จังหวัด / เขต</th>
-                <th>ประเภท</th>
-                <th>ไฟล์หลักฐาน</th>
-                <th>Totals source</th>
-                <th>อัปเดตโดย</th>
-                <th>เหตุผล</th>
-              </tr>
-            </thead>
-            <tbody id="auditBody"></tbody>
           </table>
         </div>
       </section>
@@ -387,6 +364,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16-r1.js?v=redv16-six-tabs"></script>
+    <script src="./app-k16-r1.js?v=redv17-no-audit"></script>
   </body>
 </html>
