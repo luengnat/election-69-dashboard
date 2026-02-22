@@ -48,6 +48,8 @@ let skewGeoLayer = null;
 let skewGeoPromise = null;
 const sectionPanes = [...document.querySelectorAll('[data-section-pane]')];
 
+const PARTY_MAP_FALLBACK = {"1": "ไทยทรัพย์ทวี", "10": "ทางเลือกใหม่", "11": "เศรษฐกิจ", "12": "เสรีรวมไทย", "13": "รวมพลังประชาชน", "14": "ท้องที่ไทย", "15": "อนาคตไทย", "16": "พลังเพื่อไทย", "17": "ไทยชนะ", "18": "พลังสังคมใหม่", "19": "สังคมประชาธิปไตยไทย", "2": "เพื่อชาติไทย", "20": "ฟิวชัน", "21": "ไทรวมพลัง", "22": "ก้าวอิสระ", "23": "ปวงชนไทย", "24": "วิชชั่นใหม่", "25": "เพื่อชีวิตใหม่", "26": "คลองไทย", "27": "ประชาธิปัตย์", "28": "ไทยก้าวหน้า", "29": "ไทยภักดี", "3": "ใหม่", "30": "แรงงานสร้างชาติ", "31": "ประชากรไทย", "32": "ครูไทยเพื่อประชาชน", "33": "ประชาชาติ", "34": "สร้างอนาคตไทย", "35": "รักชาติ", "36": "ไทยพร้อม", "37": "ภูมิใจไทย", "38": "พลังธรรมใหม่", "39": "กรีน", "4": "มิติใหม่", "40": "ไทยธรรม", "41": "แผ่นดินธรรม", "42": "กล้าธรรม", "43": "พลังประชารัฐ", "44": "โอกาสใหม่", "45": "เป็นธรรม", "46": "ประชาชน", "47": "ประชาไทย", "48": "ไทยสร้างไทย", "49": "ไทยก้าวใหม่", "5": "รวมใจไทย", "50": "ประชาอาสาชาติ", "51": "พร้อม", "52": "เครือข่ายชาวนาแห่งประเทศไทย", "53": "ไทยพิทักษ์ธรรม", "54": "ความหวังใหม่", "55": "ไทยรวมไทย", "56": "เพื่อบ้านเมือง", "57": "พลังไทยรักชาติ", "6": "รวมไทยสร้างชาติ", "7": "พลวัต", "8": "ประชาธิปไตยใหม่", "9": "เพื่อไทย"};
+
 const NO_FILE_REASON_MAP = new Map([
   ['กรุงเทพมหานคร|15', 'กกต. ยังไม่ประกาศ'],
   ['ลพบุรี|4', 'กกต. อัพโหลด PDF ผิด (เป็นเอกสารเขต 1)'],
@@ -248,9 +250,19 @@ function normalizePartyNo(row, sourceKey, num) {
 function partyOrNameLabel(row, num, sourceKey = 'latest') {
   const key = normalizePartyNo(row, sourceKey, num);
   if (row?.form_type === 'party_list') {
-    return state.partyMap[key] || row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
+    return state.partyMap[key] || PARTY_MAP_FALLBACK[key] || row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
   }
   return row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
+}
+
+function displayLabel(row, num, sourceKey = 'latest') {
+  const key = normalizePartyNo(row, sourceKey, num);
+  const raw = partyOrNameLabel(row, num, sourceKey);
+  if (row?.form_type === 'party_list') {
+    if (!raw) return `หมายเลข ${key}`;
+    return String(raw).startsWith('พรรค') ? String(raw) : `พรรค${raw}`;
+  }
+  return raw ? `${key} ${raw}` : `หมายเลข ${key}`;
 }
 
 function winnerInfo(row, sourceKey) {
@@ -258,7 +270,8 @@ function winnerInfo(row, sourceKey) {
   const num = rawNum ? normalizePartyNo(row, sourceKey, rawNum) : null;
   if (!num) return null;
   const label = partyOrNameLabel(row, num, sourceKey);
-  return { num, label: `${num}${label ? ` ${label}` : ''}` };
+  const display = displayLabel(row, num, sourceKey);
+  return { num, label: `${num}${label ? ` ${label}` : ''}`, display };
 }
 
 function topTwo(votesObj) {
@@ -1098,9 +1111,9 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
     const form = document.createElement('td');
     form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
     const wl = document.createElement('td');
-    wl.innerHTML = `<span class="mono">${wLatest.label}</span>`;
+    wl.textContent = wLatest.display;
     const wo = document.createElement('td');
-    wo.innerHTML = `<span class="mono">${wOther.label}</span>`;
+    wo.textContent = wOther.display;
     const mg = document.createElement('td');
     mg.className = 'mono';
     mg.textContent = margin.diff === null ? '-' : margin.diff.toLocaleString();
@@ -1200,13 +1213,13 @@ function renderCloseRaces(limit = 200) {
   els.closeRaceBody.innerHTML = '';
   rows.forEach(({ row, m, turnout }) => {
     const w1 = winnerInfo(row, 'latest');
-    const n2 = partyOrNameLabel(row, m.second) || `หมายเลข ${m.second}`;
+    const n2 = displayLabel(row, m.second, 'latest');
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
       <td>${row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต'}</td>
-      <td class="mono">${w1 ? w1.label : '-'}</td>
-      <td class="mono">${m.second} ${n2}</td>
+      <td>${w1 ? w1.display : '-'}</td>
+      <td>${n2}</td>
       <td class="mono">${m.diff.toLocaleString()}</td>
       <td class="mono">${m.pct === null ? '-' : `${m.pct.toFixed(2)}%`}</td>
       <td class="mono">${turnout === null ? '-' : turnout.toLocaleString()}</td>
