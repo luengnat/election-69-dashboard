@@ -1098,23 +1098,24 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
       const margin = latestMarginInfo(row);
       const score = confidenceScore(row);
       const coverage = numOrNull(row?.sources?.vote62?.station_count);
-      if (
-        sourceKey === 'vote62'
-        && (coverage === null || coverage < MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH)
-      ) {
-        return null;
-      }
-      return { row, wLatest, wOther, margin, score, coverage };
+      const lowCoverage = sourceKey === 'vote62'
+        && (coverage === null || coverage < MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH);
+      return { row, wLatest, wOther, margin, score, coverage, lowCoverage };
     })
     .filter(Boolean)
     .sort((a, b) =>
-      (b.margin.diff ?? 0) - (a.margin.diff ?? 0)
+      Number(a.lowCoverage) - Number(b.lowCoverage)
+      || (b.coverage ?? -1) - (a.coverage ?? -1)
+      || (b.margin.diff ?? 0) - (a.margin.diff ?? 0)
       || String(a.row.province || '').localeCompare(String(b.row.province || ''), 'th')
       || Number(a.row.district_number || 0) - Number(b.row.district_number || 0)
     );
 
+  const lowCoverageCount = rows.filter((x) => x.lowCoverage).length;
+  const highCoverageCount = rows.length - lowCoverageCount;
+
   bodyEl.innerHTML = '';
-  rows.slice(0, 300).forEach(({ row, wLatest, wOther, margin, score, coverage }) => {
+  rows.slice(0, 300).forEach(({ row, wLatest, wOther, margin, score, coverage, lowCoverage }) => {
     const tr = document.createElement('tr');
     const loc = document.createElement('td');
     loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
@@ -1147,8 +1148,10 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
       cov.className = 'mono';
       cov.textContent = coverage === null ? '-' : `${coverage.toLocaleString()} หน่วย`;
       const badge = document.createElement('td');
-      if (coverage !== null && coverage < 20) {
+      if (lowCoverage) {
         badge.append(makeChip('Low coverage', 'form-chip party_list'));
+      } else {
+        badge.append(makeChip('Coverage OK', 'form-chip constituency'));
       }
       badge.append(makeChip('Volunteer source', 'form-chip constituency'));
       tr.append(loc, form, wl, wo, cov, badge, drive);
@@ -1161,7 +1164,11 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
 
     bodyEl.append(tr);
   });
-  countEl.textContent = `${rows.length} รายการ`;
+  if (includeCoverage) {
+    countEl.textContent = `${rows.length} รายการ (coverage>=${MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH}: ${highCoverageCount} • ต่ำกว่าเกณฑ์: ${lowCoverageCount})`;
+  } else {
+    countEl.textContent = `${rows.length} รายการ`;
+  }
 }
 
 function canonicalPartyKey(label) {
