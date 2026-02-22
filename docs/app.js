@@ -666,12 +666,13 @@ function decodeThaiMojibake(s) {
 
 function colorByRatio(ratio) {
   const t = Math.max(0, Math.min(1, ratio));
-  // 5-step YlOrRd-ish scale (light yellow -> deep red), easier to read than green/red.
-  if (t <= 0.2) return '#fff7bc';
-  if (t <= 0.4) return '#fee391';
-  if (t <= 0.6) return '#fec44f';
-  if (t <= 0.8) return '#fe9929';
-  return '#cc4c02';
+  // 6-step viridis (colorblind-safe), dark purple -> yellow-green.
+  if (t <= 0.16) return '#440154';
+  if (t <= 0.33) return '#414487';
+  if (t <= 0.50) return '#2a788e';
+  if (t <= 0.66) return '#22a884';
+  if (t <= 0.83) return '#7ad151';
+  return '#fde725';
 }
 
 function ensureSkewMapBase() {
@@ -747,18 +748,21 @@ async function renderSkewMap(items) {
       const hit = scoreByProvince.get(province);
       if (!hit) {
         return {
-          color: '#4e5b65',
-          weight: 0.4,
-          fillColor: '#1f2c37',
-          fillOpacity: 0.22
+          color: '#1a2128',
+          weight: 0.2,
+          opacity: 0.25,
+          fillColor: '#1a2128',
+          fillOpacity: 0.14
         };
       }
       const ratio = hit.abs_diff_sum / maxScore;
+      const fill = colorByRatio(ratio);
       return {
-        color: '#20303c',
-        weight: 0.5,
-        fillColor: colorByRatio(ratio),
-        fillOpacity: 0.82
+        color: fill,
+        weight: 0.2,
+        opacity: 0.35,
+        fillColor: fill,
+        fillOpacity: 0.78
       };
     },
     onEachFeature: (feature, layer) => {
@@ -769,6 +773,12 @@ async function renderSkewMap(items) {
         ? `${province}<br>เขย่ง: ${hit.skew_rows} เขต<br>ผลต่างรวม: ${hit.abs_diff_sum.toLocaleString()}<br>สูงสุด: ${hit.max_abs_diff.toLocaleString()}`
         : `${province}<br>ไม่มีเขย่ง`;
       layer.bindTooltip(tooltip, { sticky: true });
+      layer.on('mouseover', () => {
+        layer.setStyle({ weight: 1.0, opacity: 0.95, fillOpacity: 0.92 });
+      });
+      layer.on('mouseout', () => {
+        skewGeoLayer.resetStyle(layer);
+      });
       layer.on('click', () => {
         if (!els.province) return;
         els.province.value = province;
