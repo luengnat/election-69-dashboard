@@ -1092,6 +1092,7 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
   if (!bodyEl || !countEl) return;
   const rows = state.filtered
     .map((row) => {
+      if (row?.form_type !== 'constituency') return null;
       const wLatest = winnerInfo(row, 'latest');
       const wOther = winnerInfo(row, sourceKey);
       if (!wLatest || !wOther || wLatest.num === wOther.num) return null;
