@@ -32,6 +32,7 @@ const els = {
 let state = { items: [], filtered: [], view: 'all', selected: null };
 let skewMapInstance = null;
 let skewGeoLayer = null;
+let skewDistrictLayer = null;
 let skewGeoPromise = null;
 
 const NO_FILE_REASON_MAP = new Map([
@@ -686,6 +687,22 @@ function colorByRatio(ratio) {
   return '#99000d';
 }
 
+function colorBySignedRatio(ratio) {
+  const t = Math.max(-1, Math.min(1, ratio));
+  if (Math.abs(t) < 0.05) return '#efe7dc';
+  if (t > 0) {
+    if (t <= 0.25) return '#fcbba1';
+    if (t <= 0.5) return '#fb6a4a';
+    if (t <= 0.75) return '#de2d26';
+    return '#a50f15';
+  }
+  const a = Math.abs(t);
+  if (a <= 0.25) return '#bdd7e7';
+  if (a <= 0.5) return '#6baed6';
+  if (a <= 0.75) return '#3182bd';
+  return '#08519c';
+}
+
 function ensureSkewMapBase() {
   if (!els.skewMap || typeof window.L === 'undefined') return null;
   if (skewMapInstance) return skewMapInstance;
@@ -702,11 +719,11 @@ function ensureSkewMapBase() {
   legend.onAdd = () => {
     const div = window.L.DomUtil.create('div', 'map-legend');
     div.innerHTML = `
-      <div><strong>บัตรเขย่ง (palette: red-v7)</strong></div>
-      <div>สรุประดับจังหวัดจากข้อมูลรายเขต</div>
-      <div class="row"><span class="swatch" style="background:${colorByRatio(0)}"></span><span>ต่ำ</span></div>
-      <div class="row"><span class="swatch" style="background:${colorByRatio(0.5)}"></span><span>กลาง</span></div>
-      <div class="row"><span class="swatch" style="background:${colorByRatio(1)}"></span><span>สูง</span></div>
+      <div><strong>เขย่งรายเขต (จุด)</strong></div>
+      <div>แดง: เขต &gt; บช | น้ำเงิน: บช &gt; เขต</div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(-1)}"></span><span>- สูง</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0)}"></span><span>ใกล้ 0</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(1)}"></span><span>+ สูง</span></div>
     `;
     return div;
   };
@@ -733,14 +750,13 @@ async function renderSkewMap(items) {
     return;
   }
 
-  const rows = computeSkewProvinceHeatmap(items);
-  els.skewMapCount.textContent = `${rows.length} provinces · red-v7`;
-  const scoreByProvince = new Map(rows.map((r) => [r.province, r]));
-  const maxScore = rows.reduce((m, r) => Math.max(m, r.abs_diff_sum), 0) || 1;
+  const rows = computeSkewRows(items);
+  const maxAbsDiff = rows.reduce((m, r) => Math.max(m, Math.abs(Number(r.diff || 0))), 0) || 1;
+  els.skewMapCount.textContent = `${rows.length} districts · diverging +/-`;
 
   const geo = await loadSkewGeoJson();
   if (!geo || !Array.isArray(geo.features)) {
-    els.skewMapCount.textContent = `${rows.length} provinces (topology load failed)`;
+    els.skewMapCount.textContent = `${rows.length} districts (topology load failed)`;
     return;
   }
 
@@ -748,41 +764,34 @@ async function renderSkewMap(items) {
     skewGeoLayer.remove();
     skewGeoLayer = null;
   }
+  if (skewDistrictLayer) {
+    skewDistrictLayer.remove();
+    skewDistrictLayer = null;
+  }
+
+  const provinceCenters = new Map();
 
   skewGeoLayer = window.L.geoJSON(geo, {
     style: (feature) => {
       const raw = feature?.properties?.pro_th || '';
       const province = decodeThaiMojibake(raw);
-      const hit = scoreByProvince.get(province);
-      if (!hit) {
-        return {
-          color: '#c5cfd8',
-          weight: 0.45,
-          opacity: 0.9,
-          fillColor: '#e5ecf2',
-          fillOpacity: 0.95
-        };
-      }
-      const ratio = hit.abs_diff_sum / maxScore;
-      const fill = colorByRatio(ratio);
       return {
-        color: '#5b0a0a',
-        weight: 0.55,
-        opacity: 0.95,
-        fillColor: fill,
-        fillOpacity: 0.98
+        color: '#c5cfd8',
+        weight: 0.45,
+        opacity: 0.9,
+        fillColor: '#e9eef3',
+        fillOpacity: 0.7
       };
     },
     onEachFeature: (feature, layer) => {
       const raw = feature?.properties?.pro_th || '';
       const province = decodeThaiMojibake(raw);
-      const hit = scoreByProvince.get(province);
-      const tooltip = hit
-        ? `${province}<br>เขย่ง: ${hit.skew_rows} เขต<br>ผลต่างรวม: ${hit.abs_diff_sum.toLocaleString()}<br>สูงสุด: ${hit.max_abs_diff.toLocaleString()}`
-        : `${province}<br>ไม่มีเขย่ง`;
-      layer.bindTooltip(tooltip, { sticky: true });
+      if (!provinceCenters.has(province)) {
+        provinceCenters.set(province, layer.getBounds().getCenter());
+      }
+      layer.bindTooltip(`${province}`, { sticky: true });
       layer.on('mouseover', () => {
-        layer.setStyle({ weight: 1.0, opacity: 0.95, fillOpacity: 0.92 });
+        layer.setStyle({ weight: 0.9, opacity: 0.95, fillOpacity: 0.8 });
       });
       layer.on('mouseout', () => {
         skewGeoLayer.resetStyle(layer);
@@ -794,6 +803,57 @@ async function renderSkewMap(items) {
       });
     }
   }).addTo(map);
+
+  const byProvince = new Map();
+  rows.forEach((r) => {
+    const p = String(r.province || '').trim();
+    if (!p) return;
+    if (!byProvince.has(p)) byProvince.set(p, []);
+    byProvince.get(p).push(r);
+  });
+  byProvince.forEach((list) => list.sort((a, b) => Number(a.district_number || 0) - Number(b.district_number || 0)));
+
+  skewDistrictLayer = window.L.layerGroup();
+  byProvince.forEach((list, province) => {
+    const center = provinceCenters.get(province);
+    if (!center) return;
+    list.forEach((r, idx) => {
+      const ring = Math.floor(idx / 8) + 1;
+      const slot = idx % 8;
+      const angle = (slot / 8) * Math.PI * 2 + ring * 0.17;
+      const offset = 0.10 * ring;
+      const lat = center.lat + Math.sin(angle) * offset * 0.65;
+      const lng = center.lng + Math.cos(angle) * offset;
+      const signed = Number(r.diff || 0) / maxAbsDiff;
+      const color = colorBySignedRatio(signed);
+      const absRatio = Math.abs(Number(r.diff || 0)) / maxAbsDiff;
+      const radius = 4 + 7 * Math.sqrt(absRatio);
+      const diffPct = r.p_total > 0 ? (Number(r.diff || 0) / Number(r.p_total)) * 100 : null;
+      const marker = window.L.circleMarker([lat, lng], {
+        radius,
+        color: '#4c3a2a',
+        weight: 0.7,
+        opacity: 0.9,
+        fillColor: color,
+        fillOpacity: 0.95
+      });
+      marker.bindTooltip(
+        `${province} เขต ${r.district_number}<br>` +
+        `Diff: ${r.diff > 0 ? '+' : ''}${Number(r.diff || 0).toLocaleString()}<br>` +
+        `Diff%: ${diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`}<br>` +
+        `${r.diff > 0 ? 'เขต > บช' : 'บช > เขต'}`,
+        { sticky: true }
+      );
+      marker.on('click', () => {
+        if (!els.province || !els.search) return;
+        els.province.value = province;
+        els.search.value = `${r.district_number}`;
+        applyFilters();
+      });
+      skewDistrictLayer.addLayer(marker);
+    });
+  });
+  skewDistrictLayer.addTo(map);
 }
 
 function renderProvinceHeatmap(items, limit = 100) {
