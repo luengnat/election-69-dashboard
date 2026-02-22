@@ -356,7 +356,7 @@ function rowTotals(row) {
   return { valid, invalid, blank, total: valid + invalid + blank };
 }
 
-function computeSkewRows(items) {
+function _collectSkewDistrictRows(items, includeZero = false) {
   const byKey = new Map();
   items.forEach((r) => {
     const p = r.province || '';
@@ -375,7 +375,7 @@ function computeSkewRows(items) {
     const pt = rowTotals(g.party_list);
     if (ct.total === null || pt.total === null) return;
     const diff = ct.total - pt.total;
-    if (diff === 0) return;
+    if (!includeZero && diff === 0) return;
     out.push({
       province: g.province,
       district_number: g.district_number,
@@ -392,6 +392,14 @@ function computeSkewRows(items) {
   });
 
   return out.sort((a, b) => Math.abs(b.diff) - Math.abs(a.diff) || a.province.localeCompare(b.province, 'th') || Number(a.district_number) - Number(b.district_number));
+}
+
+function computeSkewRows(items) {
+  return _collectSkewDistrictRows(items, false);
+}
+
+function computeSkewDistrictRows(items) {
+  return _collectSkewDistrictRows(items, true);
 }
 
 function renderSkewTable(items) {
@@ -760,8 +768,9 @@ function ensureSkewMapBase() {
       <div><strong>เขย่งรายเขต (ลงสีพื้นที่)</strong></div>
       <div>แดง: เขต &gt; บช | น้ำเงิน: บช &gt; เขต</div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(-1)}"></span><span>- สูง</span></div>
-      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0)}"></span><span>ใกล้ 0</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0)}"></span><span>ปกติ (ไม่เขย่ง)</span></div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(1)}"></span><span>+ สูง</span></div>
+      <div class="row"><span class="swatch" style="background:#eef1f4"></span><span>ไม่มีข้อมูล</span></div>
     `;
     return div;
   };
@@ -788,14 +797,15 @@ async function renderSkewMap(items) {
     return;
   }
 
-  const rows = computeSkewRows(items);
-  const maxAbsDiff = rows.reduce((m, r) => Math.max(m, Math.abs(Number(r.diff || 0))), 0) || 1;
-  els.skewMapCount.textContent = `${rows.length} districts · choropleth +/-`;
-  const byDistrict = new Map(rows.map((r) => [`${String(r.province || '').trim()}|${Number(r.district_number || 0)}`, r]));
+  const allRows = computeSkewDistrictRows(items);
+  const skewRows = allRows.filter((r) => Number(r.diff || 0) !== 0);
+  const maxAbsDiff = skewRows.reduce((m, r) => Math.max(m, Math.abs(Number(r.diff || 0))), 0) || 1;
+  els.skewMapCount.textContent = `${allRows.length} districts (normal ${allRows.length - skewRows.length} · skew ${skewRows.length})`;
+  const byDistrict = new Map(allRows.map((r) => [`${String(r.province || '').trim()}|${Number(r.district_number || 0)}`, r]));
 
   const geo = await loadSkewGeoJson();
   if (!geo || !Array.isArray(geo.features)) {
-    els.skewMapCount.textContent = `${rows.length} districts (topology load failed)`;
+    els.skewMapCount.textContent = `${allRows.length} districts (topology load failed)`;
     return;
   }
 
@@ -818,7 +828,17 @@ async function renderSkewMap(items) {
           fillOpacity: 0.5
         };
       }
-      const signed = Number(hit.diff || 0) / maxAbsDiff;
+      const diffVal = Number(hit.diff || 0);
+      if (diffVal === 0) {
+        return {
+          color: '#a8957f',
+          weight: 0.5,
+          opacity: 0.9,
+          fillColor: colorBySignedRatio(0),
+          fillOpacity: 0.88
+        };
+      }
+      const signed = diffVal / maxAbsDiff;
       return {
         color: '#5c4630',
         weight: 0.55,
@@ -837,7 +857,7 @@ async function renderSkewMap(items) {
           `${province} เขต ${district}<br>` +
           `Diff: ${hit.diff > 0 ? '+' : ''}${Number(hit.diff || 0).toLocaleString()}<br>` +
           `Diff%: ${diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`}<br>` +
-          `${hit.diff > 0 ? 'เขต > บช' : 'บช > เขต'}`,
+          `${Number(hit.diff || 0) === 0 ? 'ปกติ (ไม่เขย่ง)' : (hit.diff > 0 ? 'เขต > บช' : 'บช > เขต')}`,
           { sticky: true }
         );
       } else {
