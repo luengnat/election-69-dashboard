@@ -62,15 +62,17 @@ function renderKPIs(summary) {
   const mismatchRows = computeMismatchRows(state.items);
   const coverageRows = computeCoverageRows(state.items);
   const irregularityRows = computeIrregularityRows(state.items);
+  const totalRows = state.items.length;
   const withEct = state.items.filter((r) => numOrNull(r?.sources?.ect?.valid_votes) !== null).length;
   const withVote62 = state.items.filter((r) => numOrNull(r?.sources?.vote62?.valid_votes) !== null).length;
   const withKillernay = state.items.filter((r) => numOrNull(r?.sources?.killernay?.valid_votes) !== null).length;
   const withRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null).length;
+  const weakRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null && !!r.weak_summary).length;
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
-    kpi('Total Files', summary.total_files ?? 0),
-    kpi('Strong Summaries', (summary.total_files ?? 0) - (summary.weak_summaries ?? 0)),
-    kpi('Weak Summaries', summary.weak_summaries ?? 0),
+    kpi('Total Rows', totalRows),
+    kpi('Strong Summaries', withRead - weakRead),
+    kpi('Weak Summaries', weakRead),
     kpi('With Valid Votes', summary.with_valid_votes ?? 0),
     kpi('OCR Exact', summary.ocr_exact_matches ?? 0),
     kpi('Skew Districts', skewRows.length),
@@ -110,6 +112,12 @@ function vote62Gap(row) {
   const s = sourceValidValues(row);
   if (s.read === null || s.vote62 === null) return null;
   return s.read - s.vote62;
+}
+
+function killernayGap(row) {
+  const s = sourceValidValues(row);
+  if (s.read === null || s.killernay === null) return null;
+  return s.read - s.killernay;
 }
 
 function valueStatusChip(ok) {
@@ -165,15 +173,15 @@ function renderRows(rows) {
     node.querySelector('.ectValid').textContent = vals.ect === null ? '-' : vals.ect.toLocaleString();
     node.querySelector('.vote62Valid').textContent = vals.vote62 === null ? '-' : vals.vote62.toLocaleString();
     node.querySelector('.killernayValid').textContent = vals.killernay === null ? '-' : vals.killernay.toLocaleString();
-    const spread = sourceSpread(r);
+    const kGap = killernayGap(r);
     const spreadAll = sourceSpreadAll(r);
     const v62Gap = vote62Gap(r);
-    node.querySelector('.spread').textContent = spread === null ? '-' : spread.toLocaleString();
+    node.querySelector('.spread').textContent = kGap === null ? '-' : Math.abs(kGap).toLocaleString();
     const flagsCell = node.querySelector('.flags');
-    if (spread !== null && spread >= 1000) {
-      flagsCell.append(makeChip('High spread', 'form-chip party_list'));
-    } else if (spread !== null && spread >= 100) {
-      flagsCell.append(makeChip('Spread', 'form-chip constituency'));
+    if (kGap !== null && Math.abs(kGap) >= 1000) {
+      flagsCell.append(makeChip('High Δkillernay', 'form-chip party_list'));
+    } else if (kGap !== null && Math.abs(kGap) >= 100) {
+      flagsCell.append(makeChip('Δkillernay', 'form-chip constituency'));
     }
     if (winnerDisagreement(r)) {
       flagsCell.append(makeChip('Winner mismatch', 'form-chip party_list'));
@@ -181,7 +189,7 @@ function renderRows(rows) {
     if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
       flagsCell.append(makeChip('vote62 far', 'form-chip constituency'));
     }
-    if (spreadAll !== null && spread !== null && spreadAll > spread) {
+    if (spreadAll !== null && kGap !== null && spreadAll > Math.abs(kGap)) {
       flagsCell.append(makeChip('incl. vote62 spread↑', 'form-chip constituency'));
     }
     if (!flagsCell.hasChildNodes()) {
@@ -408,13 +416,16 @@ function computeMismatchRows(items) {
   const out = [];
   items.forEach((r) => {
     const read = numOrNull(r.valid_votes_extracted);
+    const killernay = numOrNull(r?.sources?.killernay?.valid_votes);
     const ect = numOrNull(r?.sources?.ect?.valid_votes);
     const vote62 = numOrNull(r?.sources?.vote62?.valid_votes);
     if (read === null) return;
     const dE = ect === null ? null : read - ect;
     const dV = vote62 === null ? null : read - vote62;
-    const score = Math.max(Math.abs(dE ?? 0), Math.abs(dV ?? 0));
-    if (score === 0) return;
+    const dK = killernay === null ? null : read - killernay;
+    // Primary mismatch list is anchored on killernay (official-style OCR reference).
+    if (dK === null || dK === 0) return;
+    const score = Math.abs(dK);
     out.push({
       province: r.province,
       district_number: r.district_number,
@@ -423,6 +434,8 @@ function computeMismatchRows(items) {
       read,
       ect,
       vote62,
+      killernay,
+      delta_killernay: dK,
       delta_ect: dE,
       delta_vote62: dV,
       score
@@ -480,22 +493,28 @@ function computeIrregularityRows(items) {
   const rows = [];
   items.forEach((r) => {
     const vals = sourceValidValues(r);
-    const spread = sourceSpread(r);
+    const kGap = killernayGap(r);
     const spreadAll = sourceSpreadAll(r);
     const v62Gap = vote62Gap(r);
     const inv = numOrNull(r?.invalid_votes ?? r?.sources?.read?.invalid_votes);
     const blank = numOrNull(r?.blank_votes ?? r?.sources?.read?.blank_votes);
     const read = vals.read;
     const badRate = (read !== null && inv !== null && blank !== null && read > 0) ? ((inv + blank) / read) : null;
-    const winMismatch = winnerDisagreement(r);
+    const winMismatch = (() => {
+      const src = r?.sources || {};
+      const a = winnerNumber(r?.votes || {});
+      const b = winnerNumber(src?.killernay?.votes || {});
+      if (a === null || b === null) return false;
+      return a !== b;
+    })();
     const flags = [];
     let severity = 0;
 
-    if (spread !== null && spread >= 1000) {
-      flags.push('high_source_spread');
+    if (kGap !== null && Math.abs(kGap) >= 1000) {
+      flags.push('high_delta_killernay');
       severity += 3;
-    } else if (spread !== null && spread >= 200) {
-      flags.push('source_spread');
+    } else if (kGap !== null && Math.abs(kGap) >= 200) {
+      flags.push('delta_killernay');
       severity += 2;
     }
     if (badRate !== null && badRate >= 0.10) {
@@ -510,7 +529,7 @@ function computeIrregularityRows(items) {
       // Informational only: vote62 can diverge from official-style sources.
       flags.push('vote62_far_from_read');
     }
-    if (!flags.length) return;
+    if (severity <= 0) return;
     let tier = 'P3';
     if (severity >= 5) tier = 'P1';
     else if (severity >= 3) tier = 'P2';
@@ -518,7 +537,7 @@ function computeIrregularityRows(items) {
       row: r,
       severity,
       tier,
-      spread,
+      spread: kGap === null ? null : Math.abs(kGap),
       spreadAll,
       v62Gap,
       badRate,
@@ -703,7 +722,7 @@ function setupTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260222-k6';
+  const dataVersion = '20260222-k7';
   const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
   const data = await res.json();
   state.items = (data.items || []).filter((r) =>
