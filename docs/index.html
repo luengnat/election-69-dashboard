@@ -35,13 +35,15 @@
       <section class="kpis" id="kpiGrid"></section>
 
       <section class="panel view-tabs" id="sectionTabs">
-        <button class="tab active" data-section="overview">ภาพรวม</button>
-        <button class="tab" data-section="compare">เทียบแหล่งข้อมูล</button>
-        <button class="tab" data-section="irregularity">ความผิดปกติ</button>
-        <button class="tab" data-section="skew">เขย่งรายเขต</button>
+        <button class="tab active" data-section="mismatch_ect">Winner Mismatch (Latest vs ECT)</button>
+        <button class="tab" data-section="mismatch_vote62">Winner Mismatch (Latest vs vote62)</button>
+        <button class="tab" data-section="seat_summary">MP Seat Summary</button>
+        <button class="tab" data-section="close_races">Close Races</button>
+        <button class="tab" data-section="quality_confidence">Data Quality / Confidence</button>
+        <button class="tab" data-section="audit_trail">Audit Trail</button>
       </section>
 
-      <section class="panel filters" data-section-pane="overview">
+      <section class="panel filters">
         <input id="searchInput" placeholder="ค้นหา จังหวัด / เขต / ไฟล์" />
         <select id="provinceSelect"><option value="">ทุกจังหวัด</option></select>
         <select id="formSelect">
@@ -55,6 +57,147 @@
           <option value="weak">สรุปอ่อน</option>
           <option value="ocr_exact">OCR ตรงเป๊ะ</option>
         </select>
+      </section>
+
+      <section class="panel" data-section-pane="mismatch_ect">
+        <div class="table-head">
+          <h2>เขตที่ผู้ชนะไม่ตรงกัน (Latest vs ECT)</h2>
+          <span id="winnerMismatchEctCount">0 รายการ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>ผู้ชนะล่าสุด</th>
+                <th>ผู้ชนะ ECT</th>
+                <th>ส่วนต่าง 1-2 (ล่าสุด)</th>
+                <th>หลักฐาน</th>
+                <th>ความมั่นใจ</th>
+              </tr>
+            </thead>
+            <tbody id="winnerMismatchEctBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" data-section-pane="mismatch_vote62">
+        <div class="table-head">
+          <h2>เขตที่ผู้ชนะไม่ตรงกัน (Latest vs vote62)</h2>
+          <span id="winnerMismatchVote62Count">0 รายการ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>ผู้ชนะล่าสุด</th>
+                <th>ผู้ชนะ vote62</th>
+                <th>Coverage vote62</th>
+                <th>Badge</th>
+                <th>หลักฐาน</th>
+              </tr>
+            </thead>
+            <tbody id="winnerMismatchVote62Body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" data-section-pane="seat_summary">
+        <div class="table-head">
+          <h2>สรุปที่นั่ง ส.ส.</h2>
+          <span id="seatSummaryMeta">โหมดล่าสุด</span>
+        </div>
+        <div class="filters" style="grid-template-columns: 1fr;">
+          <select id="seatMode">
+            <option value="latest">latest verified</option>
+            <option value="official">official (ECT)</option>
+            <option value="scenario">scenario (killernay)</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>พรรค</th>
+                <th>สส.เขต</th>
+                <th>ผู้นำคะแนน บช. (รายเขต)</th>
+                <th>รวม (ชั่วคราว)</th>
+              </tr>
+            </thead>
+            <tbody id="seatSummaryBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" data-section-pane="close_races">
+        <div class="table-head">
+          <h2>เขตคะแนนสูสี (Close Races)</h2>
+          <span id="closeRaceCount">0 รายการ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>ผู้ชนะ</th>
+                <th>อันดับ 2</th>
+                <th>ส่วนต่างคะแนน</th>
+                <th>ส่วนต่าง %</th>
+                <th>คะแนนใช้สิทธิ (ประมาณ)</th>
+              </tr>
+            </thead>
+            <tbody id="closeRaceBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" data-section-pane="quality_confidence">
+        <div class="table-head">
+          <h2>คุณภาพข้อมูล / ความมั่นใจ</h2>
+          <span id="qualityCount">0 รายการ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>มี Latest</th>
+                <th>มี ECT</th>
+                <th>มี vote62</th>
+                <th>มี killernay</th>
+                <th>คะแนนความมั่นใจ</th>
+              </tr>
+            </thead>
+            <tbody id="qualityBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" data-section-pane="audit_trail">
+        <div class="table-head">
+          <h2>Audit Trail</h2>
+          <span id="auditCount">0 รายการ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>ไฟล์หลักฐาน</th>
+                <th>Totals source</th>
+                <th>อัปเดตโดย</th>
+                <th>เหตุผล</th>
+              </tr>
+            </thead>
+            <tbody id="auditBody"></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="split-grid" data-section-pane="overview">
@@ -244,6 +387,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16-r1.js?v=redv15-tabs"></script>
+    <script src="./app-k16-r1.js?v=redv16-six-tabs"></script>
   </body>
 </html>

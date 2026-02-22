@@ -9,6 +9,7 @@ const els = {
   province: document.getElementById('provinceSelect'),
   form: document.getElementById('formSelect'),
   quality: document.getElementById('qualitySelect'),
+  seatMode: document.getElementById('seatMode'),
   rowTemplate: document.getElementById('rowTemplate'),
   viewTabs: document.getElementById('viewTabs'),
   sectionTabs: document.getElementById('sectionTabs'),
@@ -28,10 +29,22 @@ const els = {
   heatmapBody: document.getElementById('heatmapBody'),
   heatmapCount: document.getElementById('heatmapCount'),
   skewMap: document.getElementById('skewMap'),
-  skewMapCount: document.getElementById('skewMapCount')
+  skewMapCount: document.getElementById('skewMapCount'),
+  winnerMismatchEctBody: document.getElementById('winnerMismatchEctBody'),
+  winnerMismatchEctCount: document.getElementById('winnerMismatchEctCount'),
+  winnerMismatchVote62Body: document.getElementById('winnerMismatchVote62Body'),
+  winnerMismatchVote62Count: document.getElementById('winnerMismatchVote62Count'),
+  seatSummaryBody: document.getElementById('seatSummaryBody'),
+  seatSummaryMeta: document.getElementById('seatSummaryMeta'),
+  closeRaceBody: document.getElementById('closeRaceBody'),
+  closeRaceCount: document.getElementById('closeRaceCount'),
+  qualityBody: document.getElementById('qualityBody'),
+  qualityCount: document.getElementById('qualityCount'),
+  auditBody: document.getElementById('auditBody'),
+  auditCount: document.getElementById('auditCount')
 };
 
-let state = { items: [], filtered: [], view: 'all', section: 'overview', selected: null };
+let state = { items: [], filtered: [], view: 'all', section: 'mismatch_ect', selected: null };
 let skewMapInstance = null;
 let skewGeoLayer = null;
 let skewGeoPromise = null;
@@ -192,6 +205,51 @@ function winnerDisagreement(row) {
   ].filter((x) => x !== null);
   if (wins.length < 2) return false;
   return new Set(wins).size > 1;
+}
+
+function sourceVotes(row, sourceKey) {
+  if (sourceKey === 'latest') return row?.votes || {};
+  return row?.sources?.[sourceKey]?.votes || {};
+}
+
+function winnerInfo(row, sourceKey) {
+  const num = winnerNumber(sourceVotes(row, sourceKey));
+  if (!num) return null;
+  const names = row?.candidate_names || {};
+  const parties = row?.candidate_parties || {};
+  const name = names[num] || parties[num] || '';
+  return { num, label: `${num}${name ? ` ${name}` : ''}` };
+}
+
+function topTwo(votesObj) {
+  const entries = Object.entries(votesObj || {})
+    .map(([k, v]) => [String(k), numOrNull(v)])
+    .filter(([, v]) => v !== null)
+    .sort((a, b) => b[1] - a[1] || Number(a[0]) - Number(b[0]));
+  return entries.slice(0, 2);
+}
+
+function latestMarginInfo(row) {
+  const tt = topTwo(sourceVotes(row, 'latest'));
+  if (!tt.length) return { diff: null, pct: null, first: null, second: null };
+  const first = tt[0];
+  const second = tt[1] || [null, 0];
+  const diff = first[1] - second[1];
+  const pct = first[1] > 0 ? (diff / first[1]) * 100 : null;
+  return { diff, pct, first: first[0], second: second[0] };
+}
+
+function confidenceScore(row) {
+  let score = 50;
+  if (numOrNull(row?.valid_votes_extracted) !== null) score += 20;
+  if (numOrNull(row?.sources?.ect?.valid_votes) !== null) score += 10;
+  if (numOrNull(row?.sources?.vote62?.valid_votes) !== null) score += 10;
+  if (numOrNull(row?.sources?.killernay?.valid_votes) !== null) score += 10;
+  if (row?.weak_summary) score -= 15;
+  const kGap = killernayGap(row);
+  if (kGap !== null && Math.abs(kGap) >= 1000) score -= 20;
+  else if (kGap !== null && Math.abs(kGap) >= 200) score -= 10;
+  return Math.max(0, Math.min(100, score));
 }
 
 function renderRows(rows) {
@@ -973,6 +1031,226 @@ function renderMismatchTable(items, limit = 120) {
   els.mismatchCount.textContent = `${rows.length} รายการ`;
 }
 
+function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage = false) {
+  if (!bodyEl || !countEl) return;
+  const rows = state.filtered
+    .map((row) => {
+      const wLatest = winnerInfo(row, 'latest');
+      const wOther = winnerInfo(row, sourceKey);
+      if (!wLatest || !wOther || wLatest.num === wOther.num) return null;
+      const margin = latestMarginInfo(row);
+      const score = confidenceScore(row);
+      const coverage = numOrNull(row?.sources?.vote62?.station_count);
+      return { row, wLatest, wOther, margin, score, coverage };
+    })
+    .filter(Boolean)
+    .sort((a, b) =>
+      (b.margin.diff ?? 0) - (a.margin.diff ?? 0)
+      || String(a.row.province || '').localeCompare(String(b.row.province || ''), 'th')
+      || Number(a.row.district_number || 0) - Number(b.row.district_number || 0)
+    );
+
+  bodyEl.innerHTML = '';
+  rows.slice(0, 300).forEach(({ row, wLatest, wOther, margin, score, coverage }) => {
+    const tr = document.createElement('tr');
+    const loc = document.createElement('td');
+    loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
+    const form = document.createElement('td');
+    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
+    const wl = document.createElement('td');
+    wl.innerHTML = `<span class="mono">${wLatest.label}</span>`;
+    const wo = document.createElement('td');
+    wo.innerHTML = `<span class="mono">${wOther.label}</span>`;
+    const mg = document.createElement('td');
+    mg.className = 'mono';
+    mg.textContent = margin.diff === null ? '-' : margin.diff.toLocaleString();
+
+    const drive = document.createElement('td');
+    const durl = resolveDriveUrl(row);
+    if (durl) {
+      const a = document.createElement('a');
+      a.href = durl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'loc-link';
+      a.textContent = 'เปิดไฟล์';
+      drive.append(a);
+    } else {
+      drive.textContent = '-';
+    }
+
+    if (includeCoverage) {
+      const cov = document.createElement('td');
+      cov.className = 'mono';
+      cov.textContent = coverage === null ? '-' : `${coverage.toLocaleString()} หน่วย`;
+      const badge = document.createElement('td');
+      if (coverage !== null && coverage < 20) {
+        badge.append(makeChip('Low coverage', 'form-chip party_list'));
+      }
+      badge.append(makeChip('Volunteer source', 'form-chip constituency'));
+      tr.append(loc, form, wl, wo, cov, badge, drive);
+    } else {
+      const cf = document.createElement('td');
+      cf.className = 'mono';
+      cf.textContent = `${score}`;
+      tr.append(loc, form, wl, wo, mg, drive, cf);
+    }
+
+    bodyEl.append(tr);
+  });
+  countEl.textContent = `${rows.length} รายการ`;
+}
+
+function renderSeatSummary() {
+  if (!els.seatSummaryBody || !els.seatSummaryMeta) return;
+  const mode = (els.seatMode && els.seatMode.value) || 'latest';
+  const sourceKey = mode === 'official' ? 'ect' : (mode === 'scenario' ? 'killernay' : 'latest');
+  const byParty = new Map();
+
+  const bump = (party, key) => {
+    const name = String(party || '-').trim() || '-';
+    if (!byParty.has(name)) byParty.set(name, { party: name, mp_zone: 0, party_lead: 0, total: 0 });
+    byParty.get(name)[key] += 1;
+  };
+
+  state.filtered.forEach((row) => {
+    const w = winnerInfo(row, sourceKey);
+    if (!w) return;
+    const party = row?.candidate_parties?.[w.num] || row?.candidate_names?.[w.num] || `หมายเลข ${w.num}`;
+    if (row.form_type === 'constituency') bump(party, 'mp_zone');
+    if (row.form_type === 'party_list') bump(party, 'party_lead');
+  });
+
+  const rows = [...byParty.values()]
+    .map((x) => ({ ...x, total: x.mp_zone + x.party_lead }))
+    .sort((a, b) => b.total - a.total || b.mp_zone - a.mp_zone || a.party.localeCompare(b.party, 'th'))
+    .slice(0, 100);
+
+  els.seatSummaryBody.innerHTML = '';
+  rows.forEach((r) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.party}</td>
+      <td class="mono">${r.mp_zone.toLocaleString()}</td>
+      <td class="mono">${r.party_lead.toLocaleString()}</td>
+      <td class="mono">${r.total.toLocaleString()}</td>
+    `;
+    els.seatSummaryBody.append(tr);
+  });
+  const modeLabel = mode === 'official' ? 'official (ECT)' : mode === 'scenario' ? 'scenario (killernay)' : 'latest verified';
+  els.seatSummaryMeta.textContent = `โหมด: ${modeLabel} • หมายเหตุ: คอลัมน์ บช. เป็นจำนวนเขตที่นำคะแนน ไม่ใช่สูตรจัดสรรที่นั่งทางการ`;
+}
+
+function renderCloseRaces(limit = 200) {
+  if (!els.closeRaceBody || !els.closeRaceCount) return;
+  const rows = state.filtered
+    .map((row) => {
+      const m = latestMarginInfo(row);
+      if (m.diff === null || m.second === null) return null;
+      const valid = numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes);
+      const inv = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
+      const blank = numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes);
+      const turnout = [valid, inv, blank].every((x) => x !== null) ? valid + inv + blank : null;
+      return { row, m, turnout };
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.m.diff - b.m.diff)
+    .slice(0, limit);
+
+  els.closeRaceBody.innerHTML = '';
+  rows.forEach(({ row, m, turnout }) => {
+    const w1 = winnerInfo(row, 'latest');
+    const n2 = row?.candidate_names?.[m.second] || row?.candidate_parties?.[m.second] || `หมายเลข ${m.second}`;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
+      <td>${row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต'}</td>
+      <td class="mono">${w1 ? w1.label : '-'}</td>
+      <td class="mono">${m.second} ${n2}</td>
+      <td class="mono">${m.diff.toLocaleString()}</td>
+      <td class="mono">${m.pct === null ? '-' : `${m.pct.toFixed(2)}%`}</td>
+      <td class="mono">${turnout === null ? '-' : turnout.toLocaleString()}</td>
+    `;
+    els.closeRaceBody.append(tr);
+  });
+  els.closeRaceCount.textContent = `${rows.length} รายการ`;
+}
+
+function renderQualityTable(limit = 400) {
+  if (!els.qualityBody || !els.qualityCount) return;
+  const rows = state.filtered
+    .map((row) => ({
+      row,
+      score: confidenceScore(row),
+      hasRead: numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes) !== null,
+      hasEct: numOrNull(row?.sources?.ect?.valid_votes) !== null,
+      hasVote62: numOrNull(row?.sources?.vote62?.valid_votes) !== null,
+      hasK: numOrNull(row?.sources?.killernay?.valid_votes) !== null
+    }))
+    .sort((a, b) => a.score - b.score || String(a.row.province).localeCompare(String(b.row.province), 'th'))
+    .slice(0, limit);
+
+  els.qualityBody.innerHTML = '';
+  rows.forEach(({ row, score, hasRead, hasEct, hasVote62, hasK }) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
+      <td>${row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต'}</td>
+      <td>${hasRead ? 'มี' : 'ไม่มี'}</td>
+      <td>${hasEct ? 'มี' : 'ไม่มี'}</td>
+      <td>${hasVote62 ? 'มี' : 'ไม่มี'}</td>
+      <td>${hasK ? 'มี' : 'ไม่มี'}</td>
+      <td class="mono">${score}</td>
+    `;
+    els.qualityBody.append(tr);
+  });
+  els.qualityCount.textContent = `${rows.length} รายการ`;
+}
+
+function renderAuditTrail(limit = 400) {
+  if (!els.auditBody || !els.auditCount) return;
+  const rows = state.filtered.slice(0, limit);
+  els.auditBody.innerHTML = '';
+  rows.forEach((row) => {
+    const tr = document.createElement('tr');
+    const loc = document.createElement('td');
+    loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
+    const form = document.createElement('td');
+    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
+    const evidence = document.createElement('td');
+    const durl = resolveDriveUrl(row);
+    if (durl) {
+      const a = document.createElement('a');
+      a.href = durl;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = 'loc-link';
+      a.textContent = 'Drive/PDF';
+      evidence.append(a);
+    } else {
+      evidence.textContent = '-';
+    }
+    const ts = document.createElement('td');
+    ts.textContent = row.totals_source || '-';
+    const by = document.createElement('td');
+    by.textContent = row.updated_by || '-';
+    const reason = document.createElement('td');
+    reason.textContent = row.update_reason || '-';
+    tr.append(loc, form, evidence, ts, by, reason);
+    els.auditBody.append(tr);
+  });
+  els.auditCount.textContent = `${rows.length} รายการ`;
+}
+
+function renderNewTabs() {
+  renderWinnerMismatchTable('ect', els.winnerMismatchEctBody, els.winnerMismatchEctCount, false);
+  renderWinnerMismatchTable('vote62', els.winnerMismatchVote62Body, els.winnerMismatchVote62Count, true);
+  renderSeatSummary();
+  renderCloseRaces();
+  renderQualityTable();
+  renderAuditTrail();
+}
+
 function applyFilters() {
   const q = (els.search.value || '').trim().toLowerCase();
   const province = els.province.value;
@@ -1011,6 +1289,7 @@ function applyFilters() {
     state.selected = state.filtered[0] || null;
     renderDetail(state.selected);
   }
+  renderNewTabs();
 }
 
 function setupTabs() {
@@ -1041,7 +1320,7 @@ function setupSectionTabs() {
   };
   tabs.forEach((btn) => {
     btn.addEventListener('click', () => {
-      state.section = btn.dataset.section || 'overview';
+      state.section = btn.dataset.section || 'mismatch_ect';
       applySection();
     });
   });
@@ -1078,6 +1357,7 @@ async function init() {
 
   [els.search, els.province, els.form, els.quality].forEach((el) => el.addEventListener('input', applyFilters));
   [els.province, els.form, els.quality].forEach((el) => el.addEventListener('change', applyFilters));
+  if (els.seatMode) els.seatMode.addEventListener('change', renderSeatSummary);
   setupTabs();
   setupSectionTabs();
   applyFilters();
