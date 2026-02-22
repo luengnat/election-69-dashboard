@@ -93,9 +93,23 @@ function sourceValidValues(row) {
 }
 
 function sourceSpread(row) {
+  // Primary spread excludes vote62 because it is volunteer-sourced and can be noisy.
+  const s = sourceValidValues(row);
+  const vals = [s.read, s.ect, s.killernay].filter((v) => v !== null);
+  if (!vals.length) return null;
+  return Math.max(...vals) - Math.min(...vals);
+}
+
+function sourceSpreadAll(row) {
   const vals = Object.values(sourceValidValues(row)).filter((v) => v !== null);
   if (!vals.length) return null;
   return Math.max(...vals) - Math.min(...vals);
+}
+
+function vote62Gap(row) {
+  const s = sourceValidValues(row);
+  if (s.read === null || s.vote62 === null) return null;
+  return s.read - s.vote62;
 }
 
 function valueStatusChip(ok) {
@@ -115,7 +129,6 @@ function winnerDisagreement(row) {
   const wins = [
     winnerNumber(row?.votes || {}),
     winnerNumber(src?.ect?.votes || {}),
-    winnerNumber(src?.vote62?.votes || {}),
     winnerNumber(src?.killernay?.votes || {})
   ].filter((x) => x !== null);
   if (wins.length < 2) return false;
@@ -153,6 +166,8 @@ function renderRows(rows) {
     node.querySelector('.vote62Valid').textContent = vals.vote62 === null ? '-' : vals.vote62.toLocaleString();
     node.querySelector('.killernayValid').textContent = vals.killernay === null ? '-' : vals.killernay.toLocaleString();
     const spread = sourceSpread(r);
+    const spreadAll = sourceSpreadAll(r);
+    const v62Gap = vote62Gap(r);
     node.querySelector('.spread').textContent = spread === null ? '-' : spread.toLocaleString();
     const flagsCell = node.querySelector('.flags');
     if (spread !== null && spread >= 1000) {
@@ -162,6 +177,12 @@ function renderRows(rows) {
     }
     if (winnerDisagreement(r)) {
       flagsCell.append(makeChip('Winner mismatch', 'form-chip party_list'));
+    }
+    if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
+      flagsCell.append(makeChip('vote62 far', 'form-chip constituency'));
+    }
+    if (spreadAll !== null && spread !== null && spreadAll > spread) {
+      flagsCell.append(makeChip('incl. vote62 spread↑', 'form-chip constituency'));
     }
     if (!flagsCell.hasChildNodes()) {
       flagsCell.append(makeChip('OK', 'form-chip constituency'));
@@ -460,6 +481,8 @@ function computeIrregularityRows(items) {
   items.forEach((r) => {
     const vals = sourceValidValues(r);
     const spread = sourceSpread(r);
+    const spreadAll = sourceSpreadAll(r);
+    const v62Gap = vote62Gap(r);
     const inv = numOrNull(r?.invalid_votes ?? r?.sources?.read?.invalid_votes);
     const blank = numOrNull(r?.blank_votes ?? r?.sources?.read?.blank_votes);
     const read = vals.read;
@@ -483,6 +506,10 @@ function computeIrregularityRows(items) {
       flags.push('winner_disagreement');
       severity += 2;
     }
+    if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
+      // Informational only: vote62 can diverge from official-style sources.
+      flags.push('vote62_far_from_read');
+    }
     if (!flags.length) return;
     let tier = 'P3';
     if (severity >= 5) tier = 'P1';
@@ -492,6 +519,8 @@ function computeIrregularityRows(items) {
       severity,
       tier,
       spread,
+      spreadAll,
+      v62Gap,
       badRate,
       flags
     });
@@ -674,10 +703,15 @@ function setupTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260221-k3';
+  const dataVersion = '20260222-k6';
   const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
   const data = await res.json();
-  state.items = data.items || [];
+  state.items = (data.items || []).filter((r) =>
+    r &&
+    String(r.province || '').trim() &&
+    Number(r.district_number || 0) > 0 &&
+    (r.form_type === 'constituency' || r.form_type === 'party_list')
+  );
 
   els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: OCR extraction pipeline`;
   renderKPIs(data.summary || {});
