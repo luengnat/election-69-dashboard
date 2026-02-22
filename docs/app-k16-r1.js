@@ -48,6 +48,7 @@ let skewGeoLayer = null;
 let skewGeoPromise = null;
 const sectionPanes = [...document.querySelectorAll('[data-section-pane]')];
 const MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH = 20;
+const SKEW_NOISE_ABS_TOLERANCE = 200;
 
 const PARTY_MAP_FALLBACK = {"1": "ไทยทรัพย์ทวี", "10": "ทางเลือกใหม่", "11": "เศรษฐกิจ", "12": "เสรีรวมไทย", "13": "รวมพลังประชาชน", "14": "ท้องที่ไทย", "15": "อนาคตไทย", "16": "พลังเพื่อไทย", "17": "ไทยชนะ", "18": "พลังสังคมใหม่", "19": "สังคมประชาธิปไตยไทย", "2": "เพื่อชาติไทย", "20": "ฟิวชัน", "21": "ไทยรวมพลัง", "22": "ก้าวอิสระ", "23": "ปวงชนไทย", "24": "วิชชั่นใหม่", "25": "เพื่อชีวิตใหม่", "26": "คลองไทย", "27": "ประชาธิปัตย์", "28": "ไทยก้าวหน้า", "29": "ไทยภักดี", "3": "ใหม่", "30": "แรงงานสร้างชาติ", "31": "ประชากรไทย", "32": "ครูไทยเพื่อประชาชน", "33": "ประชาชาติ", "34": "สร้างอนาคตไทย", "35": "รักชาติ", "36": "ไทยพร้อม", "37": "ภูมิใจไทย", "38": "พลังธรรมใหม่", "39": "กรีน", "4": "มิติใหม่", "40": "ไทยธรรม", "41": "แผ่นดินธรรม", "42": "กล้าธรรม", "43": "พลังประชารัฐ", "44": "โอกาสใหม่", "45": "เป็นธรรม", "46": "ประชาชน", "47": "ประชาไทย", "48": "ไทยสร้างไทย", "49": "ไทยก้าวใหม่", "5": "รวมใจไทย", "50": "ประชาอาสาชาติ", "51": "พร้อม", "52": "เครือข่ายชาวนาแห่งประเทศไทย", "53": "ไทยพิทักษ์ธรรม", "54": "ความหวังใหม่", "55": "ไทยรวมไทย", "56": "เพื่อบ้านเมือง", "57": "พลังไทยรักชาติ", "6": "รวมไทยสร้างชาติ", "7": "พลวัต", "8": "ประชาธิปไตยใหม่", "9": "เพื่อไทย"};
 
@@ -492,14 +493,17 @@ function _collectSkewDistrictRows(items, includeZero = false) {
     const ct = rowTotals(g.constituency);
     const pt = rowTotals(g.party_list);
     if (ct.total === null || pt.total === null) return;
-    const diff = ct.total - pt.total;
+    const rawDiff = ct.total - pt.total;
+    const diff = Math.abs(rawDiff) <= SKEW_NOISE_ABS_TOLERANCE ? 0 : rawDiff;
     if (!includeZero && diff === 0) return;
     out.push({
       province: g.province,
       district_number: g.district_number,
       c_total: ct.total,
       p_total: pt.total,
+      raw_diff: rawDiff,
       diff,
+      within_tolerance: diff === 0 && rawDiff !== 0,
       c_invalid: ct.invalid,
       c_blank: ct.blank,
       p_invalid: pt.invalid,
@@ -601,7 +605,7 @@ function renderSkewTable(items) {
       `<span class="diff-neg"><strong>ฝั่ง -:</strong> ${negSum.toLocaleString()} (${negRows.length} เขต)</span>` +
       `<span><strong>รวมเขต (บัตรใช้สิทธิ):</strong> ${cTotalSum.toLocaleString()}</span>` +
       `<span><strong>รวมบช (บัตรใช้สิทธิ):</strong> ${pTotalSum.toLocaleString()}</span>` +
-      `<span><strong>เกณฑ์:</strong> ใช้ valid+invalid+blank จาก latest/read เท่านั้น</span>`;
+      `<span><strong>เกณฑ์:</strong> ใช้ valid+invalid+blank จาก latest/read และนับเขย่งเมื่อ |diff| > ${SKEW_NOISE_ABS_TOLERANCE.toLocaleString()}</span>`;
   }
 }
 
@@ -984,12 +988,17 @@ async function renderSkewMap(items) {
       const district = Number(feature?.properties?.CONS_no || 0);
       const hit = byDistrict.get(`${province}|${district}`);
       if (hit) {
-        const diffPct = hit.p_total > 0 ? (Number(hit.diff || 0) / Number(hit.p_total)) * 100 : null;
+        const displayDiff = Number(hit.diff || 0);
+        const rawDiff = Number(hit.raw_diff || 0);
+        const diffPct = hit.p_total > 0 ? (displayDiff / Number(hit.p_total)) * 100 : null;
+        const toleranceNote = hit.within_tolerance ? '<br>หมายเหตุ: ต่างเล็กน้อย (อยู่ใน tolerance)' : '';
         layer.bindTooltip(
           `${province} เขต ${district}<br>` +
-          `ส่วนต่าง: ${hit.diff > 0 ? '+' : ''}${Number(hit.diff || 0).toLocaleString()}<br>` +
+          `ส่วนต่าง: ${displayDiff > 0 ? '+' : ''}${displayDiff.toLocaleString()}<br>` +
+          `raw diff: ${rawDiff > 0 ? '+' : ''}${rawDiff.toLocaleString()}<br>` +
           `ส่วนต่าง%: ${diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`}<br>` +
-          `${Number(hit.diff || 0) === 0 ? 'ปกติ (ไม่เขย่ง)' : (hit.diff > 0 ? 'เขต > บช' : 'บช > เขต')}`,
+          `${displayDiff === 0 ? 'ปกติ (ไม่เขย่ง)' : (displayDiff > 0 ? 'เขต > บช' : 'บช > เขต')}` +
+          toleranceNote,
           { sticky: true }
         );
       } else {
