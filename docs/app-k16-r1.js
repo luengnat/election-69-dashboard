@@ -1339,7 +1339,7 @@ function setupSectionTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260222-k7';
+  const dataVersion = '20260222-k8';
   const [res, pmRes] = await Promise.all([
     fetch(`./data/district_dashboard_data.json?v=${dataVersion}`),
     fetch(`./data/party_map.json?v=${dataVersion}`).catch(() => null)

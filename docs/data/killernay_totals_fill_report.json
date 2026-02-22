@@ -1,0 +1,274 @@
+{
+  "killernay_index_rows": 772,
+  "rows_total": 800,
+  "rows_changed": 650,
+  "filled_valid": 0,
+  "filled_invalid": 650,
+  "filled_blank": 650,
+  "unchanged_no_match": 28,
+  "unchanged_no_k_totals": 0,
+  "validation": {
+    "sum_votes_mismatch_after_fill_count": 12,
+    "total_ballots_mismatch_after_fill_count": 53,
+    "sum_votes_mismatch_after_fill_top20": [
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 12,
+        "form_type": "party_list",
+        "vote_sum": 106736,
+        "valid": 106754,
+        "delta": -18
+      },
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 19,
+        "form_type": "party_list",
+        "vote_sum": 94973,
+        "valid": 95000,
+        "delta": -27
+      },
+      {
+        "province": "กาฬสินธุ์",
+        "district_number": 1,
+        "form_type": "party_list",
+        "vote_sum": 83229,
+        "valid": 82880,
+        "delta": 349
+      },
+      {
+        "province": "ขอนแก่น",
+        "district_number": 7,
+        "form_type": "party_list",
+        "vote_sum": 83183,
+        "valid": 83257,
+        "delta": -74
+      },
+      {
+        "province": "ชลบุรี",
+        "district_number": 5,
+        "form_type": "constituency",
+        "vote_sum": 95514,
+        "valid": 95056,
+        "delta": 458
+      },
+      {
+        "province": "นครปฐม",
+        "district_number": 3,
+        "form_type": "party_list",
+        "vote_sum": 82500,
+        "valid": 82526,
+        "delta": -26
+      },
+      {
+        "province": "นครสวรรค์",
+        "district_number": 6,
+        "form_type": "party_list",
+        "vote_sum": 80356,
+        "valid": 81637,
+        "delta": -1281
+      },
+      {
+        "province": "ปัตตานี",
+        "district_number": 2,
+        "form_type": "party_list",
+        "vote_sum": 75428,
+        "valid": 75538,
+        "delta": -110
+      },
+      {
+        "province": "มหาสารคาม",
+        "district_number": 6,
+        "form_type": "party_list",
+        "vote_sum": 85945,
+        "valid": 85988,
+        "delta": -43
+      },
+      {
+        "province": "สงขลา",
+        "district_number": 4,
+        "form_type": "party_list",
+        "vote_sum": 95194,
+        "valid": 95827,
+        "delta": -633
+      },
+      {
+        "province": "สตูล",
+        "district_number": 2,
+        "form_type": "party_list",
+        "vote_sum": 92701,
+        "valid": 92747,
+        "delta": -46
+      },
+      {
+        "province": "อุตรดิตถ์",
+        "district_number": 2,
+        "form_type": "party_list",
+        "vote_sum": 74516,
+        "valid": 74563,
+        "delta": -47
+      }
+    ],
+    "total_ballots_mismatch_after_fill_top20": [
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 5,
+        "form_type": "party_list",
+        "total": 96505,
+        "ballots_used_killernay": 96559,
+        "delta": -54
+      },
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 10,
+        "form_type": "party_list",
+        "total": 99656,
+        "ballots_used_killernay": 99657,
+        "delta": -1
+      },
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 21,
+        "form_type": "constituency",
+        "total": 96859,
+        "ballots_used_killernay": 96860,
+        "delta": -1
+      },
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 21,
+        "form_type": "party_list",
+        "total": 96859,
+        "ballots_used_killernay": 96860,
+        "delta": -1
+      },
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 31,
+        "form_type": "constituency",
+        "total": 107447,
+        "ballots_used_killernay": 103227,
+        "delta": 4220
+      },
+      {
+        "province": "กรุงเทพมหานคร",
+        "district_number": 31,
+        "form_type": "party_list",
+        "total": 107447,
+        "ballots_used_killernay": 103227,
+        "delta": 4220
+      },
+      {
+        "province": "กำแพงเพชร",
+        "district_number": 1,
+        "form_type": "party_list",
+        "total": 101538,
+        "ballots_used_killernay": 101439,
+        "delta": 99
+      },
+      {
+        "province": "ฉะเชิงเทรา",
+        "district_number": 2,
+        "form_type": "party_list",
+        "total": 118517,
+        "ballots_used_killernay": 118518,
+        "delta": -1
+      },
+      {
+        "province": "ชลบุรี",
+        "district_number": 1,
+        "form_type": "constituency",
+        "total": 104344,
+        "ballots_used_killernay": 104346,
+        "delta": -2
+      },
+      {
+        "province": "ชัยภูมิ",
+        "district_number": 1,
+        "form_type": "party_list",
+        "total": 88468,
+        "ballots_used_killernay": 88777,
+        "delta": -309
+      },
+      {
+        "province": "ตาก",
+        "district_number": 1,
+        "form_type": "constituency",
+        "total": 105328,
+        "ballots_used_killernay": 105329,
+        "delta": -1
+      },
+      {
+        "province": "นครปฐม",
+        "district_number": 3,
+        "form_type": "party_list",
+        "total": 91164,
+        "ballots_used_killernay": 91278,
+        "delta": -114
+      },
+      {
+        "province": "นครราชสีมา",
+        "district_number": 10,
+        "form_type": "party_list",
+        "total": 112011,
+        "ballots_used_killernay": 112031,
+        "delta": -20
+      },
+      {
+        "province": "นครศรีธรรมราช",
+        "district_number": 1,
+        "form_type": "constituency",
+        "total": 99798,
+        "ballots_used_killernay": 99799,
+        "delta": -1
+      },
+      {
+        "province": "นครศรีธรรมราช",
+        "district_number": 1,
+        "form_type": "party_list",
+        "total": 99798,
+        "ballots_used_killernay": 99799,
+        "delta": -1
+      },
+      {
+        "province": "นนทบุรี",
+        "district_number": 6,
+        "form_type": "party_list",
+        "total": 110026,
+        "ballots_used_killernay": 110021,
+        "delta": 5
+      },
+      {
+        "province": "น่าน",
+        "district_number": 3,
+        "form_type": "constituency",
+        "total": 89541,
+        "ballots_used_killernay": 89542,
+        "delta": -1
+      },
+      {
+        "province": "บึงกาฬ",
+        "district_number": 1,
+        "form_type": "party_list",
+        "total": 74245,
+        "ballots_used_killernay": 74240,
+        "delta": 5
+      },
+      {
+        "province": "ประจวบคีรีขันธ์",
+        "district_number": 1,
+        "form_type": "constituency",
+        "total": 118297,
+        "ballots_used_killernay": 118298,
+        "delta": -1
+      },
+      {
+        "province": "ปราจีนบุรี",
+        "district_number": 1,
+        "form_type": "party_list",
+        "total": 90452,
+        "ballots_used_killernay": 94811,
+        "delta": -4359
+      }
+    ]
+  }
+}
