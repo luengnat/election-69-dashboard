@@ -34,7 +34,14 @@
 
       <section class="kpis" id="kpiGrid"></section>
 
-      <section class="panel filters">
+      <section class="panel view-tabs" id="sectionTabs">
+        <button class="tab active" data-section="overview">ภาพรวม</button>
+        <button class="tab" data-section="compare">เทียบแหล่งข้อมูล</button>
+        <button class="tab" data-section="irregularity">ความผิดปกติ</button>
+        <button class="tab" data-section="skew">เขย่งรายเขต</button>
+      </section>
+
+      <section class="panel filters" data-section-pane="overview">
         <input id="searchInput" placeholder="ค้นหา จังหวัด / เขต / ไฟล์" />
         <select id="provinceSelect"><option value="">ทุกจังหวัด</option></select>
         <select id="formSelect">
@@ -50,7 +57,7 @@
         </select>
       </section>
 
-      <section class="split-grid">
+      <section class="split-grid" data-section-pane="overview">
         <section class="panel">
           <div class="table-head">
             <h2>ข้อมูลรายเขต</h2>
@@ -99,7 +106,7 @@
         </section>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-section-pane="compare">
         <div class="table-head">
           <h2>ช่องว่างข้อมูล (รายเขต/ประเภท)</h2>
           <span id="coverageCount">0 รายการ</span>
@@ -121,7 +128,7 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-section-pane="irregularity">
         <div class="table-head">
           <h2>สัญญาณผิดปกติ</h2>
           <span id="irregularityCount">0 รายการ</span>
@@ -143,7 +150,7 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-section-pane="irregularity">
         <div class="table-head">
           <h2>สรุปความผิดปกติรายจังหวัด</h2>
           <span id="heatmapCount">0 จังหวัด</span>
@@ -164,7 +171,7 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-section-pane="skew">
         <div class="table-head">
           <h2>เขย่งรายเขต (ค่าหลัก)</h2>
           <span id="skewCount">0 รายการ</span>
@@ -191,7 +198,7 @@
         </div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-section-pane="skew">
         <div class="table-head">
           <h2>แผนที่เขย่งรายเขต (ลงสีรายเขต)</h2>
           <span id="skewMapCount">0 เขต</span>
@@ -199,7 +206,7 @@
         <div id="skewMap" class="skew-map"></div>
       </section>
 
-      <section class="panel">
+      <section class="panel" data-section-pane="compare">
         <div class="table-head">
           <h2>รายการต่างสูงสุด (บัตรดี)</h2>
           <span id="mismatchCount">0 รายการ</span>
@@ -237,6 +244,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16-r1.js?v=redv14-hardcache"></script>
+    <script src="./app-k16-r1.js?v=redv15-tabs"></script>
   </body>
 </html>

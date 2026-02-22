@@ -11,6 +11,7 @@ const els = {
   quality: document.getElementById('qualitySelect'),
   rowTemplate: document.getElementById('rowTemplate'),
   viewTabs: document.getElementById('viewTabs'),
+  sectionTabs: document.getElementById('sectionTabs'),
   detailTitle: document.getElementById('detailTitle'),
   detailMeta: document.getElementById('detailMeta'),
   detailCompareMeta: document.getElementById('detailCompareMeta'),
@@ -30,10 +31,11 @@ const els = {
   skewMapCount: document.getElementById('skewMapCount')
 };
 
-let state = { items: [], filtered: [], view: 'all', selected: null };
+let state = { items: [], filtered: [], view: 'all', section: 'overview', selected: null };
 let skewMapInstance = null;
 let skewGeoLayer = null;
 let skewGeoPromise = null;
+const sectionPanes = [...document.querySelectorAll('[data-section-pane]')];
 
 const NO_FILE_REASON_MAP = new Map([
   ['กรุงเทพมหานคร|15', 'กกต. ยังไม่ประกาศ'],
@@ -1028,6 +1030,24 @@ function setupTabs() {
   });
 }
 
+function setupSectionTabs() {
+  if (!els.sectionTabs) return;
+  const tabs = [...els.sectionTabs.querySelectorAll('[data-section]')];
+  const applySection = () => {
+    tabs.forEach((btn) => btn.classList.toggle('active', btn.dataset.section === state.section));
+    sectionPanes.forEach((pane) => {
+      pane.hidden = pane.dataset.sectionPane !== state.section;
+    });
+  };
+  tabs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      state.section = btn.dataset.section || 'overview';
+      applySection();
+    });
+  });
+  applySection();
+}
+
 async function init() {
   const dataVersion = '20260222-k7';
   const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
@@ -1059,6 +1079,7 @@ async function init() {
   [els.search, els.province, els.form, els.quality].forEach((el) => el.addEventListener('input', applyFilters));
   [els.province, els.form, els.quality].forEach((el) => el.addEventListener('change', applyFilters));
   setupTabs();
+  setupSectionTabs();
   applyFilters();
 }
 
