@@ -783,7 +783,7 @@ function ensureSkewMapBase() {
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0.2)}"></span><span>+ ต่ำ</span></div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0.5)}"></span><span>+ กลาง</span></div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(1)}"></span><span>+ สูง</span></div>
-      <div class="row"><span class="swatch" style="background:#eef1f4"></span><span>ไม่มีข้อมูล</span></div>
+      <div class="row"><span class="swatch" style="background:#b7b7b7"></span><span>ไม่มีข้อมูล</span></div>
     `;
     return div;
   };
@@ -834,11 +834,11 @@ async function renderSkewMap(items) {
       const hit = byDistrict.get(`${province}|${district}`);
       if (!hit) {
         return {
-          color: '#c5cfd8',
+          color: '#8a8a8a',
           weight: 0.4,
-          opacity: 0.85,
-          fillColor: '#eef1f4',
-          fillOpacity: 0.5
+          opacity: 0.9,
+          fillColor: '#b7b7b7',
+          fillOpacity: 0.72
         };
       }
       const diffVal = Number(hit.diff || 0);
