@@ -1,0 +1,99 @@
+{
+  "snapshot_utc": "2026-02-22T12:42:02.684790+00:00",
+  "source": "ECT endpoints used in ect_api.ECT_ENDPOINTS",
+  "files": [
+    {
+      "key": "provinces",
+      "url": "https://static-ectreport69.ect.go.th/data/data/refs/info_province.json",
+      "path": "static-ectreport69.ect.go.th/data/data/refs/info_province.json",
+      "bytes": 12826,
+      "sha256": "671e3555778b113d77327e2c5c1867694aa4b9af74dff9b7acc6452f71854421",
+      "json_type": "dict",
+      "json_keys": [
+        "province",
+        "total_registered_vote",
+        "total_vote_stations"
+      ]
+    },
+    {
+      "key": "constituencies",
+      "url": "https://static-ectreport69.ect.go.th/data/data/refs/info_constituency.json",
+      "path": "static-ectreport69.ect.go.th/data/data/refs/info_constituency.json",
+      "bytes": 127923,
+      "sha256": "930d16b1a6d92f03a2f2b1c51d0838506588a0f1c1c588ae12832c992835f42e",
+      "json_type": "list",
+      "json_len": 401
+    },
+    {
+      "key": "party_overview",
+      "url": "https://static-ectreport69.ect.go.th/data/data/refs/info_party_overview.json",
+      "path": "static-ectreport69.ect.go.th/data/data/refs/info_party_overview.json",
+      "bytes": 16568,
+      "sha256": "8c7d4298d436e808aa1bdfed55552d26ff9f2cb7343a3815394a66728193662b",
+      "json_type": "list",
+      "json_len": 57
+    },
+    {
+      "key": "mp_candidates",
+      "url": "https://static-ectreport69.ect.go.th/data/data/refs/info_mp_candidate.json",
+      "path": "static-ectreport69.ect.go.th/data/data/refs/info_mp_candidate.json",
+      "bytes": 1101453,
+      "sha256": "e506202d08f020358a92eea629e8bb28d1a9f69837f51f24db9142cc82465770",
+      "json_type": "list",
+      "json_len": 3491
+    },
+    {
+      "key": "party_candidates",
+      "url": "https://static-ectreport69.ect.go.th/data/data/refs/info_party_candidate.json",
+      "path": "static-ectreport69.ect.go.th/data/data/refs/info_party_candidate.json",
+      "bytes": 327583,
+      "sha256": "559493eb8c725082db721d8fd05fc5e445a8379337c1ca3249d6ab22abb3fb01",
+      "json_type": "list",
+      "json_len": 57
+    },
+    {
+      "key": "stats_cons",
+      "url": "https://stats-ectreport69.ect.go.th/data/records/stats_cons.json",
+      "path": "stats-ectreport69.ect.go.th/data/records/stats_cons.json",
+      "bytes": 2859861,
+      "sha256": "41533dd23fef98dc77831b94b15ce5665cd90fa40cb3914a6541d912acf45014",
+      "json_type": "dict",
+      "json_keys": [
+        "blank_votes",
+        "counted_vote_stations",
+        "invalid_votes",
+        "last_update",
+        "party_list_blank_votes",
+        "party_list_invalid_votes",
+        "party_list_percent_turn_out",
+        "party_list_turn_out",
+        "party_list_valid_votes",
+        "party_percent_blank_votes",
+        "party_percent_invalid_votes",
+        "party_percent_valid_votes",
+        "pause_report",
+        "percent_blank_votes",
+        "percent_count",
+        "percent_invalid_votes",
+        "percent_turn_out",
+        "percent_valid_votes",
+        "result_province",
+        "turn_out"
+      ]
+    },
+    {
+      "key": "stats_party",
+      "url": "https://stats-ectreport69.ect.go.th/data/records/stats_party.json",
+      "path": "stats-ectreport69.ect.go.th/data/records/stats_party.json",
+      "bytes": 372740,
+      "sha256": "c116ebcf0c3e62617b0f8627d76dc57d98c11b1cb3fd765717b79960d4b766f1",
+      "json_type": "dict",
+      "json_keys": [
+        "counted_vote_stations",
+        "last_update",
+        "percent_count",
+        "result_party"
+      ]
+    }
+  ]
+}
