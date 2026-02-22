@@ -1155,30 +1155,105 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
   countEl.textContent = `${rows.length} รายการ`;
 }
 
+function canonicalPartyKey(label) {
+  return String(label || '')
+    .trim()
+    .replace(/^พรรค\s*/u, '')
+    .replace(/\s+/g, ' ');
+}
+
+function partyDisplayFromNo(partyNo) {
+  const no = String(partyNo || '').trim();
+  const raw = state.partyMap[no] || PARTY_MAP_FALLBACK[no] || '';
+  if (!raw) return `หมายเลข ${no}`;
+  const name = String(raw).trim();
+  const withPrefix = name.startsWith('พรรค') ? name : `พรรค${name}`;
+  return `${no} ${withPrefix}`;
+}
+
+function computePartyListSeats(items, sourceKey, totalSeats = 100) {
+  const voteByNo = new Map();
+  let totalVotes = 0;
+  items.forEach((row) => {
+    if (row?.form_type !== 'party_list') return;
+    const votes = sourceVotes(row, sourceKey);
+    Object.entries(votes || {}).forEach(([rawNo, rawVote]) => {
+      const vote = numOrNull(rawVote);
+      if (vote === null || vote < 0) return;
+      const no = normalizePartyNo(row, sourceKey, rawNo);
+      if (!/^\d+$/.test(no)) return;
+      voteByNo.set(no, (voteByNo.get(no) || 0) + vote);
+      totalVotes += vote;
+    });
+  });
+
+  const rows = [...voteByNo.entries()].map(([partyNo, votes]) => ({ partyNo, votes }));
+  if (!rows.length || totalVotes <= 0) {
+    return { rows: [], totalVotes: 0, quota: null, assignedBase: 0, tieAtCutoff: false };
+  }
+
+  const quota = totalVotes / totalSeats;
+  let assignedBase = 0;
+  rows.forEach((r) => {
+    const exact = r.votes / quota;
+    r.base = Math.floor(exact);
+    r.remainder = exact - r.base;
+    r.listSeats = r.base;
+    assignedBase += r.base;
+  });
+
+  let remaining = Math.max(0, totalSeats - assignedBase);
+  const rank = [...rows].sort((a, b) =>
+    b.remainder - a.remainder
+    || b.votes - a.votes
+    || Number(a.partyNo) - Number(b.partyNo)
+  );
+  for (let i = 0; i < remaining && i < rank.length; i += 1) {
+    rank[i].listSeats += 1;
+  }
+
+  let tieAtCutoff = false;
+  if (remaining > 0 && remaining < rank.length) {
+    const lastTake = rank[remaining - 1];
+    const firstOut = rank[remaining];
+    if (lastTake && firstOut && Math.abs(lastTake.remainder - firstOut.remainder) < 1e-12) {
+      tieAtCutoff = true;
+    }
+  }
+
+  return { rows, totalVotes, quota, assignedBase, tieAtCutoff };
+}
+
 function renderSeatSummary() {
   if (!els.seatSummaryBody || !els.seatSummaryMeta) return;
   const mode = (els.seatMode && els.seatMode.value) || 'latest';
   const sourceKey = mode === 'official' ? 'ect' : (mode === 'scenario' ? 'killernay' : 'latest');
   const byParty = new Map();
-
-  const bump = (party, key) => {
-    const name = String(party || '-').trim() || '-';
-    if (!byParty.has(name)) byParty.set(name, { party: name, mp_zone: 0, party_lead: 0, total: 0 });
-    byParty.get(name)[key] += 1;
+  const upsert = (key, display) => {
+    if (!byParty.has(key)) byParty.set(key, { party: display, mp_zone: 0, party_list: 0, total: 0 });
+    return byParty.get(key);
   };
 
   state.filtered.forEach((row) => {
+    if (row?.form_type !== 'constituency') return;
     const w = winnerInfo(row, sourceKey);
     if (!w) return;
-    const party = partyOrNameLabel(row, w.num) || `หมายเลข ${w.num}`;
-    if (row.form_type === 'constituency') bump(party, 'mp_zone');
-    if (row.form_type === 'party_list') bump(party, 'party_lead');
+    const raw = partyOrNameLabel(row, w.num, sourceKey) || w.display;
+    const key = canonicalPartyKey(raw) || raw;
+    upsert(key, raw).mp_zone += 1;
+  });
+
+  const list = computePartyListSeats(state.filtered, sourceKey, 100);
+  list.rows.forEach((r) => {
+    const display = partyDisplayFromNo(r.partyNo);
+    const key = canonicalPartyKey(display);
+    upsert(key, display).party_list += Number(r.listSeats || 0);
   });
 
   const rows = [...byParty.values()]
-    .map((x) => ({ ...x, total: x.mp_zone + x.party_lead }))
+    .map((x) => ({ ...x, total: x.mp_zone + x.party_list }))
     .sort((a, b) => b.total - a.total || b.mp_zone - a.mp_zone || a.party.localeCompare(b.party, 'th'))
-    .slice(0, 100);
+    .slice(0, 120);
 
   els.seatSummaryBody.innerHTML = '';
   rows.forEach((r) => {
@@ -1186,13 +1261,15 @@ function renderSeatSummary() {
     tr.innerHTML = `
       <td>${r.party}</td>
       <td class="mono">${r.mp_zone.toLocaleString()}</td>
-      <td class="mono">${r.party_lead.toLocaleString()}</td>
+      <td class="mono">${r.party_list.toLocaleString()}</td>
       <td class="mono">${r.total.toLocaleString()}</td>
     `;
     els.seatSummaryBody.append(tr);
   });
   const modeLabel = mode === 'official' ? 'official (ECT)' : mode === 'scenario' ? 'scenario (killernay)' : 'latest verified';
-  els.seatSummaryMeta.textContent = `โหมด: ${modeLabel} • หมายเหตุ: คอลัมน์ บช. เป็นจำนวนเขตที่นำคะแนน ไม่ใช่สูตรจัดสรรที่นั่งทางการ`;
+  const quotaText = list.quota === null ? '-' : list.quota.toLocaleString(undefined, { maximumFractionDigits: 3 });
+  const tieText = list.tieAtCutoff ? ' • หมายเหตุ: มีเศษคะแนนเสมอกันที่ขอบที่นั่งสุดท้าย (ตามกฎหมายต้องจับสลาก)' : '';
+  els.seatSummaryMeta.textContent = `โหมด: ${modeLabel} • คำนวณ บช. แบบ 100 ที่นั่ง (หารเฉลี่ย + เศษสูงสุด) • คะแนนรวม บช.: ${list.totalVotes.toLocaleString()} • ค่าเฉลี่ยต่อ 1 ที่นั่ง: ${quotaText}${tieText}`;
 }
 
 function renderCloseRaces(limit = 200) {
