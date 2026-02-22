@@ -42,7 +42,7 @@ const els = {
   qualityCount: document.getElementById('qualityCount')
 };
 
-let state = { items: [], filtered: [], view: 'all', section: 'mismatch_ect', selected: null };
+let state = { items: [], filtered: [], view: 'all', section: 'overview', selected: null, partyMap: {} };
 let skewMapInstance = null;
 let skewGeoLayer = null;
 let skewGeoPromise = null;
@@ -210,13 +210,43 @@ function sourceVotes(row, sourceKey) {
   return row?.sources?.[sourceKey]?.votes || {};
 }
 
+function normalizePartyNo(row, sourceKey, num) {
+  const n = Number(num);
+  if (!Number.isFinite(n)) return String(num);
+  if (row?.form_type !== 'party_list') return String(n);
+  if (sourceKey !== 'latest' && sourceKey !== 'killernay') return String(n);
+  const ectVotes = row?.sources?.ect?.votes || {};
+  const srcVotes = sourceVotes(row, sourceKey);
+  const ectKeys = new Set(Object.keys(ectVotes || {}).filter((k) => /^\d+$/.test(String(k))).map((k) => Number(k)));
+  const srcKeys = Object.keys(srcVotes || {}).filter((k) => /^\d+$/.test(String(k))).map((k) => Number(k));
+  if (!ectKeys.size || !srcKeys.length) return String(n);
+  const srcSet = new Set(srcKeys);
+  const minSrc = Math.min(...srcKeys);
+  const maxSrc = Math.max(...srcKeys);
+  // Common shifted encoding in some latest/killernay rows: party keys become 2..58 instead of 1..57.
+  if (srcKeys.length >= 50 && minSrc === 2 && maxSrc === 58 && !srcSet.has(1) && srcSet.has(58) && n > 1) {
+    return String(n - 1);
+  }
+  const direct = srcKeys.reduce((acc, k) => acc + (ectKeys.has(k) ? 1 : 0), 0);
+  const minus1 = srcKeys.reduce((acc, k) => acc + (ectKeys.has(k - 1) ? 1 : 0), 0);
+  if (minus1 >= direct + 2 && minus1 >= 3 && n > 1) return String(n - 1);
+  return String(n);
+}
+
+function partyOrNameLabel(row, num, sourceKey = 'latest') {
+  const key = normalizePartyNo(row, sourceKey, num);
+  if (row?.form_type === 'party_list') {
+    return state.partyMap[key] || row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
+  }
+  return row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
+}
+
 function winnerInfo(row, sourceKey) {
-  const num = winnerNumber(sourceVotes(row, sourceKey));
+  const rawNum = winnerNumber(sourceVotes(row, sourceKey));
+  const num = rawNum ? normalizePartyNo(row, sourceKey, rawNum) : null;
   if (!num) return null;
-  const names = row?.candidate_names || {};
-  const parties = row?.candidate_parties || {};
-  const name = names[num] || parties[num] || '';
-  return { num, label: `${num}${name ? ` ${name}` : ''}` };
+  const label = partyOrNameLabel(row, num, sourceKey);
+  return { num, label: `${num}${label ? ` ${label}` : ''}` };
 }
 
 function topTwo(votesObj) {
@@ -1114,7 +1144,7 @@ function renderSeatSummary() {
   state.filtered.forEach((row) => {
     const w = winnerInfo(row, sourceKey);
     if (!w) return;
-    const party = row?.candidate_parties?.[w.num] || row?.candidate_names?.[w.num] || `หมายเลข ${w.num}`;
+    const party = partyOrNameLabel(row, w.num) || `หมายเลข ${w.num}`;
     if (row.form_type === 'constituency') bump(party, 'mp_zone');
     if (row.form_type === 'party_list') bump(party, 'party_lead');
   });
@@ -1158,7 +1188,7 @@ function renderCloseRaces(limit = 200) {
   els.closeRaceBody.innerHTML = '';
   rows.forEach(({ row, m, turnout }) => {
     const w1 = winnerInfo(row, 'latest');
-    const n2 = row?.candidate_names?.[m.second] || row?.candidate_parties?.[m.second] || `หมายเลข ${m.second}`;
+    const n2 = partyOrNameLabel(row, m.second) || `หมายเลข ${m.second}`;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
@@ -1282,7 +1312,7 @@ function setupSectionTabs() {
   };
   tabs.forEach((btn) => {
     btn.addEventListener('click', () => {
-      state.section = btn.dataset.section || 'mismatch_ect';
+      state.section = btn.dataset.section || 'overview';
       applySection();
     });
   });
@@ -1291,8 +1321,15 @@ function setupSectionTabs() {
 
 async function init() {
   const dataVersion = '20260222-k7';
-  const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
+  const [res, pmRes] = await Promise.all([
+    fetch(`./data/district_dashboard_data.json?v=${dataVersion}`),
+    fetch(`./data/party_map.json?v=${dataVersion}`).catch(() => null)
+  ]);
   const data = await res.json();
+  if (pmRes && pmRes.ok) {
+    const pm = await pmRes.json();
+    state.partyMap = pm?.party_map || {};
+  }
   state.items = (data.items || []).filter((r) =>
     r &&
     String(r.province || '').trim() &&
