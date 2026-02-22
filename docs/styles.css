@@ -146,11 +146,11 @@ input::placeholder { color: #84b7cd; }
   border: 1px solid rgba(125, 193, 225, 0.2);
   border-radius: 12px;
   overflow: hidden;
-  background: #eef3f7;
+  background: #fff8dc;
 }
 
 .skew-map .leaflet-container {
-  background: #eef3f7;
+  background: #fff8dc;
 }
 
 .map-legend {
