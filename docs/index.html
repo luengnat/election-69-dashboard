@@ -1,72 +1,73 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Election 69 District Monitor</title>
+    <title>ติดตามผลเลือกตั้ง 69 รายเขต</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./vendor/leaflet.css" />
+    <link rel="stylesheet" href="./styles.css?v=warm-k16" />
   </head>
   <body>
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
     <header class="hero">
-      <p class="eyebrow">Thailand Election 69</p>
-      <h1>District-Level Extraction Tracker</h1>
-      <p id="generatedAt" class="sub">Loading snapshot...</p>
+      <p class="eyebrow">เลือกตั้งประเทศไทย 69</p>
+      <h1>ติดตามการอ่านผลคะแนนระดับเขต</h1>
+      <p id="generatedAt" class="sub">กำลังโหลดข้อมูลล่าสุด...</p>
       <div class="source-note">
         <p>ECT เป็นข้อมูลจากเว็บรายงานผลคะแนนแบบไม่เป็นทางการของ กกต.</p>
-        <p>Vote62 เป็นข้อมูลจากการอ่านผลของอาสาสมัคร จึงอาจจะไม่ครบทุกหน่วย</p>
+        <p>Vote62 เป็นข้อมูลภาคอาสาสมัคร (ภาพหน่วยเลือกตั้ง) อาจคลาดเคลื่อนจากผลทางการอย่างมีนัยสำคัญ</p>
         <p>Killernay เป็นข้อมูลจากการอ่านรายงานผลคะแนนแบบเป็นทางการของ กกต. โดย @killernay</p>
       </div>
     </header>
 
     <main>
       <section class="panel view-tabs" id="viewTabs">
-        <button class="tab active" data-view="all">All</button>
-        <button class="tab" data-view="party_list">Party List</button>
-        <button class="tab" data-view="constituency">Constituency</button>
-        <button class="tab" data-view="missing_ect">Missing ECT</button>
+        <button class="tab active" data-view="all">ทั้งหมด</button>
+        <button class="tab" data-view="party_list">บัญชีรายชื่อ</button>
+        <button class="tab" data-view="constituency">แบ่งเขต</button>
+        <button class="tab" data-view="missing_read">ยังไม่มีไฟล์/ผลอ่าน</button>
       </section>
 
       <section class="kpis" id="kpiGrid"></section>
 
       <section class="panel filters">
-        <input id="searchInput" placeholder="Search province / district / file" />
-        <select id="provinceSelect"><option value="">All provinces</option></select>
+        <input id="searchInput" placeholder="ค้นหา จังหวัด / เขต / ไฟล์" />
+        <select id="provinceSelect"><option value="">ทุกจังหวัด</option></select>
         <select id="formSelect">
-          <option value="">All forms</option>
-          <option value="constituency">Constituency</option>
-          <option value="party_list">Party List</option>
+          <option value="">ทุกแบบฟอร์ม</option>
+          <option value="constituency">แบ่งเขต</option>
+          <option value="party_list">บัญชีรายชื่อ</option>
         </select>
         <select id="qualitySelect">
-          <option value="">All quality</option>
-          <option value="strong">Strong summary</option>
-          <option value="weak">Weak summary</option>
-          <option value="ocr_exact">OCR exact match</option>
+          <option value="">ทุกระดับคุณภาพ</option>
+          <option value="strong">สรุปชัดเจน</option>
+          <option value="weak">สรุปอ่อน</option>
+          <option value="ocr_exact">OCR ตรงเป๊ะ</option>
         </select>
       </section>
 
       <section class="split-grid">
         <section class="panel">
           <div class="table-head">
-            <h2>District Records</h2>
-            <span id="rowCount">0 rows</span>
+            <h2>ข้อมูลรายเขต</h2>
+            <span id="rowCount">0 รายการ</span>
           </div>
           <div class="table-wrap table-wrap-main">
             <table>
               <thead>
                 <tr>
-                  <th>Province / District</th>
-                  <th>Form</th>
-                  <th>Read Valid</th>
-                  <th>ECT Valid</th>
-                  <th>vote62 Valid</th>
-                  <th>killernay Valid</th>
-                  <th>Spread</th>
-                  <th>Flags</th>
+                  <th>จังหวัด / เขต</th>
+                  <th>ประเภท</th>
+                  <th>บัตรดี (อ่านได้)</th>
+                  <th>บัตรดี (ECT)</th>
+                  <th>บัตรดี (vote62)</th>
+                  <th>บัตรดี (killernay)</th>
+                  <th>ส่วนต่าง</th>
+                  <th>สถานะ</th>
                 </tr>
               </thead>
               <tbody id="tableBody"></tbody>
@@ -76,17 +77,17 @@
 
         <section class="panel detail-panel" id="detailPanel">
           <div class="table-head">
-            <h2 id="detailTitle">District Detail</h2>
-            <span id="detailMeta">Select a row</span>
+            <h2 id="detailTitle">รายละเอียดรายเขต</h2>
+            <span id="detailMeta">เลือกหนึ่งรายการเพื่อดูรายละเอียด</span>
           </div>
           <div class="compare-meta" id="detailCompareMeta"></div>
           <div class="table-wrap table-wrap-detail">
             <table>
               <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>Name</th>
-                  <th>Read</th>
+                  <th>ลำดับ</th>
+                  <th>ชื่อ</th>
+                  <th>อ่านได้</th>
                   <th>ECT</th>
                   <th>vote62</th>
                   <th>killernay</th>
@@ -100,16 +101,16 @@
 
       <section class="panel">
         <div class="table-head">
-          <h2>Coverage Gaps by District/Form</h2>
-          <span id="coverageCount">0 rows</span>
+          <h2>ช่องว่างข้อมูล (รายเขต/ประเภท)</h2>
+          <span id="coverageCount">0 รายการ</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Province / District</th>
-                <th>Form</th>
-                <th>Read</th>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>อ่านได้</th>
                 <th>ECT</th>
                 <th>vote62</th>
                 <th>killernay</th>
@@ -122,19 +123,19 @@
 
       <section class="panel">
         <div class="table-head">
-          <h2>Irregularity Signals</h2>
-          <span id="irregularityCount">0 rows</span>
+          <h2>สัญญาณผิดปกติ</h2>
+          <span id="irregularityCount">0 รายการ</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Province / District</th>
-                <th>Form</th>
-                <th>Severity</th>
-                <th>Valid Spread</th>
-                <th>Read Invalid+Blank %</th>
-                <th>Flags</th>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>ระดับ</th>
+                <th>ช่วงต่างบัตรดี</th>
+                <th>% บัตรเสีย+ไม่เลือก (อ่านได้)</th>
+                <th>ธงเตือน</th>
               </tr>
             </thead>
             <tbody id="irregularityBody"></tbody>
@@ -144,15 +145,15 @@
 
       <section class="panel">
         <div class="table-head">
-          <h2>Province Irregularity Heatmap</h2>
-          <span id="heatmapCount">0 provinces</span>
+          <h2>สรุปความผิดปกติรายจังหวัด</h2>
+          <span id="heatmapCount">0 จังหวัด</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Province</th>
-                <th>Total Irregular</th>
+                <th>จังหวัด</th>
+                <th>รวมผิดปกติ</th>
                 <th>P1</th>
                 <th>P2</th>
                 <th>P3</th>
@@ -165,21 +166,24 @@
 
       <section class="panel">
         <div class="table-head">
-          <h2>เขตที่คะแนนเขย่ง (รวมบัตรเสีย/ไม่เลือก)</h2>
-          <span id="skewCount">0 rows</span>
+          <h2>เขย่งรายเขต (ค่าหลัก)</h2>
+          <span id="skewCount">0 รายการ</span>
         </div>
+        <div id="skewSummary" class="skew-summary">กำลังคำนวณ...</div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Province / District</th>
-                <th>เขต Total</th>
-                <th>บัญชีรายชื่อ Total</th>
-                <th>Diff</th>
-                <th>เขต Invalid</th>
-                <th>เขต Blank</th>
-                <th>บช Invalid</th>
-                <th>บช Blank</th>
+                <th>จังหวัด / เขต</th>
+                <th>รวมแบ่งเขต</th>
+                <th>รวมบัญชีรายชื่อ</th>
+                <th>ส่วนต่าง (+/-)</th>
+                <th>ส่วนต่าง %</th>
+                <th>ทิศทาง</th>
+                <th>เสีย (แบ่งเขต)</th>
+                <th>ไม่เลือก (แบ่งเขต)</th>
+                <th>เสีย (บัญชีรายชื่อ)</th>
+                <th>ไม่เลือก (บัญชีรายชื่อ)</th>
               </tr>
             </thead>
             <tbody id="skewBody"></tbody>
@@ -189,19 +193,27 @@
 
       <section class="panel">
         <div class="table-head">
-          <h2>Top Mismatch (Valid Votes)</h2>
-          <span id="mismatchCount">0 rows</span>
+          <h2>แผนที่เขย่งรายเขต (ลงสีรายเขต)</h2>
+          <span id="skewMapCount">0 เขต</span>
+        </div>
+        <div id="skewMap" class="skew-map"></div>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>รายการต่างสูงสุด (บัตรดี)</h2>
+          <span id="mismatchCount">0 รายการ</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Province / District</th>
-                <th>Form</th>
-                <th>Read Valid</th>
-                <th>ECT Valid</th>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>บัตรดี (อ่านได้)</th>
+                <th>บัตรดี (ECT)</th>
                 <th>ΔECT</th>
-                <th>vote62 Valid</th>
+                <th>บัตรดี (vote62)</th>
                 <th>Δvote62</th>
               </tr>
             </thead>
@@ -224,6 +236,7 @@
       </tr>
     </template>
 
-    <script src="./app.js?v=20260222-k5"></script>
+    <script src="./vendor/leaflet.js"></script>
+    <script src="./app-k16.js?v=redv12-nodata-gray"></script>
   </body>
 </html>
