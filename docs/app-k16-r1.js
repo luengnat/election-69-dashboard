@@ -461,19 +461,12 @@ function renderDetail(row) {
 }
 
 function rowTotals(row) {
-  const valid = numOrNull(row?.valid_votes_extracted ?? row?.valid_votes ?? row?.sources?.read?.valid_votes);
-  const invalid = numOrNull(
-    row?.invalid_votes ??
-    row?.sources?.read?.invalid_votes ??
-    row?.sources?.ect?.invalid_votes ??
-    row?.sources?.vote62?.invalid_votes
-  );
-  const blank = numOrNull(
-    row?.blank_votes ??
-    row?.sources?.read?.blank_votes ??
-    row?.sources?.ect?.blank_votes ??
-    row?.sources?.vote62?.blank_votes
-  );
+  // For skew logic, always keep a single-source equation:
+  // total_used_ballots = valid + invalid + blank from the same "latest/read" source.
+  // Do not mix ECT/vote62 fallback fields into this equation.
+  const valid = numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes);
+  const invalid = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
+  const blank = numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes);
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
@@ -605,8 +598,9 @@ function renderSkewTable(items) {
       `<span><strong>รวมค่าสัมบูรณ์:</strong> ${absSum.toLocaleString()}</span>` +
       `<span class="diff-pos"><strong>ฝั่ง +:</strong> ${posSum.toLocaleString()} (${posRows.length} เขต)</span>` +
       `<span class="diff-neg"><strong>ฝั่ง -:</strong> ${negSum.toLocaleString()} (${negRows.length} เขต)</span>` +
-      `<span><strong>รวมเขต Total:</strong> ${cTotalSum.toLocaleString()}</span>` +
-      `<span><strong>รวมบช Total:</strong> ${pTotalSum.toLocaleString()}</span>`;
+      `<span><strong>รวมเขต (บัตรใช้สิทธิ):</strong> ${cTotalSum.toLocaleString()}</span>` +
+      `<span><strong>รวมบช (บัตรใช้สิทธิ):</strong> ${pTotalSum.toLocaleString()}</span>` +
+      `<span><strong>เกณฑ์:</strong> ใช้ valid+invalid+blank จาก latest/read เท่านั้น</span>`;
   }
 }
 
