@@ -264,6 +264,16 @@ tbody tr:hover {
   margin-bottom: 6px;
 }
 
+.diff-pos {
+  color: #a51f1f;
+  font-weight: 700;
+}
+
+.diff-neg {
+  color: #185fb0;
+  font-weight: 700;
+}
+
 .skew-map {
   width: 100%;
   height: 560px;

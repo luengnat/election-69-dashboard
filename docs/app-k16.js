@@ -430,7 +430,17 @@ function renderSkewTable(items) {
     pTotal.textContent = r.p_total.toLocaleString();
     const diff = document.createElement('td');
     diff.className = 'mono';
-    diff.textContent = r.diff.toLocaleString();
+    const diffPct = r.p_total > 0 ? (r.diff / r.p_total) * 100 : null;
+    diff.textContent = r.diff > 0 ? `+${r.diff.toLocaleString()}` : r.diff.toLocaleString();
+    diff.classList.add(r.diff > 0 ? 'diff-pos' : 'diff-neg');
+    const diffPctCell = document.createElement('td');
+    diffPctCell.className = 'mono';
+    diffPctCell.textContent = diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`;
+    diffPctCell.classList.add(r.diff > 0 ? 'diff-pos' : 'diff-neg');
+    const dir = document.createElement('td');
+    dir.className = 'mono';
+    dir.textContent = r.diff > 0 ? 'เขต > บช' : 'บช > เขต';
+    dir.classList.add(r.diff > 0 ? 'diff-pos' : 'diff-neg');
     const cInv = document.createElement('td');
     cInv.className = 'mono';
     cInv.textContent = r.c_invalid.toLocaleString();
@@ -443,7 +453,7 @@ function renderSkewTable(items) {
     const pBlk = document.createElement('td');
     pBlk.className = 'mono';
     pBlk.textContent = r.p_blank.toLocaleString();
-    tr.append(loc, cTotal, pTotal, diff, cInv, cBlk, pInv, pBlk);
+    tr.append(loc, cTotal, pTotal, diff, diffPctCell, dir, cInv, cBlk, pInv, pBlk);
     els.skewBody.append(tr);
   });
   els.skewCount.textContent = `${rows.length} rows`;
@@ -692,8 +702,8 @@ function ensureSkewMapBase() {
   legend.onAdd = () => {
     const div = window.L.DomUtil.create('div', 'map-legend');
     div.innerHTML = `
-      <div><strong>บัตรเขย่ง (palette: red-v6)</strong></div>
-      <div>ตามผลต่างรวมระดับจังหวัด</div>
+      <div><strong>บัตรเขย่ง (palette: red-v7)</strong></div>
+      <div>สรุประดับจังหวัดจากข้อมูลรายเขต</div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(0)}"></span><span>ต่ำ</span></div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(0.5)}"></span><span>กลาง</span></div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(1)}"></span><span>สูง</span></div>
@@ -724,7 +734,7 @@ async function renderSkewMap(items) {
   }
 
   const rows = computeSkewProvinceHeatmap(items);
-  els.skewMapCount.textContent = `${rows.length} provinces · red-v6`;
+  els.skewMapCount.textContent = `${rows.length} provinces · red-v7`;
   const scoreByProvince = new Map(rows.map((r) => [r.province, r]));
   const maxScore = rows.reduce((m, r) => Math.max(m, r.abs_diff_sum), 0) || 1;
 

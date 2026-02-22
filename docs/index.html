@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./vendor/leaflet.css" />
-    <link rel="stylesheet" href="./styles.css?v=warm-k15" />
+    <link rel="stylesheet" href="./styles.css?v=warm-k16" />
   </head>
   <body>
     <div class="bg-orb orb-a"></div>
@@ -166,15 +166,7 @@
 
       <section class="panel">
         <div class="table-head">
-          <h2>แผนที่บัตรเขย่ง (Heatmap) · VERSION K16</h2>
-          <span id="skewMapCount">0 provinces</span>
-        </div>
-        <div id="skewMap" class="skew-map"></div>
-      </section>
-
-      <section class="panel">
-        <div class="table-head">
-          <h2>เขตที่คะแนนเขย่ง (รวมบัตรเสีย/ไม่เลือก)</h2>
+          <h2>เขย่งรายเขต (ค่าหลัก)</h2>
           <span id="skewCount">0 rows</span>
         </div>
         <div class="table-wrap">
@@ -184,7 +176,9 @@
                 <th>Province / District</th>
                 <th>เขต Total</th>
                 <th>บัญชีรายชื่อ Total</th>
-                <th>Diff</th>
+                <th>Diff (+/-)</th>
+                <th>Diff %</th>
+                <th>Direction</th>
                 <th>เขต Invalid</th>
                 <th>เขต Blank</th>
                 <th>บช Invalid</th>
@@ -194,6 +188,14 @@
             <tbody id="skewBody"></tbody>
           </table>
         </div>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>แผนที่สรุปเขย่งระดับจังหวัด (aggregate จากรายเขต) · VERSION K17</h2>
+          <span id="skewMapCount">0 provinces</span>
+        </div>
+        <div id="skewMap" class="skew-map"></div>
       </section>
 
       <section class="panel">
@@ -234,6 +236,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16.js?v=redv6-k16"></script>
+    <script src="./app-k16.js?v=redv7-k17"></script>
   </body>
 </html>
