@@ -687,9 +687,29 @@ function computeSkewProvinceHeatmap(items) {
 
 function decodeThaiMojibake(s) {
   const text = String(s || '');
-  if (!text.includes('à¸')) return text;
+  if (!text.includes('à')) return text;
+  // Convert CP1252-misdecoded UTF-8 back to real UTF-8 bytes.
+  const cp1252 = new Map([
+    [8364, 0x80], [8218, 0x82], [402, 0x83], [8222, 0x84], [8230, 0x85],
+    [8224, 0x86], [8225, 0x87], [710, 0x88], [8240, 0x89], [352, 0x8a],
+    [8249, 0x8b], [338, 0x8c], [381, 0x8e], [8216, 0x91], [8217, 0x92],
+    [8220, 0x93], [8221, 0x94], [8226, 0x95], [8211, 0x96], [8212, 0x97],
+    [732, 0x98], [8482, 0x99], [353, 0x9a], [8250, 0x9b], [339, 0x9c],
+    [382, 0x9e], [376, 0x9f]
+  ]);
   try {
-    return decodeURIComponent(escape(text));
+    const bytes = [];
+    for (const ch of text) {
+      const code = ch.codePointAt(0);
+      if (code <= 255) {
+        bytes.push(code);
+      } else if (cp1252.has(code)) {
+        bytes.push(cp1252.get(code));
+      } else {
+        return text;
+      }
+    }
+    return new TextDecoder('utf-8', { fatal: false }).decode(Uint8Array.from(bytes));
   } catch (_e) {
     return text;
   }
