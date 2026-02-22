@@ -649,13 +649,13 @@ function applyFilters() {
   const q = (els.search.value || '').trim().toLowerCase();
   const province = els.province.value;
   const form = els.form.value;
-  const forcedForm = (state.view === 'all' || state.view === 'missing_ect') ? '' : state.view;
+  const forcedForm = (state.view === 'all' || state.view === 'missing_read') ? '' : state.view;
   const quality = els.quality.value;
 
   state.filtered = state.items.filter((r) => {
     if (province && r.province !== province) return false;
     if (forcedForm && r.form_type !== forcedForm) return false;
-    if (state.view === 'missing_ect' && numOrNull(r?.sources?.ect?.valid_votes) !== null) return false;
+    if (state.view === 'missing_read' && numOrNull(r?.valid_votes_extracted ?? r?.sources?.read?.valid_votes) !== null) return false;
     if (form && r.form_type !== form) return false;
     if (quality === 'strong' && r.weak_summary) return false;
     if (quality === 'weak' && !r.weak_summary) return false;
