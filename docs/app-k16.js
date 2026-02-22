@@ -735,18 +735,27 @@ function colorByRatio(ratio) {
 
 function colorBySignedRatio(ratio) {
   const t = Math.max(-1, Math.min(1, ratio));
-  if (Math.abs(t) < 0.05) return '#efe7dc';
-  if (t > 0) {
-    if (t <= 0.25) return '#fcbba1';
-    if (t <= 0.5) return '#fb6a4a';
-    if (t <= 0.75) return '#de2d26';
-    return '#a50f15';
-  }
+  if (Math.abs(t) < 1e-6) return '#d9d2c6';
+  const hexToRgb = (hex) => {
+    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    if (!m) return [0, 0, 0];
+    return [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)];
+  };
+  const rgbToHex = (r, g, b) =>
+    `#${[r, g, b].map((x) => Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2, '0')).join('')}`;
+  const lerp = (a, b, p) => a + (b - a) * p;
+
+  // Continuous diverging ramp:
+  // negative: blue -> neutral, positive: neutral -> red
+  const neutral = hexToRgb('#d9d2c6');
+  const negDeep = hexToRgb('#0b4f8a');
+  const posDeep = hexToRgb('#a50f15');
   const a = Math.abs(t);
-  if (a <= 0.25) return '#bdd7e7';
-  if (a <= 0.5) return '#6baed6';
-  if (a <= 0.75) return '#3182bd';
-  return '#08519c';
+  const gamma = 0.72; // boost mid-range contrast
+  const p = Math.pow(a, gamma);
+  const from = t < 0 ? neutral : neutral;
+  const to = t < 0 ? negDeep : posDeep;
+  return rgbToHex(lerp(from[0], to[0], p), lerp(from[1], to[1], p), lerp(from[2], to[2], p));
 }
 
 function ensureSkewMapBase() {
@@ -768,7 +777,11 @@ function ensureSkewMapBase() {
       <div><strong>เขย่งรายเขต (ลงสีพื้นที่)</strong></div>
       <div>แดง: เขต &gt; บช | น้ำเงิน: บช &gt; เขต</div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(-1)}"></span><span>- สูง</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(-0.5)}"></span><span>- กลาง</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(-0.2)}"></span><span>- ต่ำ</span></div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0)}"></span><span>ปกติ (ไม่เขย่ง)</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0.2)}"></span><span>+ ต่ำ</span></div>
+      <div class="row"><span class="swatch" style="background:${colorBySignedRatio(0.5)}"></span><span>+ กลาง</span></div>
       <div class="row"><span class="swatch" style="background:${colorBySignedRatio(1)}"></span><span>+ สูง</span></div>
       <div class="row"><span class="swatch" style="background:#eef1f4"></span><span>ไม่มีข้อมูล</span></div>
     `;
