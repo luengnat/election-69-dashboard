@@ -666,8 +666,12 @@ function decodeThaiMojibake(s) {
 
 function colorByRatio(ratio) {
   const t = Math.max(0, Math.min(1, ratio));
-  const hue = 120 - (t * 120); // green -> red
-  return `hsl(${hue} 78% 46%)`;
+  // 5-step YlOrRd-ish scale (light yellow -> deep red), easier to read than green/red.
+  if (t <= 0.2) return '#fff7bc';
+  if (t <= 0.4) return '#fee391';
+  if (t <= 0.6) return '#fec44f';
+  if (t <= 0.8) return '#fe9929';
+  return '#cc4c02';
 }
 
 function ensureSkewMapBase() {
@@ -743,18 +747,18 @@ async function renderSkewMap(items) {
       const hit = scoreByProvince.get(province);
       if (!hit) {
         return {
-          color: '#55646f',
+          color: '#4e5b65',
           weight: 0.4,
-          fillColor: '#1a2a35',
-          fillOpacity: 0.25
+          fillColor: '#1f2c37',
+          fillOpacity: 0.22
         };
       }
       const ratio = hit.abs_diff_sum / maxScore;
       return {
-        color: '#0d1b24',
-        weight: 0.35,
+        color: '#20303c',
+        weight: 0.5,
         fillColor: colorByRatio(ratio),
-        fillOpacity: 0.72
+        fillOpacity: 0.82
       };
     },
     onEachFeature: (feature, layer) => {
