@@ -22,10 +22,33 @@ const els = {
   irregularityBody: document.getElementById('irregularityBody'),
   irregularityCount: document.getElementById('irregularityCount'),
   heatmapBody: document.getElementById('heatmapBody'),
-  heatmapCount: document.getElementById('heatmapCount')
+  heatmapCount: document.getElementById('heatmapCount'),
+  skewMap: document.getElementById('skewMap'),
+  skewMapCount: document.getElementById('skewMapCount')
 };
 
 let state = { items: [], filtered: [], view: 'all', selected: null };
+let skewMapInstance = null;
+let skewGeoLayer = null;
+let skewGeoPromise = null;
+
+const NO_FILE_REASON_MAP = new Map([
+  ['กรุงเทพมหานคร|15', 'กกต. ยังไม่ประกาศ'],
+  ['ลพบุรี|4', 'กกต. อัพโหลด PDF ผิด (เป็นเอกสารเขต 1)'],
+  ['นครพนม|2', 'รอตรวจสอบ'],
+  ['บุรีรัมย์|1', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|2', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|3', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|4', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|5', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|6', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|7', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|8', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|9', 'ไม่มี PDF จาก กกต.'],
+  ['บุรีรัมย์|10', 'ไม่มี PDF จาก กกต.'],
+  ['ปราจีนบุรี|2', 'รอตรวจสอบ'],
+  ['อุดรธานี|6', 'กกต. ยังไม่ประกาศ']
+]);
 
 function numOrNull(v) {
   if (v === null || v === undefined || v === '') return null;
@@ -41,6 +64,11 @@ function resolveDriveUrl(row) {
     return `https://drive.google.com/file/d/${did}/view`;
   }
   return '';
+}
+
+function noFileReason(row) {
+  const key = `${String(row?.province || '').trim()}|${Number(row?.district_number || 0)}`;
+  return NO_FILE_REASON_MAP.get(key) || 'ยังไม่มีไฟล์ในชุดข้อมูล';
 }
 
 function kpi(label, value) {
@@ -63,6 +91,12 @@ function renderKPIs(summary) {
   const coverageRows = computeCoverageRows(state.items);
   const irregularityRows = computeIrregularityRows(state.items);
   const totalRows = state.items.length;
+  const realFileIds = new Set(
+    state.items
+      .map((r) => String(r?.drive_id || '').trim())
+      .filter((id) => id && !id.startsWith('missing::'))
+  );
+  const totalFiles = realFileIds.size;
   const withEct = state.items.filter((r) => numOrNull(r?.sources?.ect?.valid_votes) !== null).length;
   const withVote62 = state.items.filter((r) => numOrNull(r?.sources?.vote62?.valid_votes) !== null).length;
   const withKillernay = state.items.filter((r) => numOrNull(r?.sources?.killernay?.valid_votes) !== null).length;
@@ -70,6 +104,7 @@ function renderKPIs(summary) {
   const weakRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null && !!r.weak_summary).length;
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
+    kpi('Total Files', totalFiles),
     kpi('Total Rows', totalRows),
     kpi('Strong Summaries', withRead - weakRead),
     kpi('Weak Summaries', weakRead),
@@ -471,7 +506,9 @@ function renderCoverageTable(items, limit = 300) {
   rows.forEach(({ row, hasRead, hasEct, hasVote62, hasKillernay }) => {
     const tr = document.createElement('tr');
     const loc = document.createElement('td');
-    const text = `${row.province || '-'} เขต ${row.district_number || '-'}${resolveDriveUrl(row) ? '' : ' (no file)'}`;
+    const text = resolveDriveUrl(row)
+      ? `${row.province || '-'} เขต ${row.district_number || '-'}`
+      : `${row.province || '-'} เขต ${row.district_number || '-'} (no file: ${noFileReason(row)})`;
     loc.textContent = text;
     const form = document.createElement('td');
     form.textContent = row.form_type === 'party_list' ? 'Party List' : 'Constituency';
@@ -594,6 +631,147 @@ function computeProvinceHeatmap(items) {
   return [...byProv.values()].sort((a, b) =>
     b.total - a.total || b.p1 - a.p1 || a.province.localeCompare(b.province, 'th')
   );
+}
+
+function computeSkewProvinceHeatmap(items) {
+  const byProv = new Map();
+  computeSkewRows(items).forEach((r) => {
+    const p = String(r.province || '').trim();
+    if (!p) return;
+    if (!byProv.has(p)) {
+      byProv.set(p, { province: p, skew_rows: 0, abs_diff_sum: 0, max_abs_diff: 0 });
+    }
+    const agg = byProv.get(p);
+    const absDiff = Math.abs(Number(r.diff || 0));
+    agg.skew_rows += 1;
+    agg.abs_diff_sum += absDiff;
+    if (absDiff > agg.max_abs_diff) agg.max_abs_diff = absDiff;
+  });
+  return [...byProv.values()].sort((a, b) =>
+    b.abs_diff_sum - a.abs_diff_sum
+    || b.skew_rows - a.skew_rows
+    || a.province.localeCompare(b.province, 'th')
+  );
+}
+
+function decodeThaiMojibake(s) {
+  const text = String(s || '');
+  if (!text.includes('à¸')) return text;
+  try {
+    return decodeURIComponent(escape(text));
+  } catch (_e) {
+    return text;
+  }
+}
+
+function colorByRatio(ratio) {
+  const t = Math.max(0, Math.min(1, ratio));
+  const hue = 120 - (t * 120); // green -> red
+  return `hsl(${hue} 78% 46%)`;
+}
+
+function ensureSkewMapBase() {
+  if (!els.skewMap || typeof window.L === 'undefined') return null;
+  if (skewMapInstance) return skewMapInstance;
+
+  skewMapInstance = window.L.map(els.skewMap, {
+    zoomControl: true,
+    attributionControl: true
+  }).setView([13.2, 101.1], 6);
+
+  window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 10,
+    minZoom: 5,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(skewMapInstance);
+
+  const legend = window.L.control({ position: 'bottomright' });
+  legend.onAdd = () => {
+    const div = window.L.DomUtil.create('div', 'map-legend');
+    div.innerHTML = `
+      <div><strong>บัตรเขย่ง</strong></div>
+      <div>ตามผลต่างรวมระดับจังหวัด</div>
+      <div class="row"><span class="swatch" style="background:${colorByRatio(0)}"></span><span>ต่ำ</span></div>
+      <div class="row"><span class="swatch" style="background:${colorByRatio(0.5)}"></span><span>กลาง</span></div>
+      <div class="row"><span class="swatch" style="background:${colorByRatio(1)}"></span><span>สูง</span></div>
+    `;
+    return div;
+  };
+  legend.addTo(skewMapInstance);
+  return skewMapInstance;
+}
+
+function loadSkewGeoJson() {
+  if (skewGeoPromise) return skewGeoPromise;
+  skewGeoPromise = fetch('./data/thai_districts.geojson')
+    .then((res) => {
+      if (!res.ok) throw new Error(`geojson_http_${res.status}`);
+      return res.json();
+    })
+    .catch(() => null);
+  return skewGeoPromise;
+}
+
+async function renderSkewMap(items) {
+  if (!els.skewMap || !els.skewMapCount) return;
+  const map = ensureSkewMapBase();
+  if (!map) {
+    els.skewMapCount.textContent = 'map unavailable';
+    return;
+  }
+
+  const rows = computeSkewProvinceHeatmap(items);
+  els.skewMapCount.textContent = `${rows.length} provinces`;
+  const scoreByProvince = new Map(rows.map((r) => [r.province, r]));
+  const maxScore = rows.reduce((m, r) => Math.max(m, r.abs_diff_sum), 0) || 1;
+
+  const geo = await loadSkewGeoJson();
+  if (!geo || !Array.isArray(geo.features)) {
+    els.skewMapCount.textContent = `${rows.length} provinces (topology load failed)`;
+    return;
+  }
+
+  if (skewGeoLayer) {
+    skewGeoLayer.remove();
+    skewGeoLayer = null;
+  }
+
+  skewGeoLayer = window.L.geoJSON(geo, {
+    style: (feature) => {
+      const raw = feature?.properties?.pro_th || '';
+      const province = decodeThaiMojibake(raw);
+      const hit = scoreByProvince.get(province);
+      if (!hit) {
+        return {
+          color: '#55646f',
+          weight: 0.4,
+          fillColor: '#1a2a35',
+          fillOpacity: 0.25
+        };
+      }
+      const ratio = hit.abs_diff_sum / maxScore;
+      return {
+        color: '#0d1b24',
+        weight: 0.35,
+        fillColor: colorByRatio(ratio),
+        fillOpacity: 0.72
+      };
+    },
+    onEachFeature: (feature, layer) => {
+      const raw = feature?.properties?.pro_th || '';
+      const province = decodeThaiMojibake(raw);
+      const hit = scoreByProvince.get(province);
+      const tooltip = hit
+        ? `${province}<br>เขย่ง: ${hit.skew_rows} เขต<br>ผลต่างรวม: ${hit.abs_diff_sum.toLocaleString()}<br>สูงสุด: ${hit.max_abs_diff.toLocaleString()}`
+        : `${province}<br>ไม่มีเขย่ง`;
+      layer.bindTooltip(tooltip, { sticky: true });
+      layer.on('click', () => {
+        if (!els.province) return;
+        els.province.value = province;
+        applyFilters();
+      });
+    }
+  }).addTo(map);
 }
 
 function renderProvinceHeatmap(items, limit = 100) {
@@ -738,6 +916,7 @@ async function init() {
   renderIrregularityTable(state.items);
   renderProvinceHeatmap(state.items);
   renderSkewTable(state.items);
+  await renderSkewMap(state.items);
   renderMismatchTable(state.items);
 
   const provinces = [...new Set(state.items.map((x) => x.province).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'th'));
