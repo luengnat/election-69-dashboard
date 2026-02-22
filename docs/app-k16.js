@@ -88,6 +88,17 @@ function makeChip(text, cls) {
   return s;
 }
 
+function irregularityFlagLabel(flag) {
+  const map = {
+    high_delta_killernay: 'ต่างจาก killernay สูง',
+    delta_killernay: 'ต่างจาก killernay',
+    high_invalid_blank_ratio: 'สัดส่วนบัตรเสีย+ไม่เลือกสูง',
+    winner_disagreement: 'ผู้ชนะไม่ตรงกัน',
+    vote62_far_from_read: 'ต่างจาก vote62 มาก'
+  };
+  return map[flag] || String(flag || '-');
+}
+
 function renderKPIs(summary) {
   const skewRows = computeSkewRows(state.items);
   const mismatchRows = computeMismatchRows(state.items);
@@ -107,20 +118,20 @@ function renderKPIs(summary) {
   const weakRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null && !!r.weak_summary).length;
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
-    kpi('Total Files', totalFiles),
-    kpi('Total Rows', totalRows),
-    kpi('Strong Summaries', withRead - weakRead),
-    kpi('Weak Summaries', weakRead),
-    kpi('With Valid Votes', summary.with_valid_votes ?? 0),
-    kpi('OCR Exact', summary.ocr_exact_matches ?? 0),
-    kpi('Skew Districts', skewRows.length),
-    kpi('Top Mismatch Rows', mismatchRows.length),
-    kpi('Coverage Gaps', coverageRows.length),
-    kpi('Irregularity Signals', irregularityRows.length),
-    kpi('With Read', withRead),
-    kpi('With ECT', withEct),
-    kpi('With vote62', withVote62),
-    kpi('With killernay', withKillernay)
+    kpi('จำนวนไฟล์ทั้งหมด', totalFiles),
+    kpi('จำนวนแถวข้อมูล', totalRows),
+    kpi('สรุปชัดเจน', withRead - weakRead),
+    kpi('สรุปอ่อน', weakRead),
+    kpi('มีบัตรดี', summary.with_valid_votes ?? 0),
+    kpi('OCR ตรงเป๊ะ', summary.ocr_exact_matches ?? 0),
+    kpi('เขตที่เขย่ง', skewRows.length),
+    kpi('แถวต่างสูงสุด', mismatchRows.length),
+    kpi('ช่องว่างข้อมูล', coverageRows.length),
+    kpi('สัญญาณผิดปกติ', irregularityRows.length),
+    kpi('มีข้อมูลอ่านได้', withRead),
+    kpi('มีข้อมูล ECT', withEct),
+    kpi('มีข้อมูล vote62', withVote62),
+    kpi('มีข้อมูล killernay', withKillernay)
   );
 }
 
@@ -159,8 +170,8 @@ function killernayGap(row) {
 }
 
 function valueStatusChip(ok) {
-  if (ok) return makeChip('Yes', 'form-chip constituency');
-  return makeChip('No', 'form-chip party_list');
+  if (ok) return makeChip('มี', 'form-chip constituency');
+  return makeChip('ไม่มี', 'form-chip party_list');
 }
 
 function winnerNumber(votesObj) {
@@ -198,14 +209,14 @@ function renderRows(rows) {
       a.rel = 'noopener noreferrer';
       a.className = 'loc-link';
       a.textContent = locText;
-      a.title = 'Open source document on Google Drive';
+      a.title = 'เปิดไฟล์ต้นทางบน Google Drive';
       a.addEventListener('click', (e) => e.stopPropagation());
       locCell.append(a);
     } else {
       locCell.textContent = locText;
     }
     const form = node.querySelector('.form');
-    form.append(makeChip(r.form_type === 'party_list' ? 'Party List' : 'Constituency', `form-chip ${r.form_type}`));
+    form.append(makeChip(r.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต', `form-chip ${r.form_type}`));
     const vals = sourceValidValues(r);
     node.querySelector('.readValid').textContent = vals.read === null ? '-' : vals.read.toLocaleString();
     node.querySelector('.ectValid').textContent = vals.ect === null ? '-' : vals.ect.toLocaleString();
@@ -217,21 +228,21 @@ function renderRows(rows) {
     node.querySelector('.spread').textContent = kGap === null ? '-' : Math.abs(kGap).toLocaleString();
     const flagsCell = node.querySelector('.flags');
     if (kGap !== null && Math.abs(kGap) >= 1000) {
-      flagsCell.append(makeChip('High Δkillernay', 'form-chip party_list'));
+      flagsCell.append(makeChip('ต่างจาก killernay สูง', 'form-chip party_list'));
     } else if (kGap !== null && Math.abs(kGap) >= 100) {
-      flagsCell.append(makeChip('Δkillernay', 'form-chip constituency'));
+      flagsCell.append(makeChip('ต่างจาก killernay', 'form-chip constituency'));
     }
     if (winnerDisagreement(r)) {
-      flagsCell.append(makeChip('Winner mismatch', 'form-chip party_list'));
+      flagsCell.append(makeChip('ผู้ชนะไม่ตรงกัน', 'form-chip party_list'));
     }
     if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
-      flagsCell.append(makeChip('vote62 far', 'form-chip constituency'));
+      flagsCell.append(makeChip('ต่างจาก vote62 มาก', 'form-chip constituency'));
     }
     if (spreadAll !== null && kGap !== null && spreadAll > Math.abs(kGap)) {
-      flagsCell.append(makeChip('incl. vote62 spread↑', 'form-chip constituency'));
+      flagsCell.append(makeChip('ช่วงต่างรวม vote62 สูง', 'form-chip constituency'));
     }
     if (!flagsCell.hasChildNodes()) {
-      flagsCell.append(makeChip('OK', 'form-chip constituency'));
+      flagsCell.append(makeChip('ปกติ', 'form-chip constituency'));
     }
 
     tr.addEventListener('click', () => {
@@ -241,20 +252,20 @@ function renderRows(rows) {
     });
     els.tableBody.append(node);
   });
-  els.rowCount.textContent = `${rows.length} rows`;
+  els.rowCount.textContent = `${rows.length} รายการ`;
 }
 
 function renderDetail(row) {
   if (!row) {
-    els.detailTitle.textContent = 'District Detail';
-    els.detailMeta.textContent = 'Select a row';
+    els.detailTitle.textContent = 'รายละเอียดรายเขต';
+    els.detailMeta.textContent = 'เลือกหนึ่งรายการเพื่อดูรายละเอียด';
     if (els.detailCompareMeta) els.detailCompareMeta.innerHTML = '';
     els.detailBody.innerHTML = '';
     return;
   }
-  const label = row.form_type === 'party_list' ? '(Party List)' : '(Constituency)';
+  const label = row.form_type === 'party_list' ? '(บัญชีรายชื่อ)' : '(แบ่งเขต)';
   els.detailTitle.textContent = `${row.province || '-'} เขต ${row.district_number || '-'} ${label}`;
-  els.detailMeta.textContent = `Valid votes: ${row.valid_votes_extracted ?? '-'}`;
+  els.detailMeta.textContent = `บัตรดี (อ่านได้): ${row.valid_votes_extracted ?? '-'}`;
   if (els.detailCompareMeta) {
     const readValid = numOrNull(row.valid_votes_extracted);
     const ectValid = numOrNull(row?.sources?.ect?.valid_votes);
@@ -268,17 +279,17 @@ function renderDetail(row) {
     const deltaVote62 = readValid !== null && vote62Valid !== null ? readValid - vote62Valid : null;
     const deltaKillernay = readValid !== null && killernayValid !== null ? readValid - killernayValid : null;
     const pieces = [
-      `Read valid: <span class="mono">${readValid === null ? '-' : readValid.toLocaleString()}</span>`,
-      `Read invalid: <span class="mono">${readInvalid === null ? '-' : readInvalid.toLocaleString()}</span>`,
-      `Read blank: <span class="mono">${readBlank === null ? '-' : readBlank.toLocaleString()}</span>`,
-      `ECT: <span class="mono">${ectValid === null ? '-' : ectValid.toLocaleString()}</span>`,
-      `ECT invalid: <span class="mono">${ectInvalid === null ? '-' : ectInvalid.toLocaleString()}</span>`,
-      `ECT blank: <span class="mono">${ectBlank === null ? '-' : ectBlank.toLocaleString()}</span>`,
+      `บัตรดี (อ่านได้): <span class="mono">${readValid === null ? '-' : readValid.toLocaleString()}</span>`,
+      `บัตรเสีย (อ่านได้): <span class="mono">${readInvalid === null ? '-' : readInvalid.toLocaleString()}</span>`,
+      `บัตรไม่เลือก (อ่านได้): <span class="mono">${readBlank === null ? '-' : readBlank.toLocaleString()}</span>`,
+      `บัตรดี (ECT): <span class="mono">${ectValid === null ? '-' : ectValid.toLocaleString()}</span>`,
+      `บัตรเสีย (ECT): <span class="mono">${ectInvalid === null ? '-' : ectInvalid.toLocaleString()}</span>`,
+      `บัตรไม่เลือก (ECT): <span class="mono">${ectBlank === null ? '-' : ectBlank.toLocaleString()}</span>`,
       `ΔECT: <span class="mono">${deltaEct === null ? '-' : deltaEct.toLocaleString()}</span>`,
-      `vote62: <span class="mono">${vote62Valid === null ? '-' : vote62Valid.toLocaleString()}</span>`,
-      `Δvote62: <span class="mono">${deltaVote62 === null ? '-' : deltaVote62.toLocaleString()}</span>`,
-      `killernay: <span class="mono">${killernayValid === null ? '-' : killernayValid.toLocaleString()}</span>`,
-      `Δkillernay: <span class="mono">${deltaKillernay === null ? '-' : deltaKillernay.toLocaleString()}</span>`
+      `บัตรดี (vote62): <span class="mono">${vote62Valid === null ? '-' : vote62Valid.toLocaleString()}</span>`,
+      `Δบัตรดี (vote62): <span class="mono">${deltaVote62 === null ? '-' : deltaVote62.toLocaleString()}</span>`,
+      `บัตรดี (killernay): <span class="mono">${killernayValid === null ? '-' : killernayValid.toLocaleString()}</span>`,
+      `Δบัตรดี (killernay): <span class="mono">${deltaKillernay === null ? '-' : deltaKillernay.toLocaleString()}</span>`
     ];
     els.detailCompareMeta.innerHTML = pieces.map((x) => `<span class="meta-pill">${x}</span>`).join('');
   }
@@ -417,7 +428,7 @@ function renderSkewTable(items) {
       c.rel = 'noopener noreferrer';
       c.className = 'loc-link';
       c.textContent = text;
-      c.title = 'Open constituency source';
+      c.title = 'เปิดไฟล์ต้นทางแบบแบ่งเขต';
       const sep = document.createElement('span');
       sep.textContent = ' ';
       const p = document.createElement('a');
@@ -426,7 +437,7 @@ function renderSkewTable(items) {
       p.rel = 'noopener noreferrer';
       p.className = 'loc-link';
       p.textContent = '[บช]';
-      p.title = 'Open party-list source';
+      p.title = 'เปิดไฟล์ต้นทางแบบบัญชีรายชื่อ';
       loc.append(c, sep, p);
     } else {
       loc.textContent = text;
@@ -465,7 +476,7 @@ function renderSkewTable(items) {
     tr.append(loc, cTotal, pTotal, diff, diffPctCell, dir, cInv, cBlk, pInv, pBlk);
     els.skewBody.append(tr);
   });
-  els.skewCount.textContent = `${rows.length} rows`;
+  els.skewCount.textContent = `${rows.length} รายการ`;
   if (els.skewSummary) {
     const net = rows.reduce((s, r) => s + Number(r.diff || 0), 0);
     const absSum = rows.reduce((s, r) => s + Math.abs(Number(r.diff || 0)), 0);
@@ -547,10 +558,10 @@ function renderCoverageTable(items, limit = 300) {
     const loc = document.createElement('td');
     const text = resolveDriveUrl(row)
       ? `${row.province || '-'} เขต ${row.district_number || '-'}`
-      : `${row.province || '-'} เขต ${row.district_number || '-'} (no file: ${noFileReason(row)})`;
+      : `${row.province || '-'} เขต ${row.district_number || '-'} (ไม่มีไฟล์: ${noFileReason(row)})`;
     loc.textContent = text;
     const form = document.createElement('td');
-    form.textContent = row.form_type === 'party_list' ? 'Party List' : 'Constituency';
+    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
     const read = document.createElement('td');
     read.append(valueStatusChip(hasRead));
     const ect = document.createElement('td');
@@ -562,7 +573,7 @@ function renderCoverageTable(items, limit = 300) {
     tr.append(loc, form, read, ect, v62, k);
     els.coverageBody.append(tr);
   });
-  els.coverageCount.textContent = `${rows.length} rows`;
+  els.coverageCount.textContent = `${rows.length} รายการ`;
 }
 
 function computeIrregularityRows(items) {
@@ -637,7 +648,7 @@ function renderIrregularityTable(items, limit = 200) {
     const loc = document.createElement('td');
     loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
     const form = document.createElement('td');
-    form.textContent = row.form_type === 'party_list' ? 'Party List' : 'Constituency';
+    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
     const sev = document.createElement('td');
     sev.className = 'mono';
     sev.innerHTML = `<span class="severity-chip ${tier.toLowerCase()}">${tier}</span> <span class="mono">${severity}</span>`;
@@ -648,11 +659,11 @@ function renderIrregularityTable(items, limit = 200) {
     br.className = 'mono';
     br.textContent = badRate === null ? '-' : `${(badRate * 100).toFixed(2)}%`;
     const fg = document.createElement('td');
-    flags.forEach((f) => fg.append(makeChip(f, 'form-chip party_list')));
+    flags.forEach((f) => fg.append(makeChip(irregularityFlagLabel(f), 'form-chip party_list')));
     tr.append(loc, form, sev, sp, br, fg);
     els.irregularityBody.append(tr);
   });
-  els.irregularityCount.textContent = `${rows.length} rows`;
+  els.irregularityCount.textContent = `${rows.length} รายการ`;
 }
 
 function computeProvinceHeatmap(items) {
@@ -806,19 +817,19 @@ async function renderSkewMap(items) {
   if (!els.skewMap || !els.skewMapCount) return;
   const map = ensureSkewMapBase();
   if (!map) {
-    els.skewMapCount.textContent = 'map unavailable';
+    els.skewMapCount.textContent = 'ไม่สามารถโหลดแผนที่ได้';
     return;
   }
 
   const allRows = computeSkewDistrictRows(items);
   const skewRows = allRows.filter((r) => Number(r.diff || 0) !== 0);
   const maxAbsDiff = skewRows.reduce((m, r) => Math.max(m, Math.abs(Number(r.diff || 0))), 0) || 1;
-  els.skewMapCount.textContent = `${allRows.length} districts (normal ${allRows.length - skewRows.length} · skew ${skewRows.length})`;
+  els.skewMapCount.textContent = `${allRows.length} เขต (ปกติ ${allRows.length - skewRows.length} · เขย่ง ${skewRows.length})`;
   const byDistrict = new Map(allRows.map((r) => [`${String(r.province || '').trim()}|${Number(r.district_number || 0)}`, r]));
 
   const geo = await loadSkewGeoJson();
   if (!geo || !Array.isArray(geo.features)) {
-    els.skewMapCount.textContent = `${allRows.length} districts (topology load failed)`;
+    els.skewMapCount.textContent = `${allRows.length} เขต (โหลด topology ไม่สำเร็จ)`;
     return;
   }
 
@@ -868,8 +879,8 @@ async function renderSkewMap(items) {
         const diffPct = hit.p_total > 0 ? (Number(hit.diff || 0) / Number(hit.p_total)) * 100 : null;
         layer.bindTooltip(
           `${province} เขต ${district}<br>` +
-          `Diff: ${hit.diff > 0 ? '+' : ''}${Number(hit.diff || 0).toLocaleString()}<br>` +
-          `Diff%: ${diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`}<br>` +
+          `ส่วนต่าง: ${hit.diff > 0 ? '+' : ''}${Number(hit.diff || 0).toLocaleString()}<br>` +
+          `ส่วนต่าง%: ${diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`}<br>` +
           `${Number(hit.diff || 0) === 0 ? 'ปกติ (ไม่เขย่ง)' : (hit.diff > 0 ? 'เขต > บช' : 'บช > เขต')}`,
           { sticky: true }
         );
@@ -915,7 +926,7 @@ function renderProvinceHeatmap(items, limit = 100) {
     tr.append(p, total, p1, p2, p3);
     els.heatmapBody.append(tr);
   });
-  els.heatmapCount.textContent = `${rows.length} provinces`;
+  els.heatmapCount.textContent = `${rows.length} จังหวัด`;
 }
 
 function renderMismatchTable(items, limit = 120) {
@@ -938,7 +949,7 @@ function renderMismatchTable(items, limit = 120) {
       loc.textContent = text;
     }
     const form = document.createElement('td');
-    form.textContent = r.form_type === 'party_list' ? 'Party List' : 'Constituency';
+    form.textContent = r.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
     const read = document.createElement('td');
     read.className = 'mono';
     read.textContent = r.read.toLocaleString();
@@ -957,7 +968,7 @@ function renderMismatchTable(items, limit = 120) {
     tr.append(loc, form, read, ect, de, v62, dv);
     els.mismatchBody.append(tr);
   });
-  els.mismatchCount.textContent = `${rows.length} rows`;
+  els.mismatchCount.textContent = `${rows.length} รายการ`;
 }
 
 function applyFilters() {
@@ -1028,7 +1039,7 @@ async function init() {
     (r.form_type === 'constituency' || r.form_type === 'party_list')
   );
 
-  els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: OCR extraction pipeline`;
+  els.generatedAt.textContent = `อัปเดตเมื่อ: ${data.generated_at || '-'} • แหล่งข้อมูล: กระบวนการอ่าน OCR`;
   renderKPIs(data.summary || {});
   renderCoverageTable(state.items);
   renderIrregularityTable(state.items);
@@ -1052,5 +1063,5 @@ async function init() {
 }
 
 init().catch((err) => {
-  els.generatedAt.textContent = `Failed to load data: ${err.message}`;
+  els.generatedAt.textContent = `โหลดข้อมูลไม่สำเร็จ: ${err.message}`;
 });

@@ -690,7 +690,7 @@ function ensureSkewMapBase() {
   legend.onAdd = () => {
     const div = window.L.DomUtil.create('div', 'map-legend');
     div.innerHTML = `
-      <div><strong>บัตรเขย่ง (palette: red-v5)</strong></div>
+      <div><strong>บัตรเขย่ง (palette: red-v6)</strong></div>
       <div>ตามผลต่างรวมระดับจังหวัด</div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(0)}"></span><span>ต่ำ</span></div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(0.5)}"></span><span>กลาง</span></div>
@@ -722,7 +722,7 @@ async function renderSkewMap(items) {
   }
 
   const rows = computeSkewProvinceHeatmap(items);
-  els.skewMapCount.textContent = `${rows.length} provinces · red-v5`;
+  els.skewMapCount.textContent = `${rows.length} provinces · red-v6`;
   const scoreByProvince = new Map(rows.map((r) => [r.province, r]));
   const maxScore = rows.reduce((m, r) => Math.max(m, r.abs_diff_sum), 0) || 1;
 
