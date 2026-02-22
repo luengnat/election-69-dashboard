@@ -28,6 +28,7 @@
         <button class="tab active" data-view="all">All</button>
         <button class="tab" data-view="party_list">Party List</button>
         <button class="tab" data-view="constituency">Constituency</button>
+        <button class="tab" data-view="missing_ect">Missing ECT</button>
       </section>
 
       <section class="kpis" id="kpiGrid"></section>
@@ -60,9 +61,12 @@
                 <tr>
                   <th>Province / District</th>
                   <th>Form</th>
-                  <th>Extracted Valid</th>
-                  <th>ΔECT</th>
-                  <th>Δvote62</th>
+                  <th>Read Valid</th>
+                  <th>ECT Valid</th>
+                  <th>vote62 Valid</th>
+                  <th>killernay Valid</th>
+                  <th>Spread</th>
+                  <th>Flags</th>
                 </tr>
               </thead>
               <tbody id="tableBody"></tbody>
@@ -92,6 +96,71 @@
             </table>
           </div>
         </section>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>Coverage Gaps by District/Form</h2>
+          <span id="coverageCount">0 rows</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Province / District</th>
+                <th>Form</th>
+                <th>Read</th>
+                <th>ECT</th>
+                <th>vote62</th>
+                <th>killernay</th>
+              </tr>
+            </thead>
+            <tbody id="coverageBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>Irregularity Signals</h2>
+          <span id="irregularityCount">0 rows</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Province / District</th>
+                <th>Form</th>
+                <th>Severity</th>
+                <th>Valid Spread</th>
+                <th>Read Invalid+Blank %</th>
+                <th>Flags</th>
+              </tr>
+            </thead>
+            <tbody id="irregularityBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="table-head">
+          <h2>Province Irregularity Heatmap</h2>
+          <span id="heatmapCount">0 provinces</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Province</th>
+                <th>Total Irregular</th>
+                <th>P1</th>
+                <th>P2</th>
+                <th>P3</th>
+              </tr>
+            </thead>
+            <tbody id="heatmapBody"></tbody>
+          </table>
+        </div>
       </section>
 
       <section class="panel">
@@ -146,12 +215,15 @@
       <tr>
         <td class="mono loc"></td>
         <td class="form"></td>
-        <td class="mono valid"></td>
-        <td class="mono dE"></td>
-        <td class="mono dV"></td>
+        <td class="mono readValid"></td>
+        <td class="mono ectValid"></td>
+        <td class="mono vote62Valid"></td>
+        <td class="mono killernayValid"></td>
+        <td class="mono spread"></td>
+        <td class="flags"></td>
       </tr>
     </template>
 
-    <script src="./app.js?v=20260221-k4"></script>
+    <script src="./app.js?v=20260222-k5"></script>
   </body>
 </html>

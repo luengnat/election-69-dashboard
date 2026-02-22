@@ -16,7 +16,13 @@ const els = {
   skewBody: document.getElementById('skewBody'),
   skewCount: document.getElementById('skewCount'),
   mismatchBody: document.getElementById('mismatchBody'),
-  mismatchCount: document.getElementById('mismatchCount')
+  mismatchCount: document.getElementById('mismatchCount'),
+  coverageBody: document.getElementById('coverageBody'),
+  coverageCount: document.getElementById('coverageCount'),
+  irregularityBody: document.getElementById('irregularityBody'),
+  irregularityCount: document.getElementById('irregularityCount'),
+  heatmapBody: document.getElementById('heatmapBody'),
+  heatmapCount: document.getElementById('heatmapCount')
 };
 
 let state = { items: [], filtered: [], view: 'all', selected: null };
@@ -54,9 +60,12 @@ function makeChip(text, cls) {
 function renderKPIs(summary) {
   const skewRows = computeSkewRows(state.items);
   const mismatchRows = computeMismatchRows(state.items);
+  const coverageRows = computeCoverageRows(state.items);
+  const irregularityRows = computeIrregularityRows(state.items);
   const withEct = state.items.filter((r) => numOrNull(r?.sources?.ect?.valid_votes) !== null).length;
   const withVote62 = state.items.filter((r) => numOrNull(r?.sources?.vote62?.valid_votes) !== null).length;
   const withKillernay = state.items.filter((r) => numOrNull(r?.sources?.killernay?.valid_votes) !== null).length;
+  const withRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null).length;
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
     kpi('Total Files', summary.total_files ?? 0),
@@ -66,10 +75,51 @@ function renderKPIs(summary) {
     kpi('OCR Exact', summary.ocr_exact_matches ?? 0),
     kpi('Skew Districts', skewRows.length),
     kpi('Top Mismatch Rows', mismatchRows.length),
+    kpi('Coverage Gaps', coverageRows.length),
+    kpi('Irregularity Signals', irregularityRows.length),
+    kpi('With Read', withRead),
     kpi('With ECT', withEct),
     kpi('With vote62', withVote62),
     kpi('With killernay', withKillernay)
   );
+}
+
+function sourceValidValues(row) {
+  const read = numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes);
+  const ect = numOrNull(row?.sources?.ect?.valid_votes);
+  const vote62 = numOrNull(row?.sources?.vote62?.valid_votes);
+  const killernay = numOrNull(row?.sources?.killernay?.valid_votes);
+  return { read, ect, vote62, killernay };
+}
+
+function sourceSpread(row) {
+  const vals = Object.values(sourceValidValues(row)).filter((v) => v !== null);
+  if (!vals.length) return null;
+  return Math.max(...vals) - Math.min(...vals);
+}
+
+function valueStatusChip(ok) {
+  if (ok) return makeChip('Yes', 'form-chip constituency');
+  return makeChip('No', 'form-chip party_list');
+}
+
+function winnerNumber(votesObj) {
+  const entries = Object.entries(votesObj || {}).map(([k, v]) => [String(k), numOrNull(v)]).filter(([, v]) => v !== null);
+  if (!entries.length) return null;
+  entries.sort((a, b) => b[1] - a[1] || Number(a[0]) - Number(b[0]));
+  return entries[0][0];
+}
+
+function winnerDisagreement(row) {
+  const src = row?.sources || {};
+  const wins = [
+    winnerNumber(row?.votes || {}),
+    winnerNumber(src?.ect?.votes || {}),
+    winnerNumber(src?.vote62?.votes || {}),
+    winnerNumber(src?.killernay?.votes || {})
+  ].filter((x) => x !== null);
+  if (wins.length < 2) return false;
+  return new Set(wins).size > 1;
 }
 
 function renderRows(rows) {
@@ -97,11 +147,25 @@ function renderRows(rows) {
     }
     const form = node.querySelector('.form');
     form.append(makeChip(r.form_type === 'party_list' ? 'Party List' : 'Constituency', `form-chip ${r.form_type}`));
-    node.querySelector('.valid').textContent = r.valid_votes_extracted ?? '-';
-    const dE = numOrNull((r.compare || {}).delta_valid_ect);
-    const dV = numOrNull((r.compare || {}).delta_valid_vote62);
-    node.querySelector('.dE').textContent = dE === null ? '-' : dE.toLocaleString();
-    node.querySelector('.dV').textContent = dV === null ? '-' : dV.toLocaleString();
+    const vals = sourceValidValues(r);
+    node.querySelector('.readValid').textContent = vals.read === null ? '-' : vals.read.toLocaleString();
+    node.querySelector('.ectValid').textContent = vals.ect === null ? '-' : vals.ect.toLocaleString();
+    node.querySelector('.vote62Valid').textContent = vals.vote62 === null ? '-' : vals.vote62.toLocaleString();
+    node.querySelector('.killernayValid').textContent = vals.killernay === null ? '-' : vals.killernay.toLocaleString();
+    const spread = sourceSpread(r);
+    node.querySelector('.spread').textContent = spread === null ? '-' : spread.toLocaleString();
+    const flagsCell = node.querySelector('.flags');
+    if (spread !== null && spread >= 1000) {
+      flagsCell.append(makeChip('High spread', 'form-chip party_list'));
+    } else if (spread !== null && spread >= 100) {
+      flagsCell.append(makeChip('Spread', 'form-chip constituency'));
+    }
+    if (winnerDisagreement(r)) {
+      flagsCell.append(makeChip('Winner mismatch', 'form-chip party_list'));
+    }
+    if (!flagsCell.hasChildNodes()) {
+      flagsCell.append(makeChip('OK', 'form-chip constituency'));
+    }
 
     tr.addEventListener('click', () => {
       state.selected = r;
@@ -346,6 +410,170 @@ function computeMismatchRows(items) {
   return out.sort((a, b) => b.score - a.score || a.province.localeCompare(b.province, 'th') || Number(a.district_number) - Number(b.district_number));
 }
 
+function computeCoverageRows(items) {
+  return items
+    .map((r) => {
+      const vals = sourceValidValues(r);
+      return {
+        row: r,
+        hasRead: vals.read !== null,
+        hasEct: vals.ect !== null,
+        hasVote62: vals.vote62 !== null,
+        hasKillernay: vals.killernay !== null
+      };
+    })
+    .filter((x) => !(x.hasRead && x.hasEct && x.hasVote62 && x.hasKillernay))
+    .sort((a, b) =>
+      String(a.row.province || '').localeCompare(String(b.row.province || ''), 'th')
+      || Number(a.row.district_number || 0) - Number(b.row.district_number || 0)
+      || String(a.row.form_type || '').localeCompare(String(b.row.form_type || ''), 'en')
+    );
+}
+
+function renderCoverageTable(items, limit = 300) {
+  if (!els.coverageBody || !els.coverageCount) return;
+  const rows = computeCoverageRows(items).slice(0, limit);
+  els.coverageBody.innerHTML = '';
+  rows.forEach(({ row, hasRead, hasEct, hasVote62, hasKillernay }) => {
+    const tr = document.createElement('tr');
+    const loc = document.createElement('td');
+    const text = `${row.province || '-'} เขต ${row.district_number || '-'}${resolveDriveUrl(row) ? '' : ' (no file)'}`;
+    loc.textContent = text;
+    const form = document.createElement('td');
+    form.textContent = row.form_type === 'party_list' ? 'Party List' : 'Constituency';
+    const read = document.createElement('td');
+    read.append(valueStatusChip(hasRead));
+    const ect = document.createElement('td');
+    ect.append(valueStatusChip(hasEct));
+    const v62 = document.createElement('td');
+    v62.append(valueStatusChip(hasVote62));
+    const k = document.createElement('td');
+    k.append(valueStatusChip(hasKillernay));
+    tr.append(loc, form, read, ect, v62, k);
+    els.coverageBody.append(tr);
+  });
+  els.coverageCount.textContent = `${rows.length} rows`;
+}
+
+function computeIrregularityRows(items) {
+  const rows = [];
+  items.forEach((r) => {
+    const vals = sourceValidValues(r);
+    const spread = sourceSpread(r);
+    const inv = numOrNull(r?.invalid_votes ?? r?.sources?.read?.invalid_votes);
+    const blank = numOrNull(r?.blank_votes ?? r?.sources?.read?.blank_votes);
+    const read = vals.read;
+    const badRate = (read !== null && inv !== null && blank !== null && read > 0) ? ((inv + blank) / read) : null;
+    const winMismatch = winnerDisagreement(r);
+    const flags = [];
+    let severity = 0;
+
+    if (spread !== null && spread >= 1000) {
+      flags.push('high_source_spread');
+      severity += 3;
+    } else if (spread !== null && spread >= 200) {
+      flags.push('source_spread');
+      severity += 2;
+    }
+    if (badRate !== null && badRate >= 0.10) {
+      flags.push('high_invalid_blank_ratio');
+      severity += 2;
+    }
+    if (winMismatch) {
+      flags.push('winner_disagreement');
+      severity += 2;
+    }
+    if (!flags.length) return;
+    let tier = 'P3';
+    if (severity >= 5) tier = 'P1';
+    else if (severity >= 3) tier = 'P2';
+    rows.push({
+      row: r,
+      severity,
+      tier,
+      spread,
+      badRate,
+      flags
+    });
+  });
+  return rows.sort((a, b) =>
+    b.severity - a.severity
+    || (b.spread ?? 0) - (a.spread ?? 0)
+    || String(a.row.province || '').localeCompare(String(b.row.province || ''), 'th')
+    || Number(a.row.district_number || 0) - Number(b.row.district_number || 0)
+  );
+}
+
+function renderIrregularityTable(items, limit = 200) {
+  if (!els.irregularityBody || !els.irregularityCount) return;
+  const rows = computeIrregularityRows(items).slice(0, limit);
+  els.irregularityBody.innerHTML = '';
+  rows.forEach(({ row, severity, tier, spread, badRate, flags }) => {
+    const tr = document.createElement('tr');
+    const loc = document.createElement('td');
+    loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
+    const form = document.createElement('td');
+    form.textContent = row.form_type === 'party_list' ? 'Party List' : 'Constituency';
+    const sev = document.createElement('td');
+    sev.className = 'mono';
+    sev.innerHTML = `<span class="severity-chip ${tier.toLowerCase()}">${tier}</span> <span class="mono">${severity}</span>`;
+    const sp = document.createElement('td');
+    sp.className = 'mono';
+    sp.textContent = spread === null ? '-' : spread.toLocaleString();
+    const br = document.createElement('td');
+    br.className = 'mono';
+    br.textContent = badRate === null ? '-' : `${(badRate * 100).toFixed(2)}%`;
+    const fg = document.createElement('td');
+    flags.forEach((f) => fg.append(makeChip(f, 'form-chip party_list')));
+    tr.append(loc, form, sev, sp, br, fg);
+    els.irregularityBody.append(tr);
+  });
+  els.irregularityCount.textContent = `${rows.length} rows`;
+}
+
+function computeProvinceHeatmap(items) {
+  const irr = computeIrregularityRows(items);
+  const byProv = new Map();
+  irr.forEach((x) => {
+    const p = String(x?.row?.province || '').trim() || '-';
+    if (!byProv.has(p)) byProv.set(p, { province: p, total: 0, p1: 0, p2: 0, p3: 0 });
+    const agg = byProv.get(p);
+    agg.total += 1;
+    if (x.tier === 'P1') agg.p1 += 1;
+    else if (x.tier === 'P2') agg.p2 += 1;
+    else agg.p3 += 1;
+  });
+  return [...byProv.values()].sort((a, b) =>
+    b.total - a.total || b.p1 - a.p1 || a.province.localeCompare(b.province, 'th')
+  );
+}
+
+function renderProvinceHeatmap(items, limit = 100) {
+  if (!els.heatmapBody || !els.heatmapCount) return;
+  const rows = computeProvinceHeatmap(items).slice(0, limit);
+  els.heatmapBody.innerHTML = '';
+  rows.forEach((r) => {
+    const tr = document.createElement('tr');
+    const p = document.createElement('td');
+    p.textContent = r.province;
+    const total = document.createElement('td');
+    total.className = 'mono';
+    total.textContent = r.total.toLocaleString();
+    const p1 = document.createElement('td');
+    p1.className = 'mono';
+    p1.textContent = r.p1.toLocaleString();
+    const p2 = document.createElement('td');
+    p2.className = 'mono';
+    p2.textContent = r.p2.toLocaleString();
+    const p3 = document.createElement('td');
+    p3.className = 'mono';
+    p3.textContent = r.p3.toLocaleString();
+    tr.append(p, total, p1, p2, p3);
+    els.heatmapBody.append(tr);
+  });
+  els.heatmapCount.textContent = `${rows.length} provinces`;
+}
+
 function renderMismatchTable(items, limit = 120) {
   if (!els.mismatchBody || !els.mismatchCount) return;
   const rows = computeMismatchRows(items).slice(0, limit);
@@ -392,12 +620,13 @@ function applyFilters() {
   const q = (els.search.value || '').trim().toLowerCase();
   const province = els.province.value;
   const form = els.form.value;
-  const forcedForm = state.view === 'all' ? '' : state.view;
+  const forcedForm = (state.view === 'all' || state.view === 'missing_ect') ? '' : state.view;
   const quality = els.quality.value;
 
   state.filtered = state.items.filter((r) => {
     if (province && r.province !== province) return false;
     if (forcedForm && r.form_type !== forcedForm) return false;
+    if (state.view === 'missing_ect' && numOrNull(r?.sources?.ect?.valid_votes) !== null) return false;
     if (form && r.form_type !== form) return false;
     if (quality === 'strong' && r.weak_summary) return false;
     if (quality === 'weak' && !r.weak_summary) return false;
@@ -452,6 +681,9 @@ async function init() {
 
   els.generatedAt.textContent = `Generated: ${data.generated_at || '-'} • Source: OCR extraction pipeline`;
   renderKPIs(data.summary || {});
+  renderCoverageTable(state.items);
+  renderIrregularityTable(state.items);
+  renderProvinceHeatmap(state.items);
   renderSkewTable(state.items);
   renderMismatchTable(state.items);
 
