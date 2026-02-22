@@ -666,13 +666,12 @@ function decodeThaiMojibake(s) {
 
 function colorByRatio(ratio) {
   const t = Math.max(0, Math.min(1, ratio));
-  // 6-step viridis (colorblind-safe), dark purple -> yellow-green.
-  if (t <= 0.16) return '#440154';
-  if (t <= 0.33) return '#414487';
-  if (t <= 0.50) return '#2a788e';
-  if (t <= 0.66) return '#22a884';
-  if (t <= 0.83) return '#7ad151';
-  return '#fde725';
+  // Very obvious 5-step red scale (light -> deep red) for immediate visibility.
+  if (t <= 0.2) return '#fee5d9';
+  if (t <= 0.4) return '#fcbba1';
+  if (t <= 0.6) return '#fc9272';
+  if (t <= 0.8) return '#ef3b2c';
+  return '#99000d';
 }
 
 function ensureSkewMapBase() {
@@ -694,7 +693,7 @@ function ensureSkewMapBase() {
   legend.onAdd = () => {
     const div = window.L.DomUtil.create('div', 'map-legend');
     div.innerHTML = `
-      <div><strong>บัตรเขย่ง</strong></div>
+      <div><strong>บัตรเขย่ง (palette: red-v4)</strong></div>
       <div>ตามผลต่างรวมระดับจังหวัด</div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(0)}"></span><span>ต่ำ</span></div>
       <div class="row"><span class="swatch" style="background:${colorByRatio(0.5)}"></span><span>กลาง</span></div>
@@ -726,7 +725,7 @@ async function renderSkewMap(items) {
   }
 
   const rows = computeSkewProvinceHeatmap(items);
-  els.skewMapCount.textContent = `${rows.length} provinces`;
+  els.skewMapCount.textContent = `${rows.length} provinces · red-v4`;
   const scoreByProvince = new Map(rows.map((r) => [r.province, r]));
   const maxScore = rows.reduce((m, r) => Math.max(m, r.abs_diff_sum), 0) || 1;
 
@@ -748,21 +747,21 @@ async function renderSkewMap(items) {
       const hit = scoreByProvince.get(province);
       if (!hit) {
         return {
-          color: '#1a2128',
-          weight: 0.2,
-          opacity: 0.25,
-          fillColor: '#1a2128',
-          fillOpacity: 0.14
+          color: '#38434d',
+          weight: 0.35,
+          opacity: 0.45,
+          fillColor: '#d7dee4',
+          fillOpacity: 0.35
         };
       }
       const ratio = hit.abs_diff_sum / maxScore;
       const fill = colorByRatio(ratio);
       return {
-        color: fill,
-        weight: 0.2,
-        opacity: 0.35,
+        color: '#5b0a0a',
+        weight: 0.45,
+        opacity: 0.6,
         fillColor: fill,
-        fillOpacity: 0.78
+        fillOpacity: 0.88
       };
     },
     onEachFeature: (feature, layer) => {
