@@ -1,5 +1,5 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv50-debug-skew';
+const BUILD_TAG = 'redv51-skew-read-source';
 const DATA_VERSION = '20260223-k9';
 
 const els = {
@@ -538,9 +538,9 @@ function rowTotals(row) {
   // For skew logic, always keep a single-source equation:
   // total_used_ballots = valid + invalid + blank from the same "latest/read" source.
   // Do not mix ECT/vote62 fallback fields into this equation.
-  const valid = numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes);
-  const invalid = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
-  const blank = numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes);
+  const valid = numOrNull(row?.sources?.read?.valid_votes ?? row?.valid_votes_extracted);
+  const invalid = numOrNull(row?.sources?.read?.invalid_votes ?? row?.invalid_votes);
+  const blank = numOrNull(row?.sources?.read?.blank_votes ?? row?.blank_votes);
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
