@@ -36,6 +36,8 @@ const els = {
   winnerMismatchVote62Count: document.getElementById('winnerMismatchVote62Count'),
   seatSummaryBody: document.getElementById('seatSummaryBody'),
   seatSummaryMeta: document.getElementById('seatSummaryMeta'),
+  mpWinnersBody: document.getElementById('mpWinnersBody'),
+  mpWinnersCount: document.getElementById('mpWinnersCount'),
   closeRaceBody: document.getElementById('closeRaceBody'),
   closeRaceCount: document.getElementById('closeRaceCount'),
   qualityBody: document.getElementById('qualityBody'),
@@ -1356,11 +1358,48 @@ function renderSeatSummary() {
   const quotaText = list.quota === null ? '-' : list.quota.toLocaleString(undefined, { maximumFractionDigits: 3 });
   const tieText = list.tieAtCutoff ? ' • หมายเหตุ: มีเศษคะแนนเสมอกันที่ขอบที่นั่งสุดท้าย (ตามกฎหมายต้องจับสลาก)' : '';
   els.seatSummaryMeta.textContent = `โหมด: ${modeLabel} • คำนวณ บช. แบบ 100 ที่นั่ง (หารเฉลี่ย + เศษสูงสุด) • คะแนนรวม บช.: ${list.totalVotes.toLocaleString()} • ค่าเฉลี่ยต่อ 1 ที่นั่ง: ${quotaText}${tieText}`;
+
+  renderMpWinners(sourceKey);
+}
+
+function renderMpWinners(sourceKey = 'latest', limit = 500) {
+  if (!els.mpWinnersBody || !els.mpWinnersCount) return;
+  const rows = state.filtered
+    .filter((row) => row?.form_type === 'constituency')
+    .map((row) => {
+      const w = winnerInfo(row, sourceKey);
+      if (!w || !w.num) return null;
+      const key = String(w.num);
+      const name = row?.candidate_names?.[key] || '';
+      const party = row?.candidate_parties?.[key] || '';
+      const votes = numOrNull(sourceVotes(row, sourceKey)?.[key]);
+      return { row, key, name, party, votes };
+    })
+    .filter(Boolean)
+    .sort((a, b) =>
+      String(a.row.province || '').localeCompare(String(b.row.province || ''), 'th')
+      || Number(a.row.district_number || 0) - Number(b.row.district_number || 0)
+    )
+    .slice(0, limit);
+
+  els.mpWinnersBody.innerHTML = '';
+  rows.forEach(({ row, key, name, party, votes }) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
+      <td>${name ? `${key} ${name}` : `หมายเลข ${key}`}</td>
+      <td>${party || '-'}</td>
+      <td class="mono">${votes === null ? '-' : Number(votes).toLocaleString()}</td>
+    `;
+    els.mpWinnersBody.append(tr);
+  });
+  els.mpWinnersCount.textContent = `${rows.length} รายการ`;
 }
 
 function renderCloseRaces(limit = 200) {
   if (!els.closeRaceBody || !els.closeRaceCount) return;
   const rows = state.filtered
+    .filter((row) => row?.form_type === 'constituency')
     .map((row) => {
       const m = latestMarginInfo(row);
       if (m.diff === null || m.second === null) return null;
