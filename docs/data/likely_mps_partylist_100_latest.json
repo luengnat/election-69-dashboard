@@ -1,0 +1,521 @@
+{
+  "count": 57,
+  "total_votes": 34475125,
+  "quota": 344751.25,
+  "used_rows": 393,
+  "items": [
+    {
+      "party_no": 46,
+      "party_name": "ประชาชน",
+      "votes": 10863340,
+      "exact": 31.5106616727278,
+      "base": 31,
+      "remainder": 0.5106616727277995,
+      "list_seats": 32
+    },
+    {
+      "party_no": 37,
+      "party_name": "ภูมิใจไทย",
+      "votes": 6259682,
+      "exact": 18.157097327420857,
+      "base": 18,
+      "remainder": 0.1570973274208569,
+      "list_seats": 18
+    },
+    {
+      "party_no": 9,
+      "party_name": "เพื่อไทย",
+      "votes": 5448215,
+      "exact": 15.803321960398984,
+      "base": 15,
+      "remainder": 0.8033219603989838,
+      "list_seats": 16
+    },
+    {
+      "party_no": 27,
+      "party_name": "ประชาธิปัตย์",
+      "votes": 3921432,
+      "exact": 11.374670867763351,
+      "base": 11,
+      "remainder": 0.374670867763351,
+      "list_seats": 12
+    },
+    {
+      "party_no": 11,
+      "party_name": "เศรฐกิจ",
+      "votes": 1113704,
+      "exact": 3.23045674236134,
+      "base": 3,
+      "remainder": 0.23045674236134017,
+      "list_seats": 3
+    },
+    {
+      "party_no": 6,
+      "party_name": "รวมไทยสร้างชาติ",
+      "votes": 756398,
+      "exact": 2.194039905584099,
+      "base": 2,
+      "remainder": 0.1940399055840989,
+      "list_seats": 2
+    },
+    {
+      "party_no": 2,
+      "party_name": "เพื่อชาติไทย",
+      "votes": 671811,
+      "exact": 1.9486832897632713,
+      "base": 1,
+      "remainder": 0.9486832897632713,
+      "list_seats": 2
+    },
+    {
+      "party_no": 42,
+      "party_name": "กล้าธรรม",
+      "votes": 642186,
+      "exact": 1.862751766672347,
+      "base": 1,
+      "remainder": 0.862751766672347,
+      "list_seats": 2
+    },
+    {
+      "party_no": 33,
+      "party_name": "ประชาชาติ",
+      "votes": 428435,
+      "exact": 1.2427366108172198,
+      "base": 1,
+      "remainder": 0.24273661081721976,
+      "list_seats": 1
+    },
+    {
+      "party_no": 5,
+      "party_name": "รวมใจไทย",
+      "votes": 424333,
+      "exact": 1.2308381768013894,
+      "base": 1,
+      "remainder": 0.2308381768013894,
+      "list_seats": 1
+    },
+    {
+      "party_no": 3,
+      "party_name": "ใหม่",
+      "votes": 312237,
+      "exact": 0.9056877966359803,
+      "base": 0,
+      "remainder": 0.9056877966359803,
+      "list_seats": 1
+    },
+    {
+      "party_no": 1,
+      "party_name": "ไทยทรัพย์ทวี",
+      "votes": 297061,
+      "exact": 0.8616676516763898,
+      "base": 0,
+      "remainder": 0.8616676516763898,
+      "list_seats": 1
+    },
+    {
+      "party_no": 8,
+      "party_name": "ประชาธิปไตยใหม่",
+      "votes": 275348,
+      "exact": 0.7986860091152679,
+      "base": 0,
+      "remainder": 0.7986860091152679,
+      "list_seats": 1
+    },
+    {
+      "party_no": 29,
+      "party_name": "ไทยภักดี",
+      "votes": 243988,
+      "exact": 0.7077218719293984,
+      "base": 0,
+      "remainder": 0.7077218719293984,
+      "list_seats": 1
+    },
+    {
+      "party_no": 4,
+      "party_name": "มิติใหม่",
+      "votes": 242928,
+      "exact": 0.7046471912719678,
+      "base": 0,
+      "remainder": 0.7046471912719678,
+      "list_seats": 1
+    },
+    {
+      "party_no": 48,
+      "party_name": "ไทยสร้างไทย",
+      "votes": 199074,
+      "exact": 0.577442431318233,
+      "base": 0,
+      "remainder": 0.577442431318233,
+      "list_seats": 1
+    },
+    {
+      "party_no": 13,
+      "party_name": "รวมพลังประชาชน",
+      "votes": 194657,
+      "exact": 0.5646302950315626,
+      "base": 0,
+      "remainder": 0.5646302950315626,
+      "list_seats": 1
+    },
+    {
+      "party_no": 12,
+      "party_name": "เสรีรวมไทย",
+      "votes": 182785,
+      "exact": 0.5301938716683405,
+      "base": 0,
+      "remainder": 0.5301938716683405,
+      "list_seats": 1
+    },
+    {
+      "party_no": 10,
+      "party_name": "ทางเลือกใหม่",
+      "votes": 175032,
+      "exact": 0.5077051932371529,
+      "base": 0,
+      "remainder": 0.5077051932371529,
+      "list_seats": 1
+    },
+    {
+      "party_no": 21,
+      "party_name": "ไทรวมพลัง",
+      "votes": 166422,
+      "exact": 0.4827306645008539,
+      "base": 0,
+      "remainder": 0.4827306645008539,
+      "list_seats": 1
+    },
+    {
+      "party_no": 43,
+      "party_name": "พลังประชารัฐ",
+      "votes": 163331,
+      "exact": 0.47376477967810127,
+      "base": 0,
+      "remainder": 0.47376477967810127,
+      "list_seats": 1
+    },
+    {
+      "party_no": 7,
+      "party_name": "พลวัต",
+      "votes": 116961,
+      "exact": 0.3392620041261634,
+      "base": 0,
+      "remainder": 0.3392620041261634,
+      "list_seats": 0
+    },
+    {
+      "party_no": 49,
+      "party_name": "ไทยก้าวใหม่",
+      "votes": 108223,
+      "exact": 0.31391619319726904,
+      "base": 0,
+      "remainder": 0.31391619319726904,
+      "list_seats": 0
+    },
+    {
+      "party_no": 44,
+      "party_name": "โอกาสใหม่",
+      "votes": 104622,
+      "exact": 0.3034709808883942,
+      "base": 0,
+      "remainder": 0.3034709808883942,
+      "list_seats": 0
+    },
+    {
+      "party_no": 38,
+      "party_name": "พลังธรรมใหม่",
+      "votes": 88131,
+      "exact": 0.2556364915283121,
+      "base": 0,
+      "remainder": 0.2556364915283121,
+      "list_seats": 0
+    },
+    {
+      "party_no": 16,
+      "party_name": "พลังเพื่อไทย",
+      "votes": 71025,
+      "exact": 0.20601810725849434,
+      "base": 0,
+      "remainder": 0.20601810725849434,
+      "list_seats": 0
+    },
+    {
+      "party_no": 36,
+      "party_name": "ไทยพร้อม",
+      "votes": 69745,
+      "exact": 0.2023052853325405,
+      "base": 0,
+      "remainder": 0.2023052853325405,
+      "list_seats": 0
+    },
+    {
+      "party_no": 31,
+      "party_name": "ประชากรไทย",
+      "votes": 69080,
+      "exact": 0.20037635831632228,
+      "base": 0,
+      "remainder": 0.20037635831632228,
+      "list_seats": 0
+    },
+    {
+      "party_no": 35,
+      "party_name": "รักชาติ",
+      "votes": 67433,
+      "exact": 0.19559900072878633,
+      "base": 0,
+      "remainder": 0.19559900072878633,
+      "list_seats": 0
+    },
+    {
+      "party_no": 47,
+      "party_name": "ประชาไทย",
+      "votes": 63454,
+      "exact": 0.1840573456949032,
+      "base": 0,
+      "remainder": 0.1840573456949032,
+      "list_seats": 0
+    },
+    {
+      "party_no": 34,
+      "party_name": "สร้างอนาคตไทย",
+      "votes": 58500,
+      "exact": 0.16968756458460993,
+      "base": 0,
+      "remainder": 0.16968756458460993,
+      "list_seats": 0
+    },
+    {
+      "party_no": 32,
+      "party_name": "ครูไทยเพื่อประชาชน",
+      "votes": 55451,
+      "exact": 0.16084350673130265,
+      "base": 0,
+      "remainder": 0.16084350673130265,
+      "list_seats": 0
+    },
+    {
+      "party_no": 30,
+      "party_name": "แรงงานสร้างชาติ",
+      "votes": 53207,
+      "exact": 0.1543344657923648,
+      "base": 0,
+      "remainder": 0.1543344657923648,
+      "list_seats": 0
+    },
+    {
+      "party_no": 17,
+      "party_name": "ไทยชนะ",
+      "votes": 51399,
+      "exact": 0.14909010482195495,
+      "base": 0,
+      "remainder": 0.14909010482195495,
+      "list_seats": 0
+    },
+    {
+      "party_no": 28,
+      "party_name": "ไทยก้าวหน้า",
+      "votes": 50629,
+      "exact": 0.14685661038212333,
+      "base": 0,
+      "remainder": 0.14685661038212333,
+      "list_seats": 0
+    },
+    {
+      "party_no": 14,
+      "party_name": "ท้องที่ไทย",
+      "votes": 47786,
+      "exact": 0.13861008480752426,
+      "base": 0,
+      "remainder": 0.13861008480752426,
+      "list_seats": 0
+    },
+    {
+      "party_no": 24,
+      "party_name": "วิชชั่นใหม่",
+      "votes": 42921,
+      "exact": 0.12449846084676995,
+      "base": 0,
+      "remainder": 0.12449846084676995,
+      "list_seats": 0
+    },
+    {
+      "party_no": 45,
+      "party_name": "เป็นธรรม",
+      "votes": 40198,
+      "exact": 0.11660001232772906,
+      "base": 0,
+      "remainder": 0.11660001232772906,
+      "list_seats": 0
+    },
+    {
+      "party_no": 26,
+      "party_name": "คลองไทย",
+      "votes": 38939,
+      "exact": 0.11294810388649787,
+      "base": 0,
+      "remainder": 0.11294810388649787,
+      "list_seats": 0
+    },
+    {
+      "party_no": 15,
+      "party_name": "อนาคตไทย",
+      "votes": 30003,
+      "exact": 0.0870279658159325,
+      "base": 0,
+      "remainder": 0.0870279658159325,
+      "list_seats": 0
+    },
+    {
+      "party_no": 23,
+      "party_name": "ปวงชนไทย",
+      "votes": 28008,
+      "exact": 0.08124118476727786,
+      "base": 0,
+      "remainder": 0.08124118476727786,
+      "list_seats": 0
+    },
+    {
+      "party_no": 56,
+      "party_name": "เพื่อบ้านเมือง",
+      "votes": 24390,
+      "exact": 0.0707466615421989,
+      "base": 0,
+      "remainder": 0.0707466615421989,
+      "list_seats": 0
+    },
+    {
+      "party_no": 39,
+      "party_name": "กรีน",
+      "votes": 23882,
+      "exact": 0.06927313534033597,
+      "base": 0,
+      "remainder": 0.06927313534033597,
+      "list_seats": 0
+    },
+    {
+      "party_no": 57,
+      "party_name": "พลังไทยรักชาติ",
+      "votes": 21871,
+      "exact": 0.0634399440176069,
+      "base": 0,
+      "remainder": 0.0634399440176069,
+      "list_seats": 0
+    },
+    {
+      "party_no": 40,
+      "party_name": "ไทยธรรม",
+      "votes": 21684,
+      "exact": 0.06289752393936207,
+      "base": 0,
+      "remainder": 0.06289752393936207,
+      "list_seats": 0
+    },
+    {
+      "party_no": 19,
+      "party_name": "สังคมประชาธิปไตยไทย",
+      "votes": 19400,
+      "exact": 0.05627245731523816,
+      "base": 0,
+      "remainder": 0.05627245731523816,
+      "list_seats": 0
+    },
+    {
+      "party_no": 22,
+      "party_name": "ก้าวอิสระ",
+      "votes": 17677,
+      "exact": 0.05127465092584871,
+      "base": 0,
+      "remainder": 0.05127465092584871,
+      "list_seats": 0
+    },
+    {
+      "party_no": 51,
+      "party_name": "พร้อม",
+      "votes": 17407,
+      "exact": 0.050491477550842816,
+      "base": 0,
+      "remainder": 0.050491477550842816,
+      "list_seats": 0
+    },
+    {
+      "party_no": 25,
+      "party_name": "เพื่อชีวิตใหม่",
+      "votes": 14058,
+      "exact": 0.040777227058640106,
+      "base": 0,
+      "remainder": 0.040777227058640106,
+      "list_seats": 0
+    },
+    {
+      "party_no": 41,
+      "party_name": "แผ่นดินธรรม",
+      "votes": 14040,
+      "exact": 0.04072501550030638,
+      "base": 0,
+      "remainder": 0.04072501550030638,
+      "list_seats": 0
+    },
+    {
+      "party_no": 20,
+      "party_name": "ฟิวชัน",
+      "votes": 13138,
+      "exact": 0.038108636299360774,
+      "base": 0,
+      "remainder": 0.038108636299360774,
+      "list_seats": 0
+    },
+    {
+      "party_no": 18,
+      "party_name": "พลังสังคมใหม่",
+      "votes": 11630,
+      "exact": 0.033734467967846384,
+      "base": 0,
+      "remainder": 0.033734467967846384,
+      "list_seats": 0
+    },
+    {
+      "party_no": 54,
+      "party_name": "ความหวังใหม่",
+      "votes": 9440,
+      "exact": 0.027382061703909704,
+      "base": 0,
+      "remainder": 0.027382061703909704,
+      "list_seats": 0
+    },
+    {
+      "party_no": 52,
+      "party_name": "เครือข่ายชาวนาแห่งประเทศไทย",
+      "votes": 9019,
+      "exact": 0.026160891367326442,
+      "base": 0,
+      "remainder": 0.026160891367326442,
+      "list_seats": 0
+    },
+    {
+      "party_no": 55,
+      "party_name": "ไทยรวมไทย",
+      "votes": 8045,
+      "exact": 0.023335665933045927,
+      "base": 0,
+      "remainder": 0.023335665933045927,
+      "list_seats": 0
+    },
+    {
+      "party_no": 50,
+      "party_name": "ประชาอาสาชาติ",
+      "votes": 5739,
+      "exact": 0.01664678518206968,
+      "base": 0,
+      "remainder": 0.01664678518206968,
+      "list_seats": 0
+    },
+    {
+      "party_no": 53,
+      "party_name": "ไทยพิทักษ์ธรรม",
+      "votes": 5591,
+      "exact": 0.016217490146881265,
+      "base": 0,
+      "remainder": 0.016217490146881265,
+      "list_seats": 0
+    }
+  ]
+}
