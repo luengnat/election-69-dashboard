@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-02-23T14:57:31.648486Z",
+  "rows": 800,
+  "updated_rows": 800,
+  "filled_total_from_read_sum": 800,
+  "filled_total_from_killernay": 0,
+  "filled_total_from_ect": 0,
+  "still_missing_total": 0,
+  "samples": [
+    {
+      "province": "กระบี่",
+      "district_number": 1,
+      "form_type": "constituency",
+      "drive_id": "1oGYn79Mr7OqXb2I7JFmy1Y3YhtNda7mN",
+      "read_total": 97431
+    },
+    {
+      "province": "กระบี่",
+      "district_number": 1,
+      "form_type": "party_list",
+      "drive_id": "1tmEswtv_et-SilrPhGMrADBYgb7o7FAF",
+      "read_total": 97430
+    },
+    {
+      "province": "กระบี่",
+      "district_number": 2,
+      "form_type": "constituency",
+      "drive_id": "1O-m1c3dlYRHNvRZ1zcAs9wVOkeAtYE_W",
+      "read_total": 86116
+    },
+    {
+      "province": "กระบี่",
+      "district_number": 2,
+      "form_type": "party_list",
+      "drive_id": "19jHMap174RCPniYk-ouSw4Hjc4x_kP5_",
+      "read_total": 86116
+    },
+    {
+      "province": "กระบี่",
+      "district_number": 3,
+      "form_type": "constituency",
+      "drive_id": "1fDLms3hZKRQNDEmX0iWuFH1SiM8VqLJo",
+      "read_total": 94677
+    },
+    {
+      "province": "กระบี่",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "17AASdaeTCYe2PU4qDr31GNBjag0QUNfy",
+      "read_total": 94677
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 1,
+      "form_type": "constituency",
+      "drive_id": "1eMio2cG71gPV0BNYPs4_3RWVxFrJEeTc",
+      "read_total": 82421
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 1,
+      "form_type": "party_list",
+      "drive_id": "1RM3qfUAS0JITAJql_TnTn5899nD8au33",
+      "read_total": 82421
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 2,
+      "form_type": "constituency",
+      "drive_id": "1yYV_7WvATIkrXZ9Yl1I7I_12nzxNUgk4",
+      "read_total": 90181
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 2,
+      "form_type": "party_list",
+      "drive_id": "1l8FFCSWg3cBfI79LLiauIV5AOcH8PsJ6",
+      "read_total": 90181
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 3,
+      "form_type": "constituency",
+      "drive_id": "1mRmRW0mCj0-cGmv7gqfBvCbRLLHe7zkS",
+      "read_total": 82361
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "12PCZZ-z57PUhbjVN66TD4v71KuT5rmXn",
+      "read_total": 82297
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 4,
+      "form_type": "constituency",
+      "drive_id": "1JxW3LXY1b4DjkSHoN1mgZlWjq5pVLRAY",
+      "read_total": 83947
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 4,
+      "form_type": "party_list",
+      "drive_id": "11TtqKq_g89uBA4QUWeYEpWMa-2RCvWWY",
+      "read_total": 82948
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 5,
+      "form_type": "constituency",
+      "drive_id": "12OhytfHmQj9DZwl72aJuFmjZtd5FQU-N",
+      "read_total": 96561
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 5,
+      "form_type": "party_list",
+      "drive_id": "17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd",
+      "read_total": 96531
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 6,
+      "form_type": "constituency",
+      "drive_id": "1HVBCILZX94fkIhkOjOX5nliBfcw4nwTF",
+      "read_total": 100871
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 6,
+      "form_type": "party_list",
+      "drive_id": "1bpWv-h95Kofiy5QSxIdC1Efp4HCK0E9S",
+      "read_total": 100872
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 7,
+      "form_type": "constituency",
+      "drive_id": "1ValgLEY9IDP2tjduGw73t2M8x6aEuSKl",
+      "read_total": 92497
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 7,
+      "form_type": "party_list",
+      "drive_id": "1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS",
+      "read_total": 94926
+    }
+  ]
+}
