@@ -1,0 +1,407 @@
+{
+  "source": "https://party.ect.go.th/party-info",
+  "downloaded_count": 57,
+  "missing": [],
+  "failed": [],
+  "downloaded": [
+    {
+      "no": 1,
+      "party": "ไทยทรัพย์ทวี",
+      "matched_name": "ไทยทรัพย์ทวี",
+      "file": "01.jpg",
+      "bytes": 516172
+    },
+    {
+      "no": 2,
+      "party": "เพื่อชาติไทย",
+      "matched_name": "เพื่อชาติไทย",
+      "file": "02.jpg",
+      "bytes": 15516
+    },
+    {
+      "no": 3,
+      "party": "ใหม่",
+      "matched_name": "ใหม่",
+      "file": "03.jpg",
+      "bytes": 37900
+    },
+    {
+      "no": 4,
+      "party": "มิติใหม่",
+      "matched_name": "มิติใหม่",
+      "file": "04.jpg",
+      "bytes": 70202
+    },
+    {
+      "no": 5,
+      "party": "รวมใจไทย",
+      "matched_name": "รวมใจไทย",
+      "file": "05.jpg",
+      "bytes": 53681
+    },
+    {
+      "no": 6,
+      "party": "รวมไทยสร้างชาติ",
+      "matched_name": "รวมไทยสร้างชาติ",
+      "file": "06.jpg",
+      "bytes": 13411
+    },
+    {
+      "no": 7,
+      "party": "พลวัต",
+      "matched_name": "พลวัต",
+      "file": "07.jpg",
+      "bytes": 355550
+    },
+    {
+      "no": 8,
+      "party": "ประชาธิปไตยใหม่",
+      "matched_name": "ประชาธิปไตยใหม่",
+      "file": "08.jpg",
+      "bytes": 30342
+    },
+    {
+      "no": 9,
+      "party": "เพื่อไทย",
+      "matched_name": "เพื่อไทย",
+      "file": "09.jpg",
+      "bytes": 18715
+    },
+    {
+      "no": 10,
+      "party": "ทางเลือกใหม่",
+      "matched_name": "ทางเลือกใหม่",
+      "file": "10.jpg",
+      "bytes": 23079
+    },
+    {
+      "no": 11,
+      "party": "เศรษฐกิจ",
+      "matched_name": "เศรษฐกิจ",
+      "file": "11.png",
+      "bytes": 705975
+    },
+    {
+      "no": 12,
+      "party": "เสรีรวมไทย",
+      "matched_name": "เสรีรวมไทย",
+      "file": "12.jpg",
+      "bytes": 346873
+    },
+    {
+      "no": 13,
+      "party": "รวมพลังประชาชน",
+      "matched_name": "รวมพลังประชาชน",
+      "file": "13.jpg",
+      "bytes": 308937
+    },
+    {
+      "no": 14,
+      "party": "ท้องที่ไทย",
+      "matched_name": "ท้องที่ไทย",
+      "file": "14.jpg",
+      "bytes": 521021
+    },
+    {
+      "no": 15,
+      "party": "อนาคตไทย",
+      "matched_name": "อนาคตไทย",
+      "file": "15.jpg",
+      "bytes": 128641
+    },
+    {
+      "no": 16,
+      "party": "พลังเพื่อไทย",
+      "matched_name": "พลังเพื่อไทย",
+      "file": "16.jpg",
+      "bytes": 393897
+    },
+    {
+      "no": 17,
+      "party": "ไทยชนะ",
+      "matched_name": "ไทยชนะ",
+      "file": "17.jpg",
+      "bytes": 42885
+    },
+    {
+      "no": 18,
+      "party": "พลังสังคมใหม่",
+      "matched_name": "พลังสังคมใหม่",
+      "file": "18.jpg",
+      "bytes": 106204
+    },
+    {
+      "no": 19,
+      "party": "สังคมประชาธิปไตยไทย",
+      "matched_name": "สังคมประชาธิปไตยไทย",
+      "file": "19.jpg",
+      "bytes": 66648
+    },
+    {
+      "no": 20,
+      "party": "ฟิวชัน",
+      "matched_name": "ฟิวชัน",
+      "file": "20.jpg",
+      "bytes": 90613
+    },
+    {
+      "no": 21,
+      "party": "ไทรวมพลัง",
+      "matched_name": "ไทรวมพลัง",
+      "file": "21.jpg",
+      "bytes": 59958
+    },
+    {
+      "no": 22,
+      "party": "ก้าวอิสระ",
+      "matched_name": "ก้าวอิสระ",
+      "file": "22.jpg",
+      "bytes": 239057
+    },
+    {
+      "no": 23,
+      "party": "ปวงชนไทย",
+      "matched_name": "ปวงชนไทย",
+      "file": "23.jpg",
+      "bytes": 50907
+    },
+    {
+      "no": 24,
+      "party": "วิชชั่นใหม่",
+      "matched_name": "วิชชั่นใหม่",
+      "file": "24.jpg",
+      "bytes": 42057
+    },
+    {
+      "no": 25,
+      "party": "เพื่อชีวิตใหม่",
+      "matched_name": "เพื่อชีวิตใหม่",
+      "file": "25.jpg",
+      "bytes": 24970
+    },
+    {
+      "no": 26,
+      "party": "คลองไทย",
+      "matched_name": "คลองไทย",
+      "file": "26.jpg",
+      "bytes": 50985
+    },
+    {
+      "no": 27,
+      "party": "ประชาธิปัตย์",
+      "matched_name": "ประชาธิปัตย์",
+      "file": "27.jpg",
+      "bytes": 360416
+    },
+    {
+      "no": 28,
+      "party": "ไทยก้าวหน้า",
+      "matched_name": "ไทยก้าวหน้า",
+      "file": "28.jpg",
+      "bytes": 32559
+    },
+    {
+      "no": 29,
+      "party": "ไทยภักดี",
+      "matched_name": "ไทยภักดี",
+      "file": "29.png",
+      "bytes": 611496
+    },
+    {
+      "no": 30,
+      "party": "แรงงานสร้างชาติ",
+      "matched_name": "แรงงานสร้างชาติ",
+      "file": "30.jpg",
+      "bytes": 77869
+    },
+    {
+      "no": 31,
+      "party": "ประชากรไทย",
+      "matched_name": "ประชากรไทย",
+      "file": "31.jpg",
+      "bytes": 77361
+    },
+    {
+      "no": 32,
+      "party": "ครูไทยเพื่อประชาชน",
+      "matched_name": "ครูไทยเพื่อประชาชน",
+      "file": "32.jpg",
+      "bytes": 96787
+    },
+    {
+      "no": 33,
+      "party": "ประชาชาติ",
+      "matched_name": "ประชาชาติ",
+      "file": "33.png",
+      "bytes": 30450
+    },
+    {
+      "no": 34,
+      "party": "สร้างอนาคตไทย",
+      "matched_name": "สร้างอนาคตไทย",
+      "file": "34.jpg",
+      "bytes": 54978
+    },
+    {
+      "no": 35,
+      "party": "รักชาติ",
+      "matched_name": "รักชาติ",
+      "file": "35.jpg",
+      "bytes": 461482
+    },
+    {
+      "no": 36,
+      "party": "ไทยพร้อม",
+      "matched_name": "ไทยพร้อม",
+      "file": "36.jpg",
+      "bytes": 73625
+    },
+    {
+      "no": 37,
+      "party": "ภูมิใจไทย",
+      "matched_name": "ภูมิใจไทย",
+      "file": "37.jpg",
+      "bytes": 901643
+    },
+    {
+      "no": 38,
+      "party": "พลังธรรมใหม่",
+      "matched_name": "พลังธรรมใหม่",
+      "file": "38.jpg",
+      "bytes": 368769
+    },
+    {
+      "no": 39,
+      "party": "กรีน",
+      "matched_name": "กรีน",
+      "file": "39.jpg",
+      "bytes": 66922
+    },
+    {
+      "no": 40,
+      "party": "ไทยธรรม",
+      "matched_name": "ไทยธรรม",
+      "file": "40.jpg",
+      "bytes": 44814
+    },
+    {
+      "no": 41,
+      "party": "แผ่นดินธรรม",
+      "matched_name": "แผ่นดินธรรม",
+      "file": "41.jpg",
+      "bytes": 89236
+    },
+    {
+      "no": 42,
+      "party": "กล้าธรรม",
+      "matched_name": "กล้าธรรม",
+      "file": "42.jpg",
+      "bytes": 86212
+    },
+    {
+      "no": 43,
+      "party": "พลังประชารัฐ",
+      "matched_name": "พลังประชารัฐ",
+      "file": "43.jpg",
+      "bytes": 276022
+    },
+    {
+      "no": 44,
+      "party": "โอกาสใหม่",
+      "matched_name": "โอกาสใหม่",
+      "file": "44.jpg",
+      "bytes": 236703
+    },
+    {
+      "no": 45,
+      "party": "เป็นธรรม",
+      "matched_name": "เป็นธรรม",
+      "file": "45.jpg",
+      "bytes": 34197
+    },
+    {
+      "no": 46,
+      "party": "ประชาชน",
+      "matched_name": "ประชาชน",
+      "file": "46.png",
+      "bytes": 46663
+    },
+    {
+      "no": 47,
+      "party": "ประชาไทย",
+      "matched_name": "ประชาไทย",
+      "file": "47.jpg",
+      "bytes": 779566
+    },
+    {
+      "no": 48,
+      "party": "ไทยสร้างไทย",
+      "matched_name": "ไทยสร้างไทย",
+      "file": "48.png",
+      "bytes": 218974
+    },
+    {
+      "no": 49,
+      "party": "ไทยก้าวใหม่",
+      "matched_name": "ไทยก้าวใหม่",
+      "file": "49.jpg",
+      "bytes": 317859
+    },
+    {
+      "no": 50,
+      "party": "ประชาอาสาชาติ",
+      "matched_name": "ประชาอาสาชาติ",
+      "file": "50.jpg",
+      "bytes": 454860
+    },
+    {
+      "no": 51,
+      "party": "พร้อม",
+      "matched_name": "พร้อม",
+      "file": "51.jpg",
+      "bytes": 27338
+    },
+    {
+      "no": 52,
+      "party": "เครือข่ายชาวนาแห่งประเทศไทย",
+      "matched_name": "เครือข่ายชาวนาแห่งประเทศไทย",
+      "file": "52.jpg",
+      "bytes": 576392
+    },
+    {
+      "no": 53,
+      "party": "ไทยพิทักษ์ธรรม",
+      "matched_name": "ไทยพิทักษ์ธรรม",
+      "file": "53.jpg",
+      "bytes": 81188
+    },
+    {
+      "no": 54,
+      "party": "ความหวังใหม่",
+      "matched_name": "ความหวังใหม่",
+      "file": "54.jpg",
+      "bytes": 62307
+    },
+    {
+      "no": 55,
+      "party": "ไทยรวมไทย",
+      "matched_name": "ไทยรวมไทย",
+      "file": "55.jpg",
+      "bytes": 1539934
+    },
+    {
+      "no": 56,
+      "party": "เพื่อบ้านเมือง",
+      "matched_name": "เพื่อบ้านเมือง",
+      "file": "56.jpg",
+      "bytes": 45318
+    },
+    {
+      "no": 57,
+      "party": "พลังไทยรักชาติ",
+      "matched_name": "พลังไทยรักชาติ",
+      "file": "57.jpg",
+      "bytes": 317891
+    }
+  ]
+}

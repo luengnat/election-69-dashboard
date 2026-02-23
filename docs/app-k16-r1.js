@@ -1259,10 +1259,14 @@ function partyNameFromNo(partyNo) {
   return name || `หมายเลข ${no}`;
 }
 
-function partyLogoUrlByName(name) {
+function partyNoFromName(name) {
   const clean = canonicalPartyKey(name);
-  if (!clean) return '';
-  return `https://election2569.thestandard.co/images/export_bg_light/${encodeURIComponent(clean)}.webp`;
+  if (!clean) return null;
+  const byState = Object.entries(state.partyMap || {}).find(([, value]) => canonicalPartyKey(value) === clean);
+  if (byState) return byState[0].padStart(2, '0');
+  const byFallback = Object.entries(PARTY_MAP_FALLBACK || {}).find(([, value]) => canonicalPartyKey(value) === clean);
+  if (byFallback) return byFallback[0].padStart(2, '0');
+  return null;
 }
 
 function buildPartyLabelNode(name) {
@@ -1273,14 +1277,20 @@ function buildPartyLabelNode(name) {
   const label = document.createElement('span');
   label.textContent = clean || '-';
 
-  const url = partyLogoUrlByName(clean);
-  if (url) {
+  const no = partyNoFromName(clean);
+  if (no) {
     const img = document.createElement('img');
     img.className = 'party-logo';
     img.alt = clean || 'party logo';
     img.loading = 'lazy';
-    img.src = url;
+    img.dataset.ext = 'png';
+    img.src = `./assets/party-logos/${no}.png`;
     img.addEventListener('error', () => {
+      if (img.dataset.ext === 'png') {
+        img.dataset.ext = 'jpg';
+        img.src = `./assets/party-logos/${no}.jpg`;
+        return;
+      }
       img.remove();
     });
     wrap.append(img);
