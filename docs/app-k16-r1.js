@@ -1,6 +1,6 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv56-hide-missing-file-read';
-const DATA_VERSION = '20260223-k10';
+const BUILD_TAG = 'redv57-fix-name-party-fallback';
+const DATA_VERSION = '20260223-k11';
 
 const els = {
   kpiGrid: document.getElementById('kpiGrid'),
@@ -83,16 +83,6 @@ const NO_FILE_REASON_MAP = new Map([
   ['กรุงเทพมหานคร|15', 'กกต. ยังไม่ประกาศ'],
   ['ลพบุรี|4', 'กกต. อัพโหลด PDF ผิด (เป็นเอกสารเขต 1)'],
   ['นครพนม|2', 'รอตรวจสอบ'],
-  ['บุรีรัมย์|1', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|2', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|3', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|4', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|5', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|6', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|7', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|8', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|9', 'ไม่มี PDF จาก กกต.'],
-  ['บุรีรัมย์|10', 'ไม่มี PDF จาก กกต.'],
   ['ปราจีนบุรี|2', 'รอตรวจสอบ'],
   ['อุดรธานี|6', 'กกต. ยังไม่ประกาศ']
 ]);
@@ -293,12 +283,22 @@ function normalizePartyNo(row, sourceKey, num) {
   return String(n);
 }
 
+function lookupByNumber(map, num) {
+  if (!map || typeof map !== 'object') return '';
+  const rawKey = String(num);
+  if (Object.prototype.hasOwnProperty.call(map, rawKey)) return map[rawKey];
+  const n = String(rawKey).replace(/[^\d]/g, '');
+  if (!n) return '';
+  if (Object.prototype.hasOwnProperty.call(map, n)) return map[n];
+  return '';
+}
+
 function partyOrNameLabel(row, num, sourceKey = 'latest') {
   const key = normalizePartyNo(row, sourceKey, num);
   if (row?.form_type === 'party_list') {
-    return state.partyMap[key] || PARTY_MAP_FALLBACK[key] || row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
+    return state.partyMap[key] || PARTY_MAP_FALLBACK[key] || lookupByNumber(row?.candidate_parties, key) || lookupByNumber(row?.candidate_names, key) || '';
   }
-  return row?.candidate_parties?.[key] || row?.candidate_names?.[key] || '';
+  return lookupByNumber(row?.candidate_parties, key) || lookupByNumber(row?.candidate_names, key) || '';
 }
 
 function displayLabel(row, num, sourceKey = 'latest') {
@@ -529,8 +529,10 @@ function renderDetail(row) {
     no.className = 'mono';
     no.textContent = number;
     const nm = document.createElement('td');
-    const baseName = names[number] || '-';
-    if (row.form_type === 'constituency' && parties[number]) {
+    const rawName = lookupByNumber(names, number);
+    const baseName = rawName || (row.form_type === 'party_list' ? partyOrNameLabel(row, number, 'latest') : `หมายเลข ${number}`);
+    const partyName = lookupByNumber(parties, number);
+    if (row.form_type === 'constituency' && partyName) {
       const cand = document.createElement('span');
       cand.textContent = baseName;
       nm.append(cand);
@@ -542,7 +544,7 @@ function renderDetail(row) {
       open.textContent = '(';
       const close = document.createElement('span');
       close.textContent = ')';
-      partyWrap.append(open, buildPartyLabelNode(parties[number]), close);
+      partyWrap.append(open, buildPartyLabelNode(partyName), close);
       nm.append(partyWrap);
     } else if (row.form_type === 'party_list') {
       nm.append(buildPartyLabelNode(baseName));
