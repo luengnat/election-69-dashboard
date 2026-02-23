@@ -501,13 +501,16 @@ function renderDetail(row) {
       const cand = document.createElement('span');
       cand.textContent = baseName;
       nm.append(cand);
+      const spacer = document.createTextNode(' ');
+      nm.append(spacer);
+      const partyWrap = document.createElement('span');
+      partyWrap.className = 'party-inline-paren';
       const open = document.createElement('span');
-      open.textContent = ' (';
-      nm.append(open);
-      nm.append(buildPartyLabelNode(parties[number]));
+      open.textContent = '(';
       const close = document.createElement('span');
       close.textContent = ')';
-      nm.append(close);
+      partyWrap.append(open, buildPartyLabelNode(parties[number]), close);
+      nm.append(partyWrap);
     } else if (row.form_type === 'party_list') {
       nm.append(buildPartyLabelNode(baseName));
     } else {

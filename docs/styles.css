@@ -234,6 +234,8 @@ tbody tr:hover {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .party-logo {
@@ -243,6 +245,14 @@ tbody tr:hover {
   object-fit: cover;
   border: 1px solid #e1c7a9;
   background: #fff;
+}
+
+.party-inline-paren {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  vertical-align: middle;
+  white-space: nowrap;
 }
 
 .loc-link {
