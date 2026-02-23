@@ -1194,9 +1194,15 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
     const form = document.createElement('td');
     form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
     const wl = document.createElement('td');
-    wl.textContent = displayWinner(wLatest, 'latest');
+    const latestLabel = row?.form_type === 'constituency'
+      ? (partyOrNameLabel(row, wLatest.num, 'latest') || displayWinner(wLatest, 'latest'))
+      : displayWinner(wLatest, 'latest');
+    appendPartyLabelOrText(wl, latestLabel);
     const wo = document.createElement('td');
-    wo.textContent = displayWinner(wOther, sourceKey);
+    const otherLabel = row?.form_type === 'constituency'
+      ? (partyOrNameLabel(row, wOther.num, sourceKey) || displayWinner(wOther, sourceKey))
+      : displayWinner(wOther, sourceKey);
+    appendPartyLabelOrText(wo, otherLabel);
     const mg = document.createElement('td');
     mg.className = 'mono';
     mg.textContent = margin.diff === null ? '-' : margin.diff.toLocaleString();
@@ -1297,6 +1303,15 @@ function buildPartyLabelNode(name) {
   }
   wrap.append(label);
   return wrap;
+}
+
+function appendPartyLabelOrText(cell, label) {
+  const clean = canonicalPartyKey(label);
+  if (!clean || clean === '-') {
+    cell.textContent = '-';
+    return;
+  }
+  cell.append(buildPartyLabelNode(clean));
 }
 
 function computePartyListSeats(items, sourceKey, totalSeats = 100) {
@@ -1468,15 +1483,30 @@ function renderCloseRaces(limit = 200) {
     const w1 = winnerInfo(row, 'latest');
     const n2 = displayLabel(row, m.second, 'latest');
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
-      <td>${row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต'}</td>
-      <td>${w1 ? w1.display : '-'}</td>
-      <td>${n2}</td>
-      <td class="mono">${m.diff.toLocaleString()}</td>
-      <td class="mono">${m.pct === null ? '-' : `${m.pct.toFixed(2)}%`}</td>
-      <td class="mono">${turnout === null ? '-' : turnout.toLocaleString()}</td>
-    `;
+    const loc = document.createElement('td');
+    loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
+    const form = document.createElement('td');
+    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
+    const winner = document.createElement('td');
+    const winnerLabel = row?.form_type === 'constituency'
+      ? (w1 ? (partyOrNameLabel(row, w1.num, 'latest') || w1.display) : '-')
+      : (w1 ? w1.display : '-');
+    appendPartyLabelOrText(winner, winnerLabel);
+    const runnerUp = document.createElement('td');
+    const runnerUpLabel = row?.form_type === 'constituency'
+      ? (partyOrNameLabel(row, m.second, 'latest') || n2)
+      : n2;
+    appendPartyLabelOrText(runnerUp, runnerUpLabel);
+    const margin = document.createElement('td');
+    margin.className = 'mono';
+    margin.textContent = m.diff.toLocaleString();
+    const marginPct = document.createElement('td');
+    marginPct.className = 'mono';
+    marginPct.textContent = m.pct === null ? '-' : `${m.pct.toFixed(2)}%`;
+    const turnoutCell = document.createElement('td');
+    turnoutCell.className = 'mono';
+    turnoutCell.textContent = turnout === null ? '-' : turnout.toLocaleString();
+    tr.append(loc, form, winner, runnerUp, margin, marginPct, turnoutCell);
     els.closeRaceBody.append(tr);
   });
   els.closeRaceCount.textContent = `${rows.length} รายการ`;
@@ -1694,7 +1724,25 @@ function renderAnomaly100Table(limit = 500) {
     invPct.textContent = x.invalidPct === null ? '-' : `${x.invalidPct > 0 ? '+' : ''}${x.invalidPct.toFixed(2)}%`;
 
     const w = document.createElement('td');
-    w.textContent = `${x.w100?.display || '-'} / ${x.w94?.display || '-'}`;
+    const w100Label = x.w100
+      ? (row?.form_type === 'constituency'
+        ? (partyOrNameLabel(row, x.w100.num, 'latest') || x.w100.display)
+        : x.w100.display)
+      : '-';
+    const w94Label = x.w94
+      ? (row?.form_type === 'constituency'
+        ? (partyOrNameLabel(row, x.w94.num, 'ect') || x.w94.display)
+        : x.w94.display)
+      : '-';
+    const w100Span = document.createElement('span');
+    appendPartyLabelOrText(w100Span, w100Label);
+    w.append(w100Span);
+    const sep = document.createElement('span');
+    sep.textContent = ' / ';
+    w.append(sep);
+    const w94Span = document.createElement('span');
+    appendPartyLabelOrText(w94Span, w94Label);
+    w.append(w94Span);
     const wd = document.createElement('td');
     wd.className = 'mono';
     if (x.winnerVoteDiff === null) {
