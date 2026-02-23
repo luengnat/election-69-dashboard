@@ -186,6 +186,28 @@
           <h2>ความผิดปกติระหว่างผล 100% กับผล 94% (ECT)</h2>
           <span id="anomaly100Count">0 รายการ</span>
         </div>
+        <div class="filters" style="grid-template-columns: repeat(5, minmax(120px, 1fr));">
+          <label>
+            ผู้มาใช้สิทธิ ต่างเกิน (%)
+            <input id="anomalyTurnoutPct" type="number" min="0" step="0.5" value="6" />
+          </label>
+          <label>
+            บัตรเสีย ต่างเกิน (%)
+            <input id="anomalyInvalidPct" type="number" min="0" step="1" value="20" />
+          </label>
+          <label>
+            ผู้ชนะ ต่างเกิน (คะแนน)
+            <input id="anomalyWinnerVotes" type="number" min="0" step="100" value="1000" />
+          </label>
+          <label>
+            ผู้ชนะ ต่างเกิน (%)
+            <input id="anomalyWinnerPct" type="number" min="0" step="1" value="10" />
+          </label>
+          <label>
+            นอกเขตต่ำผิดปกติ (%)
+            <input id="anomalyOutsideLowPct" type="number" min="0" max="100" step="1" value="50" />
+          </label>
+        </div>
         <div class="table-wrap">
           <table>
             <thead>
@@ -395,6 +417,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16-r1.js?v=redv40-anomaly-100v94"></script>
+    <script src="./app-k16-r1.js?v=redv41-anomaly-thresholds"></script>
   </body>
 </html>

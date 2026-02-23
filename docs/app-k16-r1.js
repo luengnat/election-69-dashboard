@@ -41,7 +41,12 @@ const els = {
   qualityBody: document.getElementById('qualityBody'),
   qualityCount: document.getElementById('qualityCount'),
   anomaly100Body: document.getElementById('anomaly100Body'),
-  anomaly100Count: document.getElementById('anomaly100Count')
+  anomaly100Count: document.getElementById('anomaly100Count'),
+  anomalyTurnoutPct: document.getElementById('anomalyTurnoutPct'),
+  anomalyInvalidPct: document.getElementById('anomalyInvalidPct'),
+  anomalyWinnerVotes: document.getElementById('anomalyWinnerVotes'),
+  anomalyWinnerPct: document.getElementById('anomalyWinnerPct'),
+  anomalyOutsideLowPct: document.getElementById('anomalyOutsideLowPct')
 };
 
 let state = {
@@ -52,7 +57,14 @@ let state = {
   selected: null,
   partyMap: {},
   pollAggByDistrict: new Map(),
-  section3ByDistrictForm: new Map()
+  section3ByDistrictForm: new Map(),
+  anomalyCfg: {
+    turnoutPct: 6,
+    invalidPct: 20,
+    winnerVotes: 1000,
+    winnerPct: 10,
+    outsideLowPct: 50
+  }
 };
 let skewMapInstance = null;
 let skewGeoLayer = null;
@@ -1435,6 +1447,12 @@ function turnoutTotalFromSource(row, sourceKey) {
 }
 
 function computeAnomaly100Rows(items) {
+  const cfg = state.anomalyCfg || {};
+  const turnoutThreshold = Number.isFinite(Number(cfg.turnoutPct)) ? Number(cfg.turnoutPct) : 6;
+  const invalidThreshold = Number.isFinite(Number(cfg.invalidPct)) ? Number(cfg.invalidPct) : 20;
+  const winnerVotesThreshold = Number.isFinite(Number(cfg.winnerVotes)) ? Number(cfg.winnerVotes) : 1000;
+  const winnerPctThreshold = Number.isFinite(Number(cfg.winnerPct)) ? Number(cfg.winnerPct) : 10;
+  const outsideLowThreshold = Number.isFinite(Number(cfg.outsideLowPct)) ? Number(cfg.outsideLowPct) : 50;
   const rows = [];
   items.forEach((row) => {
     const dKey = districtKey(row?.province, row?.district_number);
@@ -1477,16 +1495,16 @@ function computeAnomaly100Rows(items) {
 
     const flags = [];
     let severity = 0;
-    if (turnoutRateDiff !== null && Math.abs(turnoutRateDiff) > 6) {
-      flags.push('ผู้มาใช้สิทธิ 100% vs 94% ต่างเกิน 6%');
+    if (turnoutRateDiff !== null && Math.abs(turnoutRateDiff) > turnoutThreshold) {
+      flags.push(`ผู้มาใช้สิทธิ 100% vs 94% ต่างเกิน ${turnoutThreshold}%`);
       severity += 2;
     }
-    if (invalidPct !== null && Math.abs(invalidPct) >= 20) {
-      flags.push('บัตรเสียต่างอย่างมีนัยสำคัญ');
+    if (invalidPct !== null && Math.abs(invalidPct) >= invalidThreshold) {
+      flags.push(`บัตรเสียต่างอย่างมีนัย (>=${invalidThreshold}%)`);
       severity += 2;
     }
-    if (winnerVoteDiff !== null && (Math.abs(winnerVoteDiff) >= 1000 || (winnerPct !== null && Math.abs(winnerPct) >= 10))) {
-      flags.push('คะแนนผู้ชนะต่างอย่างมีนัยสำคัญ');
+    if (winnerVoteDiff !== null && (Math.abs(winnerVoteDiff) >= winnerVotesThreshold || (winnerPct !== null && Math.abs(winnerPct) >= winnerPctThreshold))) {
+      flags.push(`คะแนนผู้ชนะต่างอย่างมีนัย (>=${winnerVotesThreshold} หรือ >=${winnerPctThreshold}%)`);
       severity += 2;
     }
     if (winnerChanged) {
@@ -1500,8 +1518,8 @@ function computeAnomaly100Rows(items) {
     if (outsideCompletionPct !== null && outsideCompletionPct > 100) {
       flags.push('นอกเขต/นอกราชฯ เกิน 100% ของผู้ลงทะเบียน');
       severity += 2;
-    } else if (outsideCompletionPct !== null && outsideCompletionPct < 50) {
-      flags.push('นอกเขต/นอกราชฯ ต่ำผิดปกติ (<50%)');
+    } else if (outsideCompletionPct !== null && outsideCompletionPct < outsideLowThreshold) {
+      flags.push(`นอกเขต/นอกราชฯ ต่ำผิดปกติ (<${outsideLowThreshold}%)`);
       severity += 1;
     }
 
@@ -1609,6 +1627,25 @@ function renderNewTabs() {
   renderCloseRaces();
   renderQualityTable();
   renderAnomaly100Table();
+}
+
+function setupAnomalyControls() {
+  const bindNum = (el, key) => {
+    if (!el) return;
+    const onChange = () => {
+      const v = Number(el.value);
+      if (!Number.isFinite(v) || v < 0) return;
+      state.anomalyCfg[key] = v;
+      renderAnomaly100Table();
+    };
+    el.addEventListener('input', onChange);
+    el.addEventListener('change', onChange);
+  };
+  bindNum(els.anomalyTurnoutPct, 'turnoutPct');
+  bindNum(els.anomalyInvalidPct, 'invalidPct');
+  bindNum(els.anomalyWinnerVotes, 'winnerVotes');
+  bindNum(els.anomalyWinnerPct, 'winnerPct');
+  bindNum(els.anomalyOutsideLowPct, 'outsideLowPct');
 }
 
 function applyFilters() {
@@ -1743,6 +1780,7 @@ async function init() {
   if (els.seatMode) els.seatMode.addEventListener('change', renderSeatSummary);
   setupTabs();
   setupSectionTabs();
+  setupAnomalyControls();
   applyFilters();
 }
 
