@@ -527,8 +527,11 @@ function computeSkewDistrictRows(items) {
 function renderSkewTable(items) {
   if (!els.skewBody || !els.skewCount) return;
   const rows = computeSkewRows(items);
+  const minorRows = computeSkewDistrictRows(items)
+    .filter((r) => Number(r.raw_diff || 0) !== 0 && Number(r.diff || 0) === 0);
+  const displayRows = rows.length ? rows : minorRows.slice(0, 30);
   els.skewBody.innerHTML = '';
-  rows.forEach((r) => {
+  displayRows.forEach((r) => {
     const tr = document.createElement('tr');
     const loc = document.createElement('td');
     const text = `${r.province} เขต ${r.district_number}`;
@@ -561,17 +564,23 @@ function renderSkewTable(items) {
     pTotal.textContent = r.p_total.toLocaleString();
     const diff = document.createElement('td');
     diff.className = 'mono';
-    const diffPct = r.p_total > 0 ? (r.diff / r.p_total) * 100 : null;
-    diff.textContent = r.diff > 0 ? `+${r.diff.toLocaleString()}` : r.diff.toLocaleString();
-    diff.classList.add(r.diff > 0 ? 'diff-pos' : 'diff-neg');
+    const shownDiff = Number(r.diff || 0) === 0 ? Number(r.raw_diff || 0) : Number(r.diff || 0);
+    const diffPct = r.p_total > 0 ? (shownDiff / r.p_total) * 100 : null;
+    diff.textContent = shownDiff > 0 ? `+${shownDiff.toLocaleString()}` : shownDiff.toLocaleString();
+    diff.classList.add(shownDiff > 0 ? 'diff-pos' : 'diff-neg');
     const diffPctCell = document.createElement('td');
     diffPctCell.className = 'mono';
     diffPctCell.textContent = diffPct === null ? '-' : `${diffPct > 0 ? '+' : ''}${diffPct.toFixed(2)}%`;
-    diffPctCell.classList.add(r.diff > 0 ? 'diff-pos' : 'diff-neg');
+    diffPctCell.classList.add(shownDiff > 0 ? 'diff-pos' : 'diff-neg');
     const dir = document.createElement('td');
     dir.className = 'mono';
-    dir.textContent = r.diff > 0 ? 'เขต > บช' : 'บช > เขต';
-    dir.classList.add(r.diff > 0 ? 'diff-pos' : 'diff-neg');
+    if (Number(r.diff || 0) === 0) {
+      dir.textContent = 'ต่างเล็กน้อย';
+      dir.classList.add('mono');
+    } else {
+      dir.textContent = shownDiff > 0 ? 'เขต > บช' : 'บช > เขต';
+      dir.classList.add(shownDiff > 0 ? 'diff-pos' : 'diff-neg');
+    }
     const cInv = document.createElement('td');
     cInv.className = 'mono';
     cInv.textContent = r.c_invalid.toLocaleString();
@@ -587,18 +596,26 @@ function renderSkewTable(items) {
     tr.append(loc, cTotal, pTotal, diff, diffPctCell, dir, cInv, cBlk, pInv, pBlk);
     els.skewBody.append(tr);
   });
-  els.skewCount.textContent = `${rows.length} รายการ`;
+  if (rows.length) {
+    els.skewCount.textContent = `${rows.length} รายการ`;
+  } else {
+    els.skewCount.textContent = `ไม่พบเขย่งเกินเกณฑ์ • ต่างเล็กน้อย ${minorRows.length} เขต`;
+  }
   if (els.skewSummary) {
-    const net = rows.reduce((s, r) => s + Number(r.diff || 0), 0);
-    const absSum = rows.reduce((s, r) => s + Math.abs(Number(r.diff || 0)), 0);
-    const posRows = rows.filter((r) => Number(r.diff || 0) > 0);
-    const negRows = rows.filter((r) => Number(r.diff || 0) < 0);
-    const posSum = posRows.reduce((s, r) => s + Number(r.diff || 0), 0);
-    const negSum = negRows.reduce((s, r) => s + Math.abs(Number(r.diff || 0)), 0);
-    const cTotalSum = rows.reduce((s, r) => s + Number(r.c_total || 0), 0);
-    const pTotalSum = rows.reduce((s, r) => s + Number(r.p_total || 0), 0);
+    const statsRows = rows.length ? rows : minorRows;
+    const valDiff = (r) => Number((Number(r.diff || 0) === 0 ? r.raw_diff : r.diff) || 0);
+    const net = statsRows.reduce((s, r) => s + valDiff(r), 0);
+    const absSum = statsRows.reduce((s, r) => s + Math.abs(valDiff(r)), 0);
+    const posRows = statsRows.filter((r) => valDiff(r) > 0);
+    const negRows = statsRows.filter((r) => valDiff(r) < 0);
+    const posSum = posRows.reduce((s, r) => s + valDiff(r), 0);
+    const negSum = negRows.reduce((s, r) => s + Math.abs(valDiff(r)), 0);
+    const cTotalSum = statsRows.reduce((s, r) => s + Number(r.c_total || 0), 0);
+    const pTotalSum = statsRows.reduce((s, r) => s + Number(r.p_total || 0), 0);
     const netPct = pTotalSum > 0 ? (net / pTotalSum) * 100 : null;
+    const modeLabel = rows.length ? 'เขย่งเกินเกณฑ์' : 'ต่างเล็กน้อย (อยู่ใน tolerance)';
     els.skewSummary.innerHTML =
+      `<span><strong>โหมดแสดงผล:</strong> ${modeLabel}</span>` +
       `<span><strong>รวมสุทธิ:</strong> ${net > 0 ? '+' : ''}${net.toLocaleString()}${netPct === null ? '' : ` (${netPct > 0 ? '+' : ''}${netPct.toFixed(2)}%)`}</span>` +
       `<span><strong>รวมค่าสัมบูรณ์:</strong> ${absSum.toLocaleString()}</span>` +
       `<span class="diff-pos"><strong>ฝั่ง +:</strong> ${posSum.toLocaleString()} (${posRows.length} เขต)</span>` +
@@ -1090,6 +1107,16 @@ function renderMismatchTable(items, limit = 120) {
 
 function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage = false) {
   if (!bodyEl || !countEl) return;
+  const hiddenPartyListMismatchCount = state.filtered
+    .map((row) => {
+      if (row?.form_type !== 'party_list') return null;
+      const wLatest = winnerInfo(row, 'latest');
+      const wOther = winnerInfo(row, sourceKey);
+      if (!wLatest || !wOther || wLatest.num === wOther.num) return null;
+      return 1;
+    })
+    .filter(Boolean).length;
+
   const rows = state.filtered
     .map((row) => {
       if (row?.form_type !== 'constituency') return null;
@@ -1117,15 +1144,21 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
 
   bodyEl.innerHTML = '';
   rows.slice(0, 300).forEach(({ row, wLatest, wOther, margin, score, coverage, lowCoverage }) => {
+    const displayWinner = (w, srcKey) => {
+      if (!w) return '-';
+      if (row?.form_type !== 'constituency') return w.display;
+      const clean = partyOrNameLabel(row, w.num, srcKey) || '';
+      return clean || w.display;
+    };
     const tr = document.createElement('tr');
     const loc = document.createElement('td');
     loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
     const form = document.createElement('td');
     form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
     const wl = document.createElement('td');
-    wl.textContent = wLatest.display;
+    wl.textContent = displayWinner(wLatest, 'latest');
     const wo = document.createElement('td');
-    wo.textContent = wOther.display;
+    wo.textContent = displayWinner(wOther, sourceKey);
     const mg = document.createElement('td');
     mg.className = 'mono';
     mg.textContent = margin.diff === null ? '-' : margin.diff.toLocaleString();
@@ -1166,9 +1199,9 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
     bodyEl.append(tr);
   });
   if (includeCoverage) {
-    countEl.textContent = `${rows.length} รายการ (coverage>=${MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH}: ${highCoverageCount} • ต่ำกว่าเกณฑ์: ${lowCoverageCount})`;
+    countEl.textContent = `${rows.length} รายการ (coverage>=${MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH}: ${highCoverageCount} • ต่ำกว่าเกณฑ์: ${lowCoverageCount} • รายชื่อที่ไม่ตรงกันแต่ซ่อนไว้: ${hiddenPartyListMismatchCount})`;
   } else {
-    countEl.textContent = `${rows.length} รายการ`;
+    countEl.textContent = `${rows.length} รายการ • รายชื่อที่ไม่ตรงกันแต่ซ่อนไว้: ${hiddenPartyListMismatchCount}`;
   }
 }
 
