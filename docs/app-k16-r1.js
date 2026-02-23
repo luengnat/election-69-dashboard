@@ -1,5 +1,5 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv53-quality-issues';
+const BUILD_TAG = 'redv54-anomaly-killernay-fallback';
 const DATA_VERSION = '20260223-k9';
 
 const els = {
@@ -1605,10 +1605,12 @@ function pctDelta(nowVal, baseVal) {
 function turnoutTotalFromSource(row, sourceKey) {
   let src = null;
   if (sourceKey === 'latest') {
+    const read = row?.sources?.read || {};
+    const killernay = row?.sources?.killernay || {};
     src = {
-      valid_votes: numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes),
-      invalid_votes: numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes),
-      blank_votes: numOrNull(row?.blank_votes ?? row?.sources?.read?.blank_votes)
+      valid_votes: numOrNull(read?.valid_votes ?? row?.valid_votes_extracted ?? killernay?.valid_votes),
+      invalid_votes: numOrNull(read?.invalid_votes ?? killernay?.invalid_votes),
+      blank_votes: numOrNull(read?.blank_votes ?? killernay?.blank_votes)
     };
   } else {
     src = row?.sources?.[sourceKey] || {};
@@ -1640,9 +1642,11 @@ function computeAnomaly100Rows(items) {
     const turnout100Rate = (eligibleRef && total100 !== null) ? (total100 / eligibleRef) * 100 : null;
     const turnout94Rate = (eligibleRef && total94 !== null) ? (total94 / eligibleRef) * 100 : null;
     const turnoutRateDiff = (turnout100Rate !== null && turnout94Rate !== null) ? (turnout100Rate - turnout94Rate) : null;
-    const valid100 = numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes);
+    const read = row?.sources?.read || {};
+    const killernay = row?.sources?.killernay || {};
+    const valid100 = numOrNull(read?.valid_votes ?? row?.valid_votes_extracted ?? killernay?.valid_votes);
     const valid94 = numOrNull(row?.sources?.ect?.valid_votes);
-    const invalid100 = numOrNull(row?.invalid_votes ?? row?.sources?.read?.invalid_votes);
+    const invalid100 = numOrNull(read?.invalid_votes ?? killernay?.invalid_votes);
     const invalid94 = numOrNull(row?.sources?.ect?.invalid_votes);
     const w100 = winnerInfo(row, 'latest');
     const w94 = winnerInfo(row, 'ect');
@@ -1699,6 +1703,12 @@ function computeAnomaly100Rows(items) {
     } else if (outsideCompletionPct !== null && outsideCompletionPct < outsideLowThreshold) {
       flags.push(`นอกเขต/นอกราชฯ ต่ำผิดปกติ (<${outsideLowThreshold}%)`);
       severity += 1;
+    }
+    if (numOrNull(read?.invalid_votes) === null && numOrNull(killernay?.invalid_votes) !== null) {
+      flags.push('ใช้ killernay เติมบัตรเสีย (100%)');
+    }
+    if (numOrNull(read?.blank_votes) === null && numOrNull(killernay?.blank_votes) !== null) {
+      flags.push('ใช้ killernay เติมบัตรไม่เลือก (100%)');
     }
 
     if (!flags.length) return;
