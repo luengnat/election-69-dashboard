@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./vendor/leaflet.css" />
-    <link rel="stylesheet" href="./styles.css?v=warm-k16-r2" />
+    <link rel="stylesheet" href="./styles.css?v=warm-k16-r3" />
   </head>
   <body>
     <div class="bg-orb orb-a"></div>
@@ -42,6 +42,7 @@
         <button class="tab" data-section="seat_summary">MP Seat Summary</button>
         <button class="tab" data-section="close_races">Close Races</button>
         <button class="tab" data-section="quality_confidence">Data Quality / Confidence</button>
+        <button class="tab" data-section="anomaly_100_94">ความผิดปกติ 100% vs 94%</button>
         <button class="tab" data-section="skew">บัตรเขย่ง</button>
       </section>
 
@@ -176,6 +177,33 @@
               </tr>
             </thead>
             <tbody id="qualityBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" data-section-pane="anomaly_100_94">
+        <div class="table-head">
+          <h2>ความผิดปกติระหว่างผล 100% กับผล 94% (ECT)</h2>
+          <span id="anomaly100Count">0 รายการ</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>จังหวัด / เขต</th>
+                <th>ประเภท</th>
+                <th>ผู้มาใช้สิทธิ 100%</th>
+                <th>ผู้มาใช้สิทธิ 94%</th>
+                <th>Δผู้มาใช้สิทธิ</th>
+                <th>บัตรเสีย 100% / 94%</th>
+                <th>Δบัตรเสีย</th>
+                <th>ผู้ชนะ 100% / 94%</th>
+                <th>Δคะแนนผู้ชนะ</th>
+                <th>นอกเขต/นอกราชฯ</th>
+                <th>ธงเตือน</th>
+              </tr>
+            </thead>
+            <tbody id="anomaly100Body"></tbody>
           </table>
         </div>
       </section>
@@ -367,6 +395,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16-r1.js?v=redv39-warning-ai-review"></script>
+    <script src="./app-k16-r1.js?v=redv40-anomaly-100v94"></script>
   </body>
 </html>

@@ -1,0 +1,3606 @@
+{
+  "generated_at": "2026-02-23",
+  "source": "poll-stations gid=1685314517",
+  "items": [
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 1,
+      "poll_station_count": 235,
+      "eligible_total": 130423,
+      "registered_outside_country": 1198,
+      "registered_outside_district": 2798,
+      "registered_outside_total": 3996
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 2,
+      "poll_station_count": 229,
+      "eligible_total": 136481,
+      "registered_outside_country": 1401,
+      "registered_outside_district": 3733,
+      "registered_outside_total": 5134
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 3,
+      "poll_station_count": 213,
+      "eligible_total": 122578,
+      "registered_outside_country": 1064,
+      "registered_outside_district": 2493,
+      "registered_outside_total": 3557
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 4,
+      "poll_station_count": 193,
+      "eligible_total": 129453,
+      "registered_outside_country": 1464,
+      "registered_outside_district": 2917,
+      "registered_outside_total": 4381
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 5,
+      "poll_station_count": 213,
+      "eligible_total": 134016,
+      "registered_outside_country": 1469,
+      "registered_outside_district": 4611,
+      "registered_outside_total": 6080
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 6,
+      "poll_station_count": 216,
+      "eligible_total": 143144,
+      "registered_outside_country": 1334,
+      "registered_outside_district": 4969,
+      "registered_outside_total": 6303
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 7,
+      "poll_station_count": 208,
+      "eligible_total": 138276,
+      "registered_outside_country": 1027,
+      "registered_outside_district": 4667,
+      "registered_outside_total": 5694
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 8,
+      "poll_station_count": 200,
+      "eligible_total": 144067,
+      "registered_outside_country": 1569,
+      "registered_outside_district": 5337,
+      "registered_outside_total": 6906
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 9,
+      "poll_station_count": 195,
+      "eligible_total": 144296,
+      "registered_outside_country": 1249,
+      "registered_outside_district": 5282,
+      "registered_outside_total": 6531
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 10,
+      "poll_station_count": 184,
+      "eligible_total": 138687,
+      "registered_outside_country": 850,
+      "registered_outside_district": 4523,
+      "registered_outside_total": 5373
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 11,
+      "poll_station_count": 191,
+      "eligible_total": 137319,
+      "registered_outside_country": 815,
+      "registered_outside_district": 4244,
+      "registered_outside_total": 5059
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 12,
+      "poll_station_count": 187,
+      "eligible_total": 143148,
+      "registered_outside_country": 1057,
+      "registered_outside_district": 4661,
+      "registered_outside_total": 5718
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 13,
+      "poll_station_count": 189,
+      "eligible_total": 131707,
+      "registered_outside_country": 1253,
+      "registered_outside_district": 4026,
+      "registered_outside_total": 5279
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 14,
+      "poll_station_count": 193,
+      "eligible_total": 140341,
+      "registered_outside_country": 1253,
+      "registered_outside_district": 4527,
+      "registered_outside_total": 5780
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 15,
+      "poll_station_count": 181,
+      "eligible_total": 127758,
+      "registered_outside_country": 895,
+      "registered_outside_district": 3841,
+      "registered_outside_total": 4736
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 16,
+      "poll_station_count": 175,
+      "eligible_total": 138261,
+      "registered_outside_country": 751,
+      "registered_outside_district": 4349,
+      "registered_outside_total": 5100
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 17,
+      "poll_station_count": 173,
+      "eligible_total": 120704,
+      "registered_outside_country": 349,
+      "registered_outside_district": 3079,
+      "registered_outside_total": 3428
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 18,
+      "poll_station_count": 166,
+      "eligible_total": 122857,
+      "registered_outside_country": 541,
+      "registered_outside_district": 3464,
+      "registered_outside_total": 4005
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 19,
+      "poll_station_count": 185,
+      "eligible_total": 135594,
+      "registered_outside_country": 1018,
+      "registered_outside_district": 4306,
+      "registered_outside_total": 5324
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 20,
+      "poll_station_count": 166,
+      "eligible_total": 126504,
+      "registered_outside_country": 544,
+      "registered_outside_district": 3278,
+      "registered_outside_total": 3822
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 21,
+      "poll_station_count": 179,
+      "eligible_total": 136677,
+      "registered_outside_country": 939,
+      "registered_outside_district": 3541,
+      "registered_outside_total": 4480
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 22,
+      "poll_station_count": 199,
+      "eligible_total": 133669,
+      "registered_outside_country": 1188,
+      "registered_outside_district": 3477,
+      "registered_outside_total": 4665
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 23,
+      "poll_station_count": 228,
+      "eligible_total": 144136,
+      "registered_outside_country": 1306,
+      "registered_outside_district": 4040,
+      "registered_outside_total": 5346
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 24,
+      "poll_station_count": 229,
+      "eligible_total": 142161,
+      "registered_outside_country": 1056,
+      "registered_outside_district": 3700,
+      "registered_outside_total": 4756
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 25,
+      "poll_station_count": 170,
+      "eligible_total": 126847,
+      "registered_outside_country": 688,
+      "registered_outside_district": 3033,
+      "registered_outside_total": 3721
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 26,
+      "poll_station_count": 204,
+      "eligible_total": 139473,
+      "registered_outside_country": 759,
+      "registered_outside_district": 3549,
+      "registered_outside_total": 4308
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 27,
+      "poll_station_count": 172,
+      "eligible_total": 134519,
+      "registered_outside_country": 559,
+      "registered_outside_district": 3648,
+      "registered_outside_total": 4207
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 28,
+      "poll_station_count": 187,
+      "eligible_total": 139847,
+      "registered_outside_country": 625,
+      "registered_outside_district": 3814,
+      "registered_outside_total": 4439
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 29,
+      "poll_station_count": 195,
+      "eligible_total": 144498,
+      "registered_outside_country": 775,
+      "registered_outside_district": 3624,
+      "registered_outside_total": 4399
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 30,
+      "poll_station_count": 190,
+      "eligible_total": 143904,
+      "registered_outside_country": 739,
+      "registered_outside_district": 3621,
+      "registered_outside_total": 4360
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 31,
+      "poll_station_count": 237,
+      "eligible_total": 143811,
+      "registered_outside_country": 1147,
+      "registered_outside_district": 3404,
+      "registered_outside_total": 4551
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 32,
+      "poll_station_count": 224,
+      "eligible_total": 139079,
+      "registered_outside_country": 790,
+      "registered_outside_district": 3162,
+      "registered_outside_total": 3952
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district_number": 33,
+      "poll_station_count": 225,
+      "eligible_total": 148223,
+      "registered_outside_country": 1114,
+      "registered_outside_district": 3972,
+      "registered_outside_total": 5086
+    },
+    {
+      "province": "จังหวัดกระบี่",
+      "district_number": 1,
+      "poll_station_count": 211,
+      "eligible_total": 128642,
+      "registered_outside_country": 223,
+      "registered_outside_district": 5327,
+      "registered_outside_total": 5550
+    },
+    {
+      "province": "จังหวัดกระบี่",
+      "district_number": 2,
+      "poll_station_count": 205,
+      "eligible_total": 117651,
+      "registered_outside_country": 81,
+      "registered_outside_district": 4407,
+      "registered_outside_total": 4488
+    },
+    {
+      "province": "จังหวัดกระบี่",
+      "district_number": 3,
+      "poll_station_count": 228,
+      "eligible_total": 124285,
+      "registered_outside_country": 84,
+      "registered_outside_district": 4746,
+      "registered_outside_total": 4830
+    },
+    {
+      "province": "จังหวัดกาญจนบุรี",
+      "district_number": 1,
+      "poll_station_count": 186,
+      "eligible_total": 133196,
+      "registered_outside_country": 245,
+      "registered_outside_district": 7702,
+      "registered_outside_total": 7947
+    },
+    {
+      "province": "จังหวัดกาญจนบุรี",
+      "district_number": 2,
+      "poll_station_count": 208,
+      "eligible_total": 131663,
+      "registered_outside_country": 175,
+      "registered_outside_district": 3542,
+      "registered_outside_total": 3717
+    },
+    {
+      "province": "จังหวัดกาญจนบุรี",
+      "district_number": 3,
+      "poll_station_count": 225,
+      "eligible_total": 136011,
+      "registered_outside_country": 189,
+      "registered_outside_district": 3409,
+      "registered_outside_total": 3598
+    },
+    {
+      "province": "จังหวัดกาญจนบุรี",
+      "district_number": 4,
+      "poll_station_count": 266,
+      "eligible_total": 133796,
+      "registered_outside_country": 90,
+      "registered_outside_district": 3300,
+      "registered_outside_total": 3390
+    },
+    {
+      "province": "จังหวัดกาญจนบุรี",
+      "district_number": 5,
+      "poll_station_count": 193,
+      "eligible_total": 122620,
+      "registered_outside_country": 120,
+      "registered_outside_district": 5835,
+      "registered_outside_total": 5955
+    },
+    {
+      "province": "จังหวัดกาฬสินธุ์",
+      "district_number": 1,
+      "poll_station_count": 280,
+      "eligible_total": 131448,
+      "registered_outside_country": 259,
+      "registered_outside_district": 6244,
+      "registered_outside_total": 6503
+    },
+    {
+      "province": "จังหวัดกาฬสินธุ์",
+      "district_number": 2,
+      "poll_station_count": 261,
+      "eligible_total": 126190,
+      "registered_outside_country": 231,
+      "registered_outside_district": 6318,
+      "registered_outside_total": 6549
+    },
+    {
+      "province": "จังหวัดกาฬสินธุ์",
+      "district_number": 3,
+      "poll_station_count": 263,
+      "eligible_total": 124254,
+      "registered_outside_country": 175,
+      "registered_outside_district": 5575,
+      "registered_outside_total": 5750
+    },
+    {
+      "province": "จังหวัดกาฬสินธุ์",
+      "district_number": 4,
+      "poll_station_count": 306,
+      "eligible_total": 136372,
+      "registered_outside_country": 194,
+      "registered_outside_district": 6262,
+      "registered_outside_total": 6456
+    },
+    {
+      "province": "จังหวัดกาฬสินธุ์",
+      "district_number": 5,
+      "poll_station_count": 288,
+      "eligible_total": 137298,
+      "registered_outside_country": 188,
+      "registered_outside_district": 7397,
+      "registered_outside_total": 7585
+    },
+    {
+      "province": "จังหวัดกาฬสินธุ์",
+      "district_number": 6,
+      "poll_station_count": 290,
+      "eligible_total": 135642,
+      "registered_outside_country": 206,
+      "registered_outside_district": 9053,
+      "registered_outside_total": 9259
+    },
+    {
+      "province": "จังหวัดกำแพงเพชร",
+      "district_number": 1,
+      "poll_station_count": 274,
+      "eligible_total": 145121,
+      "registered_outside_country": 271,
+      "registered_outside_district": 7214,
+      "registered_outside_total": 7485
+    },
+    {
+      "province": "จังหวัดกำแพงเพชร",
+      "district_number": 2,
+      "poll_station_count": 318,
+      "eligible_total": 147920,
+      "registered_outside_country": 169,
+      "registered_outside_district": 6160,
+      "registered_outside_total": 6329
+    },
+    {
+      "province": "จังหวัดกำแพงเพชร",
+      "district_number": 3,
+      "poll_station_count": 281,
+      "eligible_total": 137789,
+      "registered_outside_country": 258,
+      "registered_outside_district": 7320,
+      "registered_outside_total": 7578
+    },
+    {
+      "province": "จังหวัดกำแพงเพชร",
+      "district_number": 4,
+      "poll_station_count": 299,
+      "eligible_total": 138876,
+      "registered_outside_country": 183,
+      "registered_outside_district": 6928,
+      "registered_outside_total": 7111
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 1,
+      "poll_station_count": 175,
+      "eligible_total": 128250,
+      "registered_outside_country": 800,
+      "registered_outside_district": 7161,
+      "registered_outside_total": 7961
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 2,
+      "poll_station_count": 175,
+      "eligible_total": 138811,
+      "registered_outside_country": 607,
+      "registered_outside_district": 7142,
+      "registered_outside_total": 7749
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 3,
+      "poll_station_count": 262,
+      "eligible_total": 132197,
+      "registered_outside_country": 302,
+      "registered_outside_district": 5583,
+      "registered_outside_total": 5885
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 4,
+      "poll_station_count": 252,
+      "eligible_total": 130881,
+      "registered_outside_country": 324,
+      "registered_outside_district": 5020,
+      "registered_outside_total": 5344
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 5,
+      "poll_station_count": 262,
+      "eligible_total": 131801,
+      "registered_outside_country": 289,
+      "registered_outside_district": 6493,
+      "registered_outside_total": 6782
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 6,
+      "poll_station_count": 253,
+      "eligible_total": 129906,
+      "registered_outside_country": 355,
+      "registered_outside_district": 5611,
+      "registered_outside_total": 5966
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 7,
+      "poll_station_count": 273,
+      "eligible_total": 132362,
+      "registered_outside_country": 263,
+      "registered_outside_district": 5282,
+      "registered_outside_total": 5545
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 8,
+      "poll_station_count": 253,
+      "eligible_total": 139634,
+      "registered_outside_country": 341,
+      "registered_outside_district": 5652,
+      "registered_outside_total": 5993
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 9,
+      "poll_station_count": 281,
+      "eligible_total": 127326,
+      "registered_outside_country": 287,
+      "registered_outside_district": 6782,
+      "registered_outside_total": 7069
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 10,
+      "poll_station_count": 305,
+      "eligible_total": 135705,
+      "registered_outside_country": 300,
+      "registered_outside_district": 7009,
+      "registered_outside_total": 7309
+    },
+    {
+      "province": "จังหวัดขอนแก่น",
+      "district_number": 11,
+      "poll_station_count": 263,
+      "eligible_total": 131498,
+      "registered_outside_country": 300,
+      "registered_outside_district": 5841,
+      "registered_outside_total": 6141
+    },
+    {
+      "province": "จังหวัดจันทบุรี",
+      "district_number": 1,
+      "poll_station_count": 291,
+      "eligible_total": 148028,
+      "registered_outside_country": 306,
+      "registered_outside_district": 5818,
+      "registered_outside_total": 6124
+    },
+    {
+      "province": "จังหวัดจันทบุรี",
+      "district_number": 2,
+      "poll_station_count": 284,
+      "eligible_total": 142477,
+      "registered_outside_country": 134,
+      "registered_outside_district": 3548,
+      "registered_outside_total": 3682
+    },
+    {
+      "province": "จังหวัดจันทบุรี",
+      "district_number": 3,
+      "poll_station_count": 292,
+      "eligible_total": 142287,
+      "registered_outside_country": 164,
+      "registered_outside_district": 4366,
+      "registered_outside_total": 4530
+    },
+    {
+      "province": "จังหวัดฉะเชิงเทรา",
+      "district_number": 1,
+      "poll_station_count": 253,
+      "eligible_total": 146573,
+      "registered_outside_country": 260,
+      "registered_outside_district": 3280,
+      "registered_outside_total": 3540
+    },
+    {
+      "province": "จังหวัดฉะเชิงเทรา",
+      "district_number": 2,
+      "poll_station_count": 274,
+      "eligible_total": 145059,
+      "registered_outside_country": 200,
+      "registered_outside_district": 2632,
+      "registered_outside_total": 2832
+    },
+    {
+      "province": "จังหวัดฉะเชิงเทรา",
+      "district_number": 3,
+      "poll_station_count": 255,
+      "eligible_total": 148423,
+      "registered_outside_country": 198,
+      "registered_outside_district": 3534,
+      "registered_outside_total": 3732
+    },
+    {
+      "province": "จังหวัดฉะเชิงเทรา",
+      "district_number": 4,
+      "poll_station_count": 253,
+      "eligible_total": 151927,
+      "registered_outside_country": 202,
+      "registered_outside_district": 2787,
+      "registered_outside_total": 2989
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 1,
+      "poll_station_count": 168,
+      "eligible_total": 133544,
+      "registered_outside_country": 547,
+      "registered_outside_district": 3681,
+      "registered_outside_total": 4228
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 2,
+      "poll_station_count": 129,
+      "eligible_total": 113941,
+      "registered_outside_country": 338,
+      "registered_outside_district": 3542,
+      "registered_outside_total": 3880
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 3,
+      "poll_station_count": 175,
+      "eligible_total": 127184,
+      "registered_outside_country": 184,
+      "registered_outside_district": 2553,
+      "registered_outside_total": 2737
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 4,
+      "poll_station_count": 179,
+      "eligible_total": 120269,
+      "registered_outside_country": 189,
+      "registered_outside_district": 2299,
+      "registered_outside_total": 2488
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 5,
+      "poll_station_count": 213,
+      "eligible_total": 134984,
+      "registered_outside_country": 204,
+      "registered_outside_district": 3650,
+      "registered_outside_total": 3854
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 6,
+      "poll_station_count": 173,
+      "eligible_total": 138570,
+      "registered_outside_country": 536,
+      "registered_outside_district": 3456,
+      "registered_outside_total": 3992
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 7,
+      "poll_station_count": 159,
+      "eligible_total": 127875,
+      "registered_outside_country": 283,
+      "registered_outside_district": 2748,
+      "registered_outside_total": 3031
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 8,
+      "poll_station_count": 177,
+      "eligible_total": 140456,
+      "registered_outside_country": 509,
+      "registered_outside_district": 3160,
+      "registered_outside_total": 3669
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 9,
+      "poll_station_count": 161,
+      "eligible_total": 122755,
+      "registered_outside_country": 718,
+      "registered_outside_district": 3207,
+      "registered_outside_total": 3925
+    },
+    {
+      "province": "จังหวัดชลบุรี",
+      "district_number": 10,
+      "poll_station_count": 173,
+      "eligible_total": 134689,
+      "registered_outside_country": 467,
+      "registered_outside_district": 5578,
+      "registered_outside_total": 6045
+    },
+    {
+      "province": "จังหวัดชัยนาท",
+      "district_number": 1,
+      "poll_station_count": 250,
+      "eligible_total": 131155,
+      "registered_outside_country": 175,
+      "registered_outside_district": 5165,
+      "registered_outside_total": 5340
+    },
+    {
+      "province": "จังหวัดชัยนาท",
+      "district_number": 2,
+      "poll_station_count": 258,
+      "eligible_total": 130424,
+      "registered_outside_country": 117,
+      "registered_outside_district": 4791,
+      "registered_outside_total": 4908
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 1,
+      "poll_station_count": 259,
+      "eligible_total": 129441,
+      "registered_outside_country": 336,
+      "registered_outside_district": 6789,
+      "registered_outside_total": 7125
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 2,
+      "poll_station_count": 341,
+      "eligible_total": 133561,
+      "registered_outside_country": 223,
+      "registered_outside_district": 6224,
+      "registered_outside_total": 6447
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 3,
+      "poll_station_count": 304,
+      "eligible_total": 127154,
+      "registered_outside_country": 207,
+      "registered_outside_district": 4981,
+      "registered_outside_total": 5188
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 4,
+      "poll_station_count": 228,
+      "eligible_total": 121184,
+      "registered_outside_country": 190,
+      "registered_outside_district": 5016,
+      "registered_outside_total": 5206
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 5,
+      "poll_station_count": 264,
+      "eligible_total": 132089,
+      "registered_outside_country": 220,
+      "registered_outside_district": 6229,
+      "registered_outside_total": 6449
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 6,
+      "poll_station_count": 268,
+      "eligible_total": 134526,
+      "registered_outside_country": 326,
+      "registered_outside_district": 6229,
+      "registered_outside_total": 6555
+    },
+    {
+      "province": "จังหวัดชัยภูมิ",
+      "district_number": 7,
+      "poll_station_count": 283,
+      "eligible_total": 126889,
+      "registered_outside_country": 283,
+      "registered_outside_district": 5915,
+      "registered_outside_total": 6198
+    },
+    {
+      "province": "จังหวัดชุมพร",
+      "district_number": 1,
+      "poll_station_count": 259,
+      "eligible_total": 137056,
+      "registered_outside_country": 154,
+      "registered_outside_district": 7134,
+      "registered_outside_total": 7288
+    },
+    {
+      "province": "จังหวัดชุมพร",
+      "district_number": 2,
+      "poll_station_count": 269,
+      "eligible_total": 136820,
+      "registered_outside_country": 127,
+      "registered_outside_district": 6007,
+      "registered_outside_total": 6134
+    },
+    {
+      "province": "จังหวัดชุมพร",
+      "district_number": 3,
+      "poll_station_count": 283,
+      "eligible_total": 135755,
+      "registered_outside_country": 116,
+      "registered_outside_district": 5730,
+      "registered_outside_total": 5846
+    },
+    {
+      "province": "จังหวัดตรัง",
+      "district_number": 1,
+      "poll_station_count": 225,
+      "eligible_total": 124216,
+      "registered_outside_country": 253,
+      "registered_outside_district": 8464,
+      "registered_outside_total": 8717
+    },
+    {
+      "province": "จังหวัดตรัง",
+      "district_number": 2,
+      "poll_station_count": 270,
+      "eligible_total": 132487,
+      "registered_outside_country": 133,
+      "registered_outside_district": 6752,
+      "registered_outside_total": 6885
+    },
+    {
+      "province": "จังหวัดตรัง",
+      "district_number": 3,
+      "poll_station_count": 222,
+      "eligible_total": 125342,
+      "registered_outside_country": 105,
+      "registered_outside_district": 6649,
+      "registered_outside_total": 6754
+    },
+    {
+      "province": "จังหวัดตรัง",
+      "district_number": 4,
+      "poll_station_count": 210,
+      "eligible_total": 128358,
+      "registered_outside_country": 121,
+      "registered_outside_district": 6738,
+      "registered_outside_total": 6859
+    },
+    {
+      "province": "จังหวัดตราด",
+      "district_number": 1,
+      "poll_station_count": 343,
+      "eligible_total": 176920,
+      "registered_outside_country": 232,
+      "registered_outside_district": 7349,
+      "registered_outside_total": 7581
+    },
+    {
+      "province": "จังหวัดตาก",
+      "district_number": 1,
+      "poll_station_count": 270,
+      "eligible_total": 150617,
+      "registered_outside_country": 327,
+      "registered_outside_district": 8806,
+      "registered_outside_total": 9133
+    },
+    {
+      "province": "จังหวัดตาก",
+      "district_number": 2,
+      "poll_station_count": 205,
+      "eligible_total": 129817,
+      "registered_outside_country": 249,
+      "registered_outside_district": 7088,
+      "registered_outside_total": 7337
+    },
+    {
+      "province": "จังหวัดตาก",
+      "district_number": 3,
+      "poll_station_count": 248,
+      "eligible_total": 134880,
+      "registered_outside_country": 177,
+      "registered_outside_district": 6263,
+      "registered_outside_total": 6440
+    },
+    {
+      "province": "จังหวัดนครนายก",
+      "district_number": 1,
+      "poll_station_count": 206,
+      "eligible_total": 104054,
+      "registered_outside_country": 197,
+      "registered_outside_district": 3716,
+      "registered_outside_total": 3913
+    },
+    {
+      "province": "จังหวัดนครนายก",
+      "district_number": 2,
+      "poll_station_count": 251,
+      "eligible_total": 108945,
+      "registered_outside_country": 121,
+      "registered_outside_district": 3230,
+      "registered_outside_total": 3351
+    },
+    {
+      "province": "จังหวัดนครปฐม",
+      "district_number": 1,
+      "poll_station_count": 213,
+      "eligible_total": 129731,
+      "registered_outside_country": 247,
+      "registered_outside_district": 2704,
+      "registered_outside_total": 2951
+    },
+    {
+      "province": "จังหวัดนครปฐม",
+      "district_number": 2,
+      "poll_station_count": 205,
+      "eligible_total": 120935,
+      "registered_outside_country": 358,
+      "registered_outside_district": 3202,
+      "registered_outside_total": 3560
+    },
+    {
+      "province": "จังหวัดนครปฐม",
+      "district_number": 3,
+      "poll_station_count": 229,
+      "eligible_total": 119352,
+      "registered_outside_country": 138,
+      "registered_outside_district": 2235,
+      "registered_outside_total": 2373
+    },
+    {
+      "province": "จังหวัดนครปฐม",
+      "district_number": 4,
+      "poll_station_count": 246,
+      "eligible_total": 128771,
+      "registered_outside_country": 131,
+      "registered_outside_district": 2283,
+      "registered_outside_total": 2414
+    },
+    {
+      "province": "จังหวัดนครปฐม",
+      "district_number": 5,
+      "poll_station_count": 196,
+      "eligible_total": 131195,
+      "registered_outside_country": 252,
+      "registered_outside_district": 3476,
+      "registered_outside_total": 3728
+    },
+    {
+      "province": "จังหวัดนครปฐม",
+      "district_number": 6,
+      "poll_station_count": 186,
+      "eligible_total": 126887,
+      "registered_outside_country": 364,
+      "registered_outside_district": 3716,
+      "registered_outside_total": 4080
+    },
+    {
+      "province": "จังหวัดนครพนม",
+      "district_number": 1,
+      "poll_station_count": 285,
+      "eligible_total": 143587,
+      "registered_outside_country": 308,
+      "registered_outside_district": 6073,
+      "registered_outside_total": 6381
+    },
+    {
+      "province": "จังหวัดนครพนม",
+      "district_number": 2,
+      "poll_station_count": 292,
+      "eligible_total": 142901,
+      "registered_outside_country": 417,
+      "registered_outside_district": 7215,
+      "registered_outside_total": 7632
+    },
+    {
+      "province": "จังหวัดนครพนม",
+      "district_number": 3,
+      "poll_station_count": 289,
+      "eligible_total": 142411,
+      "registered_outside_country": 451,
+      "registered_outside_district": 7049,
+      "registered_outside_total": 7500
+    },
+    {
+      "province": "จังหวัดนครพนม",
+      "district_number": 4,
+      "poll_station_count": 313,
+      "eligible_total": 144796,
+      "registered_outside_country": 330,
+      "registered_outside_district": 6379,
+      "registered_outside_total": 6709
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 1,
+      "poll_station_count": 236,
+      "eligible_total": 128667,
+      "registered_outside_country": 612,
+      "registered_outside_district": 7990,
+      "registered_outside_total": 8602
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 2,
+      "poll_station_count": 213,
+      "eligible_total": 141222,
+      "registered_outside_country": 520,
+      "registered_outside_district": 7079,
+      "registered_outside_total": 7599
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 3,
+      "poll_station_count": 230,
+      "eligible_total": 136549,
+      "registered_outside_country": 484,
+      "registered_outside_district": 6118,
+      "registered_outside_total": 6602
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 4,
+      "poll_station_count": 302,
+      "eligible_total": 131758,
+      "registered_outside_country": 235,
+      "registered_outside_district": 4752,
+      "registered_outside_total": 4987
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 5,
+      "poll_station_count": 292,
+      "eligible_total": 133508,
+      "registered_outside_country": 244,
+      "registered_outside_district": 5003,
+      "registered_outside_total": 5247
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 6,
+      "poll_station_count": 303,
+      "eligible_total": 133507,
+      "registered_outside_country": 385,
+      "registered_outside_district": 6492,
+      "registered_outside_total": 6877
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 7,
+      "poll_station_count": 326,
+      "eligible_total": 131810,
+      "registered_outside_country": 426,
+      "registered_outside_district": 6613,
+      "registered_outside_total": 7039
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 8,
+      "poll_station_count": 289,
+      "eligible_total": 133816,
+      "registered_outside_country": 282,
+      "registered_outside_district": 5973,
+      "registered_outside_total": 6255
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 9,
+      "poll_station_count": 296,
+      "eligible_total": 135762,
+      "registered_outside_country": 389,
+      "registered_outside_district": 5538,
+      "registered_outside_total": 5927
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 10,
+      "poll_station_count": 299,
+      "eligible_total": 138144,
+      "registered_outside_country": 251,
+      "registered_outside_district": 4167,
+      "registered_outside_total": 4418
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 11,
+      "poll_station_count": 268,
+      "eligible_total": 132460,
+      "registered_outside_country": 275,
+      "registered_outside_district": 4452,
+      "registered_outside_total": 4727
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 12,
+      "poll_station_count": 323,
+      "eligible_total": 132505,
+      "registered_outside_country": 247,
+      "registered_outside_district": 4960,
+      "registered_outside_total": 5207
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 13,
+      "poll_station_count": 281,
+      "eligible_total": 130106,
+      "registered_outside_country": 218,
+      "registered_outside_district": 4136,
+      "registered_outside_total": 4354
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 14,
+      "poll_station_count": 236,
+      "eligible_total": 130825,
+      "registered_outside_country": 276,
+      "registered_outside_district": 4496,
+      "registered_outside_total": 4772
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 15,
+      "poll_station_count": 326,
+      "eligible_total": 138615,
+      "registered_outside_country": 201,
+      "registered_outside_district": 5172,
+      "registered_outside_total": 5373
+    },
+    {
+      "province": "จังหวัดนครราชสีมา",
+      "district_number": 16,
+      "poll_station_count": 336,
+      "eligible_total": 136001,
+      "registered_outside_country": 327,
+      "registered_outside_district": 6085,
+      "registered_outside_total": 6412
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 1,
+      "poll_station_count": 219,
+      "eligible_total": 132977,
+      "registered_outside_country": 291,
+      "registered_outside_district": 8371,
+      "registered_outside_total": 8662
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 2,
+      "poll_station_count": 259,
+      "eligible_total": 141830,
+      "registered_outside_country": 135,
+      "registered_outside_district": 7329,
+      "registered_outside_total": 7464
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 3,
+      "poll_station_count": 319,
+      "eligible_total": 133623,
+      "registered_outside_country": 109,
+      "registered_outside_district": 7783,
+      "registered_outside_total": 7892
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 4,
+      "poll_station_count": 228,
+      "eligible_total": 135857,
+      "registered_outside_country": 101,
+      "registered_outside_district": 6945,
+      "registered_outside_total": 7046
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 5,
+      "poll_station_count": 233,
+      "eligible_total": 140284,
+      "registered_outside_country": 169,
+      "registered_outside_district": 7350,
+      "registered_outside_total": 7519
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 6,
+      "poll_station_count": 246,
+      "eligible_total": 134534,
+      "registered_outside_country": 78,
+      "registered_outside_district": 5705,
+      "registered_outside_total": 5783
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 7,
+      "poll_station_count": 258,
+      "eligible_total": 136717,
+      "registered_outside_country": 120,
+      "registered_outside_district": 6446,
+      "registered_outside_total": 6566
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 8,
+      "poll_station_count": 226,
+      "eligible_total": 136225,
+      "registered_outside_country": 181,
+      "registered_outside_district": 6115,
+      "registered_outside_total": 6296
+    },
+    {
+      "province": "จังหวัดนครศรีธรรมราช",
+      "district_number": 9,
+      "poll_station_count": 258,
+      "eligible_total": 139759,
+      "registered_outside_country": 151,
+      "registered_outside_district": 6219,
+      "registered_outside_total": 6370
+    },
+    {
+      "province": "จังหวัดนครสวรรค์",
+      "district_number": 1,
+      "poll_station_count": 229,
+      "eligible_total": 138721,
+      "registered_outside_country": 414,
+      "registered_outside_district": 7588,
+      "registered_outside_total": 8002
+    },
+    {
+      "province": "จังหวัดนครสวรรค์",
+      "district_number": 2,
+      "poll_station_count": 270,
+      "eligible_total": 137003,
+      "registered_outside_country": 198,
+      "registered_outside_district": 5668,
+      "registered_outside_total": 5866
+    },
+    {
+      "province": "จังหวัดนครสวรรค์",
+      "district_number": 3,
+      "poll_station_count": 306,
+      "eligible_total": 146633,
+      "registered_outside_country": 175,
+      "registered_outside_district": 6414,
+      "registered_outside_total": 6589
+    },
+    {
+      "province": "จังหวัดนครสวรรค์",
+      "district_number": 4,
+      "poll_station_count": 280,
+      "eligible_total": 139645,
+      "registered_outside_country": 134,
+      "registered_outside_district": 6531,
+      "registered_outside_total": 6665
+    },
+    {
+      "province": "จังหวัดนครสวรรค์",
+      "district_number": 5,
+      "poll_station_count": 288,
+      "eligible_total": 139426,
+      "registered_outside_country": 182,
+      "registered_outside_district": 5783,
+      "registered_outside_total": 5965
+    },
+    {
+      "province": "จังหวัดนครสวรรค์",
+      "district_number": 6,
+      "poll_station_count": 258,
+      "eligible_total": 136823,
+      "registered_outside_country": 162,
+      "registered_outside_district": 6188,
+      "registered_outside_total": 6350
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 1,
+      "poll_station_count": 172,
+      "eligible_total": 140032,
+      "registered_outside_country": 1054,
+      "registered_outside_district": 4074,
+      "registered_outside_total": 5128
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 2,
+      "poll_station_count": 171,
+      "eligible_total": 124608,
+      "registered_outside_country": 762,
+      "registered_outside_district": 3363,
+      "registered_outside_total": 4125
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 3,
+      "poll_station_count": 201,
+      "eligible_total": 140981,
+      "registered_outside_country": 724,
+      "registered_outside_district": 4244,
+      "registered_outside_total": 4968
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 4,
+      "poll_station_count": 173,
+      "eligible_total": 127356,
+      "registered_outside_country": 872,
+      "registered_outside_district": 4036,
+      "registered_outside_total": 4908
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 5,
+      "poll_station_count": 194,
+      "eligible_total": 137859,
+      "registered_outside_country": 760,
+      "registered_outside_district": 3659,
+      "registered_outside_total": 4419
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 6,
+      "poll_station_count": 209,
+      "eligible_total": 144086,
+      "registered_outside_country": 615,
+      "registered_outside_district": 4297,
+      "registered_outside_total": 4912
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 7,
+      "poll_station_count": 206,
+      "eligible_total": 142478,
+      "registered_outside_country": 494,
+      "registered_outside_district": 4139,
+      "registered_outside_total": 4633
+    },
+    {
+      "province": "จังหวัดนนทบุรี",
+      "district_number": 8,
+      "poll_station_count": 201,
+      "eligible_total": 136983,
+      "registered_outside_country": 511,
+      "registered_outside_district": 3835,
+      "registered_outside_total": 4346
+    },
+    {
+      "province": "จังหวัดนราธิวาส",
+      "district_number": 1,
+      "poll_station_count": 224,
+      "eligible_total": 129176,
+      "registered_outside_country": 268,
+      "registered_outside_district": 5969,
+      "registered_outside_total": 6237
+    },
+    {
+      "province": "จังหวัดนราธิวาส",
+      "district_number": 2,
+      "poll_station_count": 197,
+      "eligible_total": 113221,
+      "registered_outside_country": 211,
+      "registered_outside_district": 4399,
+      "registered_outside_total": 4610
+    },
+    {
+      "province": "จังหวัดนราธิวาส",
+      "district_number": 3,
+      "poll_station_count": 203,
+      "eligible_total": 112323,
+      "registered_outside_country": 181,
+      "registered_outside_district": 4366,
+      "registered_outside_total": 4547
+    },
+    {
+      "province": "จังหวัดนราธิวาส",
+      "district_number": 4,
+      "poll_station_count": 213,
+      "eligible_total": 116961,
+      "registered_outside_country": 178,
+      "registered_outside_district": 5274,
+      "registered_outside_total": 5452
+    },
+    {
+      "province": "จังหวัดนราธิวาส",
+      "district_number": 5,
+      "poll_station_count": 229,
+      "eligible_total": 125363,
+      "registered_outside_country": 175,
+      "registered_outside_district": 5228,
+      "registered_outside_total": 5403
+    },
+    {
+      "province": "จังหวัดน่าน",
+      "district_number": 1,
+      "poll_station_count": 296,
+      "eligible_total": 139889,
+      "registered_outside_country": 348,
+      "registered_outside_district": 12398,
+      "registered_outside_total": 12746
+    },
+    {
+      "province": "จังหวัดน่าน",
+      "district_number": 2,
+      "poll_station_count": 353,
+      "eligible_total": 129646,
+      "registered_outside_country": 211,
+      "registered_outside_district": 10045,
+      "registered_outside_total": 10256
+    },
+    {
+      "province": "จังหวัดน่าน",
+      "district_number": 3,
+      "poll_station_count": 313,
+      "eligible_total": 119741,
+      "registered_outside_country": 247,
+      "registered_outside_district": 9314,
+      "registered_outside_total": 9561
+    },
+    {
+      "province": "จังหวัดบึงกาฬ",
+      "district_number": 1,
+      "poll_station_count": 214,
+      "eligible_total": 104792,
+      "registered_outside_country": 216,
+      "registered_outside_district": 4757,
+      "registered_outside_total": 4973
+    },
+    {
+      "province": "จังหวัดบึงกาฬ",
+      "district_number": 2,
+      "poll_station_count": 263,
+      "eligible_total": 109412,
+      "registered_outside_country": 244,
+      "registered_outside_district": 4822,
+      "registered_outside_total": 5066
+    },
+    {
+      "province": "จังหวัดบึงกาฬ",
+      "district_number": 3,
+      "poll_station_count": 255,
+      "eligible_total": 118398,
+      "registered_outside_country": 302,
+      "registered_outside_district": 5348,
+      "registered_outside_total": 5650
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 1,
+      "poll_station_count": 271,
+      "eligible_total": 125325,
+      "registered_outside_country": 349,
+      "registered_outside_district": 6345,
+      "registered_outside_total": 6694
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 2,
+      "poll_station_count": 273,
+      "eligible_total": 127640,
+      "registered_outside_country": 282,
+      "registered_outside_district": 6484,
+      "registered_outside_total": 6766
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 3,
+      "poll_station_count": 277,
+      "eligible_total": 125637,
+      "registered_outside_country": 271,
+      "registered_outside_district": 6615,
+      "registered_outside_total": 6886
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 4,
+      "poll_station_count": 267,
+      "eligible_total": 121519,
+      "registered_outside_country": 206,
+      "registered_outside_district": 6236,
+      "registered_outside_total": 6442
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 5,
+      "poll_station_count": 315,
+      "eligible_total": 131438,
+      "registered_outside_country": 374,
+      "registered_outside_district": 6476,
+      "registered_outside_total": 6850
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 6,
+      "poll_station_count": 306,
+      "eligible_total": 130776,
+      "registered_outside_country": 274,
+      "registered_outside_district": 6568,
+      "registered_outside_total": 6842
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 7,
+      "poll_station_count": 278,
+      "eligible_total": 123023,
+      "registered_outside_country": 257,
+      "registered_outside_district": 5801,
+      "registered_outside_total": 6058
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 8,
+      "poll_station_count": 276,
+      "eligible_total": 126975,
+      "registered_outside_country": 231,
+      "registered_outside_district": 5991,
+      "registered_outside_total": 6222
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 9,
+      "poll_station_count": 248,
+      "eligible_total": 127988,
+      "registered_outside_country": 268,
+      "registered_outside_district": 6154,
+      "registered_outside_total": 6422
+    },
+    {
+      "province": "จังหวัดบุรีรัมย์",
+      "district_number": 10,
+      "poll_station_count": 219,
+      "eligible_total": 121301,
+      "registered_outside_country": 263,
+      "registered_outside_district": 6568,
+      "registered_outside_total": 6831
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 1,
+      "poll_station_count": 198,
+      "eligible_total": 130700,
+      "registered_outside_country": 358,
+      "registered_outside_district": 2822,
+      "registered_outside_total": 3180
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 2,
+      "poll_station_count": 191,
+      "eligible_total": 128901,
+      "registered_outside_country": 357,
+      "registered_outside_district": 2796,
+      "registered_outside_total": 3153
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 3,
+      "poll_station_count": 176,
+      "eligible_total": 131743,
+      "registered_outside_country": 538,
+      "registered_outside_district": 4435,
+      "registered_outside_total": 4973
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 4,
+      "poll_station_count": 174,
+      "eligible_total": 132037,
+      "registered_outside_country": 601,
+      "registered_outside_district": 3687,
+      "registered_outside_total": 4288
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 5,
+      "poll_station_count": 208,
+      "eligible_total": 122740,
+      "registered_outside_country": 681,
+      "registered_outside_district": 3652,
+      "registered_outside_total": 4333
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 6,
+      "poll_station_count": 149,
+      "eligible_total": 122393,
+      "registered_outside_country": 566,
+      "registered_outside_district": 3928,
+      "registered_outside_total": 4494
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 7,
+      "poll_station_count": 182,
+      "eligible_total": 121843,
+      "registered_outside_country": 308,
+      "registered_outside_district": 2985,
+      "registered_outside_total": 3293
+    },
+    {
+      "province": "จังหวัดปทุมธานี",
+      "district_number": 8,
+      "poll_station_count": 183,
+      "eligible_total": 122403,
+      "registered_outside_country": 271,
+      "registered_outside_district": 3743,
+      "registered_outside_total": 4014
+    },
+    {
+      "province": "จังหวัดประจวบคีรีขันธ์",
+      "district_number": 1,
+      "poll_station_count": 253,
+      "eligible_total": 152840,
+      "registered_outside_country": 206,
+      "registered_outside_district": 5831,
+      "registered_outside_total": 6037
+    },
+    {
+      "province": "จังหวัดประจวบคีรีขันธ์",
+      "district_number": 2,
+      "poll_station_count": 223,
+      "eligible_total": 146369,
+      "registered_outside_country": 449,
+      "registered_outside_district": 5167,
+      "registered_outside_total": 5616
+    },
+    {
+      "province": "จังหวัดประจวบคีรีขันธ์",
+      "district_number": 3,
+      "poll_station_count": 253,
+      "eligible_total": 138975,
+      "registered_outside_country": 144,
+      "registered_outside_district": 5876,
+      "registered_outside_total": 6020
+    },
+    {
+      "province": "จังหวัดปราจีนบุรี",
+      "district_number": 1,
+      "poll_station_count": 237,
+      "eligible_total": 129687,
+      "registered_outside_country": 174,
+      "registered_outside_district": 4779,
+      "registered_outside_total": 4953
+    },
+    {
+      "province": "จังหวัดปราจีนบุรี",
+      "district_number": 2,
+      "poll_station_count": 292,
+      "eligible_total": 141803,
+      "registered_outside_country": 199,
+      "registered_outside_district": 3759,
+      "registered_outside_total": 3958
+    },
+    {
+      "province": "จังหวัดปราจีนบุรี",
+      "district_number": 3,
+      "poll_station_count": 258,
+      "eligible_total": 132040,
+      "registered_outside_country": 152,
+      "registered_outside_district": 3697,
+      "registered_outside_total": 3849
+    },
+    {
+      "province": "จังหวัดปัตตานี",
+      "district_number": 1,
+      "poll_station_count": 155,
+      "eligible_total": 95605,
+      "registered_outside_country": 272,
+      "registered_outside_district": 4793,
+      "registered_outside_total": 5065
+    },
+    {
+      "province": "จังหวัดปัตตานี",
+      "district_number": 2,
+      "poll_station_count": 211,
+      "eligible_total": 110681,
+      "registered_outside_country": 190,
+      "registered_outside_district": 3995,
+      "registered_outside_total": 4185
+    },
+    {
+      "province": "จังหวัดปัตตานี",
+      "district_number": 3,
+      "poll_station_count": 169,
+      "eligible_total": 99188,
+      "registered_outside_country": 214,
+      "registered_outside_district": 2662,
+      "registered_outside_total": 2876
+    },
+    {
+      "province": "จังหวัดปัตตานี",
+      "district_number": 4,
+      "poll_station_count": 220,
+      "eligible_total": 110256,
+      "registered_outside_country": 229,
+      "registered_outside_district": 3869,
+      "registered_outside_total": 4098
+    },
+    {
+      "province": "จังหวัดปัตตานี",
+      "district_number": 5,
+      "poll_station_count": 207,
+      "eligible_total": 109944,
+      "registered_outside_country": 255,
+      "registered_outside_district": 2978,
+      "registered_outside_total": 3233
+    },
+    {
+      "province": "จังหวัดพระนครศรีอยุธยา",
+      "district_number": 1,
+      "poll_station_count": 235,
+      "eligible_total": 140188,
+      "registered_outside_country": 276,
+      "registered_outside_district": 3068,
+      "registered_outside_total": 3344
+    },
+    {
+      "province": "จังหวัดพระนครศรีอยุธยา",
+      "district_number": 2,
+      "poll_station_count": 230,
+      "eligible_total": 128589,
+      "registered_outside_country": 115,
+      "registered_outside_district": 2765,
+      "registered_outside_total": 2880
+    },
+    {
+      "province": "จังหวัดพระนครศรีอยุธยา",
+      "district_number": 3,
+      "poll_station_count": 213,
+      "eligible_total": 136493,
+      "registered_outside_country": 197,
+      "registered_outside_district": 2740,
+      "registered_outside_total": 2937
+    },
+    {
+      "province": "จังหวัดพระนครศรีอยุธยา",
+      "district_number": 4,
+      "poll_station_count": 227,
+      "eligible_total": 139523,
+      "registered_outside_country": 240,
+      "registered_outside_district": 2879,
+      "registered_outside_total": 3119
+    },
+    {
+      "province": "จังหวัดพระนครศรีอยุธยา",
+      "district_number": 5,
+      "poll_station_count": 237,
+      "eligible_total": 133055,
+      "registered_outside_country": 124,
+      "registered_outside_district": 2619,
+      "registered_outside_total": 2743
+    },
+    {
+      "province": "จังหวัดพะเยา",
+      "district_number": 1,
+      "poll_station_count": 277,
+      "eligible_total": 124910,
+      "registered_outside_country": 366,
+      "registered_outside_district": 9599,
+      "registered_outside_total": 9965
+    },
+    {
+      "province": "จังหวัดพะเยา",
+      "district_number": 2,
+      "poll_station_count": 290,
+      "eligible_total": 127913,
+      "registered_outside_country": 480,
+      "registered_outside_district": 9543,
+      "registered_outside_total": 10023
+    },
+    {
+      "province": "จังหวัดพะเยา",
+      "district_number": 3,
+      "poll_station_count": 313,
+      "eligible_total": 130330,
+      "registered_outside_country": 359,
+      "registered_outside_district": 9222,
+      "registered_outside_total": 9581
+    },
+    {
+      "province": "จังหวัดพังงา",
+      "district_number": 1,
+      "poll_station_count": 201,
+      "eligible_total": 100343,
+      "registered_outside_country": 130,
+      "registered_outside_district": 3946,
+      "registered_outside_total": 4076
+    },
+    {
+      "province": "จังหวัดพังงา",
+      "district_number": 2,
+      "poll_station_count": 187,
+      "eligible_total": 110773,
+      "registered_outside_country": 129,
+      "registered_outside_district": 4253,
+      "registered_outside_total": 4382
+    },
+    {
+      "province": "จังหวัดพัทลุง",
+      "district_number": 1,
+      "poll_station_count": 258,
+      "eligible_total": 134471,
+      "registered_outside_country": 214,
+      "registered_outside_district": 9287,
+      "registered_outside_total": 9501
+    },
+    {
+      "province": "จังหวัดพัทลุง",
+      "district_number": 2,
+      "poll_station_count": 277,
+      "eligible_total": 144593,
+      "registered_outside_country": 138,
+      "registered_outside_district": 8169,
+      "registered_outside_total": 8307
+    },
+    {
+      "province": "จังหวัดพัทลุง",
+      "district_number": 3,
+      "poll_station_count": 259,
+      "eligible_total": 143629,
+      "registered_outside_country": 145,
+      "registered_outside_district": 6856,
+      "registered_outside_total": 7001
+    },
+    {
+      "province": "จังหวัดพิจิตร",
+      "district_number": 1,
+      "poll_station_count": 304,
+      "eligible_total": 145533,
+      "registered_outside_country": 199,
+      "registered_outside_district": 6878,
+      "registered_outside_total": 7077
+    },
+    {
+      "province": "จังหวัดพิจิตร",
+      "district_number": 2,
+      "poll_station_count": 352,
+      "eligible_total": 140346,
+      "registered_outside_country": 212,
+      "registered_outside_district": 7665,
+      "registered_outside_total": 7877
+    },
+    {
+      "province": "จังหวัดพิจิตร",
+      "district_number": 3,
+      "poll_station_count": 355,
+      "eligible_total": 141664,
+      "registered_outside_country": 148,
+      "registered_outside_district": 7011,
+      "registered_outside_total": 7159
+    },
+    {
+      "province": "จังหวัดพิษณุโลก",
+      "district_number": 1,
+      "poll_station_count": 217,
+      "eligible_total": 139505,
+      "registered_outside_country": 487,
+      "registered_outside_district": 8112,
+      "registered_outside_total": 8599
+    },
+    {
+      "province": "จังหวัดพิษณุโลก",
+      "district_number": 2,
+      "poll_station_count": 281,
+      "eligible_total": 147454,
+      "registered_outside_country": 275,
+      "registered_outside_district": 6818,
+      "registered_outside_total": 7093
+    },
+    {
+      "province": "จังหวัดพิษณุโลก",
+      "district_number": 3,
+      "poll_station_count": 273,
+      "eligible_total": 142882,
+      "registered_outside_country": 208,
+      "registered_outside_district": 6878,
+      "registered_outside_total": 7086
+    },
+    {
+      "province": "จังหวัดพิษณุโลก",
+      "district_number": 4,
+      "poll_station_count": 280,
+      "eligible_total": 128190,
+      "registered_outside_country": 229,
+      "registered_outside_district": 4930,
+      "registered_outside_total": 5159
+    },
+    {
+      "province": "จังหวัดพิษณุโลก",
+      "district_number": 5,
+      "poll_station_count": 303,
+      "eligible_total": 132621,
+      "registered_outside_country": 140,
+      "registered_outside_district": 6786,
+      "registered_outside_total": 6926
+    },
+    {
+      "province": "จังหวัดภูเก็ต",
+      "district_number": 1,
+      "poll_station_count": 143,
+      "eligible_total": 103980,
+      "registered_outside_country": 394,
+      "registered_outside_district": 5781,
+      "registered_outside_total": 6175
+    },
+    {
+      "province": "จังหวัดภูเก็ต",
+      "district_number": 2,
+      "poll_station_count": 146,
+      "eligible_total": 108376,
+      "registered_outside_country": 408,
+      "registered_outside_district": 4617,
+      "registered_outside_total": 5025
+    },
+    {
+      "province": "จังหวัดภูเก็ต",
+      "district_number": 3,
+      "poll_station_count": 169,
+      "eligible_total": 117792,
+      "registered_outside_country": 382,
+      "registered_outside_district": 4369,
+      "registered_outside_total": 4751
+    },
+    {
+      "province": "จังหวัดมหาสารคาม",
+      "district_number": 1,
+      "poll_station_count": 233,
+      "eligible_total": 123641,
+      "registered_outside_country": 375,
+      "registered_outside_district": 6729,
+      "registered_outside_total": 7104
+    },
+    {
+      "province": "จังหวัดมหาสารคาม",
+      "district_number": 2,
+      "poll_station_count": 330,
+      "eligible_total": 128380,
+      "registered_outside_country": 169,
+      "registered_outside_district": 7640,
+      "registered_outside_total": 7809
+    },
+    {
+      "province": "จังหวัดมหาสารคาม",
+      "district_number": 3,
+      "poll_station_count": 282,
+      "eligible_total": 130144,
+      "registered_outside_country": 209,
+      "registered_outside_district": 8620,
+      "registered_outside_total": 8829
+    },
+    {
+      "province": "จังหวัดมหาสารคาม",
+      "district_number": 4,
+      "poll_station_count": 288,
+      "eligible_total": 126010,
+      "registered_outside_country": 219,
+      "registered_outside_district": 6987,
+      "registered_outside_total": 7206
+    },
+    {
+      "province": "จังหวัดมหาสารคาม",
+      "district_number": 5,
+      "poll_station_count": 339,
+      "eligible_total": 133026,
+      "registered_outside_country": 227,
+      "registered_outside_district": 5799,
+      "registered_outside_total": 6026
+    },
+    {
+      "province": "จังหวัดมหาสารคาม",
+      "district_number": 6,
+      "poll_station_count": 301,
+      "eligible_total": 128307,
+      "registered_outside_country": 231,
+      "registered_outside_district": 6374,
+      "registered_outside_total": 6605
+    },
+    {
+      "province": "จังหวัดมุกดาหาร",
+      "district_number": 1,
+      "poll_station_count": 283,
+      "eligible_total": 141841,
+      "registered_outside_country": 243,
+      "registered_outside_district": 6354,
+      "registered_outside_total": 6597
+    },
+    {
+      "province": "จังหวัดมุกดาหาร",
+      "district_number": 2,
+      "poll_station_count": 328,
+      "eligible_total": 138498,
+      "registered_outside_country": 152,
+      "registered_outside_district": 6936,
+      "registered_outside_total": 7088
+    },
+    {
+      "province": "จังหวัดยะลา",
+      "district_number": 1,
+      "poll_station_count": 217,
+      "eligible_total": 130145,
+      "registered_outside_country": 409,
+      "registered_outside_district": 7249,
+      "registered_outside_total": 7658
+    },
+    {
+      "province": "จังหวัดยะลา",
+      "district_number": 2,
+      "poll_station_count": 236,
+      "eligible_total": 134276,
+      "registered_outside_country": 255,
+      "registered_outside_district": 4188,
+      "registered_outside_total": 4443
+    },
+    {
+      "province": "จังหวัดยะลา",
+      "district_number": 3,
+      "poll_station_count": 243,
+      "eligible_total": 131444,
+      "registered_outside_country": 239,
+      "registered_outside_district": 5289,
+      "registered_outside_total": 5528
+    },
+    {
+      "province": "จังหวัดยโสธร",
+      "district_number": 1,
+      "poll_station_count": 304,
+      "eligible_total": 144704,
+      "registered_outside_country": 253,
+      "registered_outside_district": 9397,
+      "registered_outside_total": 9650
+    },
+    {
+      "province": "จังหวัดยโสธร",
+      "district_number": 2,
+      "poll_station_count": 314,
+      "eligible_total": 141190,
+      "registered_outside_country": 219,
+      "registered_outside_district": 9551,
+      "registered_outside_total": 9770
+    },
+    {
+      "province": "จังหวัดยโสธร",
+      "district_number": 3,
+      "poll_station_count": 318,
+      "eligible_total": 146614,
+      "registered_outside_country": 187,
+      "registered_outside_district": 8496,
+      "registered_outside_total": 8683
+    },
+    {
+      "province": "จังหวัดระนอง",
+      "district_number": 1,
+      "poll_station_count": 242,
+      "eligible_total": 143314,
+      "registered_outside_country": 155,
+      "registered_outside_district": 6950,
+      "registered_outside_total": 7105
+    },
+    {
+      "province": "จังหวัดระยอง",
+      "district_number": 1,
+      "poll_station_count": 175,
+      "eligible_total": 121744,
+      "registered_outside_country": 312,
+      "registered_outside_district": 3887,
+      "registered_outside_total": 4199
+    },
+    {
+      "province": "จังหวัดระยอง",
+      "district_number": 2,
+      "poll_station_count": 197,
+      "eligible_total": 116647,
+      "registered_outside_country": 313,
+      "registered_outside_district": 3232,
+      "registered_outside_total": 3545
+    },
+    {
+      "province": "จังหวัดระยอง",
+      "district_number": 3,
+      "poll_station_count": 241,
+      "eligible_total": 124374,
+      "registered_outside_country": 157,
+      "registered_outside_district": 2799,
+      "registered_outside_total": 2956
+    },
+    {
+      "province": "จังหวัดระยอง",
+      "district_number": 4,
+      "poll_station_count": 192,
+      "eligible_total": 129476,
+      "registered_outside_country": 176,
+      "registered_outside_district": 2728,
+      "registered_outside_total": 2904
+    },
+    {
+      "province": "จังหวัดระยอง",
+      "district_number": 5,
+      "poll_station_count": 174,
+      "eligible_total": 129567,
+      "registered_outside_country": 283,
+      "registered_outside_district": 3166,
+      "registered_outside_total": 3449
+    },
+    {
+      "province": "จังหวัดราชบุรี",
+      "district_number": 1,
+      "poll_station_count": 239,
+      "eligible_total": 140137,
+      "registered_outside_country": 321,
+      "registered_outside_district": 4826,
+      "registered_outside_total": 5147
+    },
+    {
+      "province": "จังหวัดราชบุรี",
+      "district_number": 2,
+      "poll_station_count": 236,
+      "eligible_total": 136101,
+      "registered_outside_country": 127,
+      "registered_outside_district": 3480,
+      "registered_outside_total": 3607
+    },
+    {
+      "province": "จังหวัดราชบุรี",
+      "district_number": 3,
+      "poll_station_count": 243,
+      "eligible_total": 141093,
+      "registered_outside_country": 146,
+      "registered_outside_district": 3048,
+      "registered_outside_total": 3194
+    },
+    {
+      "province": "จังหวัดราชบุรี",
+      "district_number": 4,
+      "poll_station_count": 206,
+      "eligible_total": 140248,
+      "registered_outside_country": 279,
+      "registered_outside_district": 3280,
+      "registered_outside_total": 3559
+    },
+    {
+      "province": "จังหวัดราชบุรี",
+      "district_number": 5,
+      "poll_station_count": 233,
+      "eligible_total": 133947,
+      "registered_outside_country": 139,
+      "registered_outside_district": 2914,
+      "registered_outside_total": 3053
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 1,
+      "poll_station_count": 259,
+      "eligible_total": 126135,
+      "registered_outside_country": 293,
+      "registered_outside_district": 7619,
+      "registered_outside_total": 7912
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 2,
+      "poll_station_count": 362,
+      "eligible_total": 136719,
+      "registered_outside_country": 176,
+      "registered_outside_district": 8015,
+      "registered_outside_total": 8191
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 3,
+      "poll_station_count": 298,
+      "eligible_total": 133017,
+      "registered_outside_country": 201,
+      "registered_outside_district": 7513,
+      "registered_outside_total": 7714
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 4,
+      "poll_station_count": 329,
+      "eligible_total": 129528,
+      "registered_outside_country": 243,
+      "registered_outside_district": 8453,
+      "registered_outside_total": 8696
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 5,
+      "poll_station_count": 342,
+      "eligible_total": 133199,
+      "registered_outside_country": 203,
+      "registered_outside_district": 9090,
+      "registered_outside_total": 9293
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 6,
+      "poll_station_count": 296,
+      "eligible_total": 130129,
+      "registered_outside_country": 172,
+      "registered_outside_district": 9313,
+      "registered_outside_total": 9485
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 7,
+      "poll_station_count": 316,
+      "eligible_total": 134383,
+      "registered_outside_country": 163,
+      "registered_outside_district": 9172,
+      "registered_outside_total": 9335
+    },
+    {
+      "province": "จังหวัดร้อยเอ็ด",
+      "district_number": 8,
+      "poll_station_count": 337,
+      "eligible_total": 131264,
+      "registered_outside_country": 180,
+      "registered_outside_district": 8946,
+      "registered_outside_total": 9126
+    },
+    {
+      "province": "จังหวัดลพบุรี",
+      "district_number": 1,
+      "poll_station_count": 255,
+      "eligible_total": 151712,
+      "registered_outside_country": 209,
+      "registered_outside_district": 7515,
+      "registered_outside_total": 7724
+    },
+    {
+      "province": "จังหวัดลพบุรี",
+      "district_number": 2,
+      "poll_station_count": 264,
+      "eligible_total": 149672,
+      "registered_outside_country": 231,
+      "registered_outside_district": 5771,
+      "registered_outside_total": 6002
+    },
+    {
+      "province": "จังหวัดลพบุรี",
+      "district_number": 3,
+      "poll_station_count": 283,
+      "eligible_total": 145648,
+      "registered_outside_country": 127,
+      "registered_outside_district": 5594,
+      "registered_outside_total": 5721
+    },
+    {
+      "province": "จังหวัดลพบุรี",
+      "district_number": 4,
+      "poll_station_count": 277,
+      "eligible_total": 149394,
+      "registered_outside_country": 161,
+      "registered_outside_district": 5100,
+      "registered_outside_total": 5261
+    },
+    {
+      "province": "จังหวัดลำปาง",
+      "district_number": 1,
+      "poll_station_count": 291,
+      "eligible_total": 146326,
+      "registered_outside_country": 683,
+      "registered_outside_district": 10860,
+      "registered_outside_total": 11543
+    },
+    {
+      "province": "จังหวัดลำปาง",
+      "district_number": 2,
+      "poll_station_count": 342,
+      "eligible_total": 150940,
+      "registered_outside_country": 343,
+      "registered_outside_district": 10033,
+      "registered_outside_total": 10376
+    },
+    {
+      "province": "จังหวัดลำปาง",
+      "district_number": 3,
+      "poll_station_count": 276,
+      "eligible_total": 147220,
+      "registered_outside_country": 522,
+      "registered_outside_district": 9846,
+      "registered_outside_total": 10368
+    },
+    {
+      "province": "จังหวัดลำปาง",
+      "district_number": 4,
+      "poll_station_count": 333,
+      "eligible_total": 157791,
+      "registered_outside_country": 786,
+      "registered_outside_district": 10577,
+      "registered_outside_total": 11363
+    },
+    {
+      "province": "จังหวัดลำพูน",
+      "district_number": 1,
+      "poll_station_count": 334,
+      "eligible_total": 171262,
+      "registered_outside_country": 610,
+      "registered_outside_district": 6783,
+      "registered_outside_total": 7393
+    },
+    {
+      "province": "จังหวัดลำพูน",
+      "district_number": 2,
+      "poll_station_count": 369,
+      "eligible_total": 162629,
+      "registered_outside_country": 307,
+      "registered_outside_district": 7347,
+      "registered_outside_total": 7654
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 1,
+      "poll_station_count": 285,
+      "eligible_total": 132927,
+      "registered_outside_country": 227,
+      "registered_outside_district": 8968,
+      "registered_outside_total": 9195
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 2,
+      "poll_station_count": 286,
+      "eligible_total": 128729,
+      "registered_outside_country": 136,
+      "registered_outside_district": 7548,
+      "registered_outside_total": 7684
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 3,
+      "poll_station_count": 288,
+      "eligible_total": 128000,
+      "registered_outside_country": 148,
+      "registered_outside_district": 6761,
+      "registered_outside_total": 6909
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 4,
+      "poll_station_count": 239,
+      "eligible_total": 122479,
+      "registered_outside_country": 168,
+      "registered_outside_district": 7205,
+      "registered_outside_total": 7373
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 5,
+      "poll_station_count": 241,
+      "eligible_total": 127678,
+      "registered_outside_country": 173,
+      "registered_outside_district": 7742,
+      "registered_outside_total": 7915
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 6,
+      "poll_station_count": 310,
+      "eligible_total": 128761,
+      "registered_outside_country": 184,
+      "registered_outside_district": 9443,
+      "registered_outside_total": 9627
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 7,
+      "poll_station_count": 338,
+      "eligible_total": 127528,
+      "registered_outside_country": 153,
+      "registered_outside_district": 9277,
+      "registered_outside_total": 9430
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 8,
+      "poll_station_count": 376,
+      "eligible_total": 133339,
+      "registered_outside_country": 183,
+      "registered_outside_district": 11745,
+      "registered_outside_total": 11928
+    },
+    {
+      "province": "จังหวัดศรีสะเกษ",
+      "district_number": 9,
+      "poll_station_count": 426,
+      "eligible_total": 139255,
+      "registered_outside_country": 139,
+      "registered_outside_district": 9362,
+      "registered_outside_total": 9501
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 1,
+      "poll_station_count": 233,
+      "eligible_total": 133910,
+      "registered_outside_country": 326,
+      "registered_outside_district": 6624,
+      "registered_outside_total": 6950
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 2,
+      "poll_station_count": 255,
+      "eligible_total": 131926,
+      "registered_outside_country": 193,
+      "registered_outside_district": 5209,
+      "registered_outside_total": 5402
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 3,
+      "poll_station_count": 259,
+      "eligible_total": 134035,
+      "registered_outside_country": 221,
+      "registered_outside_district": 5901,
+      "registered_outside_total": 6122
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 4,
+      "poll_station_count": 257,
+      "eligible_total": 128385,
+      "registered_outside_country": 164,
+      "registered_outside_district": 5122,
+      "registered_outside_total": 5286
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 5,
+      "poll_station_count": 224,
+      "eligible_total": 129748,
+      "registered_outside_country": 420,
+      "registered_outside_district": 5617,
+      "registered_outside_total": 6037
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 6,
+      "poll_station_count": 240,
+      "eligible_total": 130056,
+      "registered_outside_country": 299,
+      "registered_outside_district": 6008,
+      "registered_outside_total": 6307
+    },
+    {
+      "province": "จังหวัดสกลนคร",
+      "district_number": 7,
+      "poll_station_count": 252,
+      "eligible_total": 131937,
+      "registered_outside_country": 276,
+      "registered_outside_district": 5398,
+      "registered_outside_total": 5674
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 1,
+      "poll_station_count": 197,
+      "eligible_total": 128331,
+      "registered_outside_country": 325,
+      "registered_outside_district": 7255,
+      "registered_outside_total": 7580
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 2,
+      "poll_station_count": 175,
+      "eligible_total": 108657,
+      "registered_outside_country": 563,
+      "registered_outside_district": 7925,
+      "registered_outside_total": 8488
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 3,
+      "poll_station_count": 209,
+      "eligible_total": 133721,
+      "registered_outside_country": 397,
+      "registered_outside_district": 7397,
+      "registered_outside_total": 7794
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 4,
+      "poll_station_count": 245,
+      "eligible_total": 126692,
+      "registered_outside_country": 119,
+      "registered_outside_district": 5669,
+      "registered_outside_total": 5788
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 5,
+      "poll_station_count": 230,
+      "eligible_total": 129751,
+      "registered_outside_country": 140,
+      "registered_outside_district": 4506,
+      "registered_outside_total": 4646
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 6,
+      "poll_station_count": 187,
+      "eligible_total": 116166,
+      "registered_outside_country": 219,
+      "registered_outside_district": 4735,
+      "registered_outside_total": 4954
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 7,
+      "poll_station_count": 230,
+      "eligible_total": 123182,
+      "registered_outside_country": 135,
+      "registered_outside_district": 4446,
+      "registered_outside_total": 4581
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 8,
+      "poll_station_count": 232,
+      "eligible_total": 120448,
+      "registered_outside_country": 163,
+      "registered_outside_district": 3786,
+      "registered_outside_total": 3949
+    },
+    {
+      "province": "จังหวัดสงขลา",
+      "district_number": 9,
+      "poll_station_count": 202,
+      "eligible_total": 135999,
+      "registered_outside_country": 322,
+      "registered_outside_district": 6706,
+      "registered_outside_total": 7028
+    },
+    {
+      "province": "จังหวัดสตูล",
+      "district_number": 1,
+      "poll_station_count": 198,
+      "eligible_total": 116873,
+      "registered_outside_country": 188,
+      "registered_outside_district": 5774,
+      "registered_outside_total": 5962
+    },
+    {
+      "province": "จังหวัดสตูล",
+      "district_number": 2,
+      "poll_station_count": 230,
+      "eligible_total": 129553,
+      "registered_outside_country": 109,
+      "registered_outside_district": 6368,
+      "registered_outside_total": 6477
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 1,
+      "poll_station_count": 204,
+      "eligible_total": 130808,
+      "registered_outside_country": 550,
+      "registered_outside_district": 2526,
+      "registered_outside_total": 3076
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 2,
+      "poll_station_count": 197,
+      "eligible_total": 129020,
+      "registered_outside_country": 331,
+      "registered_outside_district": 2744,
+      "registered_outside_total": 3075
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 3,
+      "poll_station_count": 207,
+      "eligible_total": 141171,
+      "registered_outside_country": 694,
+      "registered_outside_district": 3503,
+      "registered_outside_total": 4197
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 4,
+      "poll_station_count": 175,
+      "eligible_total": 136475,
+      "registered_outside_country": 791,
+      "registered_outside_district": 3587,
+      "registered_outside_total": 4378
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 5,
+      "poll_station_count": 226,
+      "eligible_total": 158700,
+      "registered_outside_country": 586,
+      "registered_outside_district": 3733,
+      "registered_outside_total": 4319
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 6,
+      "poll_station_count": 257,
+      "eligible_total": 129989,
+      "registered_outside_country": 370,
+      "registered_outside_district": 2534,
+      "registered_outside_total": 2904
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 7,
+      "poll_station_count": 225,
+      "eligible_total": 149428,
+      "registered_outside_country": 305,
+      "registered_outside_district": 3797,
+      "registered_outside_total": 4102
+    },
+    {
+      "province": "จังหวัดสมุทรปราการ",
+      "district_number": 8,
+      "poll_station_count": 248,
+      "eligible_total": 150829,
+      "registered_outside_country": 339,
+      "registered_outside_district": 3061,
+      "registered_outside_total": 3400
+    },
+    {
+      "province": "จังหวัดสมุทรสงคราม",
+      "district_number": 1,
+      "poll_station_count": 264,
+      "eligible_total": 156265,
+      "registered_outside_country": 180,
+      "registered_outside_district": 4204,
+      "registered_outside_total": 4384
+    },
+    {
+      "province": "จังหวัดสมุทรสาคร",
+      "district_number": 1,
+      "poll_station_count": 167,
+      "eligible_total": 119393,
+      "registered_outside_country": 351,
+      "registered_outside_district": 2805,
+      "registered_outside_total": 3156
+    },
+    {
+      "province": "จังหวัดสมุทรสาคร",
+      "district_number": 2,
+      "poll_station_count": 159,
+      "eligible_total": 119061,
+      "registered_outside_country": 168,
+      "registered_outside_district": 2364,
+      "registered_outside_total": 2532
+    },
+    {
+      "province": "จังหวัดสมุทรสาคร",
+      "district_number": 3,
+      "poll_station_count": 133,
+      "eligible_total": 111965,
+      "registered_outside_country": 260,
+      "registered_outside_district": 2998,
+      "registered_outside_total": 3258
+    },
+    {
+      "province": "จังหวัดสมุทรสาคร",
+      "district_number": 4,
+      "poll_station_count": 199,
+      "eligible_total": 112305,
+      "registered_outside_country": 94,
+      "registered_outside_district": 1933,
+      "registered_outside_total": 2027
+    },
+    {
+      "province": "จังหวัดสระบุรี",
+      "district_number": 1,
+      "poll_station_count": 214,
+      "eligible_total": 128124,
+      "registered_outside_country": 282,
+      "registered_outside_district": 5103,
+      "registered_outside_total": 5385
+    },
+    {
+      "province": "จังหวัดสระบุรี",
+      "district_number": 2,
+      "poll_station_count": 240,
+      "eligible_total": 136691,
+      "registered_outside_country": 236,
+      "registered_outside_district": 3932,
+      "registered_outside_total": 4168
+    },
+    {
+      "province": "จังหวัดสระบุรี",
+      "district_number": 3,
+      "poll_station_count": 204,
+      "eligible_total": 125851,
+      "registered_outside_country": 188,
+      "registered_outside_district": 2964,
+      "registered_outside_total": 3152
+    },
+    {
+      "province": "จังหวัดสระบุรี",
+      "district_number": 4,
+      "poll_station_count": 230,
+      "eligible_total": 128318,
+      "registered_outside_country": 174,
+      "registered_outside_district": 3276,
+      "registered_outside_total": 3450
+    },
+    {
+      "province": "จังหวัดสระแก้ว",
+      "district_number": 1,
+      "poll_station_count": 287,
+      "eligible_total": 147502,
+      "registered_outside_country": 185,
+      "registered_outside_district": 5373,
+      "registered_outside_total": 5558
+    },
+    {
+      "province": "จังหวัดสระแก้ว",
+      "district_number": 2,
+      "poll_station_count": 302,
+      "eligible_total": 145146,
+      "registered_outside_country": 208,
+      "registered_outside_district": 5686,
+      "registered_outside_total": 5894
+    },
+    {
+      "province": "จังหวัดสระแก้ว",
+      "district_number": 3,
+      "poll_station_count": 302,
+      "eligible_total": 151047,
+      "registered_outside_country": 258,
+      "registered_outside_district": 6752,
+      "registered_outside_total": 7010
+    },
+    {
+      "province": "จังหวัดสิงห์บุรี",
+      "district_number": 1,
+      "poll_station_count": 361,
+      "eligible_total": 167173,
+      "registered_outside_country": 188,
+      "registered_outside_district": 5748,
+      "registered_outside_total": 5936
+    },
+    {
+      "province": "จังหวัดสุพรรณบุรี",
+      "district_number": 1,
+      "poll_station_count": 229,
+      "eligible_total": 135381,
+      "registered_outside_country": 228,
+      "registered_outside_district": 4295,
+      "registered_outside_total": 4523
+    },
+    {
+      "province": "จังหวัดสุพรรณบุรี",
+      "district_number": 2,
+      "poll_station_count": 245,
+      "eligible_total": 129576,
+      "registered_outside_country": 105,
+      "registered_outside_district": 3774,
+      "registered_outside_total": 3879
+    },
+    {
+      "province": "จังหวัดสุพรรณบุรี",
+      "district_number": 3,
+      "poll_station_count": 258,
+      "eligible_total": 130523,
+      "registered_outside_country": 129,
+      "registered_outside_district": 3400,
+      "registered_outside_total": 3529
+    },
+    {
+      "province": "จังหวัดสุพรรณบุรี",
+      "district_number": 4,
+      "poll_station_count": 280,
+      "eligible_total": 137456,
+      "registered_outside_country": 160,
+      "registered_outside_district": 4711,
+      "registered_outside_total": 4871
+    },
+    {
+      "province": "จังหวัดสุพรรณบุรี",
+      "district_number": 5,
+      "poll_station_count": 255,
+      "eligible_total": 144799,
+      "registered_outside_country": 199,
+      "registered_outside_district": 4268,
+      "registered_outside_total": 4467
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 1,
+      "poll_station_count": 165,
+      "eligible_total": 117090,
+      "registered_outside_country": 320,
+      "registered_outside_district": 8551,
+      "registered_outside_total": 8871
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 2,
+      "poll_station_count": 210,
+      "eligible_total": 119683,
+      "registered_outside_country": 181,
+      "registered_outside_district": 4262,
+      "registered_outside_total": 4443
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 3,
+      "poll_station_count": 224,
+      "eligible_total": 120055,
+      "registered_outside_country": 93,
+      "registered_outside_district": 4581,
+      "registered_outside_total": 4674
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 4,
+      "poll_station_count": 232,
+      "eligible_total": 123380,
+      "registered_outside_country": 88,
+      "registered_outside_district": 4075,
+      "registered_outside_total": 4163
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 5,
+      "poll_station_count": 221,
+      "eligible_total": 121866,
+      "registered_outside_country": 58,
+      "registered_outside_district": 3882,
+      "registered_outside_total": 3940
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 6,
+      "poll_station_count": 243,
+      "eligible_total": 125055,
+      "registered_outside_country": 86,
+      "registered_outside_district": 4571,
+      "registered_outside_total": 4657
+    },
+    {
+      "province": "จังหวัดสุราษฎร์ธานี",
+      "district_number": 7,
+      "poll_station_count": 198,
+      "eligible_total": 120277,
+      "registered_outside_country": 97,
+      "registered_outside_district": 4428,
+      "registered_outside_total": 4525
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 1,
+      "poll_station_count": 244,
+      "eligible_total": 136098,
+      "registered_outside_country": 412,
+      "registered_outside_district": 8806,
+      "registered_outside_total": 9218
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 2,
+      "poll_station_count": 261,
+      "eligible_total": 140119,
+      "registered_outside_country": 310,
+      "registered_outside_district": 8535,
+      "registered_outside_total": 8845
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 3,
+      "poll_station_count": 313,
+      "eligible_total": 137394,
+      "registered_outside_country": 212,
+      "registered_outside_district": 9783,
+      "registered_outside_total": 9995
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 4,
+      "poll_station_count": 305,
+      "eligible_total": 139651,
+      "registered_outside_country": 197,
+      "registered_outside_district": 9330,
+      "registered_outside_total": 9527
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 5,
+      "poll_station_count": 320,
+      "eligible_total": 135554,
+      "registered_outside_country": 190,
+      "registered_outside_district": 9804,
+      "registered_outside_total": 9994
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 6,
+      "poll_station_count": 269,
+      "eligible_total": 134172,
+      "registered_outside_country": 181,
+      "registered_outside_district": 7775,
+      "registered_outside_total": 7956
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 7,
+      "poll_station_count": 292,
+      "eligible_total": 136448,
+      "registered_outside_country": 283,
+      "registered_outside_district": 7478,
+      "registered_outside_total": 7761
+    },
+    {
+      "province": "จังหวัดสุรินทร์",
+      "district_number": 8,
+      "poll_station_count": 267,
+      "eligible_total": 136843,
+      "registered_outside_country": 260,
+      "registered_outside_district": 6833,
+      "registered_outside_total": 7093
+    },
+    {
+      "province": "จังหวัดสุโขทัย",
+      "district_number": 1,
+      "poll_station_count": 244,
+      "eligible_total": 118292,
+      "registered_outside_country": 193,
+      "registered_outside_district": 5976,
+      "registered_outside_total": 6169
+    },
+    {
+      "province": "จังหวัดสุโขทัย",
+      "district_number": 2,
+      "poll_station_count": 253,
+      "eligible_total": 118323,
+      "registered_outside_country": 209,
+      "registered_outside_district": 5196,
+      "registered_outside_total": 5405
+    },
+    {
+      "province": "จังหวัดสุโขทัย",
+      "district_number": 3,
+      "poll_station_count": 238,
+      "eligible_total": 120591,
+      "registered_outside_country": 255,
+      "registered_outside_district": 6695,
+      "registered_outside_total": 6950
+    },
+    {
+      "province": "จังหวัดสุโขทัย",
+      "district_number": 4,
+      "poll_station_count": 253,
+      "eligible_total": 120291,
+      "registered_outside_country": 193,
+      "registered_outside_district": 7006,
+      "registered_outside_total": 7199
+    },
+    {
+      "province": "จังหวัดหนองคาย",
+      "district_number": 1,
+      "poll_station_count": 293,
+      "eligible_total": 139496,
+      "registered_outside_country": 615,
+      "registered_outside_district": 6451,
+      "registered_outside_total": 7066
+    },
+    {
+      "province": "จังหวัดหนองคาย",
+      "district_number": 2,
+      "poll_station_count": 278,
+      "eligible_total": 136455,
+      "registered_outside_country": 480,
+      "registered_outside_district": 6399,
+      "registered_outside_total": 6879
+    },
+    {
+      "province": "จังหวัดหนองคาย",
+      "district_number": 3,
+      "poll_station_count": 283,
+      "eligible_total": 137516,
+      "registered_outside_country": 546,
+      "registered_outside_district": 6018,
+      "registered_outside_total": 6564
+    },
+    {
+      "province": "จังหวัดหนองบัวลำภู",
+      "district_number": 1,
+      "poll_station_count": 267,
+      "eligible_total": 139306,
+      "registered_outside_country": 485,
+      "registered_outside_district": 5818,
+      "registered_outside_total": 6303
+    },
+    {
+      "province": "จังหวัดหนองบัวลำภู",
+      "district_number": 2,
+      "poll_station_count": 267,
+      "eligible_total": 136024,
+      "registered_outside_country": 351,
+      "registered_outside_district": 5871,
+      "registered_outside_total": 6222
+    },
+    {
+      "province": "จังหวัดหนองบัวลำภู",
+      "district_number": 3,
+      "poll_station_count": 260,
+      "eligible_total": 133312,
+      "registered_outside_country": 399,
+      "registered_outside_district": 5283,
+      "registered_outside_total": 5682
+    },
+    {
+      "province": "จังหวัดอำนาจเจริญ",
+      "district_number": 1,
+      "poll_station_count": 333,
+      "eligible_total": 145524,
+      "registered_outside_country": 233,
+      "registered_outside_district": 8171,
+      "registered_outside_total": 8404
+    },
+    {
+      "province": "จังหวัดอำนาจเจริญ",
+      "district_number": 2,
+      "poll_station_count": 356,
+      "eligible_total": 157184,
+      "registered_outside_country": 197,
+      "registered_outside_district": 8568,
+      "registered_outside_total": 8765
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 1,
+      "poll_station_count": 220,
+      "eligible_total": 126958,
+      "registered_outside_country": 836,
+      "registered_outside_district": 7761,
+      "registered_outside_total": 8597
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 2,
+      "poll_station_count": 201,
+      "eligible_total": 130457,
+      "registered_outside_country": 692,
+      "registered_outside_district": 5679,
+      "registered_outside_total": 6371
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 3,
+      "poll_station_count": 240,
+      "eligible_total": 125830,
+      "registered_outside_country": 631,
+      "registered_outside_district": 4361,
+      "registered_outside_total": 4992
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 4,
+      "poll_station_count": 216,
+      "eligible_total": 126481,
+      "registered_outside_country": 487,
+      "registered_outside_district": 4706,
+      "registered_outside_total": 5193
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 5,
+      "poll_station_count": 226,
+      "eligible_total": 123807,
+      "registered_outside_country": 715,
+      "registered_outside_district": 4145,
+      "registered_outside_total": 4860
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 6,
+      "poll_station_count": 239,
+      "eligible_total": 126400,
+      "registered_outside_country": 423,
+      "registered_outside_district": 4742,
+      "registered_outside_total": 5165
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 7,
+      "poll_station_count": 238,
+      "eligible_total": 128249,
+      "registered_outside_country": 513,
+      "registered_outside_district": 5378,
+      "registered_outside_total": 5891
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 8,
+      "poll_station_count": 227,
+      "eligible_total": 122696,
+      "registered_outside_country": 412,
+      "registered_outside_district": 4419,
+      "registered_outside_total": 4831
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 9,
+      "poll_station_count": 233,
+      "eligible_total": 124827,
+      "registered_outside_country": 473,
+      "registered_outside_district": 3988,
+      "registered_outside_total": 4461
+    },
+    {
+      "province": "จังหวัดอุดรธานี",
+      "district_number": 10,
+      "poll_station_count": 240,
+      "eligible_total": 123023,
+      "registered_outside_country": 325,
+      "registered_outside_district": 4425,
+      "registered_outside_total": 4750
+    },
+    {
+      "province": "จังหวัดอุตรดิตถ์",
+      "district_number": 1,
+      "poll_station_count": 234,
+      "eligible_total": 118173,
+      "registered_outside_country": 251,
+      "registered_outside_district": 7830,
+      "registered_outside_total": 8081
+    },
+    {
+      "province": "จังหวัดอุตรดิตถ์",
+      "district_number": 2,
+      "poll_station_count": 286,
+      "eligible_total": 125041,
+      "registered_outside_country": 189,
+      "registered_outside_district": 7795,
+      "registered_outside_total": 7984
+    },
+    {
+      "province": "จังหวัดอุตรดิตถ์",
+      "district_number": 3,
+      "poll_station_count": 245,
+      "eligible_total": 123483,
+      "registered_outside_country": 189,
+      "registered_outside_district": 6940,
+      "registered_outside_total": 7129
+    },
+    {
+      "province": "จังหวัดอุทัยธานี",
+      "district_number": 1,
+      "poll_station_count": 338,
+      "eligible_total": 127313,
+      "registered_outside_country": 142,
+      "registered_outside_district": 6138,
+      "registered_outside_total": 6280
+    },
+    {
+      "province": "จังหวัดอุทัยธานี",
+      "district_number": 2,
+      "poll_station_count": 307,
+      "eligible_total": 134528,
+      "registered_outside_country": 111,
+      "registered_outside_district": 5972,
+      "registered_outside_total": 6083
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 1,
+      "poll_station_count": 244,
+      "eligible_total": 132544,
+      "registered_outside_country": 525,
+      "registered_outside_district": 8352,
+      "registered_outside_total": 8877
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 2,
+      "poll_station_count": 289,
+      "eligible_total": 136569,
+      "registered_outside_country": 253,
+      "registered_outside_district": 7392,
+      "registered_outside_total": 7645
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 3,
+      "poll_station_count": 335,
+      "eligible_total": 139753,
+      "registered_outside_country": 199,
+      "registered_outside_district": 6970,
+      "registered_outside_total": 7169
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 4,
+      "poll_station_count": 303,
+      "eligible_total": 150372,
+      "registered_outside_country": 317,
+      "registered_outside_district": 7818,
+      "registered_outside_total": 8135
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 5,
+      "poll_station_count": 318,
+      "eligible_total": 131064,
+      "registered_outside_country": 202,
+      "registered_outside_district": 7590,
+      "registered_outside_total": 7792
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 6,
+      "poll_station_count": 274,
+      "eligible_total": 132041,
+      "registered_outside_country": 219,
+      "registered_outside_district": 6619,
+      "registered_outside_total": 6838
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 7,
+      "poll_station_count": 281,
+      "eligible_total": 131286,
+      "registered_outside_country": 136,
+      "registered_outside_district": 6566,
+      "registered_outside_total": 6702
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 8,
+      "poll_station_count": 291,
+      "eligible_total": 137335,
+      "registered_outside_country": 150,
+      "registered_outside_district": 6309,
+      "registered_outside_total": 6459
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 9,
+      "poll_station_count": 240,
+      "eligible_total": 130180,
+      "registered_outside_country": 173,
+      "registered_outside_district": 6639,
+      "registered_outside_total": 6812
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 10,
+      "poll_station_count": 317,
+      "eligible_total": 141283,
+      "registered_outside_country": 129,
+      "registered_outside_district": 6814,
+      "registered_outside_total": 6943
+    },
+    {
+      "province": "จังหวัดอุบลราชธานี",
+      "district_number": 11,
+      "poll_station_count": 243,
+      "eligible_total": 135372,
+      "registered_outside_country": 226,
+      "registered_outside_district": 6096,
+      "registered_outside_total": 6322
+    },
+    {
+      "province": "จังหวัดอ่างทอง",
+      "district_number": 1,
+      "poll_station_count": 245,
+      "eligible_total": 111666,
+      "registered_outside_country": 137,
+      "registered_outside_district": 3209,
+      "registered_outside_total": 3346
+    },
+    {
+      "province": "จังหวัดอ่างทอง",
+      "district_number": 2,
+      "poll_station_count": 252,
+      "eligible_total": 112423,
+      "registered_outside_country": 109,
+      "registered_outside_district": 3232,
+      "registered_outside_total": 3341
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 1,
+      "poll_station_count": 239,
+      "eligible_total": 141662,
+      "registered_outside_country": 904,
+      "registered_outside_district": 8061,
+      "registered_outside_total": 8965
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 2,
+      "poll_station_count": 262,
+      "eligible_total": 132701,
+      "registered_outside_country": 555,
+      "registered_outside_district": 6435,
+      "registered_outside_total": 6990
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 3,
+      "poll_station_count": 321,
+      "eligible_total": 139926,
+      "registered_outside_country": 675,
+      "registered_outside_district": 6227,
+      "registered_outside_total": 6902
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 4,
+      "poll_station_count": 365,
+      "eligible_total": 141667,
+      "registered_outside_country": 511,
+      "registered_outside_district": 8076,
+      "registered_outside_total": 8587
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 5,
+      "poll_station_count": 308,
+      "eligible_total": 132060,
+      "registered_outside_country": 563,
+      "registered_outside_district": 7792,
+      "registered_outside_total": 8355
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 6,
+      "poll_station_count": 240,
+      "eligible_total": 126632,
+      "registered_outside_country": 785,
+      "registered_outside_district": 6779,
+      "registered_outside_total": 7564
+    },
+    {
+      "province": "จังหวัดเชียงราย",
+      "district_number": 7,
+      "poll_station_count": 294,
+      "eligible_total": 134341,
+      "registered_outside_country": 477,
+      "registered_outside_district": 7447,
+      "registered_outside_total": 7924
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 1,
+      "poll_station_count": 231,
+      "eligible_total": 137793,
+      "registered_outside_country": 1306,
+      "registered_outside_district": 7580,
+      "registered_outside_total": 8886
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 2,
+      "poll_station_count": 280,
+      "eligible_total": 143760,
+      "registered_outside_country": 882,
+      "registered_outside_district": 6582,
+      "registered_outside_total": 7464
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 3,
+      "poll_station_count": 288,
+      "eligible_total": 139193,
+      "registered_outside_country": 691,
+      "registered_outside_district": 5881,
+      "registered_outside_total": 6572
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 4,
+      "poll_station_count": 239,
+      "eligible_total": 144798,
+      "registered_outside_country": 956,
+      "registered_outside_district": 7414,
+      "registered_outside_total": 8370
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 5,
+      "poll_station_count": 292,
+      "eligible_total": 133219,
+      "registered_outside_country": 382,
+      "registered_outside_district": 5276,
+      "registered_outside_total": 5658
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 6,
+      "poll_station_count": 286,
+      "eligible_total": 127380,
+      "registered_outside_country": 369,
+      "registered_outside_district": 6111,
+      "registered_outside_total": 6480
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 7,
+      "poll_station_count": 286,
+      "eligible_total": 132908,
+      "registered_outside_country": 407,
+      "registered_outside_district": 6989,
+      "registered_outside_total": 7396
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 8,
+      "poll_station_count": 323,
+      "eligible_total": 141140,
+      "registered_outside_country": 654,
+      "registered_outside_district": 5653,
+      "registered_outside_total": 6307
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 9,
+      "poll_station_count": 290,
+      "eligible_total": 126155,
+      "registered_outside_country": 235,
+      "registered_outside_district": 4498,
+      "registered_outside_total": 4733
+    },
+    {
+      "province": "จังหวัดเชียงใหม่",
+      "district_number": 10,
+      "poll_station_count": 276,
+      "eligible_total": 121915,
+      "registered_outside_country": 105,
+      "registered_outside_district": 4785,
+      "registered_outside_total": 4890
+    },
+    {
+      "province": "จังหวัดเพชรบุรี",
+      "district_number": 1,
+      "poll_station_count": 236,
+      "eligible_total": 125505,
+      "registered_outside_country": 213,
+      "registered_outside_district": 4229,
+      "registered_outside_total": 4442
+    },
+    {
+      "province": "จังหวัดเพชรบุรี",
+      "district_number": 2,
+      "poll_station_count": 251,
+      "eligible_total": 139326,
+      "registered_outside_country": 258,
+      "registered_outside_district": 3859,
+      "registered_outside_total": 4117
+    },
+    {
+      "province": "จังหวัดเพชรบุรี",
+      "district_number": 3,
+      "poll_station_count": 278,
+      "eligible_total": 131557,
+      "registered_outside_country": 113,
+      "registered_outside_district": 3463,
+      "registered_outside_total": 3576
+    },
+    {
+      "province": "จังหวัดเพชรบูรณ์",
+      "district_number": 1,
+      "poll_station_count": 238,
+      "eligible_total": 131142,
+      "registered_outside_country": 274,
+      "registered_outside_district": 8109,
+      "registered_outside_total": 8383
+    },
+    {
+      "province": "จังหวัดเพชรบูรณ์",
+      "district_number": 2,
+      "poll_station_count": 287,
+      "eligible_total": 131081,
+      "registered_outside_country": 209,
+      "registered_outside_district": 7551,
+      "registered_outside_total": 7760
+    },
+    {
+      "province": "จังหวัดเพชรบูรณ์",
+      "district_number": 3,
+      "poll_station_count": 295,
+      "eligible_total": 126659,
+      "registered_outside_country": 213,
+      "registered_outside_district": 6810,
+      "registered_outside_total": 7023
+    },
+    {
+      "province": "จังหวัดเพชรบูรณ์",
+      "district_number": 4,
+      "poll_station_count": 292,
+      "eligible_total": 126127,
+      "registered_outside_country": 195,
+      "registered_outside_district": 6606,
+      "registered_outside_total": 6801
+    },
+    {
+      "province": "จังหวัดเพชรบูรณ์",
+      "district_number": 5,
+      "poll_station_count": 283,
+      "eligible_total": 133038,
+      "registered_outside_country": 213,
+      "registered_outside_district": 6519,
+      "registered_outside_total": 6732
+    },
+    {
+      "province": "จังหวัดเพชรบูรณ์",
+      "district_number": 6,
+      "poll_station_count": 312,
+      "eligible_total": 135294,
+      "registered_outside_country": 193,
+      "registered_outside_district": 6352,
+      "registered_outside_total": 6545
+    },
+    {
+      "province": "จังหวัดเลย",
+      "district_number": 1,
+      "poll_station_count": 224,
+      "eligible_total": 125703,
+      "registered_outside_country": 236,
+      "registered_outside_district": 5860,
+      "registered_outside_total": 6096
+    },
+    {
+      "province": "จังหวัดเลย",
+      "district_number": 2,
+      "poll_station_count": 267,
+      "eligible_total": 132976,
+      "registered_outside_country": 202,
+      "registered_outside_district": 5524,
+      "registered_outside_total": 5726
+    },
+    {
+      "province": "จังหวัดเลย",
+      "district_number": 3,
+      "poll_station_count": 289,
+      "eligible_total": 125561,
+      "registered_outside_country": 170,
+      "registered_outside_district": 5482,
+      "registered_outside_total": 5652
+    },
+    {
+      "province": "จังหวัดเลย",
+      "district_number": 4,
+      "poll_station_count": 257,
+      "eligible_total": 123891,
+      "registered_outside_country": 156,
+      "registered_outside_district": 4845,
+      "registered_outside_total": 5001
+    },
+    {
+      "province": "จังหวัดแพร่",
+      "district_number": 1,
+      "poll_station_count": 254,
+      "eligible_total": 122115,
+      "registered_outside_country": 301,
+      "registered_outside_district": 10530,
+      "registered_outside_total": 10831
+    },
+    {
+      "province": "จังหวัดแพร่",
+      "district_number": 2,
+      "poll_station_count": 288,
+      "eligible_total": 116303,
+      "registered_outside_country": 227,
+      "registered_outside_district": 10017,
+      "registered_outside_total": 10244
+    },
+    {
+      "province": "จังหวัดแพร่",
+      "district_number": 3,
+      "poll_station_count": 275,
+      "eligible_total": 121732,
+      "registered_outside_country": 229,
+      "registered_outside_district": 8753,
+      "registered_outside_total": 8982
+    },
+    {
+      "province": "จังหวัดแม่ฮ่องสอน",
+      "district_number": 1,
+      "poll_station_count": 240,
+      "eligible_total": 89158,
+      "registered_outside_country": 132,
+      "registered_outside_district": 6133,
+      "registered_outside_total": 6265
+    },
+    {
+      "province": "จังหวัดแม่ฮ่องสอน",
+      "district_number": 2,
+      "poll_station_count": 227,
+      "eligible_total": 96014,
+      "registered_outside_country": 79,
+      "registered_outside_district": 5792,
+      "registered_outside_total": 5871
+    }
+  ]
+}
