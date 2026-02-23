@@ -1,5 +1,5 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv55-killernay-totals-backfill';
+const BUILD_TAG = 'redv56-hide-missing-file-read';
 const DATA_VERSION = '20260223-k10';
 
 const els = {
@@ -143,6 +143,11 @@ function irregularityFlagLabel(flag) {
   return map[flag] || String(flag || '-');
 }
 
+function hasRealDriveFile(row) {
+  const id = String(row?.drive_id || '').trim();
+  return !!id && !id.startsWith('missing::');
+}
+
 function renderKPIs(summary) {
   const skewRows = computeSkewRows(state.items);
   const mismatchRows = computeMismatchRows(state.items);
@@ -159,8 +164,8 @@ function renderKPIs(summary) {
   const withEct = state.items.filter((r) => numOrNull(r?.sources?.ect?.valid_votes) !== null).length;
   const withVote62 = state.items.filter((r) => numOrNull(r?.sources?.vote62?.valid_votes) !== null).length;
   const withKillernay = state.items.filter((r) => numOrNull(r?.sources?.killernay?.valid_votes) !== null).length;
-  const withRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null).length;
-  const weakRead = state.items.filter((r) => numOrNull(r?.valid_votes_extracted) !== null && !!r.weak_summary).length;
+  const withRead = state.items.filter((r) => hasRealDriveFile(r) && numOrNull(r?.valid_votes_extracted) !== null).length;
+  const weakRead = state.items.filter((r) => hasRealDriveFile(r) && numOrNull(r?.valid_votes_extracted) !== null && !!r.weak_summary).length;
   els.kpiGrid.innerHTML = '';
   els.kpiGrid.append(
     kpi('จำนวนไฟล์ทั้งหมด', totalFiles),
@@ -182,7 +187,7 @@ function renderKPIs(summary) {
 }
 
 function sourceValidValues(row) {
-  const read = numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes);
+  const read = hasRealDriveFile(row) ? numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes) : null;
   const ect = numOrNull(row?.sources?.ect?.valid_votes);
   const vote62 = numOrNull(row?.sources?.vote62?.valid_votes);
   const killernay = numOrNull(row?.sources?.killernay?.valid_votes);
@@ -562,6 +567,9 @@ function renderDetail(row) {
 }
 
 function rowTotals(row) {
+  if (!hasRealDriveFile(row)) {
+    return { valid: null, invalid: null, blank: null, total: null };
+  }
   // For skew logic, always keep a single-source equation:
   // total_used_ballots = valid + invalid + blank from the same "latest/read" source.
   // Do not use top-level fallback fields in this equation.
@@ -589,6 +597,7 @@ function _collectSkewDistrictRows(items, includeZero = false) {
   const out = [];
   byKey.forEach((g) => {
     if (!g.constituency || !g.party_list) return;
+    if (!hasRealDriveFile(g.constituency) || !hasRealDriveFile(g.party_list)) return;
     const ct = rowTotals(g.constituency);
     const pt = rowTotals(g.party_list);
     if (ct.total === null || pt.total === null) return;

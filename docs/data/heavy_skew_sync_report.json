@@ -1,0 +1,141 @@
+{
+  "updated_count": 17,
+  "updated": [
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 4,
+      "read_skew_before": 999,
+      "killernay_skew": -1,
+      "const_tot_after": 82947,
+      "party_tot_after": 82948
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 32,
+      "read_skew_before": -400,
+      "killernay_skew": 0,
+      "const_tot_after": 93917,
+      "party_tot_after": 93917
+    },
+    {
+      "province": "ฉะเชิงเทรา",
+      "district": 2,
+      "read_skew_before": 540,
+      "killernay_skew": 1,
+      "const_tot_after": 118518,
+      "party_tot_after": 118517
+    },
+    {
+      "province": "นครปฐม",
+      "district": 6,
+      "read_skew_before": 557,
+      "killernay_skew": 0,
+      "const_tot_after": 97368,
+      "party_tot_after": 97368
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 4,
+      "read_skew_before": 420,
+      "killernay_skew": 0,
+      "const_tot_after": 93980,
+      "party_tot_after": 93980
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 10,
+      "read_skew_before": 762,
+      "killernay_skew": 0,
+      "const_tot_after": 112031,
+      "party_tot_after": 112031
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 13,
+      "read_skew_before": 962,
+      "killernay_skew": 0,
+      "const_tot_after": 78490,
+      "party_tot_after": 78490
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 15,
+      "read_skew_before": 1874,
+      "killernay_skew": 1,
+      "const_tot_after": 99862,
+      "party_tot_after": 99861
+    },
+    {
+      "province": "นนทบุรี",
+      "district": 3,
+      "read_skew_before": -490,
+      "killernay_skew": 0,
+      "const_tot_after": 106780,
+      "party_tot_after": 106780
+    },
+    {
+      "province": "ปราจีนบุรี",
+      "district": 3,
+      "read_skew_before": 231,
+      "killernay_skew": -1,
+      "const_tot_after": 93848,
+      "party_tot_after": 93849
+    },
+    {
+      "province": "ปัตตานี",
+      "district": 3,
+      "read_skew_before": 519,
+      "killernay_skew": 0,
+      "const_tot_after": 70192,
+      "party_tot_after": 70192
+    },
+    {
+      "province": "ระยอง",
+      "district": 4,
+      "read_skew_before": 585,
+      "killernay_skew": 0,
+      "const_tot_after": 94724,
+      "party_tot_after": 94724
+    },
+    {
+      "province": "ศรีสะเกษ",
+      "district": 7,
+      "read_skew_before": 338,
+      "killernay_skew": 0,
+      "const_tot_after": 84203,
+      "party_tot_after": 84203
+    },
+    {
+      "province": "สกลนคร",
+      "district": 7,
+      "read_skew_before": -400,
+      "killernay_skew": 0,
+      "const_tot_after": 76157,
+      "party_tot_after": 76157
+    },
+    {
+      "province": "สุราษฎร์ธานี",
+      "district": 4,
+      "read_skew_before": -260,
+      "killernay_skew": 0,
+      "const_tot_after": 98789,
+      "party_tot_after": 98789
+    },
+    {
+      "province": "อุทัยธานี",
+      "district": 2,
+      "read_skew_before": 1075,
+      "killernay_skew": 0,
+      "const_tot_after": 83898,
+      "party_tot_after": 83898
+    },
+    {
+      "province": "อุบลราชธานี",
+      "district": 7,
+      "read_skew_before": 360,
+      "killernay_skew": 0,
+      "const_tot_after": 90567,
+      "party_tot_after": 90567
+    }
+  ]
+}
