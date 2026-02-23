@@ -1,4 +1,6 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
+const BUILD_TAG = 'redv50-debug-skew';
+const DATA_VERSION = '20260223-k9';
 
 const els = {
   kpiGrid: document.getElementById('kpiGrid'),
@@ -1885,12 +1887,11 @@ function setupSectionTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260223-k9';
   const [res, pmRes, pollRes, sec3Res] = await Promise.all([
-    fetch(`./data/district_dashboard_data.json?v=${dataVersion}`),
-    fetch(`./data/party_map.json?v=${dataVersion}`).catch(() => null),
-    fetch(`./data/poll_station_agg.json?v=${dataVersion}`).catch(() => null),
-    fetch(`./data/killernay_section3_agg.json?v=${dataVersion}`).catch(() => null)
+    fetch(`./data/district_dashboard_data.json?v=${DATA_VERSION}`),
+    fetch(`./data/party_map.json?v=${DATA_VERSION}`).catch(() => null),
+    fetch(`./data/poll_station_agg.json?v=${DATA_VERSION}`).catch(() => null),
+    fetch(`./data/killernay_section3_agg.json?v=${DATA_VERSION}`).catch(() => null)
   ]);
   const data = await res.json();
   if (pmRes && pmRes.ok) {
@@ -1923,7 +1924,8 @@ async function init() {
     (r.form_type === 'constituency' || r.form_type === 'party_list')
   );
 
-  els.generatedAt.textContent = `อัปเดตเมื่อ: ${data.generated_at || '-'} • แหล่งข้อมูล: กระบวนการอ่าน OCR`;
+  const skewRowsForMeta = computeSkewRows(state.items);
+  els.generatedAt.textContent = `อัปเดตเมื่อ: ${data.generated_at || '-'} • แหล่งข้อมูล: กระบวนการอ่าน OCR • build: ${BUILD_TAG} • data: ${DATA_VERSION} • skew: ${skewRowsForMeta.length}`;
   renderKPIs(data.summary || {});
   renderCoverageTable(state.items);
   renderIrregularityTable(state.items);
