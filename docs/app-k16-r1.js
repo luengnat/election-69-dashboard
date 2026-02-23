@@ -370,6 +370,25 @@ function renderRows(rows) {
     }
     const form = node.querySelector('.form');
     form.append(makeChip(r.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต', `form-chip ${r.form_type}`));
+
+    const winnerNameCell = node.querySelector('.winnerName');
+    const winnerPartyCell = node.querySelector('.winnerParty');
+    const winner = winnerInfo(r, 'latest');
+    if (!winner) {
+      winnerNameCell.textContent = '-';
+      winnerPartyCell.textContent = '-';
+    } else if (r.form_type === 'constituency') {
+      const key = String(winner.num);
+      const candidateName = r?.candidate_names?.[key] || '';
+      const partyName = r?.candidate_parties?.[key] || partyOrNameLabel(r, key, 'latest') || '';
+      winnerNameCell.textContent = candidateName ? `${key} ${candidateName}` : `หมายเลข ${key}`;
+      appendPartyLabelOrText(winnerPartyCell, partyName);
+    } else {
+      const partyName = partyOrNameLabel(r, winner.num, 'latest') || partyNameFromNo(winner.num);
+      winnerNameCell.textContent = `พรรคหมายเลข ${winner.num}`;
+      appendPartyLabelOrText(winnerPartyCell, partyName);
+    }
+
     const vals = sourceValidValues(r);
     node.querySelector('.readValid').textContent = vals.read === null ? '-' : vals.read.toLocaleString();
     node.querySelector('.ectValid').textContent = vals.ect === null ? '-' : vals.ect.toLocaleString();
@@ -479,7 +498,18 @@ function renderDetail(row) {
     const nm = document.createElement('td');
     const baseName = names[number] || '-';
     if (row.form_type === 'constituency' && parties[number]) {
-      nm.textContent = `${baseName} (${parties[number]})`;
+      const cand = document.createElement('span');
+      cand.textContent = baseName;
+      nm.append(cand);
+      const open = document.createElement('span');
+      open.textContent = ' (';
+      nm.append(open);
+      nm.append(buildPartyLabelNode(parties[number]));
+      const close = document.createElement('span');
+      close.textContent = ')';
+      nm.append(close);
+    } else if (row.form_type === 'party_list') {
+      nm.append(buildPartyLabelNode(baseName));
     } else {
       nm.textContent = baseName;
     }
