@@ -330,6 +330,10 @@ function renderDetail(row) {
     ...Object.keys(vote62Votes),
     ...Object.keys(killernayVotes)
   ]);
+  if (row.form_type === 'party_list') {
+    // Always render complete party range 1..57 for easier auditing.
+    for (let i = 1; i <= 57; i += 1) allNumbers.add(String(i));
+  }
 
   const rows = [...allNumbers]
     .map((number) => {
@@ -339,7 +343,17 @@ function renderDetail(row) {
       const killernay = numOrNull(killernayVotes[number]);
       return { number, read, ect, vote62, killernay };
     })
-    .sort((a, b) => (b.read ?? -1) - (a.read ?? -1) || Number(a.number) - Number(b.number));
+    .sort((a, b) => {
+      if (row.form_type === 'party_list') {
+        const an = Number(a.number);
+        const bn = Number(b.number);
+        const aInRange = Number.isFinite(an) && an >= 1 && an <= 57;
+        const bInRange = Number.isFinite(bn) && bn >= 1 && bn <= 57;
+        if (aInRange !== bInRange) return aInRange ? -1 : 1;
+        return an - bn;
+      }
+      return (b.read ?? -1) - (a.read ?? -1) || Number(a.number) - Number(b.number);
+    });
 
   rows.forEach(({ number, read, ect, vote62, killernay }) => {
     const tr = document.createElement('tr');
@@ -1053,7 +1067,7 @@ function setupTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260222-k7';
+  const dataVersion = '20260223-manual-recheck-final';
   const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
   const data = await res.json();
   state.items = (data.items || []).filter((r) =>

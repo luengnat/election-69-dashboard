@@ -1,0 +1,11 @@
+{
+  "rows_total": 800,
+  "summary": {
+    "row_exact": 757,
+    "missing_key": 24,
+    "row_with_diff": 15,
+    "both_empty": 25,
+    "killernay_empty": 3
+  },
+  "diff_records": 24
+}
