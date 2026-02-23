@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="./vendor/leaflet.css" />
-    <link rel="stylesheet" href="./styles.css?v=warm-k16-r3" />
+    <link rel="stylesheet" href="./styles.css?v=warm-k16" />
   </head>
   <body>
     <div class="bg-orb orb-a"></div>
@@ -21,7 +21,6 @@
         <p>ECT เป็นข้อมูลจากเว็บรายงานผลคะแนนแบบไม่เป็นทางการของ กกต.</p>
         <p>Vote62 เป็นข้อมูลภาคอาสาสมัคร (ภาพหน่วยเลือกตั้ง) อาจคลาดเคลื่อนจากผลทางการอย่างมีนัยสำคัญ</p>
         <p>Killernay เป็นข้อมูลจากการอ่านรายงานผลคะแนนแบบเป็นทางการของ กกต. โดย @killernay</p>
-        <p><strong>คำเตือน:</strong> ข้อมูลที่แสดงจำนวนมากมาจากการอ่านเอกสารด้วย AI และยังอยู่ระหว่างการสอบทานซ้ำ จึงอาจมีความผิดพลาดได้</p>
       </div>
     </header>
 
@@ -34,17 +33,6 @@
       </section>
 
       <section class="kpis" id="kpiGrid"></section>
-
-      <section class="panel view-tabs" id="sectionTabs">
-        <button class="tab active" data-section="overview">ผลการนับคะแนนเดิม</button>
-        <button class="tab" data-section="mismatch_ect">Winner Mismatch (Latest vs ECT)</button>
-        <button class="tab" data-section="mismatch_vote62">Winner Mismatch (Latest vs vote62)</button>
-        <button class="tab" data-section="seat_summary">MP Seat Summary</button>
-        <button class="tab" data-section="close_races">Close Races</button>
-        <button class="tab" data-section="quality_confidence">Data Quality / Confidence</button>
-        <button class="tab" data-section="anomaly_100_94">ความผิดปกติ 100% vs 94%</button>
-        <button class="tab" data-section="skew">บัตรเขย่ง</button>
-      </section>
 
       <section class="panel filters">
         <input id="searchInput" placeholder="ค้นหา จังหวัด / เขต / ไฟล์" />
@@ -62,175 +50,7 @@
         </select>
       </section>
 
-      <section class="panel" data-section-pane="mismatch_ect">
-        <div class="table-head">
-          <h2>เขตที่ผู้ชนะไม่ตรงกัน (Latest vs ECT)</h2>
-          <span id="winnerMismatchEctCount">0 รายการ</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>จังหวัด / เขต</th>
-                <th>ประเภท</th>
-                <th>ผู้ชนะล่าสุด</th>
-                <th>ผู้ชนะ ECT</th>
-                <th>ส่วนต่าง 1-2 (ล่าสุด)</th>
-                <th>หลักฐาน</th>
-                <th>ความมั่นใจ</th>
-              </tr>
-            </thead>
-            <tbody id="winnerMismatchEctBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" data-section-pane="mismatch_vote62">
-        <div class="table-head">
-          <h2>เขตที่ผู้ชนะไม่ตรงกัน (Latest vs vote62)</h2>
-          <span id="winnerMismatchVote62Count">0 รายการ</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>จังหวัด / เขต</th>
-                <th>ประเภท</th>
-                <th>ผู้ชนะล่าสุด</th>
-                <th>ผู้ชนะ vote62</th>
-                <th>Coverage vote62</th>
-                <th>Badge</th>
-                <th>หลักฐาน</th>
-              </tr>
-            </thead>
-            <tbody id="winnerMismatchVote62Body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" data-section-pane="seat_summary">
-        <div class="table-head">
-          <h2>สรุปที่นั่ง ส.ส.</h2>
-          <span id="seatSummaryMeta">โหมดล่าสุด</span>
-        </div>
-        <div class="filters" style="grid-template-columns: 1fr;">
-          <select id="seatMode">
-            <option value="latest">latest verified</option>
-            <option value="official">official (ECT)</option>
-            <option value="scenario">scenario (killernay)</option>
-          </select>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>พรรค</th>
-                <th>สส.เขต</th>
-                <th>สส.บัญชีรายชื่อ (100 ที่นั่ง)</th>
-                <th>รวมที่นั่ง</th>
-              </tr>
-            </thead>
-            <tbody id="seatSummaryBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" data-section-pane="close_races">
-        <div class="table-head">
-          <h2>เขตคะแนนสูสี (Close Races)</h2>
-          <span id="closeRaceCount">0 รายการ</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>จังหวัด / เขต</th>
-                <th>ประเภท</th>
-                <th>ผู้ชนะ</th>
-                <th>อันดับ 2</th>
-                <th>ส่วนต่างคะแนน</th>
-                <th>ส่วนต่าง %</th>
-                <th>คะแนนใช้สิทธิ (ประมาณ)</th>
-              </tr>
-            </thead>
-            <tbody id="closeRaceBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" data-section-pane="quality_confidence">
-        <div class="table-head">
-          <h2>คุณภาพข้อมูล / ความมั่นใจ</h2>
-          <span id="qualityCount">0 รายการ</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>จังหวัด / เขต</th>
-                <th>ประเภท</th>
-                <th>มี Latest</th>
-                <th>มี ECT</th>
-                <th>มี vote62</th>
-                <th>มี killernay</th>
-                <th>คะแนนความมั่นใจ</th>
-              </tr>
-            </thead>
-            <tbody id="qualityBody"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel" data-section-pane="anomaly_100_94">
-        <div class="table-head">
-          <h2>ความผิดปกติระหว่างผล 100% กับผล 94% (ECT)</h2>
-          <span id="anomaly100Count">0 รายการ</span>
-        </div>
-        <div class="filters" style="grid-template-columns: repeat(5, minmax(120px, 1fr));">
-          <label>
-            ผู้มาใช้สิทธิ ต่างเกิน (%)
-            <input id="anomalyTurnoutPct" type="number" min="0" step="0.5" value="6" />
-          </label>
-          <label>
-            บัตรเสีย ต่างเกิน (%)
-            <input id="anomalyInvalidPct" type="number" min="0" step="1" value="20" />
-          </label>
-          <label>
-            ผู้ชนะ ต่างเกิน (คะแนน)
-            <input id="anomalyWinnerVotes" type="number" min="0" step="100" value="1000" />
-          </label>
-          <label>
-            ผู้ชนะ ต่างเกิน (%)
-            <input id="anomalyWinnerPct" type="number" min="0" step="1" value="10" />
-          </label>
-          <label>
-            นอกเขตต่ำผิดปกติ (%)
-            <input id="anomalyOutsideLowPct" type="number" min="0" max="100" step="1" value="50" />
-          </label>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>จังหวัด / เขต</th>
-                <th>ประเภท</th>
-                <th>ผู้มาใช้สิทธิ 100%</th>
-                <th>ผู้มาใช้สิทธิ 94%</th>
-                <th>Δผู้มาใช้สิทธิ</th>
-                <th>บัตรเสีย 100% / 94%</th>
-                <th>Δบัตรเสีย</th>
-                <th>ผู้ชนะ 100% / 94%</th>
-                <th>Δคะแนนผู้ชนะ</th>
-                <th>นอกเขต/นอกราชฯ</th>
-                <th>ธงเตือน</th>
-              </tr>
-            </thead>
-            <tbody id="anomaly100Body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="split-grid" data-section-pane="overview">
+      <section class="split-grid">
         <section class="panel">
           <div class="table-head">
             <h2>ข้อมูลรายเขต</h2>
@@ -279,7 +99,7 @@
         </section>
       </section>
 
-      <section class="panel" data-section-pane="compare">
+      <section class="panel">
         <div class="table-head">
           <h2>ช่องว่างข้อมูล (รายเขต/ประเภท)</h2>
           <span id="coverageCount">0 รายการ</span>
@@ -301,7 +121,7 @@
         </div>
       </section>
 
-      <section class="panel" data-section-pane="irregularity">
+      <section class="panel">
         <div class="table-head">
           <h2>สัญญาณผิดปกติ</h2>
           <span id="irregularityCount">0 รายการ</span>
@@ -323,7 +143,7 @@
         </div>
       </section>
 
-      <section class="panel" data-section-pane="irregularity">
+      <section class="panel">
         <div class="table-head">
           <h2>สรุปความผิดปกติรายจังหวัด</h2>
           <span id="heatmapCount">0 จังหวัด</span>
@@ -344,7 +164,7 @@
         </div>
       </section>
 
-      <section class="panel" data-section-pane="skew">
+      <section class="panel">
         <div class="table-head">
           <h2>เขย่งรายเขต (ค่าหลัก)</h2>
           <span id="skewCount">0 รายการ</span>
@@ -371,7 +191,7 @@
         </div>
       </section>
 
-      <section class="panel" data-section-pane="skew">
+      <section class="panel">
         <div class="table-head">
           <h2>แผนที่เขย่งรายเขต (ลงสีรายเขต)</h2>
           <span id="skewMapCount">0 เขต</span>
@@ -379,7 +199,7 @@
         <div id="skewMap" class="skew-map"></div>
       </section>
 
-      <section class="panel" data-section-pane="compare">
+      <section class="panel">
         <div class="table-head">
           <h2>รายการต่างสูงสุด (บัตรดี)</h2>
           <span id="mismatchCount">0 รายการ</span>
@@ -417,6 +237,6 @@
     </template>
 
     <script src="./vendor/leaflet.js"></script>
-    <script src="./app-k16-r1.js?v=redv43-anomaly-complete-mapping"></script>
+    <script src="./app-k16.js?v=redv14-manual-recheck-final"></script>
   </body>
 </html>
