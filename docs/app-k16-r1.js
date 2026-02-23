@@ -58,6 +58,7 @@ let state = {
   partyMap: {},
   pollAggByDistrict: new Map(),
   section3ByDistrictForm: new Map(),
+  section3ByDistrict: new Map(),
   anomalyCfg: {
     turnoutPct: 6,
     invalidPct: 20,
@@ -1460,7 +1461,7 @@ function computeAnomaly100Rows(items) {
     const dKey = districtKey(row?.province, row?.district_number);
     const dfKey = districtFormKey(row?.province, row?.district_number, row?.form_type);
     const pollAgg = state.pollAggByDistrict.get(dKey) || null;
-    const sec3 = state.section3ByDistrictForm.get(dfKey) || null;
+    const sec3 = state.section3ByDistrictForm.get(dfKey) || state.section3ByDistrict.get(dKey) || null;
 
     const total100 = turnoutTotalFromSource(row, 'latest');
     const total94 = turnoutTotalFromSource(row, 'ect');
@@ -1485,7 +1486,7 @@ function computeAnomaly100Rows(items) {
 
     const outsideVotes = numOrNull(sec3?.outside_and_overseas_3_3);
     const outsideRegistered = numOrNull(pollAgg?.registered_outside_total);
-    let outsideStatus = 'รอข้อมูล poll-stations';
+    let outsideStatus = 'รอข้อมูลทั้งทะเบียนและค่า 3.3';
     let outsideShortfallPct = null;
     let outsideCompletionPct = null;
     if (outsideVotes !== null && outsideRegistered !== null && outsideRegistered > 0) {
@@ -1493,6 +1494,10 @@ function computeAnomaly100Rows(items) {
       outsideShortfallPct = (shortfall / outsideRegistered) * 100;
       outsideCompletionPct = (outsideVotes / outsideRegistered) * 100;
       outsideStatus = `${outsideVotes.toLocaleString()}/${outsideRegistered.toLocaleString()} (ใช้สิทธิ ${outsideCompletionPct.toFixed(2)}%)`;
+    } else if (outsideRegistered !== null && outsideVotes === null) {
+      outsideStatus = `ลงทะเบียน ${outsideRegistered.toLocaleString()} (ขาดค่า 3.3 จากเอกสารเขต)`;
+    } else if (outsideRegistered === null && outsideVotes !== null) {
+      outsideStatus = `มีค่า 3.3 = ${outsideVotes.toLocaleString()} (ขาดข้อมูลลงทะเบียนรายหน่วย)`;
     }
 
     const flags = [];
@@ -1752,6 +1757,11 @@ async function init() {
     state.section3ByDistrictForm = new Map(
       arr.map((r) => [districtFormKey(r?.province, r?.district_number, r?.form_type), r])
     );
+    state.section3ByDistrict = new Map();
+    arr.forEach((r) => {
+      const key = districtKey(r?.province, r?.district_number);
+      if (!state.section3ByDistrict.has(key)) state.section3ByDistrict.set(key, r);
+    });
   }
   state.items = (data.items || []).filter((r) =>
     r &&
