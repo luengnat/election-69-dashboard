@@ -230,6 +230,21 @@ tbody tr:hover {
   font-family: "IBM Plex Mono", monospace;
 }
 
+.party-with-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.party-logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e1c7a9;
+  background: #fff;
+}
+
 .loc-link {
   color: #8f2d07;
   text-decoration: underline;

@@ -1259,6 +1259,36 @@ function partyNameFromNo(partyNo) {
   return name || `หมายเลข ${no}`;
 }
 
+function partyLogoUrlByName(name) {
+  const clean = canonicalPartyKey(name);
+  if (!clean) return '';
+  return `https://election2569.thestandard.co/images/export_bg_light/${encodeURIComponent(clean)}.webp`;
+}
+
+function buildPartyLabelNode(name) {
+  const wrap = document.createElement('span');
+  wrap.className = 'party-with-logo';
+
+  const clean = canonicalPartyKey(name);
+  const label = document.createElement('span');
+  label.textContent = clean || '-';
+
+  const url = partyLogoUrlByName(clean);
+  if (url) {
+    const img = document.createElement('img');
+    img.className = 'party-logo';
+    img.alt = clean || 'party logo';
+    img.loading = 'lazy';
+    img.src = url;
+    img.addEventListener('error', () => {
+      img.remove();
+    });
+    wrap.append(img);
+  }
+  wrap.append(label);
+  return wrap;
+}
+
 function computePartyListSeats(items, sourceKey, totalSeats = 100) {
   const voteByNo = new Map();
   let totalVotes = 0;
@@ -1346,12 +1376,18 @@ function renderSeatSummary() {
   els.seatSummaryBody.innerHTML = '';
   rows.forEach((r) => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${r.party}</td>
-      <td class="mono">${r.mp_zone.toLocaleString()}</td>
-      <td class="mono">${r.party_list.toLocaleString()}</td>
-      <td class="mono">${r.total.toLocaleString()}</td>
-    `;
+    const party = document.createElement('td');
+    party.append(buildPartyLabelNode(r.party));
+    const zone = document.createElement('td');
+    zone.className = 'mono';
+    zone.textContent = r.mp_zone.toLocaleString();
+    const plist = document.createElement('td');
+    plist.className = 'mono';
+    plist.textContent = r.party_list.toLocaleString();
+    const total = document.createElement('td');
+    total.className = 'mono';
+    total.textContent = r.total.toLocaleString();
+    tr.append(party, zone, plist, total);
     els.seatSummaryBody.append(tr);
   });
   const modeLabel = mode === 'official' ? 'official (ECT)' : mode === 'scenario' ? 'scenario (killernay)' : 'latest verified';
@@ -1385,12 +1421,16 @@ function renderMpWinners(sourceKey = 'latest', limit = 500) {
   els.mpWinnersBody.innerHTML = '';
   rows.forEach(({ row, key, name, party, votes }) => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
-      <td>${name ? `${key} ${name}` : `หมายเลข ${key}`}</td>
-      <td>${party || '-'}</td>
-      <td class="mono">${votes === null ? '-' : Number(votes).toLocaleString()}</td>
-    `;
+    const loc = document.createElement('td');
+    loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
+    const winner = document.createElement('td');
+    winner.textContent = name ? `${key} ${name}` : `หมายเลข ${key}`;
+    const partyTd = document.createElement('td');
+    partyTd.append(buildPartyLabelNode(party));
+    const voteTd = document.createElement('td');
+    voteTd.className = 'mono';
+    voteTd.textContent = votes === null ? '-' : Number(votes).toLocaleString();
+    tr.append(loc, winner, partyTd, voteTd);
     els.mpWinnersBody.append(tr);
   });
   els.mpWinnersCount.textContent = `${rows.length} รายการ`;
