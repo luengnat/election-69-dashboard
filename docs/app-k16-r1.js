@@ -1,5 +1,5 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv51-skew-read-source';
+const BUILD_TAG = 'redv53-quality-issues';
 const DATA_VERSION = '20260223-k9';
 
 const els = {
@@ -340,10 +340,37 @@ function confidenceScore(row) {
   if (numOrNull(row?.sources?.vote62?.valid_votes) !== null) score += 10;
   if (numOrNull(row?.sources?.killernay?.valid_votes) !== null) score += 10;
   if (row?.weak_summary) score -= 15;
+  const issues = qualityIssueFlags(row);
+  if (issues.some((x) => x.kind === 'sum_mismatch')) score -= 20;
+  if (issues.some((x) => x.kind === 'document_inconsistent')) score -= 15;
   const kGap = killernayGap(row);
   if (kGap !== null && Math.abs(kGap) >= 1000) score -= 20;
   else if (kGap !== null && Math.abs(kGap) >= 200) score -= 10;
   return Math.max(0, Math.min(100, score));
+}
+
+function qualityIssueFlags(row) {
+  const flags = [];
+  const read = row?.sources?.read || {};
+  const valid = numOrNull(read?.valid_votes);
+  const votes = read?.votes || {};
+  const voteVals = Object.values(votes || {}).map((v) => numOrNull(v)).filter((v) => v !== null);
+  if (valid !== null && voteVals.length) {
+    const sumVotes = voteVals.reduce((s, v) => s + v, 0);
+    if (sumVotes !== valid) {
+      const delta = sumVotes - valid;
+      flags.push({
+        kind: 'sum_mismatch',
+        text: `sum!=valid (${delta > 0 ? '+' : ''}${delta.toLocaleString()})`
+      });
+    }
+  }
+  const reason = String(row?.update_reason || '').toLowerCase();
+  const totalSrc = String(row?.totals_source || '').toLowerCase();
+  if (reason.includes('inconsistent') || totalSrc.includes('inconsistent')) {
+    flags.push({ kind: 'document_inconsistent', text: 'เอกสาร/ผลรวมไม่สอดคล้อง' });
+  }
+  return flags;
 }
 
 function renderRows(rows) {
@@ -537,10 +564,10 @@ function renderDetail(row) {
 function rowTotals(row) {
   // For skew logic, always keep a single-source equation:
   // total_used_ballots = valid + invalid + blank from the same "latest/read" source.
-  // Do not mix ECT/vote62 fallback fields into this equation.
-  const valid = numOrNull(row?.sources?.read?.valid_votes ?? row?.valid_votes_extracted);
-  const invalid = numOrNull(row?.sources?.read?.invalid_votes ?? row?.invalid_votes);
-  const blank = numOrNull(row?.sources?.read?.blank_votes ?? row?.blank_votes);
+  // Do not use top-level fallback fields in this equation.
+  const valid = numOrNull(row?.sources?.read?.valid_votes);
+  const invalid = numOrNull(row?.sources?.read?.invalid_votes);
+  const blank = numOrNull(row?.sources?.read?.blank_votes);
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
@@ -1536,16 +1563,21 @@ function renderQualityTable(limit = 400) {
     .map((row) => ({
       row,
       score: confidenceScore(row),
+      issues: qualityIssueFlags(row),
       hasRead: numOrNull(row?.valid_votes_extracted ?? row?.sources?.read?.valid_votes) !== null,
       hasEct: numOrNull(row?.sources?.ect?.valid_votes) !== null,
       hasVote62: numOrNull(row?.sources?.vote62?.valid_votes) !== null,
       hasK: numOrNull(row?.sources?.killernay?.valid_votes) !== null
     }))
-    .sort((a, b) => a.score - b.score || String(a.row.province).localeCompare(String(b.row.province), 'th'))
+    .sort((a, b) =>
+      b.issues.length - a.issues.length
+      || a.score - b.score
+      || String(a.row.province).localeCompare(String(b.row.province), 'th')
+    )
     .slice(0, limit);
 
   els.qualityBody.innerHTML = '';
-  rows.forEach(({ row, score, hasRead, hasEct, hasVote62, hasK }) => {
+  rows.forEach(({ row, score, issues, hasRead, hasEct, hasVote62, hasK }) => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${row.province || '-'} เขต ${row.district_number || '-'}</td>
@@ -1554,11 +1586,13 @@ function renderQualityTable(limit = 400) {
       <td>${hasEct ? 'มี' : 'ไม่มี'}</td>
       <td>${hasVote62 ? 'มี' : 'ไม่มี'}</td>
       <td>${hasK ? 'มี' : 'ไม่มี'}</td>
+      <td>${issues.length ? issues.map((x) => x.text).join(' • ') : 'ปกติ'}</td>
       <td class="mono">${score}</td>
     `;
     els.qualityBody.append(tr);
   });
-  els.qualityCount.textContent = `${rows.length} รายการ`;
+  const issueRows = rows.filter((r) => r.issues.length > 0).length;
+  els.qualityCount.textContent = `${rows.length} รายการ • มีประเด็น ${issueRows} รายการ`;
 }
 
 function pctDelta(nowVal, baseVal) {
