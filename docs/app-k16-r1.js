@@ -1,5 +1,5 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv57-fix-name-party-fallback';
+const BUILD_TAG = 'redv58-winner-fallback-and-party-clean';
 const DATA_VERSION = '20260223-k11';
 
 const els = {
@@ -406,14 +406,14 @@ function renderRows(rows) {
 
     const winnerNameCell = node.querySelector('.winnerName');
     const winnerPartyCell = node.querySelector('.winnerParty');
-    const winner = winnerInfo(r, 'latest');
+    const winner = winnerInfo(r, 'latest') || winnerInfo(r, 'killernay') || winnerInfo(r, 'ect');
     if (!winner) {
       winnerNameCell.textContent = '-';
       winnerPartyCell.textContent = '-';
     } else if (r.form_type === 'constituency') {
       const key = String(winner.num);
-      const candidateName = r?.candidate_names?.[key] || '';
-      const partyName = r?.candidate_parties?.[key] || partyOrNameLabel(r, key, 'latest') || '';
+      const candidateName = lookupByNumber(r?.candidate_names, key) || '';
+      const partyName = lookupByNumber(r?.candidate_parties, key) || partyOrNameLabel(r, key, 'latest') || '';
       winnerNameCell.textContent = candidateName ? `${key} ${candidateName}` : `หมายเลข ${key}`;
       appendPartyLabelOrText(winnerPartyCell, partyName);
     } else {
@@ -1306,11 +1306,13 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
 }
 
 function canonicalPartyKey(label) {
-  return String(label || '')
+  const clean = String(label || '')
     .trim()
     .replace(/^\d+\s*/u, '')
     .replace(/^พรรค\s*/u, '')
     .replace(/\s+/g, ' ');
+  const dup = clean.match(/^(.+)\s+\1$/u);
+  return dup ? dup[1].trim() : clean;
 }
 
 function partyNameFromNo(partyNo) {
