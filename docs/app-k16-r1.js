@@ -217,7 +217,9 @@ function valueStatusChip(ok) {
 }
 
 function districtKey(province, districtNumber) {
-  return `${String(province || '').trim()}|${Number(districtNumber || 0)}`;
+  const raw = String(province || '').trim();
+  const p = raw.replace(/^จังหวัด\s*/, '');
+  return `${p}|${Number(districtNumber || 0)}`;
 }
 
 function districtFormKey(province, districtNumber, formType) {
