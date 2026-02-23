@@ -1,6 +1,6 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv58-winner-fallback-and-party-clean';
-const DATA_VERSION = '20260223-k11';
+const BUILD_TAG = 'redv59-buriram-killernay-sanitize';
+const DATA_VERSION = '20260223-k12';
 
 const els = {
   kpiGrid: document.getElementById('kpiGrid'),
