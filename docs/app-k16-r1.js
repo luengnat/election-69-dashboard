@@ -1,6 +1,6 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
-const BUILD_TAG = 'redv54-anomaly-killernay-fallback';
-const DATA_VERSION = '20260223-k9';
+const BUILD_TAG = 'redv55-killernay-totals-backfill';
+const DATA_VERSION = '20260223-k10';
 
 const els = {
   kpiGrid: document.getElementById('kpiGrid'),
