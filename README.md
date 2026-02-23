@@ -10,3 +10,14 @@ District-level extraction + verification dashboard published via GitHub Pages.
 ## Site
 After GitHub Pages deploy, open:
 - https://luengnat.github.io/election-69-dashboard/
+
+## Security Hygiene
+- Never commit API keys, access tokens, or private keys.
+- Keep local secrets in `.env` (ignored by git).
+- Run local secret scan before push:
+
+```bash
+bash scripts/scan_secrets.sh
+```
+
+- CI also runs `.github/workflows/secret-scan.yml` on push/PR.
