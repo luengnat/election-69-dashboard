@@ -178,6 +178,21 @@ function winnerDisagreement(row) {
   return new Set(wins).size > 1;
 }
 
+function sumVotesMismatch(votesObj, reportedValid) {
+  const reported = numOrNull(reportedValid);
+  if (reported === null || !votesObj) return false;
+  let sum = 0;
+  let hasValid = false;
+  for (const v of Object.values(votesObj)) {
+    const num = numOrNull(v);
+    if (num !== null) {
+      sum += num;
+      hasValid = true;
+    }
+  }
+  return hasValid && sum !== reported;
+}
+
 function renderRows(rows) {
   els.tableBody.innerHTML = '';
   rows.forEach((r) => {
@@ -220,6 +235,12 @@ function renderRows(rows) {
     }
     if (winnerDisagreement(r)) {
       flagsCell.append(makeChip('Winner mismatch', 'form-chip party_list'));
+    }
+    if (sumVotesMismatch(r.votes, vals.read)) {
+      flagsCell.append(makeChip('Sum mismatch (อ่านได้)', 'form-chip party_list'));
+    }
+    if (sumVotesMismatch(r.sources?.killernay?.votes, vals.killernay)) {
+      flagsCell.append(makeChip('Sum mismatch (killernay)', 'form-chip party_list'));
     }
     if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
       flagsCell.append(makeChip('vote62 far', 'form-chip constituency'));
@@ -537,13 +558,10 @@ function computeIrregularityRows(items) {
     const blank = numOrNull(r?.blank_votes ?? r?.sources?.read?.blank_votes);
     const read = vals.read;
     const badRate = (read !== null && inv !== null && blank !== null && read > 0) ? ((inv + blank) / read) : null;
-    const winMismatch = (() => {
-      const src = r?.sources || {};
-      const a = winnerNumber(r?.votes || {});
-      const b = winnerNumber(src?.killernay?.votes || {});
-      if (a === null || b === null) return false;
-      return a !== b;
-    })();
+    const winMismatch = winnerDisagreement(r);
+    const sumMismatchRead = sumVotesMismatch(r.votes, vals.read);
+    const sumMismatchKillernay = sumVotesMismatch(r.sources?.killernay?.votes, vals.killernay);
+
     const flags = [];
     let severity = 0;
 
@@ -560,6 +578,10 @@ function computeIrregularityRows(items) {
     }
     if (winMismatch) {
       flags.push('winner_disagreement');
+      severity += 2;
+    }
+    if (sumMismatchRead || sumMismatchKillernay) {
+      flags.push('sum_mismatch');
       severity += 2;
     }
     if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {

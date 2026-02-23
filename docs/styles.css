@@ -123,10 +123,6 @@ h1 {
   color: #fff;
 }
 
-[data-section-pane][hidden] {
-  display: none !important;
-}
-
 .filters {
   display: grid;
   grid-template-columns: 1.5fr repeat(3, 1fr);
