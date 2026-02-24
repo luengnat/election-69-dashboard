@@ -599,7 +599,8 @@ function _collectSkewDistrictRows(items, includeZero = false) {
   const out = [];
   byKey.forEach((g) => {
     if (!g.constituency || !g.party_list) return;
-    if (!hasRealDriveFile(g.constituency) || !hasRealDriveFile(g.party_list)) return;
+    if (NO_FILE_REASON_MAP.has(`${g.province}|${g.district_number}`)) return;
+    if (!g.constituency?.availability?.has_extracted || !g.party_list?.availability?.has_extracted) return;
     const ct = rowTotals(g.constituency);
     const pt = rowTotals(g.party_list);
     if (ct.total === null || pt.total === null) return;
