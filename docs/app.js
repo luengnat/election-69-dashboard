@@ -334,19 +334,10 @@ function renderDetail(row) {
 }
 
 function rowTotals(row) {
-  const valid = numOrNull(row?.valid_votes_extracted ?? row?.valid_votes ?? row?.sources?.read?.valid_votes);
-  const invalid = numOrNull(
-    row?.invalid_votes ??
-    row?.sources?.read?.invalid_votes ??
-    row?.sources?.ect?.invalid_votes ??
-    row?.sources?.vote62?.invalid_votes
-  );
-  const blank = numOrNull(
-    row?.blank_votes ??
-    row?.sources?.read?.blank_votes ??
-    row?.sources?.ect?.blank_votes ??
-    row?.sources?.vote62?.blank_votes
-  );
+  const read = row?.sources?.read || {};
+  const valid = numOrNull(read.valid_votes ?? row?.valid_votes_extracted ?? row?.valid_votes);
+  const invalid = numOrNull(read.invalid_votes ?? row?.invalid_votes);
+  const blank = numOrNull(read.blank_votes ?? row?.blank_votes);
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
