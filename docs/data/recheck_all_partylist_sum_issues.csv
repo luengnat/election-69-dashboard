@@ -1,0 +1,4 @@
+province,district_number,drive_id,valid,sum_votes,delta
+กรุงเทพมหานคร,15,missing::กรุงเทพมหานคร::15::party_list,81890,0,81890
+นครพนม,2,missing::นครพนม::2::party_list,81917,0,81917
+อุดรธานี,6,missing::อุดรธานี::6::party_list,73916,0,73916

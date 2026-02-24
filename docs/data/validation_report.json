@@ -1,0 +1,12 @@
+{
+  "input": "docs/data/district_dashboard_data.json",
+  "stats": {
+    "rows": 800,
+    "party_list_rows": 400,
+    "constituency_rows": 400,
+    "party_list_sum_checks": 387,
+    "total_ballot_checks": 800
+  },
+  "issue_count": 0,
+  "issues": []
+}
