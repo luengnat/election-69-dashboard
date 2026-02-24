@@ -349,9 +349,9 @@ function renderDetail(row) {
 
 function rowTotals(row) {
   const read = row?.sources?.read || {};
-  const valid = numOrNull(read.valid_votes ?? row?.valid_votes_extracted ?? row?.valid_votes);
-  const invalid = numOrNull(read.invalid_votes ?? row?.invalid_votes);
-  const blank = numOrNull(read.blank_votes ?? row?.blank_votes);
+  const valid = numOrNull(read.valid_votes);
+  const invalid = numOrNull(read.invalid_votes);
+  const blank = numOrNull(read.blank_votes);
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
@@ -373,6 +373,7 @@ function _collectSkewDistrictRows(items, includeZero = false) {
   const out = [];
   byKey.forEach((g) => {
     if (!g.constituency || !g.party_list) return;
+    if (!g.constituency?.availability?.has_extracted || !g.party_list?.availability?.has_extracted) return;
     const ct = rowTotals(g.constituency);
     const pt = rowTotals(g.party_list);
     if (ct.total === null || pt.total === null) return;
