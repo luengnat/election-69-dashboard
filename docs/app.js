@@ -359,6 +359,7 @@ function computeSkewRows(items) {
   const out = [];
   byKey.forEach((g) => {
     if (!g.constituency || !g.party_list) return;
+    if (NO_FILE_REASON_MAP.has(`${g.province}|${g.district_number}`)) return;
     if (!g.constituency?.availability?.has_extracted || !g.party_list?.availability?.has_extracted) return;
     const ct = rowTotals(g.constituency);
     const pt = rowTotals(g.party_list);
