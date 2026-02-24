@@ -7,6 +7,167 @@
     "party_list_sum_checks": 387,
     "total_ballot_checks": 800
   },
-  "issue_count": 0,
-  "issues": []
+  "issue_count": 20,
+  "issues": [
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "12PCZZ-z57PUhbjVN66TD4v71KuT5rmXn",
+      "detail": "sum(votes)=78811 but valid_votes_extracted=78875"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 11,
+      "form_type": "party_list",
+      "drive_id": "1Jn04KDYVmVblmPMmgIc_Z0Vnqjie9Zps",
+      "detail": "sum(votes)=96157 but valid_votes_extracted=96112"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "กำแพงเพชร",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "1JKuTUuv2_jAxTwFMQy1yY64naTKKLMpN",
+      "detail": "sum(votes)=81857 but valid_votes_extracted=81932"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "นครสวรรค์",
+      "district_number": 2,
+      "form_type": "party_list",
+      "drive_id": "1uxpeyJsHI9u2yjsWyWbtznqCWqydgrq5",
+      "detail": "sum(votes)=94928 but valid_votes_extracted=94978"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "พัทลุง",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "1GiklxDqIMRTEdCAF_Fs2zZdQOHFL8T6J",
+      "detail": "sum(votes)=110884 but valid_votes_extracted=110887"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "พิจิตร",
+      "district_number": 1,
+      "form_type": "party_list",
+      "drive_id": "1EqYsbTpKbYhgxlWOBnmlEUoewpeZi9VK",
+      "detail": "sum(votes)=91021 but valid_votes_extracted=91071"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "มหาสารคาม",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "1m6p0W60L7ylSlN-MnOrzWw19qf8Pl_Dx",
+      "detail": "sum(votes)=83169 but valid_votes_extracted=83196"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "มหาสารคาม",
+      "district_number": 4,
+      "form_type": "party_list",
+      "drive_id": "1-m1GYDC8rHZ-h4Cp7eYpsHb4frFogqs4",
+      "detail": "sum(votes)=79657 but valid_votes_extracted=79695"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "มุกดาหาร",
+      "district_number": 2,
+      "form_type": "party_list",
+      "drive_id": "1-Kb6C7orOGn7_e0Hb0-H7CslLQTUkH9T",
+      "detail": "sum(votes)=93374 but valid_votes_extracted=93394"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "ระยอง",
+      "district_number": 1,
+      "form_type": "party_list",
+      "drive_id": "1RxBl92eWFsLYeYnuNys7UwGRub9ODkE3",
+      "detail": "sum(votes)=86327 but valid_votes_extracted=86337"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "ราชบุรี",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "1VPSZqWXLeZ-r7i0UgEJe1Anv3cYOM0II",
+      "detail": "sum(votes)=98075 but valid_votes_extracted=98080"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "ร้อยเอ็ด",
+      "district_number": 4,
+      "form_type": "party_list",
+      "drive_id": "1WMlPUNDl0MMw2FKUkj9S8QOIIciPpJYO",
+      "detail": "sum(votes)=79291 but valid_votes_extracted=79301"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "ร้อยเอ็ด",
+      "district_number": 8,
+      "form_type": "party_list",
+      "drive_id": "1DcJZYk_cv9elrpMzvyZJwJbwyq-nwJ_C",
+      "detail": "sum(votes)=84863 but valid_votes_extracted=84903"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "ศรีสะเกษ",
+      "district_number": 2,
+      "form_type": "party_list",
+      "drive_id": "1-JjjxtDaYbpE0_7sCR_qUYf8bCrSEaEY",
+      "detail": "sum(votes)=79297 but valid_votes_extracted=79352"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "สงขลา",
+      "district_number": 5,
+      "form_type": "party_list",
+      "drive_id": "1I5u_s9TaHpYiuklM-IGg4RsaLHpqG8FQ",
+      "detail": "sum(votes)=98003 but valid_votes_extracted=97917"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "สมุทรสาคร",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "116MCAtwTSvX8r1ZpO4IsmU__Ecy-SX3i",
+      "detail": "sum(votes)=76687 but valid_votes_extracted=76686"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "สระแก้ว",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "1Q-K5Vy2zeWafPEvfjIanoB9rq1DT2aSI",
+      "detail": "sum(votes)=92248 but valid_votes_extracted=92333"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "หนองบัวลำภู",
+      "district_number": 3,
+      "form_type": "party_list",
+      "drive_id": "1suatd5eSNP4iRyJnRIc9xiU540_eFunX",
+      "detail": "sum(votes)=76802 but valid_votes_extracted=76807"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "อุดรธานี",
+      "district_number": 8,
+      "form_type": "party_list",
+      "drive_id": "1w_SBbwaAtKrjiTr1Xpd9rtSj8awDJaAu",
+      "detail": "sum(votes)=70089 but valid_votes_extracted=70133"
+    },
+    {
+      "issue_type": "party_list_sum_mismatch",
+      "province": "อ่างทอง",
+      "district_number": 2,
+      "form_type": "party_list",
+      "drive_id": "1lVNzUv0nyPdUfU7bLnPf9JHx_AOgls0i",
+      "detail": "sum(votes)=78264 but valid_votes_extracted=78266"
+    }
+  ]
 }
