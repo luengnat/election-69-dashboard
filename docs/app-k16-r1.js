@@ -76,6 +76,10 @@ let skewGeoLayer = null;
 let skewGeoPromise = null;
 const sectionPanes = [...document.querySelectorAll('[data-section-pane]')];
 const MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH = 20;
+const KNOWN_ECT_WINNER_ANOMALIES = new Set([
+  districtFormKey('กรุงเทพมหานคร', 7, 'constituency'),
+  districtFormKey('กรุงเทพมหานคร', 28, 'constituency')
+]);
 
 const PARTY_MAP_FALLBACK = {"1": "ไทยทรัพย์ทวี", "10": "ทางเลือกใหม่", "11": "เศรษฐกิจ", "12": "เสรีรวมไทย", "13": "รวมพลังประชาชน", "14": "ท้องที่ไทย", "15": "อนาคตไทย", "16": "พลังเพื่อไทย", "17": "ไทยชนะ", "18": "พลังสังคมใหม่", "19": "สังคมประชาธิปไตยไทย", "2": "เพื่อชาติไทย", "20": "ฟิวชัน", "21": "ไทยรวมพลัง", "22": "ก้าวอิสระ", "23": "ปวงชนไทย", "24": "วิชชั่นใหม่", "25": "เพื่อชีวิตใหม่", "26": "คลองไทย", "27": "ประชาธิปัตย์", "28": "ไทยก้าวหน้า", "29": "ไทยภักดี", "3": "ใหม่", "30": "แรงงานสร้างชาติ", "31": "ประชากรไทย", "32": "ครูไทยเพื่อประชาชน", "33": "ประชาชาติ", "34": "สร้างอนาคตไทย", "35": "รักชาติ", "36": "ไทยพร้อม", "37": "ภูมิใจไทย", "38": "พลังธรรมใหม่", "39": "กรีน", "4": "มิติใหม่", "40": "ไทยธรรม", "41": "แผ่นดินธรรม", "42": "กล้าธรรม", "43": "พลังประชารัฐ", "44": "โอกาสใหม่", "45": "เป็นธรรม", "46": "ประชาชน", "47": "ประชาไทย", "48": "ไทยสร้างไทย", "49": "ไทยก้าวใหม่", "5": "รวมใจไทย", "50": "ประชาอาสาชาติ", "51": "พร้อม", "52": "เครือข่ายชาวนาแห่งประเทศไทย", "53": "ไทยพิทักษ์ธรรม", "54": "ความหวังใหม่", "55": "ไทยรวมไทย", "56": "เพื่อบ้านเมือง", "57": "พลังไทยรักชาติ", "6": "รวมไทยสร้างชาติ", "7": "พลวัต", "8": "ประชาธิปไตยใหม่", "9": "เพื่อไทย"};
 
@@ -309,6 +313,18 @@ function displayLabel(row, num, sourceKey = 'latest') {
     return String(raw).startsWith('พรรค') ? String(raw) : `พรรค${raw}`;
   }
   return raw ? `${key} ${raw}` : `หมายเลข ${key}`;
+}
+
+function cleanLabelText(raw) {
+  const s = String(raw || '').trim();
+  if (!s) return '';
+  const parts = s.split(/\s*\n+\s*/).map((x) => x.trim()).filter(Boolean);
+  if (parts.length <= 1) return s;
+  const uniq = [];
+  for (const p of parts) {
+    if (!uniq.includes(p)) uniq.push(p);
+  }
+  return uniq.join(' ');
 }
 
 function winnerInfo(row, sourceKey) {
@@ -1205,6 +1221,9 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
   const rows = state.filtered
     .map((row) => {
       if (row?.form_type !== 'constituency') return null;
+      if (sourceKey === 'ect' && KNOWN_ECT_WINNER_ANOMALIES.has(districtFormKey(row.province, row.district_number, row.form_type))) {
+        return null;
+      }
       const wLatest = winnerInfo(row, 'latest');
       const wOther = winnerInfo(row, sourceKey);
       if (!wLatest || !wOther || wLatest.num === wOther.num) return null;
@@ -1244,12 +1263,12 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
     const latestLabel = row?.form_type === 'constituency'
       ? (partyOrNameLabel(row, wLatest.num, 'latest') || displayWinner(wLatest, 'latest'))
       : displayWinner(wLatest, 'latest');
-    appendPartyLabelOrText(wl, latestLabel);
+    appendPartyLabelOrText(wl, cleanLabelText(latestLabel));
     const wo = document.createElement('td');
     const otherLabel = row?.form_type === 'constituency'
       ? (partyOrNameLabel(row, wOther.num, sourceKey) || displayWinner(wOther, sourceKey))
       : displayWinner(wOther, sourceKey);
-    appendPartyLabelOrText(wo, otherLabel);
+    appendPartyLabelOrText(wo, cleanLabelText(otherLabel));
     const mg = document.createElement('td');
     mg.className = 'mono';
     mg.textContent = margin.diff === null ? '-' : margin.diff.toLocaleString();
