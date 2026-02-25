@@ -11,6 +11,10 @@ District-level extraction + verification dashboard published via GitHub Pages.
 After GitHub Pages deploy, open:
 - https://luengnat.github.io/election-69-dashboard/
 
+## Operations Manual (TH)
+- Detailed self-run manual (without Codex):
+  - `docs/MANUAL_SELF_RUN_TH.md`
+
 ## Security Hygiene
 - Never commit API keys, access tokens, or private keys.
 - Keep local secrets in `.env` (ignored by git).
