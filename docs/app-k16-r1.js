@@ -1202,16 +1202,6 @@ function renderMismatchTable(items, limit = 120) {
 
 function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage = false) {
   if (!bodyEl || !countEl) return;
-  const hiddenPartyListMismatchCount = state.filtered
-    .map((row) => {
-      if (row?.form_type !== 'party_list') return null;
-      const wLatest = winnerInfo(row, 'latest');
-      const wOther = winnerInfo(row, sourceKey);
-      if (!wLatest || !wOther || wLatest.num === wOther.num) return null;
-      return 1;
-    })
-    .filter(Boolean).length;
-
   const rows = state.filtered
     .map((row) => {
       if (row?.form_type !== 'constituency') return null;
@@ -1249,7 +1239,7 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
     const loc = document.createElement('td');
     loc.textContent = `${row.province || '-'} เขต ${row.district_number || '-'}`;
     const form = document.createElement('td');
-    form.textContent = row.form_type === 'party_list' ? 'บัญชีรายชื่อ' : 'แบ่งเขต';
+    form.textContent = 'แบ่งเขต';
     const wl = document.createElement('td');
     const latestLabel = row?.form_type === 'constituency'
       ? (partyOrNameLabel(row, wLatest.num, 'latest') || displayWinner(wLatest, 'latest'))
@@ -1300,9 +1290,9 @@ function renderWinnerMismatchTable(sourceKey, bodyEl, countEl, includeCoverage =
     bodyEl.append(tr);
   });
   if (includeCoverage) {
-    countEl.textContent = `${rows.length} รายการ (coverage>=${MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH}: ${highCoverageCount} • ต่ำกว่าเกณฑ์: ${lowCoverageCount} • รายชื่อที่ไม่ตรงกันแต่ซ่อนไว้: ${hiddenPartyListMismatchCount})`;
+    countEl.textContent = `${rows.length} รายการ (coverage>=${MIN_VOTE62_COVERAGE_FOR_WINNER_MISMATCH}: ${highCoverageCount} • ต่ำกว่าเกณฑ์: ${lowCoverageCount})`;
   } else {
-    countEl.textContent = `${rows.length} รายการ • รายชื่อที่ไม่ตรงกันแต่ซ่อนไว้: ${hiddenPartyListMismatchCount}`;
+    countEl.textContent = `${rows.length} รายการ`;
   }
 }
 
