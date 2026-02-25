@@ -1,13 +1,13 @@
 {
   "summary": {
     "all_rows": 800,
-    "with_killernay": 772,
-    "exact_votes_match": 744,
-    "diff_votes_rows": 28,
+    "with_killernay": 794,
+    "exact_votes_match": 484,
+    "diff_votes_rows": 310,
     "party_list_rows": 400,
     "constituency_rows": 400,
-    "party_list_diff_rows": 23,
-    "constituency_diff_rows": 5
+    "party_list_diff_rows": 102,
+    "constituency_diff_rows": 208
   },
-  "remaining_partylist_sum_issues": 3
+  "remaining_partylist_sum_issues": 22
 }
