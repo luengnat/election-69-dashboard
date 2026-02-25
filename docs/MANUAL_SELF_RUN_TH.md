@@ -14,6 +14,7 @@
 สคริปต์หลัก:
 - `/Users/nat/dev/election/drive_cdp_browser.py`
 - `/tmp/election-main/scripts/validate_dashboard_data.py`
+- `/tmp/election-main/scripts/export_first2_csv.py`
 
 ## 2) เตรียมระบบครั้งแรก
 
@@ -163,6 +164,19 @@ for (p,k),g in sorted(by.items()):
 PY
 ```
 
+### 7.3 Generate export CSV (ไฟล์ส่งต่อ)
+```bash
+cd /tmp/election-main
+python3 scripts/export_first2_csv.py \
+  --input docs/data/district_dashboard_data.json \
+  --out-const export_first2_constituency_100.csv \
+  --out-party export_first2_party_list_100.csv
+
+wc -l export_first2_constituency_100.csv export_first2_party_list_100.csv
+```
+ค่าที่ควรได้:
+- `401` บรรทัดต่อไฟล์ (header + 400 เขต)
+
 ## 8) รันเว็บ local ตรวจด้วยสายตา
 
 ```bash
@@ -186,6 +200,11 @@ gh auth setup-git -h github.com
 git add docs/data/district_dashboard_data.json docs/app-k16-r1.js docs/index.html
 git commit -m "Update verified district totals"
 git push origin HEAD:main
+```
+
+ถ้ามีการอัปเดตไฟล์ export ด้วย ให้ add เพิ่ม:
+```bash
+git add export_first2_constituency_100.csv export_first2_party_list_100.csv
 ```
 
 หลัง push:
@@ -225,4 +244,3 @@ git push origin HEAD:main
 - [ ] validate script ผ่าน
 - [ ] หน้า Winner Mismatch (ECT) มีเฉพาะแบ่งเขต
 - [ ] commit/push ขึ้น `main` สำเร็จ
-
