@@ -130,46 +130,78 @@ class CdpPage:
 
 
 def _extract_first_json_object(text: str) -> str:
+    """Extract the best valid JSON object from text, skipping invalid/noisy ones."""
     if not text:
         return ""
     raw = text.strip()
+
+    # First try fenced JSON blocks
     fence = re.search(r"```(?:json)?\s*(\{[\s\S]*?\})\s*```", raw, flags=re.IGNORECASE)
     if fence:
-        return fence.group(1).strip()
+        cand = fence.group(1).strip()
+        if _is_valid_gemini_json(cand):
+            return cand
 
-    start = raw.find("{")
-    if start < 0:
-        return ""
-    depth = 0
-    in_str = False
-    esc = False
-    for i in range(start, len(raw)):
-        ch = raw[i]
-        if in_str:
-            if esc:
-                esc = False
-            elif ch == "\\":
-                esc = True
-            elif ch == '"':
-                in_str = False
+    # Find all JSON objects and return the best one
+    candidates = []
+    pos = 0
+    while pos < len(raw):
+        start = raw.find("{", pos)
+        if start < 0:
+            break
+        depth = 0
+        in_str = False
+        esc = False
+        end_pos = None
+        for i in range(start, len(raw)):
+            ch = raw[i]
+            if in_str:
+                if esc:
+                    esc = False
+                elif ch == "\\":
+                    esc = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+                continue
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    end_pos = i
+                    break
+        if end_pos is None:
+            break
+        cand = raw[start : end_pos + 1]
+        try:
+            obj = json.loads(cand)
+            if isinstance(obj, dict):
+                candidates.append((cand, obj))
+        except Exception:
+            pass
+        pos = end_pos + 1
+
+    # Return the best candidate (prefer larger objects with numeric values)
+    best = ""
+    best_score = 0
+    for cand, obj in candidates:
+        if not _is_valid_gemini_json(cand):
             continue
-        if ch == '"':
-            in_str = True
-            continue
-        if ch == "{":
-            depth += 1
-        elif ch == "}":
-            depth -= 1
-            if depth == 0:
-                cand = raw[start : i + 1]
-                try:
-                    obj = json.loads(cand)
-                    if isinstance(obj, dict):
-                        return cand
-                except Exception:
-                    pass
-                break
-    return ""
+        # Score: prefer objects with more keys and numeric values
+        score = len(obj)
+        for v in obj.values():
+            if isinstance(v, (int, float)):
+                score += 10
+            elif isinstance(v, str) and any(c.isdigit() for c in v):
+                score += 5
+        if score > best_score:
+            best_score = score
+            best = cand
+
+    return best
 
 
 def _json_needs_retry(parsed_json_text: str) -> bool:
@@ -492,11 +524,148 @@ async def _ask_gemini_question(page: CdpPage, prompt: str) -> bool:
 
 
 async def _gemini_has_retry(page: CdpPage) -> bool:
+    """Check if Gemini response is complete (Retry/View more visible) or failed (Something went wrong)."""
     expr = """(() => {
       const t = (document.body?.innerText || '').toLowerCase();
-      return t.includes('\\nretry\\n') || t.includes('retry\\n') || t.includes('\\nretry');
+      // Success indicators: Retry button appears after response
+      const hasRetry = t.includes('retry') || t.includes('view more') || t.includes('show fewer');
+      // Error indicators: Gemini failed
+      const hasError = t.includes('something went wrong') || t.includes('try again') && !t.includes('try again.');
+      // Loading indicator: still generating
+      const isLoading = t.includes('generating') || t.includes('thinking');
+      return hasRetry || hasError;
     })()"""
     return bool(await page.eval(expr))
+
+
+async def _gemini_has_error(page: CdpPage) -> bool:
+    """Check if Gemini returned an error."""
+    expr = """(() => {
+      const t = (document.body?.innerText || '').toLowerCase();
+      return t.includes('something went wrong') || (t.includes('try again') && t.includes('went wrong'));
+    })()"""
+    return bool(await page.eval(expr))
+
+
+async def _click_try_again(page: CdpPage) -> bool:
+    """Click 'Try again' button when Gemini errors."""
+    expr = """(() => {
+      const buttons = [...document.querySelectorAll('button,[role="button"],div[role="button"]')];
+      const tryAgain = buttons.find(el => {
+        const t = (el.innerText || '').trim().toLowerCase();
+        const a = (el.getAttribute('aria-label') || '').trim().toLowerCase();
+        return t === 'try again' || a.includes('try again');
+      });
+      if (tryAgain) {
+        tryAgain.click();
+        return true;
+      }
+      return false;
+    })()"""
+    clicked = bool(await page.eval(expr))
+    if clicked:
+        await asyncio.sleep(1.0)
+    return clicked
+
+
+async def _extract_gemini_response_json(page: CdpPage) -> str:
+    """Try to extract JSON specifically from Gemini response area, not UI elements."""
+    expr = """(() => {
+      // Find Gemini response container - typically after "View" and before "Gemini in Workspace"
+      const body = document.body?.innerText || '';
+      const lines = body.split('\\n');
+
+      // Look for JSON-like content between response markers
+      let inResponse = false;
+      let responseText = '';
+
+      for (const line of lines) {
+        const trimmed = line.trim();
+        // Skip UI elements
+        if (trimmed.includes('File') && trimmed.includes('View') && trimmed.includes('Tools')) continue;
+        if (trimmed.includes('Ask Gemini')) continue;
+        if (trimmed.includes('More options')) continue;
+        if (trimmed === 'Gemini' || trimmed === 'View' || trimmed === 'Close') continue;
+        if (trimmed.includes('Gemini in Workspace')) break;
+
+        // Start capturing after we see the question or Edit text
+        if (trimmed.includes('Edit text') || trimmed.startsWith('{') || trimmed.startsWith('[')) {
+          inResponse = true;
+        }
+
+        if (inResponse) {
+          responseText += line + '\\n';
+        }
+      }
+
+      // Extract first JSON object from response
+      const start = responseText.indexOf('{');
+      if (start < 0) return '';
+      let depth = 0;
+      let inStr = false;
+      let escaped = false;
+
+      for (let i = start; i < responseText.length; i++) {
+        const ch = responseText[i];
+        if (inStr) {
+          if (escaped) escaped = false;
+          else if (ch === '\\\\') escaped = true;
+          else if (ch === '"') inStr = false;
+          continue;
+        }
+        if (ch === '"') { inStr = true; continue; }
+        if (ch === '{') depth++;
+        else if (ch === '}') {
+          depth--;
+          if (depth === 0) {
+            return responseText.slice(start, i + 1);
+          }
+        }
+      }
+      return '';
+    })()"""
+    result = await page.eval(expr)
+    return str(result) if result else ""
+
+
+def _is_valid_gemini_json(json_text: str) -> bool:
+    """Check if extracted JSON looks like a valid Gemini response, not UI noise."""
+    if not json_text:
+        return False
+    try:
+        obj = json.loads(json_text)
+        if not isinstance(obj, dict):
+            return False
+
+        # Reject tiny objects that look like UI noise
+        if len(obj) <= 3 and len(json_text) < 150:
+            # Check if it's just noise like {"party_number": "ด", ...}
+            keys = list(obj.keys())
+            values = list(obj.values())
+
+            # Reject if any key is too short (< 3 chars)
+            if any(len(str(k)) < 3 for k in keys):
+                return False
+
+            # Reject if values look like UI noise:
+            # - Single character values (e.g., "ด")
+            # - Non-numeric, single-word Thai strings that aren't vote counts
+            for v in values:
+                v_str = str(v).strip()
+                if len(v_str) <= 2:
+                    # Single or double char values are noise
+                    return False
+                # Check if it's just a Thai word without numbers (likely party name metadata)
+                # Valid vote data should have numbers
+                if not any(c.isdigit() for c in v_str):
+                    # No digits in value - could be noise
+                    # But allow if object is large enough (detailed response)
+                    if len(obj) <= 2:
+                        return False
+
+        return True
+    except Exception:
+        return False
 
 
 async def _gemini_has_prompt_echo(page: CdpPage, probe: str) -> bool:
@@ -513,6 +682,19 @@ async def _ask_gemini_json(
     wait_seconds: int = 20,
     max_chars: int = 120000,
 ) -> tuple[str, str, str, str]:
+    """Ask Gemini a question and extract JSON response.
+
+    Returns (url, title, json_text, raw_text).
+    json_text is the extracted JSON object, or empty string if not found.
+    raw_text is the full page text for debugging.
+    """
+    # Simpler fallback prompts if main prompt fails
+    simple_prompts = [
+        "List the vote counts as key:value pairs, one per line",
+        "What are the main numbers in this document?",
+        "Summarize this document briefly"
+    ]
+
     async with CdpPage(ws_url) as page:
         for _ in range(20):
             url = str(await page.eval("location.href") or "")
@@ -529,34 +711,79 @@ async def _ask_gemini_json(
         # Ensure Gemini panel is open and question UI available.
         prompt_probe = prompt[:24]
         await _open_gemini_panel(page)
-        await asyncio.sleep(1.0)
+        await asyncio.sleep(1.5)
 
-        # Avoid duplicate sends in the same tab/session:
-        # if we already see this prompt and a Retry button, treat as completed response.
-        already_has_prompt = await _gemini_has_prompt_echo(page, prompt_probe)
-        already_done = already_has_prompt and await _gemini_has_retry(page)
-        if not already_done:
-            await _ask_gemini_question(page, prompt)
-            await asyncio.sleep(1.2)
+        # Check if Gemini has an error state from previous attempt
+        if await _gemini_has_error(page):
+            await _close_gemini_side_panel(page)
+            await asyncio.sleep(0.5)
+            await _open_gemini_panel(page)
+            await asyncio.sleep(1.0)
 
-        deadline = time.time() + max(3, int(wait_seconds))
+        # Try main prompt, then simpler fallbacks if errors occur
+        prompts_to_try = [prompt] + simple_prompts
         last_text = ""
         best_json = ""
-        while time.time() < deadline:
-            raw_text = str(await page.eval(f"document.body ? document.body.innerText.slice(0, {max_chars}) : ''") or "")
-            if raw_text:
-                last_text = raw_text
-                js = _extract_first_json_object(raw_text)
-                if js:
-                    best_json = js
-                # Prefer stopping once response is complete in UI (Retry visible).
-                if await _gemini_has_retry(page):
+
+        for attempt_idx, current_prompt in enumerate(prompts_to_try):
+            current_probe = current_prompt[:24]
+
+            # Avoid duplicate sends in the same tab/session:
+            already_has_prompt = await _gemini_has_prompt_echo(page, current_probe)
+            already_done = already_has_prompt and await _gemini_has_retry(page)
+
+            if not already_done:
+                # If error from previous attempt, try clicking "Try again" first
+                if await _gemini_has_error(page):
+                    await _click_try_again(page)
+                    await asyncio.sleep(1.0)
+                    # Clear the prompt area and send new one
+                    await _ask_gemini_question(page, current_prompt)
+                else:
+                    await _ask_gemini_question(page, current_prompt)
+                await asyncio.sleep(2.0)
+
+            deadline = time.time() + max(3, int(wait_seconds))
+            error_detected = False
+
+            while time.time() < deadline:
+                raw_text = str(await page.eval(f"document.body ? document.body.innerText.slice(0, {max_chars}) : ''") or "")
+                if raw_text:
+                    last_text = raw_text
+
+                    # Check for error state
+                    if await _gemini_has_error(page):
+                        error_detected = True
+                        break
+
+                    # Try to extract JSON from Gemini response area specifically
+                    gemini_json = await _extract_gemini_response_json(page)
+                    if gemini_json and _is_valid_gemini_json(gemini_json):
+                        best_json = gemini_json
+                        await asyncio.sleep(1.0)
+                        if await _gemini_has_retry(page):
+                            break
+                    else:
+                        # Fallback: extract from full page
+                        js = _extract_first_json_object(raw_text)
+                        if js and _is_valid_gemini_json(js):
+                            best_json = js
+
+                    # Stop if response is complete
+                    if await _gemini_has_retry(page):
+                        break
+                elif await _gemini_has_retry(page):
                     break
-            elif await _gemini_has_retry(page):
-                # Response cycle ended (Retry visible) but JSON parse failed.
-                # Return raw text for caller-side handling instead of re-sending.
+                await asyncio.sleep(1.0)
+
+            # If we got valid JSON, we're done
+            if best_json and _is_valid_gemini_json(best_json):
                 break
-            await asyncio.sleep(1.0)
+            # If no error but also no JSON, still done (got text response)
+            if not error_detected:
+                break
+            # Otherwise, try simpler prompt
+            print(f"Retry {attempt_idx + 1}/{len(prompts_to_try)}: trying simpler prompt...")
 
         url = str(await page.eval("location.href") or "")
         title = str(await page.eval("document.title") or "")
