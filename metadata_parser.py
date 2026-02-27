@@ -14,6 +14,9 @@ from pathlib import Path
 from typing import Optional
 
 
+THAI_TO_ARABIC_DIGITS = str.maketrans("๐๑๒๓๔๕๖๗๘๙", "0123456789")
+
+
 @dataclass
 class InferredMetadata:
     """
@@ -43,6 +46,25 @@ class InferredMetadata:
     confidence: float = 0.0  # 0.0 to 1.0
 
 
+@dataclass
+class DriveSheetEntry:
+    """Parsed row from Drive Sheet style: 'จังหวัด.เขต (เปอร์เซ็นต์)'."""
+
+    province: str
+    constituency_number: int
+    percent: Optional[float] = None
+    rank: Optional[int] = None
+    source: str = ""
+
+
+@dataclass
+class DriveSheetLocation:
+    """Only the location fields needed from Drive Sheet rows."""
+
+    province: str
+    constituency_number: int
+
+
 class PathMetadataParser:
     """
     Extract province/constituency metadata from Thai ballot file paths.
@@ -66,12 +88,18 @@ class PathMetadataParser:
     def __init__(self):
         """
         Initialize parser with ECT data reference.
-
-        Loads the ECT province list for validation of extracted province names.
         """
-        from ect_api import ect_data
-        ect_data.load()  # Ensure province list is available
-        self._ect_data = ect_data
+        self._ect_data = None
+
+    def _get_ect_data(self):
+        """
+        Lazily initialize ECT data to avoid network work during object construction.
+        """
+        if self._ect_data is None:
+            from ect_api import ect_data
+            ect_data.load()  # Ensure province list is available
+            self._ect_data = ect_data
+        return self._ect_data
 
     def normalize_thai(self, text: str) -> str:
         """
@@ -87,6 +115,66 @@ class PathMetadataParser:
             Normalized text with consistent Unicode representation
         """
         return unicodedata.normalize('NFC', text)
+
+    @staticmethod
+    def _normalize_digits(text: str) -> str:
+        """Normalize Thai numerals to Arabic numerals for numeric parsing."""
+        return (text or "").translate(THAI_TO_ARABIC_DIGITS)
+
+    def parse_drive_sheet_entry(self, row_text: str) -> Optional[DriveSheetEntry]:
+        """
+        Parse a row like:
+        - "เชียงใหม่.1 (68.83%)"
+        - "นราธิวาส 3 (43.35%)"
+        - "10 นครราชสีมา.2 (47.42%)"
+        """
+        raw = self.normalize_thai(row_text or "").strip()
+        if not raw:
+            return None
+
+        text = self._normalize_digits(raw)
+
+        percent = None
+        percent_match = re.search(r"\(([0-9]+(?:\.[0-9]+)?)%\)", text)
+        if percent_match:
+            try:
+                percent = float(percent_match.group(1))
+            except ValueError:
+                percent = None
+            text = text[: percent_match.start()].strip()
+
+        rank = None
+        rank_match = re.match(r"^\s*(\d+)\s+", text)
+        if rank_match:
+            rank = int(rank_match.group(1))
+            text = text[rank_match.end() :].strip()
+
+        match = re.match(r"^\s*([^.\d]+?)\s*[.\s]\s*(\d+)\s*$", text)
+        if not match:
+            return None
+
+        province = match.group(1).strip()
+        constituency = int(match.group(2))
+        if not province or constituency <= 0:
+            return None
+
+        return DriveSheetEntry(
+            province=province,
+            constituency_number=constituency,
+            percent=percent,
+            rank=rank,
+            source=raw,
+        )
+
+    def parse_drive_sheet_location(self, row_text: str) -> Optional[DriveSheetLocation]:
+        """Parse Drive sheet row and return only province + constituency number."""
+        entry = self.parse_drive_sheet_entry(row_text)
+        if entry is None:
+            return None
+        return DriveSheetLocation(
+            province=entry.province,
+            constituency_number=entry.constituency_number,
+        )
 
     def parse_path(self, file_path: str) -> InferredMetadata:
         """
@@ -120,7 +208,8 @@ class PathMetadataParser:
         if prov_match:
             potential_province = prov_match.group(1).strip()
             # Validate against ECT list
-            is_valid, canonical = self._ect_data.validate_province_name(potential_province)
+            ect_data = self._get_ect_data()
+            is_valid, canonical = ect_data.validate_province_name(potential_province)
             if is_valid and canonical:
                 metadata.province = canonical
                 metadata.confidence += 0.3
@@ -177,7 +266,8 @@ class PathMetadataParser:
         normalized = self.normalize_thai(parent_dir)
 
         # Try direct match against ECT province list
-        is_valid, canonical = self._ect_data.validate_province_name(normalized)
+        ect_data = self._get_ect_data()
+        is_valid, canonical = ect_data.validate_province_name(normalized)
         if is_valid and canonical:
             return canonical
 

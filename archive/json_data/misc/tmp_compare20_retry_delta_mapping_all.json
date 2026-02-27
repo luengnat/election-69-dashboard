@@ -1,0 +1,196 @@
+{
+  "files": {
+    "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc": {
+      "drive_id": "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc",
+      "drive_url": "https://drive.google.com/file/d/1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc/view",
+      "name": "56. ศรีสะเกษ เขต 4.pdf",
+      "province": "ศรีสะเกษ",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,3,5,8,9,10]. Current extracted votes are {\"1\":0,\"3\":0,\"5\":0,\"8\":8100,\"9\":0,\"10\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"3\":0,\"5\":0,\"8\":8100,\"9\":0,\"10\":0}}"
+    },
+    "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj": {
+      "drive_id": "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj",
+      "drive_url": "https://drive.google.com/file/d/1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj/view",
+      "name": "57. สกลนคร เขต 5 (บช).pdf",
+      "province": "สกลนคร",
+      "constituency_number": 5,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this party_list form and verify only these numbers: [9,10,11,12,13,14,15,16,24,25,36,38]. Current extracted votes are {\"9\":605,\"10\":65,\"11\":79,\"12\":268,\"13\":94,\"14\":21,\"15\":39,\"16\":20,\"24\":0,\"25\":126,\"36\":134,\"38\":354}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"9\":605,\"10\":65,\"11\":79,\"12\":268,\"13\":94,\"14\":21,\"15\":39,\"16\":20,\"24\":0,\"25\":126,\"36\":134,\"38\":354}}"
+    },
+    "1cesVQQS5tzwyRw67_TOchEINSZc-XDmU": {
+      "drive_id": "1cesVQQS5tzwyRw67_TOchEINSZc-XDmU",
+      "drive_url": "https://drive.google.com/file/d/1cesVQQS5tzwyRw67_TOchEINSZc-XDmU/view",
+      "name": "14. เชียงใหม่ เขต 3.pdf",
+      "province": "เชียงใหม่",
+      "constituency_number": 3,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,2,5,6,8,9,11,13]. Current extracted votes are {\"1\":49235,\"2\":5464,\"5\":0,\"6\":1426,\"8\":0,\"9\":0,\"11\":0,\"13\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1cesVQQS5tzwyRw67_TOchEINSZc-XDmU\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":49235,\"2\":5464,\"5\":0,\"6\":1426,\"8\":0,\"9\":0,\"11\":0,\"13\":0}}"
+    },
+    "1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM": {
+      "drive_id": "1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM",
+      "drive_url": "https://drive.google.com/file/d/1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM/view",
+      "name": "74. อุดรธานี เขต 4 (บช).pdf",
+      "province": "อุดรธานี",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this party_list form and verify only these numbers: [8,9,16,17,18,19,20,21,22,23,24,25]. Current extracted votes are {\"8\":26237,\"9\":243,\"16\":1161,\"17\":1161,\"18\":284,\"19\":20,\"20\":36,\"21\":14,\"22\":38,\"23\":29,\"24\":90,\"25\":67}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"8\":26237,\"9\":243,\"16\":1161,\"17\":1161,\"18\":284,\"19\":20,\"20\":36,\"21\":14,\"22\":38,\"23\":29,\"24\":90,\"25\":67}}"
+    },
+    "1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg": {
+      "drive_id": "1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg",
+      "drive_url": "https://drive.google.com/file/d/1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg/view",
+      "name": "55. เลย เขต 2 (บช).pdf",
+      "province": "เลย",
+      "constituency_number": 2,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this party_list form and verify only these numbers: [1,9,10,11,16,28,31,32,33,48]. Current extracted votes are {\"1\":0,\"9\":0,\"10\":0,\"11\":0,\"16\":0,\"28\":0,\"31\":0,\"32\":0,\"33\":0,\"48\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"9\":0,\"10\":0,\"11\":0,\"16\":0,\"28\":0,\"31\":0,\"32\":0,\"33\":0,\"48\":0}}"
+    },
+    "1cupM4QyYQP61yjXHgaRDfXeTn63VktDG": {
+      "drive_id": "1cupM4QyYQP61yjXHgaRDfXeTn63VktDG",
+      "drive_url": "https://drive.google.com/file/d/1cupM4QyYQP61yjXHgaRDfXeTn63VktDG/view",
+      "name": "30. ประจวบคีรีขันธ์ เขต 1.pdf",
+      "province": "ประจวบคีรีขันธ์",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1]. Current extracted votes are {\"1\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1cupM4QyYQP61yjXHgaRDfXeTn63VktDG\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1d0dy0W34DwpoxkkaoHCxBhjNmzM5Tc7a": {
+      "drive_id": "1d0dy0W34DwpoxkkaoHCxBhjNmzM5Tc7a",
+      "drive_url": "https://drive.google.com/file/d/1d0dy0W34DwpoxkkaoHCxBhjNmzM5Tc7a/view",
+      "name": "63. สระเเก้ว เขต 3.pdf",
+      "province": "สระแก้ว",
+      "constituency_number": 3,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,2,3,5,6,7,8]. Current extracted votes are {\"1\":38812,\"2\":32848,\"3\":13842,\"5\":2324,\"6\":1937,\"7\":484,\"8\":243}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1d0dy0W34DwpoxkkaoHCxBhjNmzM5Tc7a\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":38812,\"2\":32848,\"3\":13842,\"5\":2324,\"6\":1937,\"7\":484,\"8\":243}}"
+    },
+    "1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-": {
+      "drive_id": "1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-",
+      "drive_url": "https://drive.google.com/file/d/1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-/view",
+      "name": "70. หนองคาย เขต 1 (บช).pdf",
+      "province": "หนองคาย",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this party_list form and verify only these numbers: [31,32,33,34,35,36,37,46,47,48,49,50]. Current extracted votes are {\"31\":0,\"32\":135,\"33\":134,\"34\":240,\"35\":264,\"36\":0,\"37\":124,\"46\":0,\"47\":27318,\"48\":121,\"49\":713,\"50\":253}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"31\":0,\"32\":135,\"33\":134,\"34\":240,\"35\":264,\"36\":0,\"37\":124,\"46\":0,\"47\":27318,\"48\":121,\"49\":713,\"50\":253}}"
+    },
+    "1dIloQHIC2gRxInzTnqCz2H074gyJIVpz": {
+      "drive_id": "1dIloQHIC2gRxInzTnqCz2H074gyJIVpz",
+      "drive_url": "https://drive.google.com/file/d/1dIloQHIC2gRxInzTnqCz2H074gyJIVpz/view",
+      "name": "21. นครราชสีมา เขต 14 (บช).pdf",
+      "province": "นครราชสีมา",
+      "constituency_number": 14,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this party_list form and verify only these numbers: [9,10,11,12,13,14,15,16,17,18,19,20]. Current extracted votes are {\"9\":0,\"10\":0,\"11\":0,\"12\":12276,\"13\":422,\"14\":3700,\"15\":341,\"16\":576,\"17\":51,\"18\":216,\"19\":119,\"20\":24}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dIloQHIC2gRxInzTnqCz2H074gyJIVpz\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"9\":0,\"10\":0,\"11\":0,\"12\":12276,\"13\":422,\"14\":3700,\"15\":341,\"16\":576,\"17\":51,\"18\":216,\"19\":119,\"20\":24}}"
+    },
+    "1dSPVtLDJgCtYucK2orDqxQnJITODrR7C": {
+      "drive_id": "1dSPVtLDJgCtYucK2orDqxQnJITODrR7C",
+      "drive_url": "https://drive.google.com/file/d/1dSPVtLDJgCtYucK2orDqxQnJITODrR7C/view",
+      "name": "77. อุบลราชธานี เขต 1.pdf",
+      "province": "อุบลราชธานี",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,3,4,7,8]. Current extracted votes are {\"1\":0,\"3\":0,\"4\":9184,\"7\":0,\"8\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dSPVtLDJgCtYucK2orDqxQnJITODrR7C\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"3\":0,\"4\":9184,\"7\":0,\"8\":0}}"
+    },
+    "1dWgmLq-ia5JUDaAXg5hIdzIeiePab88u": {
+      "drive_id": "1dWgmLq-ia5JUDaAXg5hIdzIeiePab88u",
+      "drive_url": "https://drive.google.com/file/d/1dWgmLq-ia5JUDaAXg5hIdzIeiePab88u/view",
+      "name": "40. เพชรบูรณ์ เขต 2.pdf",
+      "province": "เพชรบูรณ์",
+      "constituency_number": 2,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,2,3,5,7,8,9,10]. Current extracted votes are {\"1\":0,\"2\":0,\"3\":0,\"5\":0,\"7\":239,\"8\":40158,\"9\":0,\"10\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dWgmLq-ia5JUDaAXg5hIdzIeiePab88u\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"5\":0,\"7\":239,\"8\":40158,\"9\":0,\"10\":0}}"
+    },
+    "1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO": {
+      "drive_id": "1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO",
+      "drive_url": "https://drive.google.com/file/d/1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO/view",
+      "name": "11. ชัยภูมิ เขต 3.pdf",
+      "province": "ชัยภูมิ",
+      "constituency_number": 3,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [5,6]. Current extracted votes are {\"5\":0,\"6\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"5\":0,\"6\":0}}"
+    },
+    "1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH": {
+      "drive_id": "1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH",
+      "drive_url": "https://drive.google.com/file/d/1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH/view",
+      "name": "4. กาฬสินธุ์ เขต 6.pdf",
+      "province": "กาฬสินธุ์",
+      "constituency_number": 6,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,3,6,8,9]. Current extracted votes are {\"1\":54665,\"3\":15141,\"6\":0,\"8\":0,\"9\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":54665,\"3\":15141,\"6\":0,\"8\":0,\"9\":0}}"
+    },
+    "1doN9xzbnfjY3AZFNlVEj5Ut1IbYsbbPZ": {
+      "drive_id": "1doN9xzbnfjY3AZFNlVEj5Ut1IbYsbbPZ",
+      "drive_url": "https://drive.google.com/file/d/1doN9xzbnfjY3AZFNlVEj5Ut1IbYsbbPZ/view",
+      "name": "1. กรุงเทพมหานคร เขต 13 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 13,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this party_list form and verify only these numbers: [38,46]. Current extracted votes are {\"38\":0,\"46\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1doN9xzbnfjY3AZFNlVEj5Ut1IbYsbbPZ\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"38\":0,\"46\":0}}"
+    },
+    "1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY": {
+      "drive_id": "1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY",
+      "drive_url": "https://drive.google.com/file/d/1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY/view",
+      "name": "60. สมุทรปราการ เขต 2.pdf",
+      "province": "สมุทรปราการ",
+      "constituency_number": 2,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [1,2,3,8,9,11]. Current extracted votes are {\"1\":0,\"2\":2506,\"3\":0,\"8\":0,\"9\":0,\"11\":0}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":2506,\"3\":0,\"8\":0,\"9\":0,\"11\":0}}"
+    },
+    "1dw2JDU-eVt8_4NvbH3qpTOlY90oWNsgV": {
+      "drive_id": "1dw2JDU-eVt8_4NvbH3qpTOlY90oWNsgV",
+      "drive_url": "https://drive.google.com/file/d/1dw2JDU-eVt8_4NvbH3qpTOlY90oWNsgV/view",
+      "name": "3. กาญจนบุรี เขต 4 (1).pdf",
+      "province": "กาญจนบุรี",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "delta_fix"
+      ],
+      "gemini_prompt": "Return STRICT JSON only. Arabic numerals only. Re-read this constituency form and verify only these numbers: [3,6]. Current extracted votes are {\"3\":700,\"6\":581}. Correct any wrong values. Cross-check digits with Thai text words next to each row. Also return valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1dw2JDU-eVt8_4NvbH3qpTOlY90oWNsgV\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"3\":700,\"6\":581}}"
+    }
+  }
+}

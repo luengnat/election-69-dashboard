@@ -1,17 +1,22 @@
 # Unit-Level Focus: 15 Districts
 
-Last updated: 2026-02-22
+Last updated: 2026-02-23
 
 ## Summary
 
-Current status for all 15 target districts is:
+Current status for the 15-district unit-level homework:
 
-- `unit_level_status = pending-no-unit-level-rows-in-dashboard-data`
+- `analysis_15_unit_vs_district_units.json`: 150 unit rows (from vote62 aggregation, 10 stations x 15 districts)
+- `homework_15_drive_gemini_raw.jsonl`: 107 rows captured from Drive/Gemini CDP run
+- CDP scrape outcome (latest pass on pending queue): `saved=58`, `skipped=4` (plus previous saved rows)
+- Remaining structured gaps after parsing:
+  - `homework_15_unit_remaining_queue.json`: 80 rows still needing manual/targeted extraction
+  - Main unresolved target by capture: `ราชบุรี เขต 4` still `partial`
 
-Meaning:
+Notes:
 
-- District-level totals exist and are being tracked.
-- Unit-level (`หน่วย`) rows are not yet integrated into dashboard data.
+- Summary/main-points scrape via CDP works.
+- Custom strict-JSON ask via CDP is still unstable in current UI, so this pass prioritized resumable summary capture.
 
 ## Target List (with source file links)
 
@@ -37,6 +42,10 @@ Meaning:
 
 - `homework_15_unit_progress.json`
 - `homework_15_unit_progress.csv`
+- `homework_15_drive_gemini_raw.jsonl`
+- `homework_15_drive_gemini_raw_state.json`
+- `homework_15_unit_remaining_queue.json`
+- `homework_15_unit_remaining_queue.csv`
 - `analyze_15_unit_vs_district.py`
 
 ## Recommended Next Execution Step
@@ -59,4 +68,3 @@ Expected outputs:
 - Unit rows exist for all 15 districts in `analysis_15_unit_vs_district_units.*`.
 - Summary shows `vote62_agg_valid_votes` for both `constituency` and `party_list` where available.
 - Delta columns (`vote62 vs read`, `vote62 vs ECT`) are computable and reviewed per district.
-

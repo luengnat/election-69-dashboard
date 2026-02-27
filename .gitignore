@@ -35,3 +35,17 @@ ballots/
 
 # Local config
 .planning/config.json
+
+# Workspace artifacts (local/scratch generated during OCR experiments)
+/tmp_*
+/drive2_*
+/analysis_15_unit_*
+/comparison_unified_preview.*
+/gemini_votes_*
+/recheck_*
+/bkk12_*
+/pcn1_*
+/korat13_*
+/mismatch_*
+/unresolved_targets.tsv
+/tess_err.txt

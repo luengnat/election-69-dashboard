@@ -1,0 +1,845 @@
+{
+  "districts": 386,
+  "districts_with_issues": 41,
+  "issues": [
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 3,
+      "row_count": 55,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        56,
+        57
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        31
+      ],
+      "sum_scores": 78811
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 5,
+      "row_count": 57,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        23,
+        57
+      ],
+      "duplicate_numbers": [
+        1,
+        24
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "UNKNOWN",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        19
+      ],
+      "sum_scores": 92873
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 12,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        24
+      ],
+      "duplicate_numbers": [
+        25
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        48
+      ],
+      "sum_scores": 106754
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 19,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        19
+      ],
+      "duplicate_numbers": [
+        20
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        260
+      ],
+      "sum_scores": 95000
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 28,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        28
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        105
+      ],
+      "sum_scores": 94506
+    },
+    {
+      "province": "กำแพงเพชร",
+      "district": 3,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        420
+      ],
+      "sum_scores": 81857
+    },
+    {
+      "province": "ขอนแก่น",
+      "district": 7,
+      "row_count": 57,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        18,
+        21
+      ],
+      "duplicate_numbers": [
+        19,
+        22
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        967
+      ],
+      "sum_scores": 83257
+    },
+    {
+      "province": "ฉะเชิงเทรา",
+      "district": 2,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        50
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        336
+      ],
+      "sum_scores": 107899
+    },
+    {
+      "province": "ชัยภูมิ",
+      "district": 1,
+      "row_count": 56,
+      "unique_numbers": 54,
+      "missing_numbers": [
+        13,
+        16,
+        39
+      ],
+      "duplicate_numbers": [
+        17
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        953
+      ],
+      "sum_scores": 81275
+    },
+    {
+      "province": "นครปฐม",
+      "district": 2,
+      "row_count": 58,
+      "unique_numbers": 57,
+      "missing_numbers": [],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไม่ระบุ",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        144
+      ],
+      "sum_scores": 87501
+    },
+    {
+      "province": "นครปฐม",
+      "district": 3,
+      "row_count": 56,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        19,
+        57
+      ],
+      "duplicate_numbers": [
+        20
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        655
+      ],
+      "sum_scores": 82066
+    },
+    {
+      "province": "นครปฐม",
+      "district": 6,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        4
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "Party 1 (Not Listed in Document)",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        378
+      ],
+      "sum_scores": 90857
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 4,
+      "row_count": 58,
+      "unique_numbers": 57,
+      "missing_numbers": [],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "Unknown Party",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        420
+      ],
+      "sum_scores": 85195
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 10,
+      "row_count": 56,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        7,
+        24
+      ],
+      "duplicate_numbers": [
+        23
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        360
+      ],
+      "sum_scores": 100890
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 13,
+      "row_count": 56,
+      "unique_numbers": 54,
+      "missing_numbers": [
+        6,
+        7,
+        42
+      ],
+      "duplicate_numbers": [
+        38,
+        40
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        511
+      ],
+      "sum_scores": 69224
+    },
+    {
+      "province": "นครราชสีมา",
+      "district": 15,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        19
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ชาติพัฒนา",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        1837
+      ],
+      "sum_scores": 92036
+    },
+    {
+      "province": "นครศรีธรรมราช",
+      "district": 5,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [
+        41
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        177
+      ],
+      "sum_scores": 100918
+    },
+    {
+      "province": "นครสวรรค์",
+      "district": 6,
+      "row_count": 58,
+      "unique_numbers": 54,
+      "missing_numbers": [
+        21,
+        24,
+        44
+      ],
+      "duplicate_numbers": [
+        1,
+        22,
+        25,
+        45
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "Unknown Party",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        697
+      ],
+      "sum_scores": 81637
+    },
+    {
+      "province": "น่าน",
+      "district": 3,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "Unknown",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        2239
+      ],
+      "sum_scores": 81152
+    },
+    {
+      "province": "ปทุมธานี",
+      "district": 3,
+      "row_count": 58,
+      "unique_numbers": 57,
+      "missing_numbers": [],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": true,
+      "party1_names": [
+        "พรรคที่ 1",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        121
+      ],
+      "sum_scores": 88780
+    },
+    {
+      "province": "ปราจีนบุรี",
+      "district": 1,
+      "row_count": 57,
+      "unique_numbers": 54,
+      "missing_numbers": [
+        15,
+        21,
+        27
+      ],
+      "duplicate_numbers": [
+        17,
+        23,
+        29
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        2250
+      ],
+      "sum_scores": 84900
+    },
+    {
+      "province": "ปราจีนบุรี",
+      "district": 3,
+      "row_count": 57,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        48,
+        52
+      ],
+      "duplicate_numbers": [
+        49,
+        53
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        1015
+      ],
+      "sum_scores": 84893
+    },
+    {
+      "province": "ปัตตานี",
+      "district": 2,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        49
+      ],
+      "duplicate_numbers": [
+        28
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        910
+      ],
+      "sum_scores": 75538
+    },
+    {
+      "province": "ปัตตานี",
+      "district": 3,
+      "row_count": 55,
+      "unique_numbers": 55,
+      "missing_numbers": [
+        5,
+        38
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        311
+      ],
+      "sum_scores": 64794
+    },
+    {
+      "province": "มหาสารคาม",
+      "district": 3,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        399
+      ],
+      "sum_scores": 83169
+    },
+    {
+      "province": "มหาสารคาม",
+      "district": 4,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        1177
+      ],
+      "sum_scores": 79657
+    },
+    {
+      "province": "มหาสารคาม",
+      "district": 6,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        19
+      ],
+      "duplicate_numbers": [
+        20
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        1595
+      ],
+      "sum_scores": 85988
+    },
+    {
+      "province": "ยะลา",
+      "district": 2,
+      "row_count": 59,
+      "unique_numbers": 57,
+      "missing_numbers": [],
+      "duplicate_numbers": [
+        1,
+        3
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไม่ระบุ",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        461
+      ],
+      "sum_scores": 88810
+    },
+    {
+      "province": "ยโสธร",
+      "district": 2,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        4
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        1516
+      ],
+      "sum_scores": 89109
+    },
+    {
+      "province": "ระยอง",
+      "district": 4,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        33
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "พรรคที่ 1 (ไม่ระบุชื่อ)",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        473
+      ],
+      "sum_scores": 88350
+    },
+    {
+      "province": "ราชบุรี",
+      "district": 2,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": true,
+      "party1_names": [
+        "พรรคที่ 1",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        1010
+      ],
+      "sum_scores": 89645
+    },
+    {
+      "province": "ศรีสะเกษ",
+      "district": 2,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        347
+      ],
+      "sum_scores": 79297
+    },
+    {
+      "province": "ศรีสะเกษ",
+      "district": 7,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        5
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": true,
+      "party1_names": [
+        "พรรคที่ 1",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        2387
+      ],
+      "sum_scores": 78587
+    },
+    {
+      "province": "สงขลา",
+      "district": 4,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        3
+      ],
+      "duplicate_numbers": [
+        5
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        392
+      ],
+      "sum_scores": 95827
+    },
+    {
+      "province": "สตูล",
+      "district": 2,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        22
+      ],
+      "duplicate_numbers": [
+        23
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        303
+      ],
+      "sum_scores": 92747
+    },
+    {
+      "province": "สมุทรสาคร",
+      "district": 2,
+      "row_count": 58,
+      "unique_numbers": 57,
+      "missing_numbers": [],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไม่ระบุ",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        2229
+      ],
+      "sum_scores": 79368
+    },
+    {
+      "province": "สระแก้ว",
+      "district": 3,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [
+        1
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไม่ระบุ",
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        0,
+        2754
+      ],
+      "sum_scores": 92248
+    },
+    {
+      "province": "อุตรดิตถ์",
+      "district": 2,
+      "row_count": 57,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        19
+      ],
+      "duplicate_numbers": [
+        20
+      ],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        756
+      ],
+      "sum_scores": 74563
+    },
+    {
+      "province": "อุทัยธานี",
+      "district": 1,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        4
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        402
+      ],
+      "sum_scores": 77398
+    },
+    {
+      "province": "อุทัยธานี",
+      "district": 2,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        4
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        843
+      ],
+      "sum_scores": 77047
+    },
+    {
+      "province": "เชียงใหม่",
+      "district": 5,
+      "row_count": 56,
+      "unique_numbers": 56,
+      "missing_numbers": [
+        57
+      ],
+      "duplicate_numbers": [],
+      "has_generic_party_name": false,
+      "party1_names": [
+        "ไทยทรัพย์ทวี"
+      ],
+      "party1_scores": [
+        3713
+      ],
+      "sum_scores": 93274
+    }
+  ]
+}

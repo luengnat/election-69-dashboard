@@ -1,0 +1,784 @@
+{
+  "rows": 16,
+  "items": [
+    {
+      "drive_id": "1TAXGRGeK1vt5KXaiUbzwaxxkin1nPHuH",
+      "name": "ปราจีนบุรี เขต 1 (บช)",
+      "province": "ปราจีนบุรี",
+      "district": 1,
+      "election_type": "party_list",
+      "our_valid": 83769,
+      "killernay_csv_valid": 84900,
+      "killernay_drive_valid": 80541,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1TAXGRGeK1vt5KXaiUbzwaxxkin1nPHuH/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1TAXGRGeK1vt5KXaiUbzwaxxkin1nPHuH_wlcida55/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 2,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 2
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 2,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 2
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1487ZDm0vUn3rkEALvhKUvTHsIAStHHY-",
+      "name": "นครสวรรค์ เขต 6 (บช)",
+      "province": "นครสวรรค์",
+      "district": 6,
+      "election_type": "party_list",
+      "our_valid": 80672,
+      "killernay_csv_valid": 81637,
+      "killernay_drive_valid": 80356,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1487ZDm0vUn3rkEALvhKUvTHsIAStHHY-/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1487ZDm0vUn3rkEALvhKUvTHsIAStHHY-_rw4g7krh/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 17,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 17
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 17,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 17
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1aqb4gW7J2F7hpIeDGqbcitGTlzMFJzD7",
+      "name": "นครราชสีมา เขต 13 (บช)",
+      "province": "นครราชสีมา",
+      "district": 13,
+      "election_type": "party_list",
+      "our_valid": 68836,
+      "killernay_csv_valid": 69224,
+      "killernay_drive_valid": 59749,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1aqb4gW7J2F7hpIeDGqbcitGTlzMFJzD7/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1aqb4gW7J2F7hpIeDGqbcitGTlzMFJzD7_ba_3osc2/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 8,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 8
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 156,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 156
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1Y9pZ76pSpv19tY_Z6pHo_ArL8M7FPkMC",
+      "name": "ปราจีนบุรี เขต 3 (บช)",
+      "province": "ปราจีนบุรี",
+      "district": 3,
+      "election_type": "party_list",
+      "our_valid": 84661,
+      "killernay_csv_valid": 84893,
+      "killernay_drive_valid": 84525,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1Y9pZ76pSpv19tY_Z6pHo_ArL8M7FPkMC/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1Y9pZ76pSpv19tY_Z6pHo_ArL8M7FPkMC_1khff_lh/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 2,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 2
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 2,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 2
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1E0O4j3G10-4XAREzQE2ll_XR9qgX6Nq1",
+      "name": "สงขลา เขต 4 (บช)",
+      "province": "สงขลา",
+      "district": 4,
+      "election_type": "party_list",
+      "our_valid": 95657,
+      "killernay_csv_valid": 95827,
+      "killernay_drive_valid": 95194,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1E0O4j3G10-4XAREzQE2ll_XR9qgX6Nq1/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1E0O4j3G10-4XAREzQE2ll_XR9qgX6Nq1_7rmxpz4a/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 5,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 5
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 5,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 5
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1I_RDI6wG2NWTc_C9wNwRFVXql_oD273o",
+      "name": "ชัยภูมิ เขต 1 (บช)",
+      "province": "ชัยภูมิ",
+      "district": 1,
+      "election_type": "party_list",
+      "our_valid": 81150,
+      "killernay_csv_valid": 81275,
+      "killernay_drive_valid": 81069,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1I_RDI6wG2NWTc_C9wNwRFVXql_oD273o/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1I_RDI6wG2NWTc_C9wNwRFVXql_oD273o_py6frs09/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 11,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 11
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 11,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 11
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1gpZ3Cr_r6LR_LyapXIZO2EPou774f4RF",
+      "name": "ปัตตานี เขต 2 (บช)",
+      "province": "ปัตตานี",
+      "district": 2,
+      "election_type": "party_list",
+      "our_valid": 75441,
+      "killernay_csv_valid": 75538,
+      "killernay_drive_valid": 75428,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1gpZ3Cr_r6LR_LyapXIZO2EPou774f4RF/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1gpZ3Cr_r6LR_LyapXIZO2EPou774f4RF_98pykqu_/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 77,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 77
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 77,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 77
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1C8Pi5_EoX5VwrgKwN2KsDNxAgu5rmfFB",
+      "name": "สตูล เขต 2 (บช)",
+      "province": "สตูล",
+      "district": 2,
+      "election_type": "party_list",
+      "our_valid": 92655,
+      "killernay_csv_valid": 92747,
+      "killernay_drive_valid": 92701,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1C8Pi5_EoX5VwrgKwN2KsDNxAgu5rmfFB/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1C8Pi5_EoX5VwrgKwN2KsDNxAgu5rmfFB_mwhj7nu2/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 18,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 18
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 23,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 23
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1lUcGZjwlQ-1n3osX8Bq98g1spydLs_qE",
+      "name": "นครราชสีมา เขต 10 (บช)",
+      "province": "นครราชสีมา",
+      "district": 10,
+      "election_type": "party_list",
+      "our_valid": 100825,
+      "killernay_csv_valid": 100890,
+      "killernay_drive_valid": 100830,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1lUcGZjwlQ-1n3osX8Bq98g1spydLs_qE/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1lUcGZjwlQ-1n3osX8Bq98g1spydLs_qE_iyw6oel0/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 0,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 0
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 0,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 0
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1GDCFtiEf56CaCcxbXLTodwrzB97ecoxJ",
+      "name": "ขอนแก่น เขต 7 (บช)",
+      "province": "ขอนแก่น",
+      "district": 7,
+      "election_type": "party_list",
+      "our_valid": 83193,
+      "killernay_csv_valid": 83257,
+      "killernay_drive_valid": 83183,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1GDCFtiEf56CaCcxbXLTodwrzB97ecoxJ/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1GDCFtiEf56CaCcxbXLTodwrzB97ecoxJ_dnkqwlmi/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 0,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 0
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 0,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 0
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1fx1cHJBn41Py_WC7uxiwqTsRQnR4O50j",
+      "name": "อุตรดิตถ์ เขต 2 (บช)",
+      "province": "อุตรดิตถ์",
+      "district": 2,
+      "election_type": "party_list",
+      "our_valid": 74506,
+      "killernay_csv_valid": 74563,
+      "killernay_drive_valid": 74516,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1fx1cHJBn41Py_WC7uxiwqTsRQnR4O50j/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1fx1cHJBn41Py_WC7uxiwqTsRQnR4O50j_6emt07d5/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 14,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 14
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 14,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 14
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1JIM7_8xeyGmJfDlDfPovZWY_jG817FmD",
+      "name": "นครปฐม เขต 3 (บช)",
+      "province": "นครปฐม",
+      "district": 3,
+      "election_type": "party_list",
+      "our_valid": 82036,
+      "killernay_csv_valid": 82066,
+      "killernay_drive_valid": 82040,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1JIM7_8xeyGmJfDlDfPovZWY_jG817FmD/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1JIM7_8xeyGmJfDlDfPovZWY_jG817FmD_nyulfe4d/pages/page-1.png",
+        "tesseract": {
+          "ok": false
+        },
+        "trocr_tesseract": {
+          "ok": false
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF",
+      "name": "กรุงเทพมหานคร เขต 19 (บช)",
+      "province": "กรุงเทพมหานคร",
+      "district": 19,
+      "election_type": "party_list",
+      "our_valid": 94982,
+      "killernay_csv_valid": 95000,
+      "killernay_drive_valid": 94973,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF_pjwmo0j4/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 4,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 4
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 4,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 4
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "1kxoESaaABDMAr6Y7TdVhSbfCUA2zUWlr",
+      "name": "มหาสารคาม เขต 6 (บช)",
+      "province": "มหาสารคาม",
+      "district": 6,
+      "election_type": "party_list",
+      "our_valid": 85971,
+      "killernay_csv_valid": 85988,
+      "killernay_drive_valid": 85945,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/1kxoESaaABDMAr6Y7TdVhSbfCUA2zUWlr/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_1kxoESaaABDMAr6Y7TdVhSbfCUA2zUWlr_dh69ltgr/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 1447,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 1447
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 201,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 201
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd",
+      "name": "กรุงเทพมหานคร เขต 5 (บช)",
+      "province": "กรุงเทพมหานคร",
+      "district": 5,
+      "election_type": "party_list",
+      "our_valid": 92858,
+      "killernay_csv_valid": 92873,
+      "killernay_drive_valid": 92819,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd/view",
+      "gemini_cached": {
+        "attempt_count": 0,
+        "attempts": []
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd_s5p69k0l/pages/page-1.png",
+        "tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 5,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 5
+        },
+        "trocr_tesseract": {
+          "ok": true,
+          "form_category": "constituency",
+          "form_type": null,
+          "province": "",
+          "district_number": 0,
+          "valid_votes": 5,
+          "invalid_votes": 0,
+          "blank_votes": 0,
+          "vote_sum": 5
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    },
+    {
+      "drive_id": "17kN56fpRgdAKLnClJxTKRA74idHwxMCV",
+      "name": "กรุงเทพมหานคร เขต 12 (บช)",
+      "province": "กรุงเทพมหานคร",
+      "district": 12,
+      "election_type": "party_list",
+      "our_valid": 106744,
+      "killernay_csv_valid": 106754,
+      "killernay_drive_valid": 106736,
+      "base_verdict": "source_conflict_manual_review",
+      "drive_url": "https://drive.google.com/file/d/17kN56fpRgdAKLnClJxTKRA74idHwxMCV/view",
+      "gemini_cached": {
+        "attempt_count": 1,
+        "attempts": [
+          {
+            "file": "tmp_expand60_A_raw.jsonl",
+            "valid_votes": 106754,
+            "district_number": 12,
+            "election_type": "party_list",
+            "raw": {
+              "drive_id": "17kN56fpRgdAKLnClJxTKRA74idHwxMCV",
+              "election_type": "party_list",
+              "province": "กรุงเทพมหานคร",
+              "district_number": 12,
+              "valid_votes": 106754,
+              "invalid_votes": 1499,
+              "blank_votes": 2776,
+              "votes": {
+                "1": 0,
+                "2": 48,
+                "3": 215,
+                "4": 49,
+                "5": 29,
+                "6": 103,
+                "7": 153,
+                "8": 205,
+                "9": 12943,
+                "10": 836,
+                "11": 319,
+                "12": 440,
+                "13": 2000,
+                "14": 37,
+                "15": 0,
+                "16": 0,
+                "17": 214,
+                "18": 7,
+                "19": 120,
+                "20": 9,
+                "21": 43,
+                "22": 13,
+                "23": 60,
+                "24": 18,
+                "25": 10,
+                "26": 28,
+                "27": 9745,
+                "28": 70,
+                "29": 1587,
+                "30": 27,
+                "31": 48,
+                "32": 30,
+                "33": 61,
+                "34": 34,
+                "35": 186,
+                "36": 47,
+                "37": 19124,
+                "38": 48,
+                "39": 94,
+                "40": 17,
+                "41": 25,
+                "42": 397,
+                "43": 247,
+                "44": 123,
+                "45": 81,
+                "46": 52294,
+                "47": 88,
+                "48": 1140,
+                "49": 943,
+                "50": 6,
+                "51": 18,
+                "52": 10,
+                "53": 10,
+                "54": 14,
+                "55": 8,
+                "56": 11,
+                "57": 22
+              }
+            }
+          }
+        ]
+      },
+      "local_ocr": {
+        "download_ok": true,
+        "page1_image": "/var/folders/gp/65j6cvy1127992wgdggbc43h0000gp/T/amb_17kN56fpRgdAKLnClJxTKRA74idHwxMCV_a_6_p43x/pages/page-1.png",
+        "tesseract": {
+          "ok": false
+        },
+        "trocr_tesseract": {
+          "ok": false
+        }
+      },
+      "typhoon": {
+        "ok": false,
+        "skipped": "missing_OPENTYPHOON_API_KEY"
+      }
+    }
+  ]
+}

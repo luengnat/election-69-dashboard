@@ -1,0 +1,12 @@
+{
+  "files": {
+    "1yGNOqcvXQP4FNge1eXZ3gd2MpyN9AgsC": {
+      "drive_id": "1yGNOqcvXQP4FNge1eXZ3gd2MpyN9AgsC",
+      "drive_url": "https://drive.google.com/file/d/1yGNOqcvXQP4FNge1eXZ3gd2MpyN9AgsC/view",
+      "name": "31. ปราจีน เขต 2.PDF",
+      "province": "ปราจีนบุรี",
+      "constituency_number": 2,
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Read all pages in this PDF and extract: province, district_number, valid_votes, invalid_votes, blank_votes, and votes object where key is candidate number and value is vote score. Include all visible candidate numbers; if unreadable use null. Schema: {\"drive_id\":\"1yGNOqcvXQP4FNge1eXZ3gd2MpyN9AgsC\",\"election_type\":\"constituency\",\"province\":\"ปราจีนบุรี\",\"district_number\":2,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    }
+  }
+}

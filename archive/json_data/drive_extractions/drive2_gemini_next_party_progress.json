@@ -1,0 +1,41 @@
+{
+  "drive_id": "1oBP6wZ2hVGUh-oZztkq1NSU1hQLlfBO1",
+  "forms": [
+    {
+      "form_seq": 2,
+      "district_number": null,
+      "unit_number": null,
+      "valid_votes": 572,
+      "sum_rows": 559,
+      "delta": 13,
+      "source_file": "/Users/nat/dev/election/drive2_gemini_next_seq2_votecheck_3page.parsed.json"
+    },
+    {
+      "form_seq": 4,
+      "district_number": 4,
+      "unit_number": 2,
+      "valid_votes": 448,
+      "sum_rows": 457,
+      "delta": -9,
+      "source_file": "/Users/nat/dev/election/drive2_gemini_next_seq4_fast_merged.parsed.json"
+    },
+    {
+      "form_seq": 6,
+      "district_number": 4,
+      "unit_number": 3,
+      "valid_votes": 427,
+      "sum_rows": 415,
+      "delta": 12,
+      "source_file": "/Users/nat/dev/election/drive2_gemini_next_seq6_fast_merged.parsed.json"
+    },
+    {
+      "form_seq": 8,
+      "district_number": 4,
+      "unit_number": 4,
+      "valid_votes": 568,
+      "sum_rows": 448,
+      "delta": 120,
+      "source_file": "/Users/nat/dev/election/drive2_gemini_next_seq8_fast_merged.parsed.json"
+    }
+  ]
+}

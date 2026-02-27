@@ -5,6 +5,7 @@ ECT (Election Commission of Thailand) API client.
 Provides access to official election reference data and statistics.
 """
 
+import os
 import json
 import urllib.request
 from typing import Optional
@@ -89,9 +90,21 @@ class Candidate:
         return int(parts[2]) if len(parts) > 2 else self.mp_app_no
 
 
-@lru_cache(maxsize=1)
-def fetch_json(url: str) -> dict:
-    """Fetch JSON data from URL with caching."""
+@lru_cache(maxsize=16)
+def fetch_json(url: str, base_dir: Optional[str] = None) -> dict:
+    """Fetch JSON data from URL or local file if base_dir is provided."""
+    if base_dir:
+        # Map URL to local path based on hostname
+        parsed_url = urllib.parse.urlparse(url)
+        path = os.path.join(base_dir, parsed_url.netloc, parsed_url.path.lstrip('/'))
+        
+        if os.path.exists(path):
+            print(f"Loading local: {path}")
+            with open(path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        else:
+            print(f"Warning: Local path not found: {path}. Falling back to remote.")
+
     print(f"Fetching: {url}")
     with urllib.request.urlopen(url, timeout=30) as response:
         return json.loads(response.read().decode('utf-8'))
@@ -100,7 +113,8 @@ def fetch_json(url: str) -> dict:
 class ECTData:
     """ECT reference data loader and validator."""
 
-    def __init__(self):
+    def __init__(self, base_dir: Optional[str] = None):
+        self.base_dir = base_dir
         self._provinces: dict[str, Province] = {}
         self._parties: dict[str, Party] = {}
         self._constituencies: dict[str, Constituency] = {}
@@ -114,7 +128,7 @@ class ECTData:
             return
 
         # Load provinces
-        prov_data = fetch_json(ECT_ENDPOINTS["provinces"])
+        prov_data = fetch_json(ECT_ENDPOINTS["provinces"], self.base_dir)
         for p in prov_data.get("province", []):
             prov = Province(
                 province_id=p["province_id"],
@@ -129,7 +143,7 @@ class ECTData:
             self._provinces[prov.name] = prov  # Also index by Thai name
 
         # Load parties
-        party_data = fetch_json(ECT_ENDPOINTS["party_overview"])
+        party_data = fetch_json(ECT_ENDPOINTS["party_overview"], self.base_dir)
         for p in party_data:
             party = Party(
                 id=p["id"],
@@ -143,7 +157,7 @@ class ECTData:
             self._parties[party.name] = party  # Also index by Thai name
 
         # Load constituencies
-        cons_data = fetch_json(ECT_ENDPOINTS["constituencies"])
+        cons_data = fetch_json(ECT_ENDPOINTS["constituencies"], self.base_dir)
         for c in cons_data:
             cons = Constituency(
                 cons_id=c["cons_id"],
@@ -164,7 +178,7 @@ class ECTData:
             return  # Already loaded
 
         # Load MP candidates (constituency)
-        cand_data = fetch_json(ECT_ENDPOINTS["mp_candidates"])
+        cand_data = fetch_json(ECT_ENDPOINTS["mp_candidates"], self.base_dir)
         for c in cand_data:
             candidate = Candidate(
                 mp_app_id=c["mp_app_id"],
@@ -280,8 +294,8 @@ class ECTData:
         if hasattr(self, '_results_loaded') and self._results_loaded:
             return
 
-        stats_cons = fetch_json(ECT_ENDPOINTS["stats_cons"])
-        stats_party = fetch_json(ECT_ENDPOINTS["stats_party"])
+        stats_cons = fetch_json(ECT_ENDPOINTS["stats_cons"], self.base_dir)
+        stats_party = fetch_json(ECT_ENDPOINTS["stats_party"], self.base_dir)
 
         self._stats_cons_raw = stats_cons if isinstance(stats_cons, dict) else {}
         self._stats_party_raw = stats_party if isinstance(stats_party, dict) else {}
@@ -298,13 +312,14 @@ class ECTData:
 
     def get_official_constituency_results(self, cons_id: str) -> Optional[dict]:
         """
-        Get official results for a constituency.
+        Get official results for a constituency (aggregate across all polling units).
         
         Args:
             cons_id: Constituency ID
             
         Returns:
-            Dictionary with official vote counts by candidate position, or None
+            Dictionary with aggregate constituency vote counts by candidate position, or None.
+            Note: This endpoint does not provide per-polling-unit breakdown.
         """
         self.load_official_results()
 

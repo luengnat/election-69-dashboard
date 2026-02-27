@@ -22,11 +22,15 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Optional, Any, Protocol, runtime_checkable
 
-# Import the existing OCR function
-from ballot_ocr import BallotData, extract_ballot_data_with_ai
+# Import core types/extraction directly to avoid broad shim dependencies
+from ballot_types import BallotData
+from ballot_extraction import extract_ballot_data_with_ai
 
 # Import path metadata parser (Phase 7)
 from metadata_parser import PathMetadataParser
+
+# Import persistent cache (Phase 13)
+from ocr_cache import cache
 
 # Import tenacity for retry logic
 from tenacity import (
@@ -282,8 +286,10 @@ class BatchProcessor:
         self,
         max_workers: int = 5,
         rate_limit: float = 2.0,
+        use_cache: bool = True,
         enable_memory_cleanup: bool = True,
-        verbose: bool = False
+        verbose: bool = False,
+        backend_spec: Optional[str] = None
     ):
         """
         Initialize batch processor.
@@ -291,15 +297,19 @@ class BatchProcessor:
         Args:
             max_workers: Maximum concurrent threads (default 5)
             rate_limit: Requests per second limit (default 2.0 for OpenRouter)
+            use_cache: Use persistent OCR cache when available (default True)
             enable_memory_cleanup: Run gc.collect() every 50 ballots (default True)
             verbose: Enable verbose logging for debugging (default False)
+            backend_spec: Optional comma-separated backend string (e.g. 'anthropic,trocr')
         """
         self.max_workers = max_workers
         self.rate_limit = rate_limit
+        self.use_cache = use_cache
         self.rate_limiter = RateLimiter(requests_per_second=rate_limit)
         self.metadata_parser = PathMetadataParser()  # Phase 7: Path-based metadata extraction
         self.enable_memory_cleanup = enable_memory_cleanup
         self.verbose = verbose
+        self.backend_spec = backend_spec
 
     def _load_checkpoint(self, checkpoint_file: str) -> dict[str, dict]:
         """
@@ -345,14 +355,24 @@ class BatchProcessor:
             requests.HTTPError: After 3 failed retries
             ConnectionError: After 3 failed retries
         """
+        # Try cache first for fast-path return.
+        if self.use_cache:
+            cached = cache.get(image_path)
+            if cached is not None:
+                if self.verbose:
+                    print(f"  Cache hit: {image_path}")
+                return cached
+
         # Pre-extract metadata from file path (Phase 7)
         path_metadata = self.metadata_parser.parse_path(image_path)
 
         # Acquire rate limit slot before API call
         with self.rate_limiter:
-            ballot_data = extract_ballot_data_with_ai(image_path)
+            ballot_data = extract_ballot_data_with_ai(image_path, backend_spec=self.backend_spec)
 
         if ballot_data:
+            original_province = ballot_data.province
+            original_constituency = ballot_data.constituency_number
             # Pre-fill from path if OCR missed these fields (path is NOT authoritative)
             if not ballot_data.province and path_metadata.province:
                 ballot_data.province = path_metadata.province
@@ -365,8 +385,8 @@ class BatchProcessor:
 
             # Track metadata source for auditing (Phase 7)
             ballot_data.confidence_details["metadata_source"] = {
-                "province": "path" if path_metadata.province and not ballot_data.province else "ocr",
-                "constituency": "path" if path_metadata.constituency_number and not ballot_data.constituency_number else "ocr",
+                "province": "path" if path_metadata.province and not original_province else "ocr",
+                "constituency": "path" if path_metadata.constituency_number and not original_constituency else "ocr",
                 "path_confidence": path_metadata.confidence,
             }
 
@@ -377,6 +397,9 @@ class BatchProcessor:
                     "path": path_metadata.province,
                     "ocr": ballot_data.province
                 }
+
+            if self.use_cache:
+                cache.set(image_path, ballot_data)
 
         return ballot_data
 

@@ -1,0 +1,300 @@
+{
+  "drive_id": "1oBP6wZ2hVGUh-oZztkq1NSU1hQLlfBO1",
+  "form_seq": 2,
+  "form_type": "ส.ส. 5/18 (บช)",
+  "rows": [
+    {
+      "party_no": 1,
+      "party_name": "ไทยทรัพย์ทวี",
+      "score": null
+    },
+    {
+      "party_no": 2,
+      "party_name": "เพื่อชาติไทย",
+      "score": 5
+    },
+    {
+      "party_no": 3,
+      "party_name": "ใหม่",
+      "score": 10
+    },
+    {
+      "party_no": 4,
+      "party_name": "มิติใหม่",
+      "score": 8
+    },
+    {
+      "party_no": 5,
+      "party_name": "รวมใจไทย",
+      "score": 5
+    },
+    {
+      "party_no": 6,
+      "party_name": "รวมไทยสร้างชาติ",
+      "score": 15
+    },
+    {
+      "party_no": 7,
+      "party_name": "พลวัต",
+      "score": 8
+    },
+    {
+      "party_no": 8,
+      "party_name": "ประชาธิปไตยใหม่",
+      "score": 39
+    },
+    {
+      "party_no": 9,
+      "party_name": "เพื่อไทย",
+      "score": 33
+    },
+    {
+      "party_no": 10,
+      "party_name": "ทางเลือกใหม่",
+      "score": null
+    },
+    {
+      "party_no": 11,
+      "party_name": "เศรษฐกิจ",
+      "score": 16
+    },
+    {
+      "party_no": 12,
+      "party_name": "เสรีรวมไทย",
+      "score": 3
+    },
+    {
+      "party_no": 13,
+      "party_name": "รวมพลังประชาชน",
+      "score": 2
+    },
+    {
+      "party_no": 14,
+      "party_name": "ท้องที่ไทย",
+      "score": 0
+    },
+    {
+      "party_no": 15,
+      "party_name": "อนาคตไทย",
+      "score": null
+    },
+    {
+      "party_no": 16,
+      "party_name": "พลังเพื่อไทย",
+      "score": null
+    },
+    {
+      "party_no": 17,
+      "party_name": "ไทยชนะ",
+      "score": null
+    },
+    {
+      "party_no": 18,
+      "party_name": "พลังสังคมใหม่",
+      "score": 0
+    },
+    {
+      "party_no": 19,
+      "party_name": "สังคมประชาธิปไตยไทย",
+      "score": 0
+    },
+    {
+      "party_no": 20,
+      "party_name": "ฟิวชัน",
+      "score": null
+    },
+    {
+      "party_no": 21,
+      "party_name": "ไทรวมพลัง",
+      "score": 1
+    },
+    {
+      "party_no": 22,
+      "party_name": "ก้าวอิสระ",
+      "score": 4
+    },
+    {
+      "party_no": 23,
+      "party_name": "ปวงชนไทย",
+      "score": 0
+    },
+    {
+      "party_no": 24,
+      "party_name": "วิชชั่นใหม่",
+      "score": 0
+    },
+    {
+      "party_no": 25,
+      "party_name": "เพื่อชีวิตใหม่",
+      "score": 0
+    },
+    {
+      "party_no": 26,
+      "party_name": "คลองไทย",
+      "score": 0
+    },
+    {
+      "party_no": 27,
+      "party_name": "ประชาธิปัตย์",
+      "score": 0
+    },
+    {
+      "party_no": 28,
+      "party_name": "ไทยก้าวหน้า",
+      "score": 1
+    },
+    {
+      "party_no": 29,
+      "party_name": "ไทยภักดี",
+      "score": 15
+    },
+    {
+      "party_no": 30,
+      "party_name": "แรงงานสร้างชาติ",
+      "score": null
+    },
+    {
+      "party_no": 31,
+      "party_name": "ประชากรไทย",
+      "score": null
+    },
+    {
+      "party_no": 32,
+      "party_name": "ครูไทยเพื่อประชาชน",
+      "score": 1
+    },
+    {
+      "party_no": 33,
+      "party_name": "ประชาชาติ",
+      "score": null
+    },
+    {
+      "party_no": 34,
+      "party_name": "สร้างอนาคตไทย",
+      "score": null
+    },
+    {
+      "party_no": 35,
+      "party_name": "รักชาติ",
+      "score": 1
+    },
+    {
+      "party_no": 36,
+      "party_name": "ไทยพร้อม",
+      "score": 3
+    },
+    {
+      "party_no": 37,
+      "party_name": "ภูมิใจไทย",
+      "score": 148
+    },
+    {
+      "party_no": 38,
+      "party_name": "พลังธรรมใหม่",
+      "score": null
+    },
+    {
+      "party_no": 39,
+      "party_name": "กรีน",
+      "score": 0
+    },
+    {
+      "party_no": 40,
+      "party_name": "ไทยธรรม",
+      "score": null
+    },
+    {
+      "party_no": 41,
+      "party_name": "แผ่นดินธรรม",
+      "score": 0
+    },
+    {
+      "party_no": 42,
+      "party_name": "กล้าธรรม",
+      "score": 13
+    },
+    {
+      "party_no": 43,
+      "party_name": "พลังประชารัฐ",
+      "score": 0
+    },
+    {
+      "party_no": 44,
+      "party_name": "โอกาสใหม่",
+      "score": 1
+    },
+    {
+      "party_no": 45,
+      "party_name": "เป็นธรรม",
+      "score": null
+    },
+    {
+      "party_no": 46,
+      "party_name": "ประชาชน",
+      "score": 225
+    },
+    {
+      "party_no": 47,
+      "party_name": "ประชาไทย",
+      "score": null
+    },
+    {
+      "party_no": 48,
+      "party_name": "ไทยสร้างไทย",
+      "score": null
+    },
+    {
+      "party_no": 49,
+      "party_name": "ไทยก้าวใหม่",
+      "score": null
+    },
+    {
+      "party_no": 50,
+      "party_name": "ประชาอาสาชาติ",
+      "score": null
+    },
+    {
+      "party_no": 51,
+      "party_name": "พร้อม",
+      "score": null
+    },
+    {
+      "party_no": 52,
+      "party_name": "เครือข่ายชาวนาแห่งประเทศไทย",
+      "score": null
+    },
+    {
+      "party_no": 53,
+      "party_name": "ไทยพิทักษ์ธรรม",
+      "score": null
+    },
+    {
+      "party_no": 54,
+      "party_name": "ความหวังใหม่",
+      "score": null
+    },
+    {
+      "party_no": 55,
+      "party_name": "ไทยรวมไทย",
+      "score": null
+    },
+    {
+      "party_no": 56,
+      "party_name": "เพื่อบ้านเมือง",
+      "score": 2
+    },
+    {
+      "party_no": 57,
+      "party_name": "พลังไทยรักชาติ",
+      "score": null
+    }
+  ],
+  "totals": {
+    "valid_votes": 572,
+    "invalid_votes": 59,
+    "blank_votes": 11,
+    "total_ballots": 612
+  },
+  "valid_calc_from_rows": 559,
+  "delta_valid_minus_sum": 13
+}

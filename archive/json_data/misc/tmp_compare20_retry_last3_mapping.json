@@ -1,0 +1,40 @@
+{
+  "files": {
+    "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc": {
+      "drive_id": "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc",
+      "drive_url": "https://drive.google.com/file/d/1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc/view",
+      "name": "56. ศรีสะเกษ เขต 4.pdf",
+      "province": "ศรีสะเกษ",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "tmp_compare20_short"
+      ],
+      "gemini_prompt": "Return JSON only. Arabic numerals only. Read candidate numbers [1,3,5,8,9,10] and totals valid_votes, invalid_votes, blank_votes. If unreadable use null. {\"drive_id\":\"...\",\"votes\":{\"1\":0},\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0}"
+    },
+    "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj": {
+      "drive_id": "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj",
+      "drive_url": "https://drive.google.com/file/d/1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj/view",
+      "name": "57. สกลนคร เขต 5 (บช).pdf",
+      "province": "สกลนคร",
+      "constituency_number": 5,
+      "folder_path": [
+        "retry",
+        "tmp_compare20_short"
+      ],
+      "gemini_prompt": "Return JSON only. Arabic numerals only. Read party numbers [9,10,11,12,13,14,15,16] and totals valid_votes, invalid_votes, blank_votes. If unreadable use null. {\"drive_id\":\"...\",\"votes\":{\"1\":0},\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0}"
+    },
+    "1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM": {
+      "drive_id": "1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM",
+      "drive_url": "https://drive.google.com/file/d/1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM/view",
+      "name": "74. อุดรธานี เขต 4 (บช).pdf",
+      "province": "อุดรธานี",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "tmp_compare20_short"
+      ],
+      "gemini_prompt": "Return JSON only. Arabic numerals only. Read party numbers [8,9,13,16,33,38,41] and totals valid_votes, invalid_votes, blank_votes. If unreadable use null. {\"drive_id\":\"...\",\"votes\":{\"1\":0},\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0}"
+    }
+  }
+}

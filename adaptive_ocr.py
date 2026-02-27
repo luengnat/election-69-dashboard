@@ -19,6 +19,8 @@ from pathlib import Path
 
 try:
     from PIL import Image, ImageStat, ImageEnhance, ImageFilter, ImageOps
+    import cv2
+    import numpy as np
     PIL_AVAILABLE = True
 except ImportError:
     PIL_AVAILABLE = False
@@ -33,6 +35,123 @@ class ImageCharacteristics:
     contrast_ratio: float
     has_noise: bool
     recommended_preprocessing: List[str]
+
+
+def deskew_image(img_arr: "np.ndarray") -> "np.ndarray":
+    """
+    Deskew image using projection profile.
+    Simple method: rotate small angles and find max horizontal projection variance.
+    """
+    try:
+        # Convert to grayscale if needed
+        if len(img_arr.shape) == 3:
+            gray = cv2.cvtColor(img_arr, cv2.COLOR_RGB2GRAY)
+        else:
+            gray = img_arr
+
+        # Invert (text is white)
+        thresh = cv2.bitwise_not(gray)
+        
+        # Check angles -5 to +5
+        best_angle = 0
+        max_variance = 0
+        
+        # Fast check: coarse steps
+        for angle in range(-5, 6):
+            # Rotate
+            h, w = gray.shape[:2]
+            center = (w // 2, h // 2)
+            M = cv2.getRotationMatrix2D(center, angle, 1.0)
+            rotated = cv2.warpAffine(thresh, M, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+            
+            # Project
+            projection = np.sum(rotated, axis=1)
+            variance = np.var(projection)
+            
+            if variance > max_variance:
+                max_variance = variance
+                best_angle = angle
+                
+        if abs(best_angle) > 0:
+            print(f"  Deskewing: detected angle {best_angle}")
+            h, w = img_arr.shape[:2]
+            center = (w // 2, h // 2)
+            M = cv2.getRotationMatrix2D(center, best_angle, 1.0)
+            return cv2.warpAffine(img_arr, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+            
+        return img_arr
+        
+    except Exception as e:
+        print(f"  Deskew error: {e}")
+        return img_arr
+
+
+def remove_lines(img_arr: "np.ndarray") -> "np.ndarray":
+    """
+    Remove horizontal and vertical lines from image using morphology.
+    """
+    try:
+        if len(img_arr.shape) == 3:
+            gray = cv2.cvtColor(img_arr, cv2.COLOR_RGB2GRAY)
+        else:
+            gray = img_arr
+            
+        # Threshold
+        _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
+        # Horizontal kernel
+        h_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (40, 1))
+        detect_horizontal = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, h_kernel, iterations=2)
+        
+        # Vertical kernel
+        v_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 40))
+        detect_vertical = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, v_kernel, iterations=2)
+        
+        # Combine lines
+        lines = cv2.addWeighted(detect_horizontal, 0.5, detect_vertical, 0.5, 0.0)
+        
+        # Invert mask to get white lines on black background (since we work with inverted images usually)
+        # But here we want to subtract lines from original image
+        
+        # Create a white image
+        # mask = cv2.threshold(lines, 40, 255, cv2.THRESH_BINARY)[1]
+        
+        # Dilate lines slightly to ensure full removal
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+        lines = cv2.dilate(lines, kernel, iterations=1)
+        
+        # Convert lines to mask: where lines are, we want white (255) in the output to "erase" them
+        # (Assuming black text on white background)
+        # Original is white bg, black text.
+        # Lines are detected as 'foreground' (white in thresh).
+        
+        # Add the lines back to original (making them white)
+        if len(img_arr.shape) == 3:
+            lines_3ch = cv2.cvtColor(lines, cv2.COLOR_GRAY2RGB)
+            result = cv2.add(img_arr, lines_3ch)
+        else:
+            result = cv2.add(img_arr, lines)
+            
+        return result
+
+    except Exception as e:
+        print(f"  Line removal error: {e}")
+        return img_arr
+
+
+def add_padding(img: "Image.Image", border: int = 20) -> "Image.Image":
+    """
+    Add white border padding to image.
+    Tesseract often fails if text touches the edge.
+    """
+    if not PIL_AVAILABLE:
+        return img
+    try:
+        # ImageOps.expand adds border. Fill with white (255)
+        return ImageOps.expand(img, border=border, fill='white')
+    except Exception as e:
+        print(f"  Padding error: {e}")
+        return img
 
 
 def analyze_image_obj(img: "Image.Image") -> ImageCharacteristics:
@@ -68,15 +187,26 @@ def analyze_image_obj(img: "Image.Image") -> ImageCharacteristics:
     has_noise = contrast > 70 and resolution == "low"
 
     # Determine recommended preprocessing based on characteristics
+    # Padding is always recommended for OCR safety
+    recommended = ["padding"]
+    
+    # v2.0: Self-Correction hint
+    force_aggressive = os.environ.get("ADAPTIVE_OCR_FORCE_AGGRESSIVE") == "1"
+    if force_aggressive:
+        recommended.extend(["contrast", "sharpen", "binarize", "dilate"])
+
     if resolution == "high":
         # High-res: can handle aggressive preprocessing
-        recommended = ["contrast", "sharpen", "binarize"]
+        recommended.extend(["contrast", "sharpen", "binarize"])
+        # High res usually means we can see lines clearly, good candidate for line removal
+        recommended.append("remove_lines")
     elif resolution == "low":
         # Low-res: preserve information, minimal processing
-        recommended = []  # No preprocessing!
+        pass
     else:
         # Medium: light preprocessing
-        recommended = ["contrast"]
+        recommended.append("contrast")
+        recommended.append("deskew") # Medium res often mobile scans
 
     # Adjust based on contrast
     if contrast < 40:
@@ -118,6 +248,24 @@ def apply_preprocessing(img: "Image.Image", methods: List[str]) -> "Image.Image"
 
     processed = img.copy()
     
+    # Advanced CV operations (convert to numpy)
+    if "deskew" in methods or "remove_lines" in methods:
+        img_np = np.array(processed)
+        
+        if "deskew" in methods:
+            img_np = deskew_image(img_np)
+            
+        if "remove_lines" in methods:
+            img_np = remove_lines(img_np)
+            
+        processed = Image.fromarray(img_np)
+    
+    # Standard PIL operations
+    
+    # Padding (do before other filters to avoid border artifacts)
+    if "padding" in methods:
+        processed = add_padding(processed)
+
     # Convert to grayscale if needed
     if processed.mode != "L" and ("binarize" in methods or "threshold" in methods):
         processed = processed.convert("L")

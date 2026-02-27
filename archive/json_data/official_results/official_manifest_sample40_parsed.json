@@ -1,0 +1,1184 @@
+[
+  {
+    "drive_id": "1-FFUjiScNltaO9ur5Cf7ZVNBC6AuzR2K",
+    "name": "1. กรุงเทพมหานคร เขต 31.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "13wKNxoo4Q4GN0EH4IZCKnLcagxF0x9EN",
+    "name": "1. กรุงเทพมหานคร เขต 13.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 15,
+    "sum_scores": 90508,
+    "valid_votes": 90508,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "1. กรุงเทพมหานคร เขต 13.pdf",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 13,
+      "form_type": "ส.ส. ๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": null,
+          "name": "เรืออากาศโท ธนเดช เพ็งสุข",
+          "party": "พรรคประชาชน",
+          "score": 44511
+        },
+        {
+          "number": 3,
+          "name": "นายศุกล กุลสิงห์",
+          "party": "พรรค ภูมิใจไทย",
+          "score": 15227
+        },
+        {
+          "number": null,
+          "name": "นายภาณุพงศ์ ลักษณวิศิษฎ์",
+          "party": "พรรคประชาธิปัตย์",
+          "score": 11428
+        },
+        {
+          "number": 2,
+          "name": "นายแมน เจริญวัลย์",
+          "party": "พรรคเพื่อไทย",
+          "score": 10752
+        },
+        {
+          "number": null,
+          "name": "นายกฤษฎ์ เครือเจริญพร",
+          "party": "พรรครวมไทยสร้างชาติ",
+          "score": 1887
+        },
+        {
+          "number": null,
+          "name": "นางสาวรุ่งนภา ทองประคำ",
+          "party": "พรรคเศรษฐกิจ",
+          "score": 1413
+        },
+        {
+          "number": null,
+          "name": "นายฐิติพัฒณ์ จันทร์แก้ว",
+          "party": "พรรครักชาติ",
+          "score": 1323
+        },
+        {
+          "number": 6,
+          "name": "นายธัญญะ เมษประสาท",
+          "party": "พรรคปวงชนไทย",
+          "score": 1082
+        },
+        {
+          "number": 14,
+          "name": "นางสาวทิฆัมพร อัศวสิรินิมิต",
+          "party": "พรรคไทยสร้างไทย",
+          "score": 807
+        },
+        {
+          "number": 13,
+          "name": "นายดนัย อินทรพยุง",
+          "party": "พรรคไทยก้าวใหม่",
+          "score": 775
+        },
+        {
+          "number": 5,
+          "name": "นายศุรุท เกษมณีภูรเดช",
+          "party": "พรรคโอกาสใหม่",
+          "score": 438
+        },
+        {
+          "number": 4,
+          "name": "นายอนุศักดิ์ กาญจนี",
+          "party": "พรรคพลวัต",
+          "score": 325
+        },
+        {
+          "number": 12,
+          "name": "นายสมบัติ มหาโคตร",
+          "party": "พรรคพลังประชารัฐ",
+          "score": 252
+        },
+        {
+          "number": 15,
+          "name": "นายวัชรพนต์ วัฒนาอาภรณ์ชัย",
+          "party": "พรรคเพื่อบ้านเมือง",
+          "score": 157
+        },
+        {
+          "number": 16,
+          "name": "นายณัษฐพงษ์ วุฒิพงศ์เตชากิจ",
+          "party": "พรรควิชชั่นใหม่",
+          "score": 131
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 90508,
+        "invalid_votes": 1315,
+        "blank_votes": 5242,
+        "total_votes": 97065
+      }
+    }
+  },
+  {
+    "drive_id": "17AASdaeTCYe2PU4qDr31GNBjag0QUNfy",
+    "name": "2. กระบี่ เขต 3 (บช).pdf",
+    "json": false
+  },
+  {
+    "drive_id": "12OhytfHmQj9DZwl72aJuFmjZtd5FQU-N",
+    "name": "1. กรุงเทพมหานคร เขต 5.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "126l2phoIXU_8ORXIhxMCUGp1VhNEGEf9",
+    "name": "1. กรุงเทพมหานคร เขต 12.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1-hsdjz9J86nvvKe9ELI3kdejY49BtLMh",
+    "name": "1. กรุงเทพมหานคร เขต 20.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1BbPEmZso37SzPaFKWN8y-YF-BQCTdBjZ",
+    "name": "1. กรุงเทพมหานคร เขต 28.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1HVBCILZX94fkIhkOjOX5nliBfcw4nwTF",
+    "name": "1. กรุงเทพมหานคร เขต 6.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 16,
+    "sum_scores": 94391,
+    "valid_votes": 94391,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "1. กรุงเทพมหานคร เขต 6.pdf",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 6,
+      "form_type": "ประกาศคณะกรรมการการเลือกตั้งประจำเขตเลือกตั้งที่ ๖ กรุงเทพมหานคร เรื่อง ผลการนับคะแนนสมาชิกสภาผู้แทนราษฎรแบบแบ่งเขตเลือกตั้ง",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 7,
+          "name": "นายกัณตภณ ดวงอัมพร",
+          "party": "ประชาชน",
+          "score": 43239
+        },
+        {
+          "number": 5,
+          "name": "นางสาวศิริภา อินทวิเชียร",
+          "party": "ประชาธิปัตย์",
+          "score": 12848
+        },
+        {
+          "number": null,
+          "name": "นายนรเสฏฐ์ เธียรประสิทธิ์",
+          "party": "ภูมิใจไทย",
+          "score": 12088
+        },
+        {
+          "number": null,
+          "name": "นางสาวอรพินทร์ เพชรทัต",
+          "party": "โอกาสใหม่",
+          "score": 10856
+        },
+        {
+          "number": 4,
+          "name": "นายสหัสวรรษ วีระมงคลกุล",
+          "party": "เพื่อไทย",
+          "score": 6380
+        },
+        {
+          "number": null,
+          "name": "นายชณทัต ปัทะมะภูวดล",
+          "party": "รวมไทยสร้างชาติ",
+          "score": 2468
+        },
+        {
+          "number": 14,
+          "name": "นายอัศวิน อัศวินวิจตร",
+          "party": "เศรษฐกิจ",
+          "score": 1679
+        },
+        {
+          "number": null,
+          "name": "นายอิง อิงคตานุวัฒน์",
+          "party": "ไทยภักดี",
+          "score": 1388
+        },
+        {
+          "number": null,
+          "name": "พลตรีดนัย ดิษาภิรมย์",
+          "party": "ไทยสร้างไทย",
+          "score": 1306
+        },
+        {
+          "number": null,
+          "name": "นายโชติพงศ์ สรรเสริญ",
+          "party": "ไทยก้าวใหม่",
+          "score": 764
+        },
+        {
+          "number": 10,
+          "name": "นายกชพล จิตต์มั่นการ",
+          "party": "พลวัต",
+          "score": 317
+        },
+        {
+          "number": null,
+          "name": "นายวรวิช กมลโชติรส",
+          "party": "รักชาติ",
+          "score": 300
+        },
+        {
+          "number": null,
+          "name": "นายณรงค์ชัย เมืองครอง",
+          "party": "กล้าธรรม",
+          "score": 247
+        },
+        {
+          "number": 12,
+          "name": "นายเจนวิทย์ สิริญาณสรณ์",
+          "party": "ประชาธิปไตยใหม่",
+          "score": 198
+        },
+        {
+          "number": 16,
+          "name": "นางสาวจงชนก พัชรประภากร",
+          "party": "ปวงชนไทย",
+          "score": 186
+        },
+        {
+          "number": 15,
+          "name": "นายสมชาย คงศิริวงค์",
+          "party": "ฟิวชน",
+          "score": 127
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 94391,
+        "invalid_votes": 1412,
+        "blank_votes": 5068,
+        "total_votes": 100871
+      }
+    }
+  },
+  {
+    "drive_id": "19jHMap174RCPniYk-ouSw4Hjc4x_kP5_",
+    "name": "2. กระบี่ เขต 2 (บช).pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1KTQwfCYT6bpqVPd0KkccjtexXf0PnAAI",
+    "name": "1. กรุงเทพมหานคร เขต 33.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1BZw_U1BCA58Z3UeKze75FYgglhYX4AwY",
+    "name": "1. กรุงเทพมหานคร เขต 8.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1AIZIgOpf-7FHKnwxzEkzGJNUciJe7AE7",
+    "name": "1. กรุงเทพมหานคร เขต 10.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1NwGf-MJFU8oxNzTWv6gMLnxIS9sNIhGH",
+    "name": "1. กรุงเทพมหานคร เขต 19.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 14,
+    "sum_scores": 92191,
+    "valid_votes": 92191,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "1. กรุงเทพมหานคร เขต 19.pdf",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 19,
+      "form_type": "ส.ส. ๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 62,
+          "name": "นายกันต์พงษ์ ประยูรศักดิ์",
+          "party": "ประชาชน",
+          "score": 42820
+        },
+        {
+          "number": 11,
+          "name": "นางสาวกาญจนา ภวัครานนท์",
+          "party": "ภูมิใจไทย",
+          "score": 17802
+        },
+        {
+          "number": 0,
+          "name": "นางสาวขวัญจิรา มีนชัยนันท์",
+          "party": "เพื่อไทย",
+          "score": 13271
+        },
+        {
+          "number": 0,
+          "name": "นางสาวกานต์ วนาดรวรวิศาล",
+          "party": "ประชาธิปัตย์",
+          "score": 10234
+        },
+        {
+          "number": 0,
+          "name": "นายภูเบศ โพธิ์โซะ",
+          "party": "รวมไทยสร้างชาติ",
+          "score": 2415
+        },
+        {
+          "number": 0,
+          "name": "นายนิยม ทรัพย์สิรินาวิน",
+          "party": "เศรษฐกิจ",
+          "score": 1607
+        },
+        {
+          "number": 2,
+          "name": "นายวรวิทย์ พงษ์ประเทศ",
+          "party": "ไทยสร้างไทย",
+          "score": 924
+        },
+        {
+          "number": 4,
+          "name": "นายจิรัฏฐ์ เชาว์อริยรัฐ",
+          "party": "กล้าธรรม",
+          "score": 772
+        },
+        {
+          "number": 3,
+          "name": "นายสมัย ภูมรินทร",
+          "party": "ไทยก้าวใหม่",
+          "score": 579
+        },
+        {
+          "number": 0,
+          "name": "นายศรศักดิ์ สวนแก้ว",
+          "party": "ปวงชนไทย",
+          "score": 546
+        },
+        {
+          "number": 0,
+          "name": "นายปิยะชาติ อำนวยเวช",
+          "party": "โอกาสใหม่",
+          "score": 377
+        },
+        {
+          "number": 13,
+          "name": "นายเอนก มนัสซง",
+          "party": "พลวัต",
+          "score": 345
+        },
+        {
+          "number": 12,
+          "name": "นางสาวสุธิดารา สาสาย",
+          "party": "รักชาติ",
+          "score": 269
+        },
+        {
+          "number": 14,
+          "name": "นายบวรวิช รักไทย",
+          "party": "ทางเลือกใหม่",
+          "score": 230
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 92191,
+        "invalid_votes": 1634,
+        "blank_votes": 5095,
+        "total_votes": 98920
+      }
+    }
+  },
+  {
+    "drive_id": "1JxW3LXY1b4DjkSHoN1mgZlWjq5pVLRAY",
+    "name": "1. กรุงเทพมหานคร เขต 4.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1Oc6RvuUPxGsSHtjvpn5opoiaEkVMOWET",
+    "name": "1. กรุงเทพมหานคร เขต 32.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 16,
+    "sum_scores": 85631,
+    "valid_votes": 85631,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "1. กรุงเทพมหานคร เขต 32.pdf",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 32,
+      "form_type": "ส.ส. ๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 15,
+          "name": "นางสาวปวิตรา จิตตกิจ",
+          "party": "ประชาชน",
+          "score": 39727
+        },
+        {
+          "number": null,
+          "name": "นางสาวศุภิกา พัฒน์ธนันภู",
+          "party": "ภูมิใจไทย",
+          "score": 13302
+        },
+        {
+          "number": 14,
+          "name": "นายวิสวัส ทองธีรภาพ",
+          "party": "ประชาธิปัตย์",
+          "score": 11573
+        },
+        {
+          "number": 2,
+          "name": "นางสาวเสาวนีย์ คงวุฒิปัญญา",
+          "party": "เพื่อไทย",
+          "score": 10257
+        },
+        {
+          "number": 3,
+          "name": "นางสาวกัญญาวีร์ จารุสัมพันธ์กนก",
+          "party": "รวมไทยสร้างชาติ",
+          "score": 3024
+        },
+        {
+          "number": 27,
+          "name": "นายวงศธร โชคภัทรชัยกิจ",
+          "party": "ไทยสร้างไทย",
+          "score": 1429
+        },
+        {
+          "number": null,
+          "name": "นายแทนรัก ศาตะมาน",
+          "party": "เศรษฐกิจ",
+          "score": 897
+        },
+        {
+          "number": null,
+          "name": "นางสาววาสนา ชาหอม",
+          "party": "พลวัต",
+          "score": 873
+        },
+        {
+          "number": null,
+          "name": "นายธิติพัทธ์ นรวิทย์โชติกุล",
+          "party": "เสรีรวมไทย",
+          "score": 775
+        },
+        {
+          "number": null,
+          "name": "นางสาวไปรพร แสงจันทร์",
+          "party": "ไทยก้าวใหม่",
+          "score": 700
+        },
+        {
+          "number": 11,
+          "name": "นายปารเมศ เอี่ยมศิลา",
+          "party": "กล้าธรรม",
+          "score": 681
+        },
+        {
+          "number": 12,
+          "name": "นายอนุรักษ์ ปวงคำ",
+          "party": "รักชาติ",
+          "score": 559
+        },
+        {
+          "number": null,
+          "name": "นายภูรินันท์ พุทธมา",
+          "party": "เพื่อบ้านเมือง",
+          "score": 551
+        },
+        {
+          "number": 5,
+          "name": "นางสาวขวัญญดาภรณ์ เชี่ยววิทย์",
+          "party": "โอกาสใหม่",
+          "score": 497
+        },
+        {
+          "number": null,
+          "name": "นายวิ ละ อุดม",
+          "party": "ทางเลือกใหม่",
+          "score": 435
+        },
+        {
+          "number": 3,
+          "name": "นางสาวนิธิสนี กลิ่นพันธหิรัญ",
+          "party": "พลังประชารัฐ",
+          "score": 351
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 85631,
+        "invalid_votes": 2233,
+        "blank_votes": 6053,
+        "total_votes": 93917
+      }
+    }
+  },
+  {
+    "drive_id": "1MEEhXhNx4j9A17_xD92KmQ4e63SmhDpg",
+    "name": "1. กรุงเทพมหานคร เขต 11.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1RkVRmdFKVTydfk9vDV5_h8C6h41iSa50",
+    "name": "1. กรุงเทพมหานคร เขต 22.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1MKaK-R4XmDTI_3YPXH9HEDni6ZlnwjHh",
+    "name": "1. กรุงเทพมหานคร เขต 29.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1VglyVY0ywHxYKGyc7OWWGGp5Okd8j2zZ",
+    "name": "1. กรุงเทพมหานคร เขต 9.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1mRmRW0mCj0-cGmv7gqfBvCbRLLHe7zkS",
+    "name": "1. กรุงเทพมหานคร เขต 3.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1nH5Ofm5U22ilGnFqJl6XL11GB-bQ0OIT",
+    "name": "1. กรุงเทพมหานคร เขต 14.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1oGYn79Mr7OqXb2I7JFmy1Y3YhtNda7mN",
+    "name": "2. กระบี่ เขต 1.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 6,
+    "sum_scores": 90061,
+    "valid_votes": 90061,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "2. กระบี่ เขต 1.pdf",
+      "province": "กระบี่",
+      "district_number": 1,
+      "form_type": "ส.ส. ๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 2,
+          "name": "นายกิตติ กิตติธรกุล",
+          "party": "ภูมิใจไทย",
+          "score": 50493
+        },
+        {
+          "number": 3,
+          "name": "นายธนวัช ภูเก้าล้วน",
+          "party": "ประชาชน",
+          "score": 20554
+        },
+        {
+          "number": 4,
+          "name": "นายวศิน สิริเกียรติกุล",
+          "party": "ประชาธิปัตย์",
+          "score": 15466
+        },
+        {
+          "number": 1,
+          "name": "นายสุวรรณ อินพรหม",
+          "party": "เพื่อไทย",
+          "score": 2308
+        },
+        {
+          "number": 5,
+          "name": "นายพิทักษ์ ภารา",
+          "party": "เศรษฐกิจ",
+          "score": 840
+        },
+        {
+          "number": 6,
+          "name": "นายพงไพร บุตรเลี่ยม",
+          "party": "พลังประชารัฐ",
+          "score": 400
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 90061,
+        "invalid_votes": 2723,
+        "blank_votes": 4647,
+        "total_votes": 97431
+      }
+    }
+  },
+  {
+    "drive_id": "1l8FFCSWg3cBfI79LLiauIV5AOcH8PsJ6",
+    "name": "1. กรุงเทพมหานคร เขต 2 (บช).pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1qyQZCwTt3nl-d4OHF0y2CzQMbyoyL-h9",
+    "name": "1. กรุงเทพมหานคร เขต 24.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 13,
+    "sum_scores": 89364,
+    "valid_votes": 89356,
+    "delta": -8,
+    "parsed": {
+      "drive_id": "1. กรุงเทพมหานคร เขต 24.pdf",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 24,
+      "form_type": "ส.ส. ๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 6,
+          "name": "นายณพัฎน์ จิตตภินันท์กัณตา",
+          "party": "ประชาชน",
+          "score": 46415
+        },
+        {
+          "number": 8,
+          "name": "นางสาวเจณิสตา เตชะโสภณมณี",
+          "party": "ภูมิใจไทย",
+          "score": 15300
+        },
+        {
+          "number": 7,
+          "name": "นางสาวมารีญา ฤกษ์ดี",
+          "party": "ประชาธิปัตย์",
+          "score": 13371
+        },
+        {
+          "number": 4,
+          "name": "นายวิชญ์วิสิษ โชติกิจพิศาล",
+          "party": "เพื่อไทย",
+          "score": 6401
+        },
+        {
+          "number": 2,
+          "name": "นายกฤษติศักดิ์ พูลสวัสดิ์",
+          "party": "เศรษฐกิจ",
+          "score": 2509
+        },
+        {
+          "number": 11,
+          "name": "นายรัชชานนท์ สมบัติลาภตระกูล",
+          "party": null,
+          "score": 1758
+        },
+        {
+          "number": 9,
+          "name": "นายทรงวุฒิ จันทร์อำนวยโชค",
+          "party": null,
+          "score": 1009
+        },
+        {
+          "number": 10,
+          "name": "นางสาวสุภาภรณ์ ไชยโคตร",
+          "party": "รวมไทยสร้างชาติ",
+          "score": 285
+        },
+        {
+          "number": 2,
+          "name": "นายพงศพัศ กตคุณวิสิทธิ์",
+          "party": "ไทยก้าวใหม่",
+          "score": 492
+        },
+        {
+          "number": 8,
+          "name": "นางสาวปภาดา ถาวรเศรษฐ",
+          "party": "ไทยสร้างไทย",
+          "score": 819
+        },
+        {
+          "number": 3,
+          "name": "ร้อยตำรวจเอก จักรกฤช ปิ่นกร",
+          "party": "กล้าธรรม",
+          "score": 280
+        },
+        {
+          "number": 12,
+          "name": "นายวิษณุ ทิพย์วงศ์",
+          "party": "โอกาสใหม่",
+          "score": 514
+        },
+        {
+          "number": 13,
+          "name": "นายชาญวิทย์ อุทัยแสน",
+          "party": "ทางเลือกใหม่",
+          "score": 211
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 89356,
+        "invalid_votes": 1902,
+        "blank_votes": 5661,
+        "total_votes": 96919
+      }
+    }
+  },
+  {
+    "drive_id": "1tmEswtv_et-SilrPhGMrADBYgb7o7FAF",
+    "name": "2. กระบี่ เขต 1 (บช).pdf",
+    "json": true,
+    "election_type": "party_list",
+    "rows_count": 57,
+    "sum_scores": 91354,
+    "valid_votes": 91354,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "2. กระบี่ เขต 1 (บช).pdf",
+      "province": "กระบี่",
+      "district_number": 1,
+      "form_type": "ส.ส. ๖/๑ (บช)",
+      "election_type": "party_list",
+      "candidate_scores": [],
+      "party_scores": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": 266
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 3417
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 466
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 352
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 374
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 1270
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 76
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 1364
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 2540
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 328
+        },
+        {
+          "number": 11,
+          "name": "เศรฐกิจ",
+          "score": 1549
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 190
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 362
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": 31
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": 29
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 62
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": 109
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": 23
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": 55
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": 6
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": 30
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": 51
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": 70
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": 111
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": 19
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": 125
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 34327
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 72
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 673
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": 69
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": 170
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": 147
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 3609
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": 98
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": 99
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": 102
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 15064
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 67
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": 28
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": 14
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": 10
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 239
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": 151
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": 50
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": 113
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 22325
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": 151
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 93
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": 168
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": 10
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": 26
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": 3
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": 6
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": 17
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": 13
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": 122
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": 43
+        }
+      ],
+      "totals": {
+        "valid_votes": 91354,
+        "invalid_votes": 3424,
+        "blank_votes": 2652,
+        "total_votes": 97430
+      }
+    }
+  },
+  {
+    "drive_id": "1uGJc1eCCl9sBQyDElUshteZt8PBRGoh9",
+    "name": "1. กรุงเทพมหานคร เขต 25.pdf",
+    "json": true,
+    "election_type": "constituency",
+    "rows_count": 14,
+    "sum_scores": 84112,
+    "valid_votes": 84112,
+    "delta": 0,
+    "parsed": {
+      "drive_id": "1. กรุงเทพมหานคร เขต 25.pdf",
+      "province": "กรุงเทพมหานคร",
+      "district_number": 25,
+      "form_type": "ส.ส. ๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 9,
+          "name": "นางสาวแอนศิริ วลัยกนก",
+          "party": "ประชาชน",
+          "score": 37035
+        },
+        {
+          "number": 4,
+          "name": "นายกิตติพล รวยฟูพันธ์",
+          "party": "เพื่อไทย",
+          "score": 21904
+        },
+        {
+          "number": 2,
+          "name": "นายเจริญศักดิ์ มณีรัตนสุบรรณ",
+          "party": "ภูมิใจไทย",
+          "score": 10493
+        },
+        {
+          "number": null,
+          "name": "นายชยิน พึ่งสาย",
+          "party": "ประชาธิปัตย์",
+          "score": 7071
+        },
+        {
+          "number": 12,
+          "name": "นางสาวปราณี ธรรมนิยม",
+          "party": "รวมไทยสร้างชาติ",
+          "score": 2493
+        },
+        {
+          "number": null,
+          "name": "นางสาวทัสนันทน์ สิริเลิศเมฆาสกุล",
+          "party": "เศรษฐกิจ",
+          "score": 1335
+        },
+        {
+          "number": null,
+          "name": "นางสาวญาตาวี เซ็นเชาวนิช",
+          "party": "พลวัต",
+          "score": 980
+        },
+        {
+          "number": 6,
+          "name": "นายธรรมนูญ เทียบขุนทด",
+          "party": "พลังประชารัฐ",
+          "score": 688
+        },
+        {
+          "number": 5,
+          "name": "นายอมรศักดิ์ สินเหลือ",
+          "party": "ไทยสร้างไทย",
+          "score": 581
+        },
+        {
+          "number": 11,
+          "name": "นายวิชิต วราศิริกุล",
+          "party": "อนาคตไทย",
+          "score": 424
+        },
+        {
+          "number": null,
+          "name": "นางสาวเนตรสกาว ชาหอม",
+          "party": "ไทยก้าวใหม่",
+          "score": 407
+        },
+        {
+          "number": null,
+          "name": "นายณัฐดนัย หลำแสงกุล",
+          "party": "กล้าธรรม",
+          "score": 357
+        },
+        {
+          "number": null,
+          "name": "นายบุญรุ่ง เต๋งจงดี",
+          "party": "โอกาสใหม่",
+          "score": 179
+        },
+        {
+          "number": 14,
+          "name": "นายเดชพนต์ ชลธาร",
+          "party": "วิชชั่นใหม่",
+          "score": 165
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 84112,
+        "invalid_votes": 1443,
+        "blank_votes": 4132,
+        "total_votes": 89687
+      }
+    }
+  },
+  {
+    "drive_id": "1v0fjDVsaMyAwTqhEtF0v03QvwIF2ayFd",
+    "name": "1. กรุงเทพมหานคร เขต 26.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1rUXXCcT-JT84VYb6OjO89_GBPs6srGEB",
+    "name": "1. กรุงเทพมหานคร เขต 30.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1w3OSjYXd8Dnf3mHnuYsmyziJT7xcVfhd",
+    "name": "1. กรุงเทพมหานคร เขต 17.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1wgJsCUVKYaLjMvn6xcd_-KbbWXimICYM",
+    "name": "1. กรุงเทพมหานคร เขต 21.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1y90eL9XEvS1hOg6AVVQliudyVtZumsM0",
+    "name": "1. กรุงเทพมหานคร เขต 27.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1vvetQAREhZztZ-Ct-JpY8v8tUJN77QlJ",
+    "name": "1. กรุงเทพมหานคร เขต 23.pdf",
+    "json": false
+  },
+  {
+    "drive_id": "1yYV_7WvATIkrXZ9Yl1I7I_12nzxNUgk4",
+    "name": "1. กรุงเทพมหานคร เขต 2.pdf",
+    "json": false
+  }
+]

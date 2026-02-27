@@ -4581,8 +4581,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_tablocked_2026-02-25",
+      "total_votes_extracted": 100871,
+      "updated_at": "2026-02-25T02:13:56.383549+00:00"
     },
     {
       "drive_id": "1bpWv-h95Kofiy5QSxIdC1Efp4HCK0E9S",
@@ -4778,8 +4780,8 @@
             "57": 14
           },
           "valid_votes": 96499,
-          "invalid_votes": null,
-          "blank_votes": null
+          "invalid_votes": 1835,
+          "blank_votes": 2538
         },
         "ect": {
           "votes": {
@@ -4982,8 +4984,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_tablocked_2026-02-25",
+      "invalid_votes": 1835,
+      "blank_votes": 2538,
+      "total_votes_extracted": 100872,
+      "updated_at": "2026-02-25T02:13:56.383549+00:00"
     },
     {
       "drive_id": "1ValgLEY9IDP2tjduGw73t2M8x6aEuSKl",
@@ -7125,9 +7131,9 @@
             "17": 584,
             "18": 60
           },
-          "valid_votes": 94994,
-          "invalid_votes": null,
-          "blank_votes": null
+          "valid_votes": 94993,
+          "invalid_votes": 1207,
+          "blank_votes": 4167
         },
         "ect": {
           "votes": {
@@ -7213,8 +7219,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "user_confirmed_manual_2026-02-25_bkk11_constituency",
+      "invalid_votes": 1207,
+      "blank_votes": 4167,
+      "total_votes_extracted": 100367,
+      "updated_at": "2026-02-25T02:18:23.091955+00:00"
     },
     {
       "drive_id": "1Jn04KDYVmVblmPMmgIc_Z0Vnqjie9Zps",
@@ -22323,8 +22333,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "total_votes_extracted": 90137,
+      "updated_at": "2026-02-25T02:28:40.274684+00:00"
     },
     {
       "drive_id": "1VKae75PH9ewqe33kglXKzZdZQf1t2dJo",
@@ -22728,8 +22740,9 @@
         "has_killernay": true
       },
       "updated_by": "codex",
-      "update_reason": "manual_user_confirmed_full_party_votes_set",
-      "updated_at": "2026-02-23T05:34:07.305311+00:00"
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "updated_at": "2026-02-25T02:28:40.274684+00:00",
+      "total_votes_extracted": 90138
     },
     {
       "drive_id": "1W15Zq7awfjPWG12O4wEcU7-QwD7iaG4l",
@@ -37031,8 +37044,10 @@
         "has_vote62": false,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm2_2026-02-25",
+      "total_votes_extracted": 104346,
+      "updated_at": "2026-02-25T02:34:49.066109+00:00"
     },
     {
       "drive_id": "1RPliZCYMtid_66mMSptogZ2Ov7vLEEI6",
@@ -37377,8 +37392,10 @@
         "has_vote62": false,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm2_2026-02-25",
+      "total_votes_extracted": 104346,
+      "updated_at": "2026-02-25T02:34:49.066109+00:00"
     },
     {
       "drive_id": "1UHrjDPOpmNm04LV-p1CZqY1GdUWGkJCh",
@@ -42254,8 +42271,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "total_votes_extracted": 94469,
+      "updated_at": "2026-02-25T02:24:37.507765+00:00"
     },
     {
       "drive_id": "1pSzYLedpO7n6rH6eGrs28lFP4-e2VRhJ",
@@ -42658,8 +42677,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "total_votes_extracted": 94468,
+      "updated_at": "2026-02-25T02:24:37.507765+00:00"
     },
     {
       "drive_id": "108lzSD4F6xxAtJLCC2Cg0SbkHMz7737m",
@@ -45846,8 +45867,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm2_2026-02-25",
+      "total_votes_extracted": 89261,
+      "updated_at": "2026-02-25T02:37:09.184602+00:00"
     },
     {
       "drive_id": "1Vt_fecvJV-0GxOXqS7u7fdVC_OIpQq3M",
@@ -46250,8 +46273,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm2_2026-02-25",
+      "total_votes_extracted": 89259,
+      "updated_at": "2026-02-25T02:37:09.184602+00:00"
     },
     {
       "drive_id": "1zFzg9N8ch5fcFc87zpxhZJ6Bs7KbCARg",
@@ -47419,8 +47444,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "total_votes_extracted": 107786,
+      "updated_at": "2026-02-25T02:24:37.507765+00:00"
     },
     {
       "drive_id": "1huwpNNhW4OVFhEWD1nKTjeNsrvbIvsC8",
@@ -47823,8 +47850,10 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "total_votes_extracted": 107787,
+      "updated_at": "2026-02-25T02:24:37.507765+00:00"
     },
     {
       "drive_id": "12GJSERpD3ou8W6Lv7du5BdT2ELPBlaX6",
@@ -77311,8 +77340,8 @@
             "8": 1741
           },
           "valid_votes": 99026,
-          "invalid_votes": null,
-          "blank_votes": null
+          "invalid_votes": 3607,
+          "blank_votes": 7390
         },
         "ect": {
           "votes": {
@@ -77368,8 +77397,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_abs100_2026-02-25",
+      "invalid_votes": 3607,
+      "blank_votes": 7390,
+      "total_votes_extracted": 110023,
+      "updated_at": "2026-02-25T02:43:47.869803+00:00"
     },
     {
       "drive_id": "1FOoRVeiYO1JkpWlgOgAMfNsjhHUdq-OI",
@@ -77377,7 +77410,7 @@
       "province": "นนทบุรี",
       "district_number": 6,
       "form_type": "party_list",
-      "valid_votes_extracted": 103366,
+      "valid_votes_extracted": 103361,
       "weak_summary": false,
       "ocr_check": {
         "exact": true,
@@ -77564,9 +77597,9 @@
             "56": 13,
             "57": 32
           },
-          "valid_votes": 103466,
-          "invalid_votes": null,
-          "blank_votes": null
+          "valid_votes": 103361,
+          "invalid_votes": 2576,
+          "blank_votes": 4084
         },
         "ect": {
           "votes": {
@@ -77769,8 +77802,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_abs100_2026-02-25",
+      "invalid_votes": 2576,
+      "blank_votes": 4084,
+      "total_votes_extracted": 110021,
+      "updated_at": "2026-02-25T02:43:47.869803+00:00"
     },
     {
       "drive_id": "1XQZTpIeiR5vqh4E6_8TRK-Y5Pk0xhloc",
@@ -93190,7 +93227,11 @@
         "has_ect": true,
         "has_vote62": true,
         "has_killernay": false
-      }
+      },
+      "total_votes_extracted": 108244,
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "updated_at": "2026-02-25T02:32:29.022143+00:00"
     },
     {
       "drive_id": "1v5ZcBDXzy2UwiEY45P2sdT7HsOMe-MKv",
@@ -93537,7 +93578,11 @@
         "has_ect": true,
         "has_vote62": true,
         "has_killernay": false
-      }
+      },
+      "total_votes_extracted": 108243,
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_pm1_2026-02-25",
+      "updated_at": "2026-02-25T02:32:29.022143+00:00"
     },
     {
       "drive_id": "1R2RHqPvUxs0eQF22wg3rxOYbJG6gDz_k",
@@ -103180,8 +103225,8 @@
             "8": 295
           },
           "valid_votes": 91069,
-          "invalid_votes": null,
-          "blank_votes": null
+          "invalid_votes": 5082,
+          "blank_votes": 4679
         },
         "ect": {
           "votes": {
@@ -103238,8 +103283,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_abs50_2026-02-25",
+      "invalid_votes": 5082,
+      "blank_votes": 4679,
+      "total_votes_extracted": 100830,
+      "updated_at": "2026-02-25T02:55:27.636705+00:00"
     },
     {
       "drive_id": "1EqYsbTpKbYhgxlWOBnmlEUoewpeZi9VK",
@@ -103434,9 +103483,9 @@
             "56": 66,
             "57": 98
           },
-          "valid_votes": 91021,
-          "invalid_votes": null,
-          "blank_votes": null
+          "valid_votes": 91071,
+          "invalid_votes": 6323,
+          "blank_votes": 3436
         },
         "ect": {
           "votes": {
@@ -103639,8 +103688,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_abs50_2026-02-25",
+      "invalid_votes": 6323,
+      "blank_votes": 3436,
+      "total_votes_extracted": 100830,
+      "updated_at": "2026-02-25T02:55:27.636705+00:00"
     },
     {
       "drive_id": "1QQSpruteYr1I9xTEoJxe7Wkc6iHbeoaP",
@@ -141342,8 +141395,8 @@
             "6": 1305
           },
           "valid_votes": 93808,
-          "invalid_votes": null,
-          "blank_votes": null
+          "invalid_votes": 3913,
+          "blank_votes": 6804
         },
         "ect": {
           "votes": {
@@ -141393,8 +141446,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_tablocked_2026-02-25",
+      "invalid_votes": 3913,
+      "blank_votes": 6804,
+      "total_votes_extracted": 104525,
+      "updated_at": "2026-02-25T02:13:56.383549+00:00"
     },
     {
       "drive_id": "1I5u_s9TaHpYiuklM-IGg4RsaLHpqG8FQ",
@@ -141402,7 +141459,7 @@
       "province": "สงขลา",
       "district_number": 5,
       "form_type": "party_list",
-      "valid_votes_extracted": 98003,
+      "valid_votes_extracted": 97917,
       "weak_summary": false,
       "ocr_check": {
         "exact": true,
@@ -141589,9 +141646,9 @@
             "56": 315,
             "57": 52
           },
-          "valid_votes": 98003,
-          "invalid_votes": null,
-          "blank_votes": null
+          "valid_votes": 97917,
+          "invalid_votes": 3923,
+          "blank_votes": 2685
         },
         "ect": {
           "votes": {
@@ -141794,8 +141851,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_tablocked_2026-02-25",
+      "invalid_votes": 3923,
+      "blank_votes": 2685,
+      "total_votes_extracted": 104525,
+      "updated_at": "2026-02-25T02:13:56.383549+00:00"
     },
     {
       "drive_id": "1tUmMiPqijb00ChBZJS2ZJboGoaxRCGhV",
@@ -154898,8 +154959,8 @@
             "8": 484
           },
           "valid_votes": 92868,
-          "invalid_votes": null,
-          "blank_votes": null
+          "invalid_votes": 5224,
+          "blank_votes": 3845
         },
         "ect": {
           "votes": {
@@ -154955,8 +155016,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_mainpoints_2026-02-25",
+      "invalid_votes": 5224,
+      "blank_votes": 3845,
+      "total_votes_extracted": 101937,
+      "updated_at": "2026-02-25T02:13:56.383549+00:00"
     },
     {
       "drive_id": "1Q-K5Vy2zeWafPEvfjIanoB9rq1DT2aSI",
@@ -155151,9 +155216,9 @@
             "56": 68,
             "57": 0
           },
-          "valid_votes": 92248,
-          "invalid_votes": null,
-          "blank_votes": null
+          "valid_votes": 92333,
+          "invalid_votes": 6205,
+          "blank_votes": 3399
         },
         "ect": {
           "votes": {
@@ -155356,8 +155421,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_tablocked_2026-02-25",
+      "invalid_votes": 6205,
+      "blank_votes": 3399,
+      "total_votes_extracted": 101937,
+      "updated_at": "2026-02-25T02:13:56.383549+00:00"
     },
     {
       "drive_id": "1fLgHLnOMrSOeZrmHzQUJCHqJSdt00WUD",
@@ -178013,9 +178082,9 @@
             "8": 300,
             "9": 5021
           },
-          "valid_votes": 74942,
-          "invalid_votes": null,
-          "blank_votes": null
+          "valid_votes": 74992,
+          "invalid_votes": 3780,
+          "blank_votes": 4342
         },
         "ect": {
           "votes": {
@@ -178074,8 +178143,12 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "codex",
+      "update_reason": "cdp_gemini_recheck_abs50_2026-02-25",
+      "invalid_votes": 3780,
+      "blank_votes": 4342,
+      "total_votes_extracted": 83114,
+      "updated_at": "2026-02-25T02:51:18.727236+00:00"
     },
     {
       "drive_id": "1fx1cHJBn41Py_WC7uxiwqTsRQnR4O50j",
@@ -178476,12 +178549,13 @@
         "has_killernay": true
       },
       "updated_by": "codex",
-      "update_reason": "manual_user_patch_party35",
-      "updated_at": "2026-02-23T07:53:34.267234+00:00",
+      "update_reason": "cdp_gemini_recheck_abs50_2026-02-25",
+      "updated_at": "2026-02-25T02:51:18.727236+00:00",
       "normalization_note": "normalized keys to 1..57 using fallback priority latest>killernay>ect",
       "invalid_votes": 5243,
       "blank_votes": 3308,
-      "total_votes": 83114
+      "total_votes": 83114,
+      "total_votes_extracted": 83114
     },
     {
       "drive_id": "17fxNWUXlFexgUa6uHLjXni14-P5CwA-o",

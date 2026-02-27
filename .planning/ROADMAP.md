@@ -138,6 +138,15 @@ Phases execute in numeric order: 5 -> 6 -> 7 -> 8
 
 **Next Action:** Consider starting v1.2 milestone or performing release
 
+### Phase 9: Drive Gemini Ground Truth Integration - Extract AI overviews from Google Drive files and use as ground truth source for OCR validation
+
+**Goal:** [To be planned]
+**Depends on:** Phase 8
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 9 to break down)
+
 ---
 
 _History: v1.0 MVP shipped 2026-02-16, v1.1 Scale & Web completed 2026-02-17_

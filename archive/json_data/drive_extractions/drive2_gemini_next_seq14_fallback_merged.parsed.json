@@ -1,0 +1,261 @@
+{
+  "drive_id": "1oBP6wZ2hVGUh-oZztkq1NSU1hQLlfBO1",
+  "form_seq": 14,
+  "form_type": "ส.ส. 5/18 (บช)",
+  "province": "ราชบุรี",
+  "district_number": null,
+  "unit_number": 7,
+  "rows": [
+    {
+      "party_no": 1,
+      "score": 0
+    },
+    {
+      "party_no": 2,
+      "score": 2
+    },
+    {
+      "party_no": 3,
+      "score": 5
+    },
+    {
+      "party_no": 4,
+      "score": 1
+    },
+    {
+      "party_no": 5,
+      "score": 3
+    },
+    {
+      "party_no": 6,
+      "score": 20
+    },
+    {
+      "party_no": 7,
+      "score": 2
+    },
+    {
+      "party_no": 8,
+      "score": 2
+    },
+    {
+      "party_no": 9,
+      "score": 55
+    },
+    {
+      "party_no": 10,
+      "score": 2
+    },
+    {
+      "party_no": 11,
+      "score": 18
+    },
+    {
+      "party_no": 12,
+      "score": 0
+    },
+    {
+      "party_no": 13,
+      "score": 4
+    },
+    {
+      "party_no": 14,
+      "score": 0
+    },
+    {
+      "party_no": 15,
+      "score": 0
+    },
+    {
+      "party_no": 16,
+      "score": 0
+    },
+    {
+      "party_no": 17,
+      "score": 2
+    },
+    {
+      "party_no": 18,
+      "score": 0
+    },
+    {
+      "party_no": 19,
+      "score": 0
+    },
+    {
+      "party_no": 20,
+      "score": 0
+    },
+    {
+      "party_no": 21,
+      "score": 0
+    },
+    {
+      "party_no": 22,
+      "score": 0
+    },
+    {
+      "party_no": 23,
+      "score": 0
+    },
+    {
+      "party_no": 24,
+      "score": 0
+    },
+    {
+      "party_no": 25,
+      "score": 0
+    },
+    {
+      "party_no": 26,
+      "score": null
+    },
+    {
+      "party_no": 27,
+      "score": 59
+    },
+    {
+      "party_no": 28,
+      "score": 0
+    },
+    {
+      "party_no": 29,
+      "score": 16
+    },
+    {
+      "party_no": 30,
+      "score": 1
+    },
+    {
+      "party_no": 31,
+      "score": 0
+    },
+    {
+      "party_no": 32,
+      "score": 1
+    },
+    {
+      "party_no": 33,
+      "score": 0
+    },
+    {
+      "party_no": 34,
+      "score": 0
+    },
+    {
+      "party_no": 35,
+      "score": 1
+    },
+    {
+      "party_no": 36,
+      "score": 0
+    },
+    {
+      "party_no": 37,
+      "score": 146
+    },
+    {
+      "party_no": 38,
+      "score": 0
+    },
+    {
+      "party_no": 39,
+      "score": 0
+    },
+    {
+      "party_no": 40,
+      "score": 0
+    },
+    {
+      "party_no": 41,
+      "score": 0
+    },
+    {
+      "party_no": 42,
+      "score": 2
+    },
+    {
+      "party_no": 43,
+      "score": 1
+    },
+    {
+      "party_no": 44,
+      "score": 0
+    },
+    {
+      "party_no": 45,
+      "score": 1
+    },
+    {
+      "party_no": 46,
+      "score": 179
+    },
+    {
+      "party_no": 47,
+      "score": 1
+    },
+    {
+      "party_no": 48,
+      "score": null
+    },
+    {
+      "party_no": 49,
+      "score": 4
+    },
+    {
+      "party_no": 50,
+      "score": 0
+    },
+    {
+      "party_no": 51,
+      "score": 0
+    },
+    {
+      "party_no": 52,
+      "score": 0
+    },
+    {
+      "party_no": 53,
+      "score": 0
+    },
+    {
+      "party_no": 54,
+      "score": 0
+    },
+    {
+      "party_no": 55,
+      "score": 0
+    },
+    {
+      "party_no": 56,
+      "score": 0
+    },
+    {
+      "party_no": 57,
+      "score": 0
+    }
+  ],
+  "totals": {
+    "valid_votes": 529,
+    "invalid_votes": 23,
+    "blank_votes": 12,
+    "total_ballots": 564
+  },
+  "parse_status": [
+    [
+      "p1",
+      "ok"
+    ],
+    [
+      "p2",
+      "ok"
+    ],
+    [
+      "p3",
+      "ok"
+    ]
+  ],
+  "mode": "fallback",
+  "valid_calc_from_rows": 528,
+  "delta_valid_minus_sum": 1
+}

@@ -1,0 +1,784 @@
+{
+  "files": {
+    "1tmEswtv_et-SilrPhGMrADBYgb7o7FAF": {
+      "drive_id": "1tmEswtv_et-SilrPhGMrADBYgb7o7FAF",
+      "drive_url": "https://drive.google.com/file/d/1tmEswtv_et-SilrPhGMrADBYgb7o7FAF/view",
+      "name": "2. กระบี่ เขต 1 (บช).pdf",
+      "province": "กระบี่",
+      "constituency_number": 1,
+      "folder_path": [
+        "official",
+        "กระบี่",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1tmEswtv_et-SilrPhGMrADBYgb7o7FAF\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "19jHMap174RCPniYk-ouSw4Hjc4x_kP5_": {
+      "drive_id": "19jHMap174RCPniYk-ouSw4Hjc4x_kP5_",
+      "drive_url": "https://drive.google.com/file/d/19jHMap174RCPniYk-ouSw4Hjc4x_kP5_/view",
+      "name": "2. กระบี่ เขต 2 (บช).pdf",
+      "province": "กระบี่",
+      "constituency_number": 2,
+      "folder_path": [
+        "official",
+        "กระบี่",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"19jHMap174RCPniYk-ouSw4Hjc4x_kP5_\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "17AASdaeTCYe2PU4qDr31GNBjag0QUNfy": {
+      "drive_id": "17AASdaeTCYe2PU4qDr31GNBjag0QUNfy",
+      "drive_url": "https://drive.google.com/file/d/17AASdaeTCYe2PU4qDr31GNBjag0QUNfy/view",
+      "name": "2. กระบี่ เขต 3 (บช).pdf",
+      "province": "กระบี่",
+      "constituency_number": 3,
+      "folder_path": [
+        "official",
+        "กระบี่",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"17AASdaeTCYe2PU4qDr31GNBjag0QUNfy\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1oGYn79Mr7OqXb2I7JFmy1Y3YhtNda7mN": {
+      "drive_id": "1oGYn79Mr7OqXb2I7JFmy1Y3YhtNda7mN",
+      "drive_url": "https://drive.google.com/file/d/1oGYn79Mr7OqXb2I7JFmy1Y3YhtNda7mN/view",
+      "name": "2. กระบี่ เขต 1.pdf",
+      "province": "กระบี่",
+      "constituency_number": 1,
+      "folder_path": [
+        "official",
+        "กระบี่",
+        "แบบเเบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1oGYn79Mr7OqXb2I7JFmy1Y3YhtNda7mN\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1O-m1c3dlYRHNvRZ1zcAs9wVOkeAtYE_W": {
+      "drive_id": "1O-m1c3dlYRHNvRZ1zcAs9wVOkeAtYE_W",
+      "drive_url": "https://drive.google.com/file/d/1O-m1c3dlYRHNvRZ1zcAs9wVOkeAtYE_W/view",
+      "name": "2. กระบี่ เขต 2.pdf",
+      "province": "กระบี่",
+      "constituency_number": 2,
+      "folder_path": [
+        "official",
+        "กระบี่",
+        "แบบเเบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1O-m1c3dlYRHNvRZ1zcAs9wVOkeAtYE_W\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1fDLms3hZKRQNDEmX0iWuFH1SiM8VqLJo": {
+      "drive_id": "1fDLms3hZKRQNDEmX0iWuFH1SiM8VqLJo",
+      "drive_url": "https://drive.google.com/file/d/1fDLms3hZKRQNDEmX0iWuFH1SiM8VqLJo/view",
+      "name": "2. กระบี่ เขต 3.pdf",
+      "province": "กระบี่",
+      "constituency_number": 3,
+      "folder_path": [
+        "official",
+        "กระบี่",
+        "แบบเเบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1fDLms3hZKRQNDEmX0iWuFH1SiM8VqLJo\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1RM3qfUAS0JITAJql_TnTn5899nD8au33": {
+      "drive_id": "1RM3qfUAS0JITAJql_TnTn5899nD8au33",
+      "drive_url": "https://drive.google.com/file/d/1RM3qfUAS0JITAJql_TnTn5899nD8au33/view",
+      "name": "1. กรุงเทพมหานคร เขต 1 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 1,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1RM3qfUAS0JITAJql_TnTn5899nD8au33\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1zURCYs0SFfMzjT0Xg01FdcTscegnSRLd": {
+      "drive_id": "1zURCYs0SFfMzjT0Xg01FdcTscegnSRLd",
+      "drive_url": "https://drive.google.com/file/d/1zURCYs0SFfMzjT0Xg01FdcTscegnSRLd/view",
+      "name": "1. กรุงเทพมหานคร เขต 10 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 10,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1zURCYs0SFfMzjT0Xg01FdcTscegnSRLd\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1Jn04KDYVmVblmPMmgIc_Z0Vnqjie9Zps": {
+      "drive_id": "1Jn04KDYVmVblmPMmgIc_Z0Vnqjie9Zps",
+      "drive_url": "https://drive.google.com/file/d/1Jn04KDYVmVblmPMmgIc_Z0Vnqjie9Zps/view",
+      "name": "1. กรุงเทพมหานคร เขต 11 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 11,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1Jn04KDYVmVblmPMmgIc_Z0Vnqjie9Zps\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "17kN56fpRgdAKLnClJxTKRA74idHwxMCV": {
+      "drive_id": "17kN56fpRgdAKLnClJxTKRA74idHwxMCV",
+      "drive_url": "https://drive.google.com/file/d/17kN56fpRgdAKLnClJxTKRA74idHwxMCV/view",
+      "name": "1. กรุงเทพมหานคร เขต 12 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 12,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"17kN56fpRgdAKLnClJxTKRA74idHwxMCV\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1NxOoIsojb6clRv0EMKCUV1orYSZYpy-u": {
+      "drive_id": "1NxOoIsojb6clRv0EMKCUV1orYSZYpy-u",
+      "drive_url": "https://drive.google.com/file/d/1NxOoIsojb6clRv0EMKCUV1orYSZYpy-u/view",
+      "name": "1. กรุงเทพมหานคร เขต 14 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 14,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1NxOoIsojb6clRv0EMKCUV1orYSZYpy-u\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1_STcC_HfWQ0wkfOICppfZ34_pRlKx5E5": {
+      "drive_id": "1_STcC_HfWQ0wkfOICppfZ34_pRlKx5E5",
+      "drive_url": "https://drive.google.com/file/d/1_STcC_HfWQ0wkfOICppfZ34_pRlKx5E5/view",
+      "name": "1. กรุงเทพมหานคร เขต 16 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 16,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1_STcC_HfWQ0wkfOICppfZ34_pRlKx5E5\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1Hy-K1YX2C-AMHfQiTVcelMXkV1f2-pCt": {
+      "drive_id": "1Hy-K1YX2C-AMHfQiTVcelMXkV1f2-pCt",
+      "drive_url": "https://drive.google.com/file/d/1Hy-K1YX2C-AMHfQiTVcelMXkV1f2-pCt/view",
+      "name": "1. กรุงเทพมหานคร เขต 17 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 17,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1Hy-K1YX2C-AMHfQiTVcelMXkV1f2-pCt\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1B-qW1g5qi4Dz0uW9K2vTzZthRzdDX1zr": {
+      "drive_id": "1B-qW1g5qi4Dz0uW9K2vTzZthRzdDX1zr",
+      "drive_url": "https://drive.google.com/file/d/1B-qW1g5qi4Dz0uW9K2vTzZthRzdDX1zr/view",
+      "name": "1. กรุงเทพมหานคร เขต 18 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 18,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1B-qW1g5qi4Dz0uW9K2vTzZthRzdDX1zr\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF": {
+      "drive_id": "18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF",
+      "drive_url": "https://drive.google.com/file/d/18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF/view",
+      "name": "1. กรุงเทพมหานคร เขต 19 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 19,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1l8FFCSWg3cBfI79LLiauIV5AOcH8PsJ6": {
+      "drive_id": "1l8FFCSWg3cBfI79LLiauIV5AOcH8PsJ6",
+      "drive_url": "https://drive.google.com/file/d/1l8FFCSWg3cBfI79LLiauIV5AOcH8PsJ6/view",
+      "name": "1. กรุงเทพมหานคร เขต 2 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 2,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1l8FFCSWg3cBfI79LLiauIV5AOcH8PsJ6\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1PaeKK0z_QeFNIimb3p_LYBr_I919UyQ6": {
+      "drive_id": "1PaeKK0z_QeFNIimb3p_LYBr_I919UyQ6",
+      "drive_url": "https://drive.google.com/file/d/1PaeKK0z_QeFNIimb3p_LYBr_I919UyQ6/view",
+      "name": "1. กรุงเทพมหานคร เขต 20 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 20,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1PaeKK0z_QeFNIimb3p_LYBr_I919UyQ6\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "172nWIHWH1nQw3yOCn2qaEblE43LCli7J": {
+      "drive_id": "172nWIHWH1nQw3yOCn2qaEblE43LCli7J",
+      "drive_url": "https://drive.google.com/file/d/172nWIHWH1nQw3yOCn2qaEblE43LCli7J/view",
+      "name": "1. กรุงเทพมหานคร เขต 21 (บช) .pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 21,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"172nWIHWH1nQw3yOCn2qaEblE43LCli7J\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1CxGE-AqJmxy_DXlgySvJ0ZnUANlk5x2e": {
+      "drive_id": "1CxGE-AqJmxy_DXlgySvJ0ZnUANlk5x2e",
+      "drive_url": "https://drive.google.com/file/d/1CxGE-AqJmxy_DXlgySvJ0ZnUANlk5x2e/view",
+      "name": "1. กรุงเทพมหานคร เขต 21 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 21,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1CxGE-AqJmxy_DXlgySvJ0ZnUANlk5x2e\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "151SpXwRG8ebTcuaTXjD3ZMdCSU8ktfe8": {
+      "drive_id": "151SpXwRG8ebTcuaTXjD3ZMdCSU8ktfe8",
+      "drive_url": "https://drive.google.com/file/d/151SpXwRG8ebTcuaTXjD3ZMdCSU8ktfe8/view",
+      "name": "1. กรุงเทพมหานคร เขต 22 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 22,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"151SpXwRG8ebTcuaTXjD3ZMdCSU8ktfe8\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1SD0rWW7AeH3-tDPFSH4wGJam24FQyrol": {
+      "drive_id": "1SD0rWW7AeH3-tDPFSH4wGJam24FQyrol",
+      "drive_url": "https://drive.google.com/file/d/1SD0rWW7AeH3-tDPFSH4wGJam24FQyrol/view",
+      "name": "1. กรุงเทพมหานคร เขต 23 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 23,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1SD0rWW7AeH3-tDPFSH4wGJam24FQyrol\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1w7k2NNR2pdp32OKIfy_TcV_kUazCaY5F": {
+      "drive_id": "1w7k2NNR2pdp32OKIfy_TcV_kUazCaY5F",
+      "drive_url": "https://drive.google.com/file/d/1w7k2NNR2pdp32OKIfy_TcV_kUazCaY5F/view",
+      "name": "1. กรุงเทพมหานคร เขต 24 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 24,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1w7k2NNR2pdp32OKIfy_TcV_kUazCaY5F\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1J2kezMLitGrEDa8bTnFFtF0UDSYe4Wxi": {
+      "drive_id": "1J2kezMLitGrEDa8bTnFFtF0UDSYe4Wxi",
+      "drive_url": "https://drive.google.com/file/d/1J2kezMLitGrEDa8bTnFFtF0UDSYe4Wxi/view",
+      "name": "1. กรุงเทพมหานคร เขต 25 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 25,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1J2kezMLitGrEDa8bTnFFtF0UDSYe4Wxi\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1otADY98vhxj0tUwI4-msaULPea5d2yyh": {
+      "drive_id": "1otADY98vhxj0tUwI4-msaULPea5d2yyh",
+      "drive_url": "https://drive.google.com/file/d/1otADY98vhxj0tUwI4-msaULPea5d2yyh/view",
+      "name": "1. กรุงเทพมหานคร เขต 26 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 26,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1otADY98vhxj0tUwI4-msaULPea5d2yyh\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1DUgO6vxwWpEKG9nLesbPDcMCMcFHBvGU": {
+      "drive_id": "1DUgO6vxwWpEKG9nLesbPDcMCMcFHBvGU",
+      "drive_url": "https://drive.google.com/file/d/1DUgO6vxwWpEKG9nLesbPDcMCMcFHBvGU/view",
+      "name": "1. กรุงเทพมหานคร เขต 27 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 27,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1DUgO6vxwWpEKG9nLesbPDcMCMcFHBvGU\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1awoGIPZJtfFq5wFTRTMS3IEbIkm0iqYW": {
+      "drive_id": "1awoGIPZJtfFq5wFTRTMS3IEbIkm0iqYW",
+      "drive_url": "https://drive.google.com/file/d/1awoGIPZJtfFq5wFTRTMS3IEbIkm0iqYW/view",
+      "name": "1. กรุงเทพมหานคร เขต 28 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 28,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1awoGIPZJtfFq5wFTRTMS3IEbIkm0iqYW\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1xmv9Dureju69TuqgL3xjtYP9Ay1oszRl": {
+      "drive_id": "1xmv9Dureju69TuqgL3xjtYP9Ay1oszRl",
+      "drive_url": "https://drive.google.com/file/d/1xmv9Dureju69TuqgL3xjtYP9Ay1oszRl/view",
+      "name": "1. กรุงเทพมหานคร เขต 29 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 29,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1xmv9Dureju69TuqgL3xjtYP9Ay1oszRl\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "12PCZZ-z57PUhbjVN66TD4v71KuT5rmXn": {
+      "drive_id": "12PCZZ-z57PUhbjVN66TD4v71KuT5rmXn",
+      "drive_url": "https://drive.google.com/file/d/12PCZZ-z57PUhbjVN66TD4v71KuT5rmXn/view",
+      "name": "1. กรุงเทพมหานคร เขต 3 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 3,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"12PCZZ-z57PUhbjVN66TD4v71KuT5rmXn\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1oo6QYeRZqii--5i9Qi8V0BMDyGZPo7Gy": {
+      "drive_id": "1oo6QYeRZqii--5i9Qi8V0BMDyGZPo7Gy",
+      "drive_url": "https://drive.google.com/file/d/1oo6QYeRZqii--5i9Qi8V0BMDyGZPo7Gy/view",
+      "name": "1. กรุงเทพมหานคร เขต 30 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 30,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1oo6QYeRZqii--5i9Qi8V0BMDyGZPo7Gy\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "13zKTOzhdu9eDL8Z5-d0EHIMb2tOPtgGa": {
+      "drive_id": "13zKTOzhdu9eDL8Z5-d0EHIMb2tOPtgGa",
+      "drive_url": "https://drive.google.com/file/d/13zKTOzhdu9eDL8Z5-d0EHIMb2tOPtgGa/view",
+      "name": "1. กรุงเทพมหานคร เขต 31 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 31,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"13zKTOzhdu9eDL8Z5-d0EHIMb2tOPtgGa\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1QCv3qS4eP5SCCUixG4NNsyI4mOkvqFA8": {
+      "drive_id": "1QCv3qS4eP5SCCUixG4NNsyI4mOkvqFA8",
+      "drive_url": "https://drive.google.com/file/d/1QCv3qS4eP5SCCUixG4NNsyI4mOkvqFA8/view",
+      "name": "1. กรุงเทพมหานคร เขต 32 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 32,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1QCv3qS4eP5SCCUixG4NNsyI4mOkvqFA8\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "11TtqKq_g89uBA4QUWeYEpWMa-2RCvWWY": {
+      "drive_id": "11TtqKq_g89uBA4QUWeYEpWMa-2RCvWWY",
+      "drive_url": "https://drive.google.com/file/d/11TtqKq_g89uBA4QUWeYEpWMa-2RCvWWY/view",
+      "name": "1. กรุงเทพมหานคร เขต 4 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 4,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"11TtqKq_g89uBA4QUWeYEpWMa-2RCvWWY\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd": {
+      "drive_id": "17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd",
+      "drive_url": "https://drive.google.com/file/d/17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd/view",
+      "name": "1. กรุงเทพมหานคร เขต 5 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 5,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1bpWv-h95Kofiy5QSxIdC1Efp4HCK0E9S": {
+      "drive_id": "1bpWv-h95Kofiy5QSxIdC1Efp4HCK0E9S",
+      "drive_url": "https://drive.google.com/file/d/1bpWv-h95Kofiy5QSxIdC1Efp4HCK0E9S/view",
+      "name": "1. กรุงเทพมหานคร เขต 6 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 6,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1bpWv-h95Kofiy5QSxIdC1Efp4HCK0E9S\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS": {
+      "drive_id": "1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS",
+      "drive_url": "https://drive.google.com/file/d/1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS/view",
+      "name": "1. กรุงเทพมหานคร เขต 7 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 7,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1rndy_28Qf8uaQkXya8n0ynl4V6CF7xCK": {
+      "drive_id": "1rndy_28Qf8uaQkXya8n0ynl4V6CF7xCK",
+      "drive_url": "https://drive.google.com/file/d/1rndy_28Qf8uaQkXya8n0ynl4V6CF7xCK/view",
+      "name": "1. กรุงเทพมหานคร เขต 8 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 8,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1rndy_28Qf8uaQkXya8n0ynl4V6CF7xCK\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1jYAiopAyLGOwbL1mba_PT1FcHrspuSPO": {
+      "drive_id": "1jYAiopAyLGOwbL1mba_PT1FcHrspuSPO",
+      "drive_url": "https://drive.google.com/file/d/1jYAiopAyLGOwbL1mba_PT1FcHrspuSPO/view",
+      "name": "1. กรุงเทพมหานคร เขต 9 (บช).pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 9,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1jYAiopAyLGOwbL1mba_PT1FcHrspuSPO\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1eMio2cG71gPV0BNYPs4_3RWVxFrJEeTc": {
+      "drive_id": "1eMio2cG71gPV0BNYPs4_3RWVxFrJEeTc",
+      "drive_url": "https://drive.google.com/file/d/1eMio2cG71gPV0BNYPs4_3RWVxFrJEeTc/view",
+      "name": "1. กรุงเทพมหานคร เขต 1.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 1,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1eMio2cG71gPV0BNYPs4_3RWVxFrJEeTc\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1AIZIgOpf-7FHKnwxzEkzGJNUciJe7AE7": {
+      "drive_id": "1AIZIgOpf-7FHKnwxzEkzGJNUciJe7AE7",
+      "drive_url": "https://drive.google.com/file/d/1AIZIgOpf-7FHKnwxzEkzGJNUciJe7AE7/view",
+      "name": "1. กรุงเทพมหานคร เขต 10.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 10,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1AIZIgOpf-7FHKnwxzEkzGJNUciJe7AE7\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1MEEhXhNx4j9A17_xD92KmQ4e63SmhDpg": {
+      "drive_id": "1MEEhXhNx4j9A17_xD92KmQ4e63SmhDpg",
+      "drive_url": "https://drive.google.com/file/d/1MEEhXhNx4j9A17_xD92KmQ4e63SmhDpg/view",
+      "name": "1. กรุงเทพมหานคร เขต 11.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 11,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1MEEhXhNx4j9A17_xD92KmQ4e63SmhDpg\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "126l2phoIXU_8ORXIhxMCUGp1VhNEGEf9": {
+      "drive_id": "126l2phoIXU_8ORXIhxMCUGp1VhNEGEf9",
+      "drive_url": "https://drive.google.com/file/d/126l2phoIXU_8ORXIhxMCUGp1VhNEGEf9/view",
+      "name": "1. กรุงเทพมหานคร เขต 12.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 12,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"126l2phoIXU_8ORXIhxMCUGp1VhNEGEf9\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "13wKNxoo4Q4GN0EH4IZCKnLcagxF0x9EN": {
+      "drive_id": "13wKNxoo4Q4GN0EH4IZCKnLcagxF0x9EN",
+      "drive_url": "https://drive.google.com/file/d/13wKNxoo4Q4GN0EH4IZCKnLcagxF0x9EN/view",
+      "name": "1. กรุงเทพมหานคร เขต 13.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 13,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"13wKNxoo4Q4GN0EH4IZCKnLcagxF0x9EN\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1nH5Ofm5U22ilGnFqJl6XL11GB-bQ0OIT": {
+      "drive_id": "1nH5Ofm5U22ilGnFqJl6XL11GB-bQ0OIT",
+      "drive_url": "https://drive.google.com/file/d/1nH5Ofm5U22ilGnFqJl6XL11GB-bQ0OIT/view",
+      "name": "1. กรุงเทพมหานคร เขต 14.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 14,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1nH5Ofm5U22ilGnFqJl6XL11GB-bQ0OIT\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1e4v-9wAYX_S3FW8uShYaypKDcU12uS99": {
+      "drive_id": "1e4v-9wAYX_S3FW8uShYaypKDcU12uS99",
+      "drive_url": "https://drive.google.com/file/d/1e4v-9wAYX_S3FW8uShYaypKDcU12uS99/view",
+      "name": "1. กรุงเทพมหานคร เขต 16.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 16,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1e4v-9wAYX_S3FW8uShYaypKDcU12uS99\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1w3OSjYXd8Dnf3mHnuYsmyziJT7xcVfhd": {
+      "drive_id": "1w3OSjYXd8Dnf3mHnuYsmyziJT7xcVfhd",
+      "drive_url": "https://drive.google.com/file/d/1w3OSjYXd8Dnf3mHnuYsmyziJT7xcVfhd/view",
+      "name": "1. กรุงเทพมหานคร เขต 17.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 17,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1w3OSjYXd8Dnf3mHnuYsmyziJT7xcVfhd\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1b62sjGfa-FTcRNvMPwYuLqpVeFlzcAo1": {
+      "drive_id": "1b62sjGfa-FTcRNvMPwYuLqpVeFlzcAo1",
+      "drive_url": "https://drive.google.com/file/d/1b62sjGfa-FTcRNvMPwYuLqpVeFlzcAo1/view",
+      "name": "1. กรุงเทพมหานคร เขต 18.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 18,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1b62sjGfa-FTcRNvMPwYuLqpVeFlzcAo1\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1NwGf-MJFU8oxNzTWv6gMLnxIS9sNIhGH": {
+      "drive_id": "1NwGf-MJFU8oxNzTWv6gMLnxIS9sNIhGH",
+      "drive_url": "https://drive.google.com/file/d/1NwGf-MJFU8oxNzTWv6gMLnxIS9sNIhGH/view",
+      "name": "1. กรุงเทพมหานคร เขต 19.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 19,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1NwGf-MJFU8oxNzTWv6gMLnxIS9sNIhGH\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1yYV_7WvATIkrXZ9Yl1I7I_12nzxNUgk4": {
+      "drive_id": "1yYV_7WvATIkrXZ9Yl1I7I_12nzxNUgk4",
+      "drive_url": "https://drive.google.com/file/d/1yYV_7WvATIkrXZ9Yl1I7I_12nzxNUgk4/view",
+      "name": "1. กรุงเทพมหานคร เขต 2.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 2,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1yYV_7WvATIkrXZ9Yl1I7I_12nzxNUgk4\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1-hsdjz9J86nvvKe9ELI3kdejY49BtLMh": {
+      "drive_id": "1-hsdjz9J86nvvKe9ELI3kdejY49BtLMh",
+      "drive_url": "https://drive.google.com/file/d/1-hsdjz9J86nvvKe9ELI3kdejY49BtLMh/view",
+      "name": "1. กรุงเทพมหานคร เขต 20.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 20,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1-hsdjz9J86nvvKe9ELI3kdejY49BtLMh\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1wgJsCUVKYaLjMvn6xcd_-KbbWXimICYM": {
+      "drive_id": "1wgJsCUVKYaLjMvn6xcd_-KbbWXimICYM",
+      "drive_url": "https://drive.google.com/file/d/1wgJsCUVKYaLjMvn6xcd_-KbbWXimICYM/view",
+      "name": "1. กรุงเทพมหานคร เขต 21.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 21,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1wgJsCUVKYaLjMvn6xcd_-KbbWXimICYM\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1RkVRmdFKVTydfk9vDV5_h8C6h41iSa50": {
+      "drive_id": "1RkVRmdFKVTydfk9vDV5_h8C6h41iSa50",
+      "drive_url": "https://drive.google.com/file/d/1RkVRmdFKVTydfk9vDV5_h8C6h41iSa50/view",
+      "name": "1. กรุงเทพมหานคร เขต 22.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 22,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1RkVRmdFKVTydfk9vDV5_h8C6h41iSa50\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1vvetQAREhZztZ-Ct-JpY8v8tUJN77QlJ": {
+      "drive_id": "1vvetQAREhZztZ-Ct-JpY8v8tUJN77QlJ",
+      "drive_url": "https://drive.google.com/file/d/1vvetQAREhZztZ-Ct-JpY8v8tUJN77QlJ/view",
+      "name": "1. กรุงเทพมหานคร เขต 23.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 23,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1vvetQAREhZztZ-Ct-JpY8v8tUJN77QlJ\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1qyQZCwTt3nl-d4OHF0y2CzQMbyoyL-h9": {
+      "drive_id": "1qyQZCwTt3nl-d4OHF0y2CzQMbyoyL-h9",
+      "drive_url": "https://drive.google.com/file/d/1qyQZCwTt3nl-d4OHF0y2CzQMbyoyL-h9/view",
+      "name": "1. กรุงเทพมหานคร เขต 24.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 24,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1qyQZCwTt3nl-d4OHF0y2CzQMbyoyL-h9\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1uGJc1eCCl9sBQyDElUshteZt8PBRGoh9": {
+      "drive_id": "1uGJc1eCCl9sBQyDElUshteZt8PBRGoh9",
+      "drive_url": "https://drive.google.com/file/d/1uGJc1eCCl9sBQyDElUshteZt8PBRGoh9/view",
+      "name": "1. กรุงเทพมหานคร เขต 25.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 25,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1uGJc1eCCl9sBQyDElUshteZt8PBRGoh9\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1v0fjDVsaMyAwTqhEtF0v03QvwIF2ayFd": {
+      "drive_id": "1v0fjDVsaMyAwTqhEtF0v03QvwIF2ayFd",
+      "drive_url": "https://drive.google.com/file/d/1v0fjDVsaMyAwTqhEtF0v03QvwIF2ayFd/view",
+      "name": "1. กรุงเทพมหานคร เขต 26.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 26,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1v0fjDVsaMyAwTqhEtF0v03QvwIF2ayFd\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1y90eL9XEvS1hOg6AVVQliudyVtZumsM0": {
+      "drive_id": "1y90eL9XEvS1hOg6AVVQliudyVtZumsM0",
+      "drive_url": "https://drive.google.com/file/d/1y90eL9XEvS1hOg6AVVQliudyVtZumsM0/view",
+      "name": "1. กรุงเทพมหานคร เขต 27.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 27,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1y90eL9XEvS1hOg6AVVQliudyVtZumsM0\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1BbPEmZso37SzPaFKWN8y-YF-BQCTdBjZ": {
+      "drive_id": "1BbPEmZso37SzPaFKWN8y-YF-BQCTdBjZ",
+      "drive_url": "https://drive.google.com/file/d/1BbPEmZso37SzPaFKWN8y-YF-BQCTdBjZ/view",
+      "name": "1. กรุงเทพมหานคร เขต 28.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 28,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1BbPEmZso37SzPaFKWN8y-YF-BQCTdBjZ\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1MKaK-R4XmDTI_3YPXH9HEDni6ZlnwjHh": {
+      "drive_id": "1MKaK-R4XmDTI_3YPXH9HEDni6ZlnwjHh",
+      "drive_url": "https://drive.google.com/file/d/1MKaK-R4XmDTI_3YPXH9HEDni6ZlnwjHh/view",
+      "name": "1. กรุงเทพมหานคร เขต 29.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 29,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1MKaK-R4XmDTI_3YPXH9HEDni6ZlnwjHh\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1mRmRW0mCj0-cGmv7gqfBvCbRLLHe7zkS": {
+      "drive_id": "1mRmRW0mCj0-cGmv7gqfBvCbRLLHe7zkS",
+      "drive_url": "https://drive.google.com/file/d/1mRmRW0mCj0-cGmv7gqfBvCbRLLHe7zkS/view",
+      "name": "1. กรุงเทพมหานคร เขต 3.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 3,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1mRmRW0mCj0-cGmv7gqfBvCbRLLHe7zkS\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1rUXXCcT-JT84VYb6OjO89_GBPs6srGEB": {
+      "drive_id": "1rUXXCcT-JT84VYb6OjO89_GBPs6srGEB",
+      "drive_url": "https://drive.google.com/file/d/1rUXXCcT-JT84VYb6OjO89_GBPs6srGEB/view",
+      "name": "1. กรุงเทพมหานคร เขต 30.pdf",
+      "province": "กรุงเทพมหานคร",
+      "constituency_number": 30,
+      "folder_path": [
+        "official",
+        "กรุงเทพมหานคร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1rUXXCcT-JT84VYb6OjO89_GBPs6srGEB\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    }
+  }
+}

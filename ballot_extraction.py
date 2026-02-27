@@ -594,17 +594,11 @@ def get_minimal_prompt() -> str:
     This prompt is shorter and more direct to avoid truncation with less capable models.
     Focus only on vote counts since text extraction is unreliable with these models.
     """
-    return """OCR task: Read handwritten numbers from ballot table.
+    return """Read all handwritten numbers in the vote column of this ballot.
 
-Instructions:
-1. Look at the column with handwritten numbers (right side of table)
-2. Each row has a position number (left) and vote count (right)
-3. Read the VOTE COUNT numbers only
+Output JSON: {"vote_counts":{"1":N1,"2":N2,"3":N3,"4":N4,"5":N5,"6":N6,"7":N7,"8":N8}}
 
-Output format (JSON only, no explanation):
-{"vote_counts":{"1":NUM,"2":NUM,"3":NUM,...}}
-
-Replace NUM with actual handwritten numbers you see. Include all rows visible."""
+Read 8 rows. N1-N8 are the actual handwritten vote counts (not position numbers)."""
 
 
 def _strip_json_fences(text: str) -> str:

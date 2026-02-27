@@ -341,8 +341,11 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
                     expected="existing ECT constituency",
                 )
 
-        # If official constituency results are available, compare extracted votes directly.
-        if cons_id:
+        # Official ECT stats are constituency-level aggregates, not polling-unit breakdowns.
+        # Only compare extracted votes directly when this record is constituency-level
+        # (no specific polling unit attached).
+        can_compare_official_votes = not (ballot_data.polling_unit and ballot_data.polling_unit > 0)
+        if cons_id and can_compare_official_votes:
             official_results = ect_data.get_official_constituency_results(cons_id)
             if official_results:
                 official_checked = True
@@ -359,6 +362,12 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
                     counter_key = f"{severity.lower()}_severity"
                     if counter_key in result["summary"]:
                         result["summary"][counter_key] += 1
+        elif cons_id and ballot_data.polling_unit and ballot_data.polling_unit > 0:
+            result["ect_data"]["official_results_available"] = True
+            result["ect_data"]["official_results_note"] = (
+                "ECT official stats are constituency-level aggregates; "
+                "polling-unit vote-to-vote comparison skipped."
+            )
 
         if ballot_data.form_category == "party_list":
             for party_no_str, extracted_votes in ballot_data.party_votes.items():
@@ -454,5 +463,4 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
         finalize_status(result, official_checked=False)
 
     return result
-
 

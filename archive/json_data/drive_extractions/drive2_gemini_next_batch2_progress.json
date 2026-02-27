@@ -1,0 +1,224 @@
+{
+  "forms": [
+    {
+      "seq": 10,
+      "valid_votes": 549,
+      "sum_rows": 367,
+      "delta": 182,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "seq": 12,
+      "valid_votes": null,
+      "sum_rows": 74,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "no_json"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ]
+    },
+    {
+      "seq": 14,
+      "valid_votes": 529,
+      "sum_rows": 436,
+      "delta": 93,
+      "parse": [
+        [
+          "p1",
+          "no_json"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "seq": 16,
+      "valid_votes": 512,
+      "sum_rows": 575,
+      "delta": -63,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "seq": 18,
+      "valid_votes": null,
+      "sum_rows": 216,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ]
+    },
+    {
+      "seq": 20,
+      "valid_votes": null,
+      "sum_rows": 300,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ]
+    },
+    {
+      "seq": 22,
+      "valid_votes": 483,
+      "sum_rows": 482,
+      "delta": 1,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "seq": 24,
+      "valid_votes": 501,
+      "sum_rows": 325,
+      "delta": 176,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "no_json"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "seq": 26,
+      "valid_votes": 483,
+      "sum_rows": 493,
+      "delta": -10,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ]
+    },
+    {
+      "seq": 28,
+      "valid_votes": null,
+      "sum_rows": 168,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ]
+    },
+    {
+      "seq": 30,
+      "valid_votes": null,
+      "sum_rows": 125,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ]
+    }
+  ]
+}

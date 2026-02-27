@@ -1,0 +1,22 @@
+{
+  "dashboard_json": "/tmp/e69-dashboard-publish/docs/data/district_dashboard_data.json",
+  "candidate_files": [
+    "/Users/nat/dev/election/tmp_expand60_parsed.json",
+    "/Users/nat/dev/election/tmp_expand60b_parsed.json",
+    "/Users/nat/dev/election/tmp_expand60c_parsed.json"
+  ],
+  "min_improve": 1000.0,
+  "max_dropped_keys": 1,
+  "max_candidate_coherence_gap": 1,
+  "min_current_coherence_gap_for_override": 25,
+  "weights": {
+    "ect": 0.0,
+    "killernay": 1.0,
+    "vote62": 0.2
+  },
+  "evaluated_keys": 108,
+  "selected_updates": 0,
+  "applied_updates": 0,
+  "selected_preview": [],
+  "applied": []
+}

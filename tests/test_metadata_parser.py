@@ -77,6 +77,43 @@ class TestPathMetadataParser(unittest.TestCase):
         self.assertIsNone(result.constituency_number)
         self.assertIsNone(result.polling_unit)
 
+    def test_parse_drive_sheet_entry_dot_format(self):
+        """Parse 'จังหวัด.เขต (เปอร์เซ็นต์)' rows."""
+        row = self.parser.parse_drive_sheet_entry("เชียงใหม่.1 (68.83%)")
+        self.assertIsNotNone(row)
+        assert row is not None
+        self.assertEqual(row.province, "เชียงใหม่")
+        self.assertEqual(row.constituency_number, 1)
+        self.assertEqual(row.percent, 68.83)
+        self.assertIsNone(row.rank)
+
+    def test_parse_drive_sheet_entry_space_format(self):
+        """Parse 'จังหวัด เขต (เปอร์เซ็นต์)' rows."""
+        row = self.parser.parse_drive_sheet_entry("นราธิวาส 3 (43.35%)")
+        self.assertIsNotNone(row)
+        assert row is not None
+        self.assertEqual(row.province, "นราธิวาส")
+        self.assertEqual(row.constituency_number, 3)
+        self.assertEqual(row.percent, 43.35)
+
+    def test_parse_drive_sheet_entry_with_rank(self):
+        """Parse rows that include a leading ranking index."""
+        row = self.parser.parse_drive_sheet_entry("10 นครราชสีมา.2 (47.42%)")
+        self.assertIsNotNone(row)
+        assert row is not None
+        self.assertEqual(row.rank, 10)
+        self.assertEqual(row.province, "นครราชสีมา")
+        self.assertEqual(row.constituency_number, 2)
+        self.assertEqual(row.percent, 47.42)
+
+    def test_parse_drive_sheet_location_only(self):
+        """Extract only province + constituency number."""
+        loc = self.parser.parse_drive_sheet_location("เชียงใหม่.1 (68.83%)")
+        self.assertIsNotNone(loc)
+        assert loc is not None
+        self.assertEqual(loc.province, "เชียงใหม่")
+        self.assertEqual(loc.constituency_number, 1)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

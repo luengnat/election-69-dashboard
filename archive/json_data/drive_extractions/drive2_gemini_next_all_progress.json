@@ -1,0 +1,306 @@
+{
+  "drive_id": "1oBP6wZ2hVGUh-oZztkq1NSU1hQLlfBO1",
+  "forms": [
+    {
+      "seq": 2,
+      "valid_votes": 572,
+      "sum_rows": 559,
+      "delta": 13,
+      "source": "drive2_gemini_next_seq2_votecheck_3page.parsed.json"
+    },
+    {
+      "seq": 4,
+      "valid_votes": 448,
+      "sum_rows": 457,
+      "delta": -9,
+      "parse": [
+        [
+          "drive2_gemini_next_seq4_p1_fast.jsonl",
+          "ok"
+        ],
+        [
+          "drive2_gemini_next_seq4_p2_fast.jsonl",
+          "ok"
+        ],
+        [
+          "drive2_gemini_next_seq4_p3_fast.jsonl",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq4_fast_merged.parsed.json"
+    },
+    {
+      "seq": 6,
+      "valid_votes": 427,
+      "sum_rows": 415,
+      "delta": 12,
+      "parse": [
+        [
+          "drive2_gemini_next_seq6_p1_fast_retry.jsonl",
+          "ok"
+        ],
+        [
+          "drive2_gemini_next_seq6_p2_fast.jsonl",
+          "ok"
+        ],
+        [
+          "drive2_gemini_next_seq6_p3_fast.jsonl",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq6_fast_merged.parsed.json"
+    },
+    {
+      "seq": 8,
+      "valid_votes": 568,
+      "sum_rows": 448,
+      "delta": 120,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq8_fast_merged.parsed.json"
+    },
+    {
+      "seq": 10,
+      "valid_votes": 549,
+      "sum_rows": 367,
+      "delta": 182,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq10_fast_merged.parsed.json"
+    },
+    {
+      "seq": 12,
+      "valid_votes": null,
+      "sum_rows": 74,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "no_json"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq12_fast_merged.parsed.json"
+    },
+    {
+      "seq": 14,
+      "valid_votes": 529,
+      "sum_rows": 436,
+      "delta": 93,
+      "parse": [
+        [
+          "p1",
+          "no_json"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq14_fast_merged.parsed.json"
+    },
+    {
+      "seq": 16,
+      "valid_votes": 512,
+      "sum_rows": 575,
+      "delta": -63,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq16_fast_merged.parsed.json"
+    },
+    {
+      "seq": 18,
+      "valid_votes": null,
+      "sum_rows": 216,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq18_fast_merged.parsed.json"
+    },
+    {
+      "seq": 20,
+      "valid_votes": null,
+      "sum_rows": 300,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq20_fast_merged.parsed.json"
+    },
+    {
+      "seq": 22,
+      "valid_votes": 483,
+      "sum_rows": 482,
+      "delta": 1,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq22_fast_merged.parsed.json"
+    },
+    {
+      "seq": 24,
+      "valid_votes": 501,
+      "sum_rows": 325,
+      "delta": 176,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "no_json"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq24_fast_merged.parsed.json"
+    },
+    {
+      "seq": 26,
+      "valid_votes": 483,
+      "sum_rows": 493,
+      "delta": -10,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq26_fast_merged.parsed.json"
+    },
+    {
+      "seq": 28,
+      "valid_votes": null,
+      "sum_rows": 168,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq28_fast_merged.parsed.json"
+    },
+    {
+      "seq": 30,
+      "valid_votes": null,
+      "sum_rows": 125,
+      "delta": null,
+      "parse": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "no_json"
+        ]
+      ],
+      "source": "drive2_gemini_next_seq30_fast_merged.parsed.json"
+    }
+  ]
+}

@@ -35,6 +35,7 @@ class TestThaiTextToNumber(unittest.TestCase):
         self.assertEqual(thai_text_to_number("เจ็ด"), 7)
         self.assertEqual(thai_text_to_number("แปด"), 8)
         self.assertEqual(thai_text_to_number("เก้า"), 9)
+        self.assertEqual(thai_text_to_number("ศูนย์"), 0)
 
     def test_tens(self):
         """Test tens place Thai numbers."""
@@ -52,6 +53,9 @@ class TestThaiTextToNumber(unittest.TestCase):
         self.assertEqual(thai_text_to_number("หนึ่งร้อยหนึ่ง"), 101)
         self.assertEqual(thai_text_to_number("สองร้อยห้าสิบ"), 250)
         self.assertEqual(thai_text_to_number("เก้าร้อยเก้าสิบเก้า"), 999)
+        self.assertEqual(thai_text_to_number("หนึ่งพัน"), 1000)
+        self.assertEqual(thai_text_to_number("สองพันห้าร้อย"), 2500)
+        self.assertEqual(thai_text_to_number("สามพันสิบเอ็ด"), 3011)
 
     def test_invalid_input(self):
         """Test invalid input returns None."""
@@ -99,6 +103,40 @@ class TestFormType(unittest.TestCase):
         """Test FormType string values."""
         self.assertEqual(FormType.S5_16.value, "ส.ส. 5/16")
         self.assertEqual(FormType.S5_16_BCH.value, "ส.ส. 5/16 (บช)")
+
+
+class TestBallotData(unittest.TestCase):
+    """Tests for BallotData dataclass."""
+
+    def test_repr(self):
+        """Test BallotData string representation."""
+        from ballot_types import BallotData
+        ballot = BallotData(
+            form_type="ส.ส. 5/18",
+            form_category="constituency",
+            province="สุโขทัย",
+            total_votes=150,
+            confidence_score=0.9578,
+            polling_station_id="station-123"
+        )
+        r = repr(ballot)
+        self.assertIn("BallotData", r)
+        self.assertIn("'ส.ส. 5/18'", r)
+        self.assertIn("total=150", r)
+        self.assertIn("confidence=0.96", r)  # Should be formatted to 2 decimals
+        self.assertIn("'station-123'", r)
+
+    def test_repr_fallback_to_file(self):
+        """Test repr uses source_file if station ID is missing."""
+        from ballot_types import BallotData
+        ballot = BallotData(
+            form_type="ส.ส. 5/16",
+            form_category="constituency",
+            province="Phrae",
+            source_file="ballot.jpg"
+        )
+        r = repr(ballot)
+        self.assertIn("'ballot.jpg'", r)
 
 
 if __name__ == "__main__":

@@ -18,22 +18,24 @@ Features:
 """
 
 import gradio as gr
-from typing import Optional
+from typing import Optional, Any
 import tempfile
 import os
 import logging
 import json
 import csv
+import copy
+import zipfile
+import shutil
+import re
 from pathlib import Path
 from dataclasses import asdict
 
-from batch_processor import BatchProcessor, BallotData, BatchResult
+from batch_processor import BatchProcessor, BatchResult
+from ballot_types import BallotData
 from ballot_ocr import (
-    aggregate_ballot_results,
-    generate_constituency_pdf,
-    generate_batch_pdf,
-    generate_one_page_executive_summary_pdf,
-    AggregatedResults
+    AggregatedResults,
+    pdf_to_images
 )
 from config import config
 
@@ -46,6 +48,8 @@ MAX_DISPLAY_RESULTS = 100
 
 # File upload validation settings (from config)
 ALLOWED_EXTENSIONS = set(config.allowed_extensions)
+ZIP_MAX_MEMBERS = config.max_batch_size * 5
+ZIP_MAX_TOTAL_UNCOMPRESSED_BYTES = config.max_file_size * config.max_batch_size
 
 
 def validate_file(file_path: str) -> tuple[bool, str]:
@@ -132,7 +136,7 @@ class GradioProgressCallback:
         if self.progress:
             self.progress(0, desc=f"Starting batch of {total} images...")
 
-    def on_progress(self, current: int, total: int, path: str, result: Optional[BallotData]) -> None:
+    def on_progress(self, current: int, total: int, path: str, _result: Optional[BallotData]) -> None:
         """Called after each ballot is successfully processed."""
         if self.progress:
             # Get filename from path for cleaner display
@@ -353,29 +357,130 @@ def generate_pdfs(ballot_results: list[BallotData]) -> tuple[Optional[str], Opti
         return None, None
 
 
-def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, list]:
+def _normalize_uploaded_paths(files: Any) -> list[str]:
     """
-    Process uploaded ballot images and return results.
+    Normalize Gradio upload payload into a list of filesystem paths.
+    """
+    if not files:
+        return []
+    if isinstance(files, (str, Path)):
+        return [str(files)]
+    normalized: list[str] = []
+    for item in files:
+        if isinstance(item, (str, Path)):
+            normalized.append(str(item))
+            continue
+        name = getattr(item, "name", None)
+        if isinstance(name, str) and name:
+            normalized.append(name)
+    return normalized
+
+
+def extract_zip_archive(zip_path: str, extract_to: str) -> list[str]:
+    """
+    Extract images from a ZIP archive.
+    
+    Args:
+        zip_path: Path to the ZIP file
+        extract_to: Directory to extract files into
+        
+    Returns:
+        List of paths to extracted image files
+    """
+    image_paths = []
+    
+    try:
+        if not zipfile.is_zipfile(zip_path):
+            logger.warning(f"Not a valid zip file: {zip_path}")
+            return []
+            
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
+            members = zip_ref.infolist()
+            if len(members) > ZIP_MAX_MEMBERS:
+                logger.warning(f"ZIP has too many entries: {len(members)} (max {ZIP_MAX_MEMBERS})")
+                return []
+
+            total_uncompressed = sum(max(0, m.file_size) for m in members)
+            if total_uncompressed > ZIP_MAX_TOTAL_UNCOMPRESSED_BYTES:
+                logger.warning(
+                    f"ZIP too large when extracted: {total_uncompressed} bytes "
+                    f"(max {ZIP_MAX_TOTAL_UNCOMPRESSED_BYTES})"
+                )
+                return []
+
+            extract_root = os.path.abspath(extract_to)
+            for member in members:
+                # Skip directories and unsupported file types.
+                if member.is_dir():
+                    continue
+
+                member_ext = os.path.splitext(member.filename)[1].lower()
+                if member_ext not in {".png", ".jpg", ".jpeg", ".pdf"}:
+                    continue
+
+                # Defend against path traversal and absolute paths.
+                member_path = os.path.abspath(os.path.join(extract_root, member.filename))
+                if not member_path.startswith(extract_root + os.sep):
+                    logger.warning(f"Skipping suspicious zip entry: {member.filename}")
+                    continue
+
+                os.makedirs(os.path.dirname(member_path), exist_ok=True)
+                with zip_ref.open(member, "r") as src, open(member_path, "wb") as dst:
+                    shutil.copyfileobj(src, dst)
+                image_paths.append(member_path)
+                        
+    except Exception as e:
+        logger.error(f"Error extracting zip {zip_path}: {e}")
+        
+    return image_paths
+
+
+def process_ballots(files, local_folder, force_reprocess, backend_name="Ensemble (Default)", progress=gr.Progress()) -> tuple[list[list], str, list]:
+    """
+    Process ballot images (uploaded or from local folder) and return results.
 
     Args:
         files: List of uploaded file paths from gr.File
+        local_folder: String path to a local directory for recursive scanning
+        force_reprocess: Boolean to disable cache and force reprocessing
+        backend_name: Selected backend option from dropdown
         progress: Gradio progress tracker
 
     Returns:
         Tuple of (results_dataframe, error_messages, ballot_results)
-        ballot_results is a list of BallotData objects for PDF generation
     """
-    logger.info(f"process_ballots called with {len(files) if files else 0} files")
+    # Mapping of UI labels to backend strings
+    BACKEND_MAPPING = {
+        "Ensemble (Default)": None,
+        "OpenRouter (Gemma/Claude)": "openrouter",
+        "Anthropic Claude": "anthropic",
+        "Local (TrOCR + Paddle)": "trocr,paddle",
+        "Local Fast (Tesseract)": "tesseract"
+    }
+    backend_spec = BACKEND_MAPPING.get(backend_name)
+    
+    logger.info(f"process_ballots: {len(files) if files else 0} files, folder: {local_folder}, backend: {backend_name}")
 
-    # Handle empty upload
-    if not files:
-        logger.warning("No files uploaded")
-        return [], "Please upload at least one ballot image.", []
+    all_paths = []
+    if files:
+        all_paths.extend(_normalize_uploaded_paths(files))
+    
+    if local_folder and os.path.isdir(local_folder):
+        logger.info(f"Scanning local folder: {local_folder}")
+        folder_files = []
+        for root, _, filenames in os.walk(local_folder):
+            for filename in filenames:
+                if filename.lower().endswith((".png", ".jpg", ".jpeg", ".pdf")):
+                    folder_files.append(os.path.join(root, filename))
+        logger.info(f"Found {len(folder_files)} files in local folder")
+        all_paths.extend(folder_files)
 
-    # Ensure files is a list (Gradio can return single file as string)
-    if isinstance(files, str):
-        files = [files]
-        logger.info("Converted single file to list")
+    # Handle empty input
+    if not all_paths:
+        logger.warning("No files or folder provided")
+        return [], "Please upload files or provide a valid local folder path.", []
+
+    files = all_paths
 
     # Log file info (including Thai filenames)
     for f in files[:5]:  # Log first 5 files
@@ -384,36 +489,80 @@ def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, lis
     if len(files) > 5:
         logger.info(f"  ... and {len(files) - 5} more files")
 
-    # Validate batch size
-    if len(files) > config.max_batch_size:
-        logger.warning(f"Batch too large: {len(files)} files (max {config.max_batch_size})")
-        return [], f"Too many files: {len(files)}. Maximum is {config.max_batch_size}.", []
-
-    # Validate all files before processing
-    invalid_files = []
-    for f in files:
-        is_valid, error_msg = validate_file(f)
-        if not is_valid:
-            filename = os.path.basename(f) if f else "unknown"
-            invalid_files.append(f"{filename}: {error_msg}")
-
-    if invalid_files:
-        error_list = "\n".join(invalid_files[:10])  # Show first 10 errors
-        if len(invalid_files) > 10:
-            error_list += f"\n... and {len(invalid_files) - 10} more invalid files"
-        logger.warning(f"Found {len(invalid_files)} invalid files")
-        return [], f"Invalid files:\n{error_list}", []
-
-    # Create progress callback
-    callback = GradioProgressCallback(progress)
-
-    # Create batch processor with rate limiting
-    processor = BatchProcessor(max_workers=5, rate_limit=2.0)
-
-    # Process the batch
+    # --- NEW ZIP LOGIC ---
+    temp_extract_dir = None
+    processed_files = []
+    
     try:
-        logger.info("Starting batch processing...")
-        result = processor.process_batch(files, progress_callback=callback)
+        # Check for ZIP and PDF files and handle them
+        has_zip = any(f.lower().endswith(".zip") for f in files)
+        has_pdf = any(f.lower().endswith(".pdf") for f in files)
+        
+        if has_zip or has_pdf:
+            temp_extract_dir = tempfile.mkdtemp(prefix="ballot_process_")
+            logger.info(f"Created temp processing dir: {temp_extract_dir}")
+            
+            for f in files:
+                if f.lower().endswith(".zip"):
+                    extracted_images = extract_zip_archive(f, temp_extract_dir)
+                    processed_files.extend(extracted_images)
+                    logger.info(f"Extracted {len(extracted_images)} files from ZIP: {os.path.basename(f)}")
+                elif f.lower().endswith(".pdf"):
+                    try:
+                        extracted_images = pdf_to_images(f, temp_extract_dir)
+                        processed_files.extend(extracted_images)
+                        logger.info(f"Converted PDF to {len(extracted_images)} images: {os.path.basename(f)}")
+                    except Exception as e:
+                        logger.error(f"Error converting PDF {f}: {e}")
+                        # Fallback to original if conversion fails (processor might have limited native support or show error later)
+                        processed_files.append(f)
+                else:
+                    processed_files.append(f)
+        else:
+            processed_files = files
+
+        # Validate batch size
+        if len(processed_files) > config.max_batch_size:
+            logger.warning(f"Batch too large: {len(processed_files)} files (max {config.max_batch_size})")
+            return [], f"Too many files: {len(processed_files)}. Maximum is {config.max_batch_size}.", []
+
+        # Validate all files before processing
+        invalid_files = []
+        valid_files_to_process = []
+        
+        for f in processed_files:
+            is_valid, error_msg = validate_file(f)
+            if not is_valid:
+                filename = os.path.basename(f) if f else "unknown"
+                invalid_files.append(f"{filename}: {error_msg}")
+            else:
+                valid_files_to_process.append(f)
+
+        if invalid_files:
+            error_list = "\n".join(invalid_files[:10])  # Show first 10 errors
+            if len(invalid_files) > 10:
+                error_list += f"\n... and {len(invalid_files) - 10} more invalid files"
+            logger.warning(f"Found {len(invalid_files)} invalid files")
+            return [], f"Invalid files:\n{error_list}", []
+            
+        if not valid_files_to_process:
+             return [], "No valid image files found to process.", []
+
+        # Create progress callback
+        callback = GradioProgressCallback(progress)
+
+        # Create batch processor with rate limiting
+        # Phase 13: Pass use_cache based on checkbox
+        processor = BatchProcessor(
+            max_workers=5, 
+            rate_limit=2.0, 
+            use_cache=not force_reprocess,
+            backend_spec=backend_spec
+        )
+
+        # Process the batch
+        logger.info(f"Starting batch processing (Force Reprocess: {force_reprocess})...")
+        result = processor.process_batch(valid_files_to_process, progress_callback=callback)
         logger.info(f"Batch complete: {result.processed} processed, {len(result.errors)} errors")
 
         # Format results for display
@@ -456,6 +605,14 @@ def process_ballots(files, progress=gr.Progress()) -> tuple[list[list], str, lis
         if len(error_msg) > 200:
             error_msg = error_msg[:200] + "..."
         return [], f"Processing error: {error_msg}", []
+    finally:
+        # Cleanup temp directory
+        if temp_extract_dir and os.path.exists(temp_extract_dir):
+            try:
+                shutil.rmtree(temp_extract_dir)
+                logger.info(f"Removed temp extraction dir: {temp_extract_dir}")
+            except Exception as e:
+                logger.warning(f"Failed to remove temp dir {temp_extract_dir}: {e}")
 
 
 def download_batch_pdf(ballot_results: list[BallotData]) -> Optional[str]:
@@ -553,7 +710,8 @@ def export_json(ballot_results: list[BallotData]) -> Optional[str]:
 
     try:
         # Create temp file for JSON
-        json_path = tempfile.mktemp(suffix="_ballot_results.json")
+        fd, json_path = tempfile.mkstemp(suffix="_ballot_results.json")
+        os.close(fd)
 
         # Convert BallotData to dict for JSON serialization
         data = []
@@ -606,7 +764,8 @@ def export_csv(ballot_results: list[BallotData]) -> Optional[str]:
 
     try:
         # Create temp file for CSV
-        csv_path = tempfile.mktemp(suffix="_ballot_results.csv")
+        fd, csv_path = tempfile.mkstemp(suffix="_ballot_results.csv")
+        os.close(fd)
 
         with open(csv_path, "w", encoding="utf-8", newline="") as f:
             writer = csv.writer(f)
@@ -664,6 +823,235 @@ def export_csv(ballot_results: list[BallotData]) -> Optional[str]:
         return None
 
 
+def get_review_candidates(ballot_results: list[BallotData]) -> gr.update:
+    """
+    Get list of ballots that need review (low/medium confidence).
+    
+    Args:
+        ballot_results: List of BallotData objects
+        
+    Returns:
+        Gradio update for dropdown choices
+    """
+    if not ballot_results:
+        return gr.update(choices=[], value=None)
+    
+    candidates = []
+    for b in ballot_results:
+        # Criteria: Confidence < 0.9 (approx 90%)
+        # Or missing critical metadata
+        needs_review = (b.confidence_score < 0.9) or (not b.province) or (b.constituency_number == 0)
+            
+        if needs_review:
+            filename = os.path.basename(b.source_file)
+            confidence_str = f"{b.confidence_score:.0%}"
+            candidates.append(f"{filename} ({confidence_str})")
+            
+    if not candidates:
+        return gr.update(choices=[], value=None)
+        
+    # Sort by confidence ascending (lowest first)
+    try:
+        candidates.sort(key=lambda x: int(x.split("(")[1].split("%")[0]))
+    except Exception:
+        pass
+        
+    return gr.update(choices=candidates, value=candidates[0] if candidates else None)
+
+
+def load_review_data(selected_item: str, ballot_results: list[BallotData]):
+    """
+    Load data for the selected ballot into the review form.
+    
+    Args:
+        selected_item: String from dropdown (e.g. "file.png (85%)")
+        ballot_results: List of BallotData objects
+        
+    Returns:
+        Tuple of (image_path, province, constituency, vote_data, status_msg)
+    """
+    if not selected_item or not ballot_results:
+        return None, "", "", [], "No ballot selected"
+        
+    # Extract filename from "filename.png (85%)"
+    filename = selected_item.split(" (")[0]
+    
+    # Find ballot
+    target_ballot = None
+    for b in ballot_results:
+        if os.path.basename(b.source_file) == filename:
+            target_ballot = b
+            break
+            
+    if not target_ballot:
+        return None, "", "", [], "Ballot not found"
+        
+    # Prepare vote data for dataframe
+    vote_data = []
+    if target_ballot.form_category == "party_list":
+        # Party-list form
+        for k, v in target_ballot.party_votes.items():
+            vote_data.append([str(k), v])
+        # Sort by party number
+        try:
+            vote_data.sort(key=lambda x: int(x[0]))
+        except:
+            pass
+    else:
+        # Constituency form
+        for k, v in target_ballot.vote_counts.items():
+            vote_data.append([str(k), v])
+        # Sort by candidate number
+        try:
+            vote_data.sort(key=lambda x: int(x[0]))
+        except:
+            pass
+        
+    # Prepare provenance gallery
+    provenance = []
+    if target_ballot.provenance_images:
+        for label, path in target_ballot.provenance_images.items():
+            if os.path.exists(path):
+                provenance.append((path, label.replace("_", " ").title()))
+        
+    return (
+        target_ballot.source_file,
+        target_ballot.province,
+        str(target_ballot.constituency_number),
+        vote_data,
+        provenance,
+        f"Loaded {filename}"
+    )
+
+
+def save_review_data(
+    selected_item: str,
+    new_province: str,
+    new_constituency: str,
+    new_votes: pd.DataFrame if 'pd' in globals() else list, # Handle potential type hint issue
+    ballot_results: list[BallotData]
+):
+    """
+    Save updated data to the state.
+    
+    Args:
+        selected_item: String from dropdown
+        new_province: Updated province string
+        new_constituency: Updated constituency string
+        new_votes: Updated votes dataframe/list
+        ballot_results: Current state list
+        
+    Returns:
+        Tuple of (updated_ballot_results, updated_results_table, status_msg, updated_dropdown)
+    """
+    if not selected_item or not ballot_results:
+        return ballot_results, [], "No ballot selected", gr.update()
+        
+    filename = selected_item.split(" (")[0]
+    
+    # Find index
+    idx = -1
+    for i, b in enumerate(ballot_results):
+        if os.path.basename(b.source_file) == filename:
+            idx = i
+            break
+            
+    if idx == -1:
+        return ballot_results, [], "Error: Ballot not found in state", gr.update()
+        
+    # Create copy to update
+    ballot = copy.deepcopy(ballot_results[idx])
+    
+    # Update Metadata
+    ballot.province = new_province.strip()
+    try:
+        ballot.constituency_number = int(new_constituency)
+    except Exception:
+        pass # Keep old if invalid
+        
+    # Update Votes
+    # new_votes comes from Dataframe, likely pandas or list of lists
+    updated_votes = {}
+    
+    # Convert input to list of lists if needed
+    vote_list = new_votes.values.tolist() if hasattr(new_votes, 'values') else new_votes
+    
+    for row in vote_list:
+        try:
+            # Handle potential empty strings or formatting
+            num_str = str(row[0])
+            count_str = str(row[1])
+            if not num_str or not count_str:
+                continue
+                
+            num = int(float(num_str)) # Handle "1.0"
+            count = int(float(count_str))
+            updated_votes[num] = count
+        except (ValueError, IndexError):
+            continue
+            
+    if ballot.form_category == "party_list":
+        # Party-list uses string keys for party numbers
+        ballot.party_votes = {str(k): v for k, v in updated_votes.items()}
+    else:
+        # Constituency uses int keys
+        ballot.vote_counts = updated_votes
+        
+    # Update totals
+    ballot.total_votes = sum(updated_votes.values())
+    ballot.valid_votes = ballot.total_votes # Simplified assumption for manual edit
+    
+    # Mark as manually verified (High confidence)
+    ballot.confidence_score = 1.0
+    
+    # Update state
+    ballot_results[idx] = ballot
+    
+    # Re-generate results table
+    new_table, _ = format_results(ballot_results)
+    
+    # Re-generate dropdown choices (this item might leave the list if we filter by score)
+    # But for now, let's keep it visible so user knows it's done.
+    # Alternatively, get_review_candidates will refresh it automatically on next call.
+    # We'll return the updated list for the dropdown to refresh.
+    new_dropdown = get_review_candidates(ballot_results)
+    
+    return ballot_results, new_table, f"Saved changes for {filename}", new_dropdown
+
+
+def save_template_correction(selected_item: str, points: list, ballot_results: list[BallotData]):
+    """
+    Save a user-defined region as a potential template for training.
+    """
+    if not selected_item or len(points) < 2:
+        return "Please select two points (top-left and bottom-right) on the image first."
+        
+    filename = selected_item.split(" (")[0]
+    target_ballot = next((b for b in ballot_results if os.path.basename(b.source_file) == filename), None)
+    
+    if not target_ballot:
+        return "Ballot data not found."
+        
+    # Save the correction to a persistent file
+    correction_dir = Path("corrections")
+    correction_dir.mkdir(exist_ok=True)
+    
+    correction_data = {
+        "source_file": filename,
+        "form_type": target_ballot.form_type,
+        "points": points,
+        "timestamp": os.path.getmtime(target_ballot.source_file) if os.path.exists(target_ballot.source_file) else 0
+    }
+    
+    safe_name = re.sub(r'[^\w\s-]', '_', filename)
+    target_path = correction_dir / f"correction_{safe_name}.json"
+    
+    with open(target_path, "w", encoding="utf-8") as f:
+        json.dump(correction_data, f, indent=2, ensure_ascii=False)
+        
+    return f"Saved region {points} as template candidate for {target_ballot.form_type}. (หลักฐานการเลือกตำแหน่งถูกบันทึกแล้ว)"
+
+
 def clear_results():
     """
     Clear all results and reset the interface.
@@ -672,13 +1060,15 @@ def clear_results():
         Tuple of empty values for all outputs
     """
     logger.info("Clearing results")
-    return [], "", None, None, None, None, None, None, None
+    return [], "", None, None, None, None, None, None, None, ""
 
 
-# Create Gradio interface with Thai text support
-with gr.Blocks(title="Thai Election Ballot OCR") as demo:
-    gr.Markdown("# Thai Election Ballot OCR / ระบบอ่านบัตรลงคะแนนเลือกตั้ง")
-    gr.Markdown("""
+def build_demo() -> gr.Blocks:
+    """Build and return the Gradio UI."""
+    # Create Gradio interface with Thai text support
+    with gr.Blocks(title="Thai Election Ballot OCR") as demo:
+        gr.Markdown("# Thai Election Ballot OCR / ระบบอ่านบัตรลงคะแนนเลือกตั้ง")
+        gr.Markdown("""
 Upload ballot images to extract vote counts.
 
 **รองรับภาษาไทย** - Thai text is fully supported in filenames and results.
@@ -686,111 +1076,252 @@ Upload ballot images to extract vote counts.
 **Instructions / วิธีใช้:**
 1. Upload ballot images / อัปโหลดรูปภาพบัตรเลือกตั้ง (supports PNG, JPG, JPEG)
 2. Click "Process Ballots" to start OCR / คลิก "ประมวลผลบัตร" เพื่อเริ่มอ่านข้อมูล
-3. View results in the table / ดูผลลัพธ์ในตารางด้านล่าง
+3. **NEW:** Use the "Review / ตรวจสอบ" tab to manually verify low-confidence results.
 4. Download reports as PDF, JSON, or CSV / ดาวน์โหลดรายงานเป็น PDF, JSON หรือ CSV
 """)
 
-    with gr.Row():
-        file_input = gr.File(
-            file_count="multiple",
-            label="Upload Ballot Images / อัปโหลดรูปภาพบัตรลงคะแนน (100-500)",
-            file_types=["image"]
-        )
+        # Global Controls
+        with gr.Row():
+            with gr.Column(scale=2):
+                file_input = gr.File(
+                    file_count="multiple",
+                    label="Upload Ballot Images or ZIP / อัปโหลดรูปภาพหรือไฟล์ ZIP (100-500)",
+                    file_types=[".png", ".jpg", ".jpeg", ".pdf", ".zip"]
+                )
+            with gr.Column(scale=2):
+                local_folder_input = gr.Textbox(
+                    label="Local Folder Path (Recursive) / เส้นทางโฟลเดอร์ในเครื่อง (ค้นหาทุกโฟลเดอร์ย่อย)",
+                    placeholder="/Users/name/ballots",
+                    info="Scans for .png, .jpg, .jpeg, .pdf recursively"
+                )
+            with gr.Column(scale=1):
+                backend_selector = gr.Dropdown(
+                    label="AI Model / โมเดล AI",
+                    choices=[
+                        "Ensemble (Default)",
+                        "OpenRouter (Gemma/Claude)",
+                        "Anthropic Claude",
+                        "Local (TrOCR + Paddle)",
+                        "Local Fast (Tesseract)"
+                    ],
+                    value="Ensemble (Default)",
+                    info="Select AI backend strategy"
+                )
+                force_reprocess_chk = gr.Checkbox(label="Force Reprocess (Disable Cache)", value=False)
 
-    with gr.Row():
-        process_btn = gr.Button("Process Ballots / ประมวลผลบัตร", variant="primary", size="lg")
-        clear_btn = gr.Button("Clear / ล้างข้อมูล", variant="secondary", size="lg")
+        with gr.Row():
+            process_btn = gr.Button("Process Ballots / ประมวลผลบัตร", variant="primary", size="lg")
+            clear_btn = gr.Button("Clear / ล้างข้อมูล", variant="secondary", size="lg")
 
-    with gr.Row():
-        results_table = gr.Dataframe(
-            headers=["Image / รูปภาพ", "Province / จังหวัด", "Constituency / เขต", "Station / หน่วย", "Form Type / ประเภท", "Confidence / ความมั่นใจ", "Votes / คะแนนเสียง"],
-            label="Extracted Results / ผลลัพธ์",
-            wrap=True
-        )
+        # Tabs for different views
+        with gr.Tabs():
+            # Tab 1: Main Results Table
+            with gr.TabItem("Results / ผลลัพธ์"):
+                with gr.Row():
+                    results_table = gr.Dataframe(
+                        headers=["Image / รูปภาพ", "Province / จังหวัด", "Constituency / เขต", "Station / หน่วย", "Form Type / ประเภท", "Confidence / ความมั่นใจ", "Votes / คะแนนเสียง"],
+                        label="Extracted Results / ผลลัพธ์",
+                        wrap=True,
+                        interactive=False
+                    )
 
-    with gr.Row():
-        status_output = gr.Textbox(label="Status / สถานะ", lines=2, placeholder="Processing status will appear here...")
+                with gr.Row():
+                    status_output = gr.Textbox(label="Status / สถานะ", lines=2, placeholder="Processing status will appear here...")
 
-    with gr.Row():
-        error_output = gr.Textbox(label="Errors / ข้อผิดพลาด", lines=5, placeholder="Any errors will be shown here...")
+                with gr.Row():
+                    error_output = gr.Textbox(label="Errors / ข้อผิดพลาด", lines=5, placeholder="Any errors will be shown here...")
 
-    # Download section - PDF reports
-    gr.Markdown("### Download Reports / ดาวน์โหลดรายงาน")
+            # Tab 2: Review Queue
+            with gr.TabItem("Review / ตรวจสอบ"):
+                gr.Markdown("### Review Low-Confidence Ballots / ตรวจสอบบัตรที่มีความมั่นใจต่ำ")
+                
+                with gr.Row():
+                    with gr.Column(scale=1):
+                        review_dropdown = gr.Dropdown(
+                            label="Select Ballot to Review / เลือกบัตรเพื่อตรวจสอบ",
+                            choices=[],
+                            interactive=True
+                        )
+                        refresh_review_btn = gr.Button("Refresh Queue / รีเฟรชรายการ", variant="secondary")
+                        
+                    with gr.Column(scale=2):
+                        review_status = gr.Textbox(label="Status / สถานะ", interactive=False)
+                
+                with gr.Row():
+                    # Left Column: Image Viewer
+                    with gr.Column(scale=1):
+                        review_image = gr.Image(label="Ballot Image / รูปภาพบัตร", type="filepath", interactive=False)
+                        review_provenance = gr.Gallery(
+                            label="Visual Evidence (Crops) / หลักฐานภาพถ่าย",
+                            show_label=True,
+                            elem_id="provenance_gallery",
+                            columns=1,
+                            object_fit="contain",
+                            height="auto"
+                        )
+                    
+                    # Right Column: Editor Form
+                    with gr.Column(scale=1):
+                        with gr.Row():
+                            review_province = gr.Textbox(label="Province / จังหวัด", interactive=True)
+                            review_constituency = gr.Textbox(label="Constituency / เขต", interactive=True)
+                        
+                        # Editable Vote Table
+                        review_votes = gr.Dataframe(
+                            headers=["Number / เบอร์", "Votes / คะแนน"],
+                            datatype=["str", "number"],
+                            label="Vote Counts / คะแนนเสียง",
+                            interactive=True,
+                            column_count=(2, "fixed"),
+                        )
+                        
+                        save_review_btn = gr.Button("Save Changes / บันทึกการแก้ไข", variant="primary")
+                        
+                        gr.Markdown("---")
+                        gr.Markdown("#### Region Selection (Training) / กำหนดตำแหน่งข้อมูล (เพื่อการฝึกฝน)")
+                        gr.Markdown("*Click two points on the image above (top-left, bottom-right) to define a data region.*")
+                        save_template_btn = gr.Button("Save as New Template / บันทึกตำแหน่งเป็นแม่แบบใหม่", variant="secondary")
 
-    with gr.Row():
-        batch_pdf_btn = gr.Button("Batch Summary PDF / สรุปผลการประมวลผล", variant="secondary")
-        constituency_pdf_btn = gr.Button("Constituency Report PDF / รายงานเขตเลือกตั้ง", variant="secondary")
-        exec_summary_btn = gr.Button("Executive Summary (1 page) / สรุปผู้บริหาร", variant="secondary")
+        # Download section - PDF reports
+        gr.Markdown("### Download Reports / ดาวน์โหลดรายงาน")
 
-    with gr.Row():
-        batch_pdf_output = gr.File(label="Batch Summary PDF / สรุปผลการประมวลผล", visible=True)
-        constituency_pdf_output = gr.File(label="Constituency Report PDF / รายงานเขตเลือกตั้ง", visible=True)
-        exec_summary_output = gr.File(label="Executive Summary / สรุปผู้บริหาร", visible=True)
+        with gr.Row():
+            batch_pdf_btn = gr.Button("Batch Summary PDF / สรุปผลการประมวลผล", variant="secondary")
+            constituency_pdf_btn = gr.Button("Constituency Report PDF / รายงานเขตเลือกตั้ง", variant="secondary")
+            exec_summary_btn = gr.Button("Executive Summary (1 page) / สรุปผู้บริหาร", variant="secondary")
 
-    # Export section - JSON and CSV
-    gr.Markdown("### Export Data / ส่งออกข้อมูล")
+        with gr.Row():
+            batch_pdf_output = gr.File(label="Batch Summary PDF / สรุปผลการประมวลผล", visible=True)
+            constituency_pdf_output = gr.File(label="Constituency Report PDF / รายงานเขตเลือกตั้ง", visible=True)
+            exec_summary_output = gr.File(label="Executive Summary / สรุปผู้บริหาร", visible=True)
 
-    with gr.Row():
-        json_btn = gr.Button("Export JSON / ส่งออก JSON", variant="secondary")
-        csv_btn = gr.Button("Export CSV / ส่งออก CSV", variant="secondary")
+        # Export section - JSON and CSV
+        gr.Markdown("### Export Data / ส่งออกข้อมูล")
 
-    with gr.Row():
-        json_output = gr.File(label="JSON Export / ส่งออก JSON", visible=True)
-        csv_output = gr.File(label="CSV Export / ส่งออก CSV", visible=True)
+        with gr.Row():
+            json_btn = gr.Button("Export JSON / ส่งออก JSON", variant="secondary")
+            csv_btn = gr.Button("Export CSV / ส่งออก CSV", variant="secondary")
 
-    # Footer
-    gr.Markdown("""
+        with gr.Row():
+            json_output = gr.File(label="JSON Export / ส่งออก JSON", visible=True)
+            csv_output = gr.File(label="CSV Export / ส่งออก CSV", visible=True)
+
+        # Footer
+        gr.Markdown("""
 ---
-**Thai Election Ballot OCR** - v1.1
+**Thai Election Ballot OCR** - v1.2
 
 Powered by AI vision models for accurate ballot data extraction.
 """)
 
-    # State to store ballot results for PDF generation
-    ballot_state = gr.State(value=None)
+        # State to store ballot results for PDF generation
+        ballot_state = gr.State(value=[])
+        selected_points = gr.State(value=[])
 
-    # Wire up event handlers
-    process_btn.click(
-        fn=process_ballots,
-        inputs=[file_input],
-        outputs=[results_table, error_output, ballot_state]
-    )
+        # Event Handlers
+        
+        # Process Ballots -> Updates Results Table & Review Queue
+        process_btn.click(
+            fn=process_ballots,
+            inputs=[file_input, local_folder_input, force_reprocess_chk, backend_selector],
+            outputs=[results_table, error_output, ballot_state]
+        ).then(
+            fn=get_review_candidates,
+            inputs=[ballot_state],
+            outputs=[review_dropdown]
+        )
 
-    batch_pdf_btn.click(
-        fn=download_batch_pdf,
-        inputs=[ballot_state],
-        outputs=[batch_pdf_output]
-    )
+        # Review Tab Events
+        refresh_review_btn.click(
+            fn=get_review_candidates,
+            inputs=[ballot_state],
+            outputs=[review_dropdown]
+        )
+        
+        review_dropdown.change(
+            fn=load_review_data,
+            inputs=[review_dropdown, ballot_state],
+            outputs=[review_image, review_province, review_constituency, review_votes, review_provenance, review_status]
+        )
+        
+        save_review_btn.click(
+            fn=save_review_data,
+            inputs=[review_dropdown, review_province, review_constituency, review_votes, ballot_state],
+            outputs=[ballot_state, results_table, review_status, review_dropdown]
+        )
 
-    constituency_pdf_btn.click(
-        fn=download_constituency_pdf,
-        inputs=[ballot_state],
-        outputs=[constituency_pdf_output]
-    )
+        # Region Selection Logic
+        def on_image_select(evt: gr.SelectData, points: list):
+            points.append(evt.index)
+            if len(points) > 2:
+                points = points[-2:]
+            
+            msg = f"Points selected: {points}. "
+            if len(points) == 2:
+                msg += "Region defined! Click 'Save as New Template' to proceed."
+            else:
+                msg += "Click one more point to define the bottom-right corner."
+            return points, msg
 
-    exec_summary_btn.click(
-        fn=download_executive_summary_pdf,
-        inputs=[ballot_state],
-        outputs=[exec_summary_output]
-    )
+        review_image.select(
+            fn=on_image_select,
+            inputs=[selected_points],
+            outputs=[selected_points, review_status]
+        )
 
-    json_btn.click(
-        fn=export_json,
-        inputs=[ballot_state],
-        outputs=[json_output]
-    )
+        save_template_btn.click(
+            fn=save_template_correction,
+            inputs=[review_dropdown, selected_points, ballot_state],
+            outputs=[review_status]
+        )
 
-    csv_btn.click(
-        fn=export_csv,
-        inputs=[ballot_state],
-        outputs=[csv_output]
-    )
+        # Download Events
+        batch_pdf_btn.click(
+            fn=download_batch_pdf,
+            inputs=[ballot_state],
+            outputs=[batch_pdf_output]
+        )
 
-    clear_btn.click(
-        fn=clear_results,
-        inputs=[],
-        outputs=[results_table, error_output, ballot_state, batch_pdf_output, constituency_pdf_output, exec_summary_output, json_output, csv_output, file_input]
-    )
+        constituency_pdf_btn.click(
+            fn=download_constituency_pdf,
+            inputs=[ballot_state],
+            outputs=[constituency_pdf_output]
+        )
+
+        exec_summary_btn.click(
+            fn=download_executive_summary_pdf,
+            inputs=[ballot_state],
+            outputs=[exec_summary_output]
+        )
+
+        json_btn.click(
+            fn=export_json,
+            inputs=[ballot_state],
+            outputs=[json_output]
+        )
+
+        csv_btn.click(
+            fn=export_csv,
+            inputs=[ballot_state],
+            outputs=[csv_output]
+        )
+
+        # Clear Results -> Clears All Outputs including Review
+        clear_btn.click(
+            fn=clear_results,
+            inputs=[],
+            outputs=[
+                results_table, error_output, ballot_state, 
+                batch_pdf_output, constituency_pdf_output, exec_summary_output, 
+                json_output, csv_output, file_input, status_output
+            ]
+        ).then(
+            fn=lambda: (None, None, "", "", [], [], [], ""),  # Clear review fields
+            inputs=[],
+            outputs=[review_dropdown, review_image, review_province, review_constituency, review_votes, review_provenance, selected_points, review_status]
+        )
+
+    return demo
 
 
 if __name__ == "__main__":
@@ -800,5 +1331,12 @@ if __name__ == "__main__":
         logger.warning("Set WEB_UI_HOST=127.0.0.1 for local-only access.")
 
     logger.info(f"Starting web UI on http://{config.web_ui_host}:{config.web_ui_port}")
-    demo.launch(server_name=config.web_ui_host, server_port=config.web_ui_port)
-
+    if config.auth_credentials:
+        logger.info("Authentication enabled.")
+    
+    demo = build_demo()
+    demo.launch(
+        server_name=config.web_ui_host, 
+        server_port=config.web_ui_port,
+        auth=config.auth_credentials
+    )

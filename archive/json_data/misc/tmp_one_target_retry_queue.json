@@ -1,0 +1,58 @@
+{
+  "summary": {
+    "inputs": [
+      "/Users/nat/dev/election/tmp_one_target_round1.jsonl",
+      "/Users/nat/dev/election/tmp_one_target_round2.jsonl",
+      "/Users/nat/dev/election/tmp_one_target_round3.jsonl",
+      "/Users/nat/dev/election/tmp_one_target_round4.jsonl",
+      "/Users/nat/dev/election/tmp_one_target_round5.jsonl"
+    ],
+    "files_with_attempts": 1,
+    "merged_sum_ok": 0,
+    "merged_sum_bad": 1,
+    "retry_count": 1
+  },
+  "items": [
+    {
+      "drive_id": "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj",
+      "drive_url": "https://drive.google.com/file/d/1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj/view",
+      "name": "57. สกลนคร เขต 5 (บช).pdf",
+      "province": "สกลนคร",
+      "district_number": 5,
+      "election_type": "party_list",
+      "focus_keys": [
+        2,
+        4,
+        5,
+        6,
+        9,
+        11,
+        13,
+        27,
+        37,
+        42,
+        46,
+        48
+      ],
+      "prompt_file": "/Users/nat/dev/election/tmp_retry_prompts/1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj.txt",
+      "reason": {
+        "sum_matches_valid": false,
+        "low_confidence_keys": [
+          2,
+          4,
+          5,
+          6,
+          9,
+          11,
+          13,
+          27,
+          37,
+          42,
+          46,
+          48
+        ],
+        "reference_mismatch_count": 1
+      }
+    }
+  ]
+}

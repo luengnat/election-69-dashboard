@@ -1,0 +1,82 @@
+{
+  "files": {
+    "108lzSD4F6xxAtJLCC2Cg0SbkHMz7737m": {
+      "drive_id": "108lzSD4F6xxAtJLCC2Cg0SbkHMz7737m",
+      "drive_url": "https://drive.google.com/file/d/108lzSD4F6xxAtJLCC2Cg0SbkHMz7737m/view",
+      "name": "10. ชัยนาท เขต 2.pdf",
+      "province": "ชัยนาท",
+      "constituency_number": 2,
+      "folder_path": [
+        "official",
+        "ชัยนาท",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"108lzSD4F6xxAtJLCC2Cg0SbkHMz7737m\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "125RIB2Ciq737IO4Ckk0nWl9b_Kp5HbTs": {
+      "drive_id": "125RIB2Ciq737IO4Ckk0nWl9b_Kp5HbTs",
+      "drive_url": "https://drive.google.com/file/d/125RIB2Ciq737IO4Ckk0nWl9b_Kp5HbTs/view",
+      "name": "11. ชัยภูมิ เขต 5.pdf",
+      "province": "ชัยภูมิ",
+      "constituency_number": 5,
+      "folder_path": [
+        "official",
+        "ชัยภูมิ",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"125RIB2Ciq737IO4Ckk0nWl9b_Kp5HbTs\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "14Nw6SyLQ-9VSM9rpTBrZWAM46Z2MDl6F": {
+      "drive_id": "14Nw6SyLQ-9VSM9rpTBrZWAM46Z2MDl6F",
+      "drive_url": "https://drive.google.com/file/d/14Nw6SyLQ-9VSM9rpTBrZWAM46Z2MDl6F/view",
+      "name": "8. ฉะเชิงเทรา เขต 1.pdf",
+      "province": "ฉะเชิงเทรา",
+      "constituency_number": 1,
+      "folder_path": [
+        "official",
+        "ฉะเชิงเทรา",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"14Nw6SyLQ-9VSM9rpTBrZWAM46Z2MDl6F\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "18RG_JdaXbSTIUJ4XBI3-ZJo8X0YfK1cG": {
+      "drive_id": "18RG_JdaXbSTIUJ4XBI3-ZJo8X0YfK1cG",
+      "drive_url": "https://drive.google.com/file/d/18RG_JdaXbSTIUJ4XBI3-ZJo8X0YfK1cG/view",
+      "name": "11. ชัยภูมิ เขต 4 (บช).pdf",
+      "province": "ชัยภูมิ",
+      "constituency_number": 4,
+      "folder_path": [
+        "official",
+        "ชัยภูมิ",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"18RG_JdaXbSTIUJ4XBI3-ZJo8X0YfK1cG\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1OYG1YT56sF81GQlbSv1QPcJt2PswSdN4": {
+      "drive_id": "1OYG1YT56sF81GQlbSv1QPcJt2PswSdN4",
+      "drive_url": "https://drive.google.com/file/d/1OYG1YT56sF81GQlbSv1QPcJt2PswSdN4/view",
+      "name": "12. ชุมพร เขต 1.pdf",
+      "province": "ชุมพร",
+      "constituency_number": 1,
+      "folder_path": [
+        "official",
+        "ชุมพร",
+        "แบบแบ่งเขต"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai constituency election form (ส.ส.5/7). Extract all candidate numbers and votes shown in the candidate table as a votes object (number->score). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1OYG1YT56sF81GQlbSv1QPcJt2PswSdN4\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0}}"
+    },
+    "1YCDqit5ifppX1qBsBGOqQtvW8JMGCcX7": {
+      "drive_id": "1YCDqit5ifppX1qBsBGOqQtvW8JMGCcX7",
+      "drive_url": "https://drive.google.com/file/d/1YCDqit5ifppX1qBsBGOqQtvW8JMGCcX7/view",
+      "name": "15. ตรัง เขต 3 (บช).pdf",
+      "province": "ตรัง",
+      "constituency_number": 3,
+      "folder_path": [
+        "official",
+        "ตรัง",
+        "แบบบัญชีรายชื่อ"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is Thai party-list election form (ส.ส.5/18). Read all pages and extract party votes for all party numbers 1..57 (use 0 for blank/dash). Also extract valid_votes, invalid_votes, blank_votes. Return schema: {\"drive_id\":\"1YCDqit5ifppX1qBsBGOqQtvW8JMGCcX7\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    }
+  }
+}

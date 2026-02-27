@@ -1,0 +1,4090 @@
+{
+  "count": 18,
+  "forms": [
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 1,
+      "page_end": 2,
+      "election_type": "constituency",
+      "province": "น กศน.",
+      "district_number": "A....",
+      "unit_number": 1,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 544,
+        "invalid_votes": 7,
+        "blank_votes": 12,
+        "total_ballots_used": 566
+      },
+      "rows": [
+        {
+          "number": 4,
+          "name": "กฤติพนธ์ ผู้ชานมวล",
+          "score": 358,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": "ทพ. เจ",
+          "score": 87,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "AMA ARTIOLO Σ",
+          "score": 21,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "พิมานันท์",
+          "score": 5,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "সায়মা করোকে পাশ",
+          "score": 10,
+          "row_type": "candidate"
+        },
+        {
+          "number": 1,
+          "name": "โบน ชิกซี่ม",
+          "score": 1,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 1,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 3,
+      "page_end": 6,
+      "election_type": "party_list",
+      "province": "น กศน.",
+      "district_number": 4,
+      "unit_number": 1,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 514,
+        "invalid_votes": 11,
+        "blank_votes": 41,
+        "total_ballots_used": 566
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 8,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 17,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 15,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 8,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 58,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 27,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 8,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 43,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 144,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 139,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 2,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 2 scores and totals.",
+      "manual_sum_known_rows_1_57": 516,
+      "manual_valid_vote_delta_vs_known_only": -2
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 7,
+      "page_end": 8,
+      "election_type": "constituency",
+      "province": "งานบุรี",
+      "district_number": 4,
+      "unit_number": 2,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 327,
+        "invalid_votes": 9,
+        "blank_votes": 9,
+        "total_ballots_used": 345
+      },
+      "rows": [
+        {
+          "number": 6,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 1,
+          "name": "นายกฤชพนธ์ อัฏฐาธมมท",
+          "score": 1,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "นางสาวสุริชวรถม สิงห์อยู่ มายากล วงพิทักษ์โรจน์",
+          "score": 7,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "มายากล วงพิทักษ์โรจน์",
+          "score": 161,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "พายชมή Ποจิรฟัง",
+          "score": 45,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "นายเอกพัฒน์ ถ้าสรรรณ",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": "นายสรวิชญ์ จำเจริญ",
+          "score": 110,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": "นางสาวชะวรลัทธิ์ หินบรมจิต",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 3,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 9,
+      "page_end": 12,
+      "election_type": "party_list",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 2,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 316,
+        "invalid_votes": 17,
+        "blank_votes": 12,
+        "total_ballots_used": 345
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 8,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 10,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 30,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 11,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 45,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 95,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 32,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": 21,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 4,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 13,
+      "page_end": 14,
+      "election_type": "constituency",
+      "province": "5043",
+      "district_number": 4,
+      "unit_number": 3,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 475,
+        "invalid_votes": 12,
+        "blank_votes": 6,
+        "total_ballots_used": 493
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "พ. กรรณ สว",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "รามাকย",
+          "score": 232,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "พายจักรเคยวางทางโรจน์ le",
+          "score": 80,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "นายธานันท์ การ: 604",
+          "score": 3,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "mulon",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": "อร HIS",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": "พะวงสิทธิ นม",
+          "score": 140,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": "บาทัต กร์นาม",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 5,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 15,
+      "page_end": 18,
+      "election_type": "party_list",
+      "province": "5043",
+      "district_number": 4,
+      "unit_number": null,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 449,
+        "invalid_votes": 7,
+        "blank_votes": 37,
+        "total_ballots_used": 493
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 16,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 43,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 8,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 12,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 14,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 6,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 19,
+      "page_end": 20,
+      "election_type": "constituency",
+      "province": "76",
+      "district_number": 4,
+      "unit_number": 4,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 148,
+        "invalid_votes": 4,
+        "blank_votes": 1,
+        "total_ballots_used": 153
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ams in qrgatio สาชาล",
+          "score": 1,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "ทั้งสวน เพื่cong",
+          "score": 3,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "শখরগুন 18",
+          "score": 87,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "ชมานันท์ ποληприе",
+          "score": 16,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "ชখ 107",
+          "score": 49,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": "ทรา กล้าธรรม ชขน",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": "ชข",
+          "score": 0,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 7,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 21,
+      "page_end": 24,
+      "election_type": "party_list",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 4,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 136,
+        "invalid_votes": 8,
+        "blank_votes": 9,
+        "total_ballots_used": 153
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 14,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 12,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 55,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 30,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 8,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 8 values and location.",
+      "manual_sum_known_rows_1_57": 136,
+      "manual_valid_vote_delta_vs_known_only": 0
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 25,
+      "page_end": 26,
+      "election_type": "constituency",
+      "province": "สาม",
+      "district_number": 4,
+      "unit_number": 5,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 525,
+        "invalid_votes": 7,
+        "blank_votes": 7,
+        "total_ballots_used": 539
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "นายกฤษจิพนธ์ อัทฐาสนมงคล",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "นางสาว สุรีย์วรรณ สิงห์อยู่",
+          "score": 14,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "นาย อัครเดช จงษ์พิทักษ์โรจน์",
+          "score": 110,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "หาย ชยานนท์ กอจิตตวนิจ",
+          "score": 275,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "นาย เอกฟัฒน์ ถ้ำสุวรณ",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": "นาย สรวิชญ์ ข้าเจริญ",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": "หางสาว ชะวรลักษ์ ชินธรรมมิตร",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 9,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 27,
+      "page_end": 30,
+      "election_type": "party_list",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 5,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 499,
+        "invalid_votes": 29,
+        "blank_votes": 11,
+        "total_ballots_used": 539
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 19,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 12,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 47,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 17,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 52,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 125,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 13,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 148,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 10,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 10 scores and totals.",
+      "manual_sum_known_rows_1_57": 499,
+      "manual_valid_vote_delta_vs_known_only": 0
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 31,
+      "page_end": 32,
+      "election_type": "constituency",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 8,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 522,
+        "invalid_votes": 14,
+        "blank_votes": 8,
+        "total_ballots_used": 544
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "นายกฤชพนธ์ อิฐราธนาก?",
+          "score": 3,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "6.8.84วรรณ",
+          "score": 20,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "นายจักรเดช อาทิกร",
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "นายเอกพัฒน์ กาวรรณ",
+          "score": 1,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "นายธรวิณ์ เคริญ",
+          "score": 2,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": null,
+          "score": 279,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": "4.8. ชาวรท",
+          "score": 130,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": "ในธรรมโทร",
+          "score": 87,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 11,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 33,
+      "page_end": 36,
+      "election_type": "party_list",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 8,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 486,
+        "invalid_votes": 37,
+        "blank_votes": 21,
+        "total_ballots_used": 544
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 10,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 26,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 12,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 41,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 10,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 19,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 46,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 106,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 169,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": 1,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 12,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 12 party-list scores and totals.",
+      "manual_sum_known_rows_1_57": 486,
+      "manual_valid_vote_delta_vs_known_only": 0
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 37,
+      "page_end": 38,
+      "election_type": "constituency",
+      "province": null,
+      "district_number": null,
+      "unit_number": 7,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 615,
+        "invalid_votes": 13,
+        "blank_votes": 15,
+        "total_ballots_used": 643
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ঠนঠาสสสএজন",
+          "score": 6,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": null,
+          "score": 15,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": null,
+          "score": 3,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": null,
+          "score": 11,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 13,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 39,
+      "page_end": 42,
+      "election_type": "party_list",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 7,
+      "committee_number": 10,
+      "totals": {
+        "valid_votes": 583,
+        "invalid_votes": 47,
+        "blank_votes": 13,
+        "total_ballots_used": 643
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 17,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 14,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 9,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 31,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 43,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 26,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 4,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 50,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 169,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 160,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 14,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 14 scores and totals.",
+      "manual_sum_known_rows_1_57": 583,
+      "manual_valid_vote_delta_vs_known_only": 0
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 43,
+      "page_end": 44,
+      "election_type": "constituency",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 6,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 405,
+        "invalid_votes": 3,
+        "blank_votes": 13,
+        "total_ballots_used": 421
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "นายกฤชพนธ์ อัฏฐาธนมง",
+          "score": 138,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "พามอัตร106",
+          "score": 3,
+          "row_type": "candidate"
+        },
+        {
+          "number": 3,
+          "name": "มหัท โร",
+          "score": 3,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "1675 15sinun nommodo",
+          "score": 82,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": null,
+          "score": 1,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": "นายสรวิชญ์ ชาเจริญ",
+          "score": 2,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": null,
+          "score": 196,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 15,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 45,
+      "page_end": 48,
+      "election_type": "party_list",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "unit_number": 6,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 383,
+        "invalid_votes": 23,
+        "blank_votes": 15,
+        "total_ballots_used": 421
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 8,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 12,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 12,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 34,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 13,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 5,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 33,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 84,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 132,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 16,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 16 scores and totals.",
+      "manual_sum_known_rows_1_57": 382,
+      "manual_valid_vote_delta_vs_known_only": 1
+    },
+    {
+      "form_type": "ส.ส. 5/18",
+      "page_start": 49,
+      "page_end": 50,
+      "election_type": "constituency",
+      "province": "ราชม",
+      "district_number": 4,
+      "unit_number": 9,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 225,
+        "invalid_votes": 7,
+        "blank_votes": 1,
+        "total_ballots_used": 233
+      },
+      "rows": [
+        {
+          "number": 3,
+          "name": "พนธ์ อัฐ วอน",
+          "score": 17,
+          "row_type": "candidate"
+        },
+        {
+          "number": 2,
+          "name": "นาย กฤชฐาชนลงกล นศ ฟรีมีตัวห้อยู่",
+          "score": 5,
+          "row_type": "candidate"
+        },
+        {
+          "number": 1,
+          "name": "ขายอัตรเดช วงษ์พิทาบ โดฯ",
+          "score": 2,
+          "row_type": "candidate"
+        },
+        {
+          "number": 4,
+          "name": "นาย ชยานันท์ กอจิตตวานิจ",
+          "score": 31,
+          "row_type": "candidate"
+        },
+        {
+          "number": 5,
+          "name": "นาย เอกพัฒน์ ช้าสุวรรณ",
+          "score": 0,
+          "row_type": "candidate"
+        },
+        {
+          "number": 6,
+          "name": "นาย สรวิช ข้าเจริญ จิตร",
+          "score": 1,
+          "row_type": "candidate"
+        },
+        {
+          "number": 7,
+          "name": "นางสาว ชะวสิทธิ์ สินธรม",
+          "score": 69,
+          "row_type": "candidate"
+        },
+        {
+          "number": 8,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 9,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 10,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 11,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        },
+        {
+          "number": 12,
+          "name": null,
+          "score": null,
+          "row_type": "candidate"
+        }
+      ],
+      "form_seq": 17,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb"
+    },
+    {
+      "form_type": "ส.ส. 5/18 (บช)",
+      "page_start": 51,
+      "page_end": 54,
+      "election_type": "party_list",
+      "province": "ราชม....",
+      "district_number": 4,
+      "unit_number": 9,
+      "committee_number": null,
+      "totals": {
+        "valid_votes": 210,
+        "invalid_votes": 21,
+        "blank_votes": 2,
+        "total_ballots_used": 233
+      },
+      "rows": [
+        {
+          "number": 1,
+          "name": "ไทยทรัพย์ทวี",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 2,
+          "name": "เพื่อชาติไทย",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 3,
+          "name": "ใหม่",
+          "score": 9,
+          "row_type": "party"
+        },
+        {
+          "number": 4,
+          "name": "มิติใหม่",
+          "score": 3,
+          "row_type": "party"
+        },
+        {
+          "number": 5,
+          "name": "รวมใจไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 6,
+          "name": "รวมไทยสร้างชาติ",
+          "score": 6,
+          "row_type": "party"
+        },
+        {
+          "number": 7,
+          "name": "พลวัต",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 8,
+          "name": "ประชาธิปไตยใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 9,
+          "name": "เพื่อไทย",
+          "score": 25,
+          "row_type": "party"
+        },
+        {
+          "number": 10,
+          "name": "ทางเลือกใหม่",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 11,
+          "name": "เศรษฐกิจ",
+          "score": 7,
+          "row_type": "party"
+        },
+        {
+          "number": 12,
+          "name": "เสรีรวมไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 13,
+          "name": "รวมพลังประชาชน",
+          "score": 0,
+          "row_type": "party"
+        },
+        {
+          "number": 14,
+          "name": "ท้องที่ไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 15,
+          "name": "อนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 16,
+          "name": "พลังเพื่อไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 17,
+          "name": "ไทยชนะ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 18,
+          "name": "พลังสังคมใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 19,
+          "name": "สังคมประชาธิปไตยไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 20,
+          "name": "ฟิวชัน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 21,
+          "name": "ไทรวมพลัง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 22,
+          "name": "ก้าวอิสระ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 23,
+          "name": "ปวงชนไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 24,
+          "name": "วิชชั่นใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 25,
+          "name": "เพื่อชีวิตใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 26,
+          "name": "คลองไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 27,
+          "name": "ประชาธิปัตย์",
+          "score": 28,
+          "row_type": "party"
+        },
+        {
+          "number": 28,
+          "name": "ไทยก้าวหน้า",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 29,
+          "name": "ไทยภักดี",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 30,
+          "name": "แรงงานสร้างชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 31,
+          "name": "ประชากรไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 32,
+          "name": "ครูไทยเพื่อประชาชน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 33,
+          "name": "ประชาชาติ",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 34,
+          "name": "สร้างอนาคตไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 35,
+          "name": "รักชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 36,
+          "name": "ไทยพร้อม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 37,
+          "name": "ภูมิใจไทย",
+          "score": 54,
+          "row_type": "party"
+        },
+        {
+          "number": 38,
+          "name": "พลังธรรมใหม่",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 39,
+          "name": "กรีน",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 40,
+          "name": "ไทยธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 41,
+          "name": "แผ่นดินธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 42,
+          "name": "กล้าธรรม",
+          "score": 2,
+          "row_type": "party"
+        },
+        {
+          "number": 43,
+          "name": "พลังประชารัฐ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 44,
+          "name": "โอกาสใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 45,
+          "name": "เป็นธรรม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 46,
+          "name": "ประชาชน",
+          "score": 57,
+          "row_type": "party"
+        },
+        {
+          "number": 47,
+          "name": "ประชาไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 48,
+          "name": "ไทยสร้างไทย",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 49,
+          "name": "ไทยก้าวใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 50,
+          "name": "ประชาอาสาชาติ",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 51,
+          "name": "พร้อม",
+          "score": 1,
+          "row_type": "party"
+        },
+        {
+          "number": 52,
+          "name": "เครือข่ายชาวนาแห่งประเทศไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 53,
+          "name": "ไทยพิทักษ์ธรรม",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 54,
+          "name": "ความหวังใหม่",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 55,
+          "name": "ไทยรวมไทย",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 56,
+          "name": "เพื่อบ้านเมือง",
+          "score": null,
+          "row_type": "party"
+        },
+        {
+          "number": 57,
+          "name": "พลังไทยรักชาติ",
+          "score": null,
+          "row_type": "party"
+        }
+      ],
+      "form_seq": 18,
+      "drive_id": "1bna6TSRQ0F3N7pc6OwjMDmO-oHYJeVFb",
+      "manual_confirmed": true,
+      "manual_confirm_note": "User confirmed seq 18 scores and totals.",
+      "manual_sum_known_rows_1_57": 209,
+      "manual_valid_vote_delta_vs_known_only": 1
+    }
+  ],
+  "bad_records": []
+}

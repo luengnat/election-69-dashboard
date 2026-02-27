@@ -1,0 +1,88 @@
+{
+  "files": {
+    "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc": {
+      "drive_id": "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc",
+      "drive_url": "https://drive.google.com/file/d/1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc/view",
+      "name": "56. ศรีสะเกษ เขต 4.pdf",
+      "province": "ศรีสะเกษ",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is constituency form ส.ส.5/7. Read the candidate vote table and totals. Extract votes for all candidate numbers in this district: [1,2,3,4,5,6,7,8,9,10] (if blank use 0). Cross-check each numeric digit with Thai text amount beside that row. Return: {\"drive_id\":\"1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0}}"
+    },
+    "1cesVQQS5tzwyRw67_TOchEINSZc-XDmU": {
+      "drive_id": "1cesVQQS5tzwyRw67_TOchEINSZc-XDmU",
+      "drive_url": "https://drive.google.com/file/d/1cesVQQS5tzwyRw67_TOchEINSZc-XDmU/view",
+      "name": "14. เชียงใหม่ เขต 3.pdf",
+      "province": "เชียงใหม่",
+      "constituency_number": 3,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is constituency form ส.ส.5/7. Read the candidate vote table and totals. Extract votes for all candidate numbers in this district: [1,2,3,4,5,6,7,8,9,10,11,12,13,14] (if blank use 0). Cross-check each numeric digit with Thai text amount beside that row. Return: {\"drive_id\":\"1cesVQQS5tzwyRw67_TOchEINSZc-XDmU\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0}}"
+    },
+    "1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM": {
+      "drive_id": "1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM",
+      "drive_url": "https://drive.google.com/file/d/1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM/view",
+      "name": "74. อุดรธานี เขต 4 (บช).pdf",
+      "province": "อุดรธานี",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is party-list form ส.ส.5/18. Read ALL party votes 1..57 and totals. Important: page1 has parties 1-10, page2 has 11-34, page3 has 35-57; read all pages before answering. Cross-check each numeric digit with the Thai text amount beside the row. If row is blank/dash set 0. Return: {\"drive_id\":\"1chM-NciZ5RbEpATYgW9oC-ErjFIpFMkM\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-": {
+      "drive_id": "1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-",
+      "drive_url": "https://drive.google.com/file/d/1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-/view",
+      "name": "70. หนองคาย เขต 1 (บช).pdf",
+      "province": "หนองคาย",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is party-list form ส.ส.5/18. Read ALL party votes 1..57 and totals. Important: page1 has parties 1-10, page2 has 11-34, page3 has 35-57; read all pages before answering. Cross-check each numeric digit with the Thai text amount beside the row. If row is blank/dash set 0. Return: {\"drive_id\":\"1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1dSPVtLDJgCtYucK2orDqxQnJITODrR7C": {
+      "drive_id": "1dSPVtLDJgCtYucK2orDqxQnJITODrR7C",
+      "drive_url": "https://drive.google.com/file/d/1dSPVtLDJgCtYucK2orDqxQnJITODrR7C/view",
+      "name": "77. อุบลราชธานี เขต 1.pdf",
+      "province": "อุบลราชธานี",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is constituency form ส.ส.5/7. Read the candidate vote table and totals. Extract votes for all candidate numbers in this district: [1,2,3,4,5,6,7,8] (if blank use 0). Cross-check each numeric digit with Thai text amount beside that row. Return: {\"drive_id\":\"1dSPVtLDJgCtYucK2orDqxQnJITODrR7C\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0}}"
+    },
+    "1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO": {
+      "drive_id": "1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO",
+      "drive_url": "https://drive.google.com/file/d/1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO/view",
+      "name": "11. ชัยภูมิ เขต 3.pdf",
+      "province": "ชัยภูมิ",
+      "constituency_number": 3,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is constituency form ส.ส.5/7. Read the candidate vote table and totals. Extract votes for all candidate numbers in this district: [1,2,3,4,5,6] (if blank use 0). Cross-check each numeric digit with Thai text amount beside that row. Return: {\"drive_id\":\"1d_WSPp34LhBOzdOFgqvBL2l8S2frHpcO\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0}}"
+    },
+    "1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY": {
+      "drive_id": "1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY",
+      "drive_url": "https://drive.google.com/file/d/1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY/view",
+      "name": "60. สมุทรปราการ เขต 2.pdf",
+      "province": "สมุทรปราการ",
+      "constituency_number": 2,
+      "folder_path": [
+        "retry",
+        "remaining13_full"
+      ],
+      "gemini_prompt": "Return STRICT JSON only (no markdown). Use Arabic numerals only. This is constituency form ส.ส.5/7. Read the candidate vote table and totals. Extract votes for all candidate numbers in this district: [1,2,3,4,5,6,7,8,9,10,11] (if blank use 0). Cross-check each numeric digit with Thai text amount beside that row. Return: {\"drive_id\":\"1dulP7mHU8b61ehkXxbpk-88z5-VJoBAY\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0}}"
+    }
+  }
+}

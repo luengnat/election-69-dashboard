@@ -1,0 +1,27 @@
+{
+  "rows_parsed": 1,
+  "sum_match_rows": 0,
+  "sum_match_and_killernay_exact": 0,
+  "sum_match_but_killernay_mismatch": 0,
+  "items": [
+    {
+      "drive_id": "1cNN2L6UhU44Cfa6RUSXxWrpCTGzwUQUc",
+      "name": "56. ศรีสะเกษ เขต 4.pdf",
+      "province": "ศรีสะเกษ",
+      "district": 4,
+      "election_type": "constituency",
+      "valid_votes": 77864,
+      "sum_votes": 65358,
+      "sum_match": false,
+      "votes": {
+        "4": 43534,
+        "2": 20190,
+        "7": 969,
+        "62": 372,
+        "6": 293
+      },
+      "killernay_valid": 77864,
+      "delta_killernay": 0
+    }
+  ]
+}

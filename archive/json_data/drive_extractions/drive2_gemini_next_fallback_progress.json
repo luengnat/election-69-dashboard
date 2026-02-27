@@ -1,0 +1,223 @@
+{
+  "drive_id": "1oBP6wZ2hVGUh-oZztkq1NSU1hQLlfBO1",
+  "forms": [
+    {
+      "seq": 8,
+      "valid_votes": 568,
+      "sum_rows": 969,
+      "delta": -401,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq8_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 10,
+      "valid_votes": 549,
+      "sum_rows": 341,
+      "delta": 208,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq10_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 14,
+      "valid_votes": 529,
+      "sum_rows": 528,
+      "delta": 1,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq14_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 16,
+      "valid_votes": 512,
+      "sum_rows": 576,
+      "delta": -64,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq16_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 24,
+      "valid_votes": 501,
+      "sum_rows": 414,
+      "delta": 87,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq24_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 12,
+      "valid_votes": 339,
+      "sum_rows": 312,
+      "delta": 27,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq12_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 18,
+      "valid_votes": null,
+      "sum_rows": 731,
+      "delta": null,
+      "parse_status": [
+        [
+          "p1",
+          "no_json"
+        ],
+        [
+          "p1_retry",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq18_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 20,
+      "valid_votes": 884,
+      "sum_rows": 1380,
+      "delta": -496,
+      "parse_status": [
+        [
+          "p1",
+          "no_json"
+        ],
+        [
+          "p1_retry",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq20_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 28,
+      "valid_votes": 4044,
+      "sum_rows": 483,
+      "delta": 3561,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq28_fallback_merged.parsed.json"
+    },
+    {
+      "seq": 30,
+      "valid_votes": 441,
+      "sum_rows": 437,
+      "delta": 4,
+      "parse_status": [
+        [
+          "p1",
+          "ok"
+        ],
+        [
+          "p2",
+          "ok"
+        ],
+        [
+          "p3",
+          "ok"
+        ]
+      ],
+      "file": "/Users/nat/dev/election/drive2_gemini_next_seq30_fallback_merged.parsed.json"
+    }
+  ]
+}

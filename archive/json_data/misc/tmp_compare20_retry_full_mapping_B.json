@@ -1,0 +1,100 @@
+{
+  "files": {
+    "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj": {
+      "drive_id": "1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj",
+      "drive_url": "https://drive.google.com/file/d/1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj/view",
+      "name": "57. สกลนคร เขต 5 (บช).pdf",
+      "province": "สกลนคร",
+      "constituency_number": 5,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is party-list (ส.ส. 5/18). Extract votes for ALL party numbers 1..57 (include zero when blank/dash). Cross-check each numeric digit with Thai text amount next to that row. Page hint: page1=1-10, page2=11-34, page3=35-57. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1cN_YdgzPVw54gvhUZBr_tggA1QUPecQj\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1ch2-FGgNwVKVGGD3sCZ-8xWCalMRy63B": {
+      "drive_id": "1ch2-FGgNwVKVGGD3sCZ-8xWCalMRy63B",
+      "drive_url": "https://drive.google.com/file/d/1ch2-FGgNwVKVGGD3sCZ-8xWCalMRy63B/view",
+      "name": "56. ศรีสะเกษ เขต 3 (บช).pdf",
+      "province": "...",
+      "constituency_number": 3,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is party-list (ส.ส. 5/18). Extract votes for ALL party numbers 1..57 (include zero when blank/dash). Cross-check each numeric digit with Thai text amount next to that row. Page hint: page1=1-10, page2=11-34, page3=35-57. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1ch2-FGgNwVKVGGD3sCZ-8xWCalMRy63B\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg": {
+      "drive_id": "1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg",
+      "drive_url": "https://drive.google.com/file/d/1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg/view",
+      "name": "55. เลย เขต 2 (บช).pdf",
+      "province": "เลย",
+      "constituency_number": 2,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is party-list (ส.ส. 5/18). Extract votes for ALL party numbers 1..57 (include zero when blank/dash). Cross-check each numeric digit with Thai text amount next to that row. Page hint: page1=1-10, page2=11-34, page3=35-57. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1ckLX1ULdyCg10J6RelgGgsCS8Q8HvLYg\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-": {
+      "drive_id": "1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-",
+      "drive_url": "https://drive.google.com/file/d/1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-/view",
+      "name": "70. หนองคาย เขต 1 (บช).pdf",
+      "province": "หนองคาย",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is party-list (ส.ส. 5/18). Extract votes for ALL party numbers 1..57 (include zero when blank/dash). Cross-check each numeric digit with Thai text amount next to that row. Page hint: page1=1-10, page2=11-34, page3=35-57. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1dCqfZ6ix_uBso92V_6HWJ3jJEQX53oI-\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1dSPVtLDJgCtYucK2orDqxQnJITODrR7C": {
+      "drive_id": "1dSPVtLDJgCtYucK2orDqxQnJITODrR7C",
+      "drive_url": "https://drive.google.com/file/d/1dSPVtLDJgCtYucK2orDqxQnJITODrR7C/view",
+      "name": "77. อุบลราชธานี เขต 1.pdf",
+      "province": "อุบลราชธานี",
+      "constituency_number": 1,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is constituency result. Extract candidate votes for these candidate numbers only: [1,2,3,4,5,6,7,8] (use 0 if blank). Cross-check each numeric digit with Thai text amount next to that row. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1dSPVtLDJgCtYucK2orDqxQnJITODrR7C\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0}}"
+    },
+    "1dYzpyyrI_eYI8SzhGQWj6jG7qjgErhkI": {
+      "drive_id": "1dYzpyyrI_eYI8SzhGQWj6jG7qjgErhkI",
+      "drive_url": "https://drive.google.com/file/d/1dYzpyyrI_eYI8SzhGQWj6jG7qjgErhkI/view",
+      "name": "33. พระนครศรีอยุทธยา เขต 4 (บช).pdf",
+      "province": "พระนครศรีอยุธยา",
+      "constituency_number": 4,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is party-list (ส.ส. 5/18). Extract votes for ALL party numbers 1..57 (include zero when blank/dash). Cross-check each numeric digit with Thai text amount next to that row. Page hint: page1=1-10, page2=11-34, page3=35-57. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1dYzpyyrI_eYI8SzhGQWj6jG7qjgErhkI\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    },
+    "1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH": {
+      "drive_id": "1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH",
+      "drive_url": "https://drive.google.com/file/d/1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH/view",
+      "name": "4. กาฬสินธุ์ เขต 6.pdf",
+      "province": "กาฬสินธุ์",
+      "constituency_number": 6,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is constituency result. Extract candidate votes for these candidate numbers only: [1,2,3,4,5,6,7,8,9,10] (use 0 if blank). Cross-check each numeric digit with Thai text amount next to that row. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1dcth62P1ypYEi_oTtzWh8Y3ryEUBeeGH\",\"election_type\":\"constituency\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0}}"
+    },
+    "1dq5kMpx5M7OJ8yM12rdqdvX7gz7Q6B8h": {
+      "drive_id": "1dq5kMpx5M7OJ8yM12rdqdvX7gz7Q6B8h",
+      "drive_url": "https://drive.google.com/file/d/1dq5kMpx5M7OJ8yM12rdqdvX7gz7Q6B8h/view",
+      "name": "38. พิษณุโลก เขต 2 (บช).pdf",
+      "province": "พิษณุโลก",
+      "constituency_number": 2,
+      "folder_path": [
+        "retry",
+        "full_vector"
+      ],
+      "gemini_prompt": "Read this Thai election PDF and return STRICT JSON only (no markdown). Use Arabic numerals only. Form is party-list (ส.ส. 5/18). Extract votes for ALL party numbers 1..57 (include zero when blank/dash). Cross-check each numeric digit with Thai text amount next to that row. Page hint: page1=1-10, page2=11-34, page3=35-57. Also extract valid_votes, invalid_votes, blank_votes. Return exactly this schema keys: {\"drive_id\":\"1dq5kMpx5M7OJ8yM12rdqdvX7gz7Q6B8h\",\"election_type\":\"party_list\",\"province\":\"...\",\"district_number\":0,\"valid_votes\":0,\"invalid_votes\":0,\"blank_votes\":0,\"votes\":{\"1\":0,\"2\":0,\"3\":0,\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"8\":0,\"9\":0,\"10\":0,\"11\":0,\"12\":0,\"13\":0,\"14\":0,\"15\":0,\"16\":0,\"17\":0,\"18\":0,\"19\":0,\"20\":0,\"21\":0,\"22\":0,\"23\":0,\"24\":0,\"25\":0,\"26\":0,\"27\":0,\"28\":0,\"29\":0,\"30\":0,\"31\":0,\"32\":0,\"33\":0,\"34\":0,\"35\":0,\"36\":0,\"37\":0,\"38\":0,\"39\":0,\"40\":0,\"41\":0,\"42\":0,\"43\":0,\"44\":0,\"45\":0,\"46\":0,\"47\":0,\"48\":0,\"49\":0,\"50\":0,\"51\":0,\"52\":0,\"53\":0,\"54\":0,\"55\":0,\"56\":0,\"57\":0}}"
+    }
+  }
+}

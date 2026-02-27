@@ -1,0 +1,152 @@
+{
+  "rows": 288,
+  "matched_with_ocr_ref": 16,
+  "exact": 14,
+  "accuracy_on_parsed": 0.875,
+  "items": [
+    {
+      "drive_id": "1pGErEA6O0xHsjFZH5gR9WqsJZIDKq3gE",
+      "province": "เชียงใหม่",
+      "district": 10,
+      "type": "party",
+      "extracted_valid": 83963,
+      "ocr_ref_valid": 83963,
+      "delta": 0
+    },
+    {
+      "drive_id": "1pr2Gc8xaYA733nOMDgWnRmk63kgMX4iq",
+      "province": "อุดรธานี",
+      "district": 7,
+      "type": "party",
+      "extracted_valid": 72005,
+      "ocr_ref_valid": 72005,
+      "delta": 0
+    },
+    {
+      "drive_id": "1tcGbhJ1X-M6iup6N8HVFouk9UlFM8ofD",
+      "province": "เชียงราย",
+      "district": 4,
+      "type": "cons",
+      "extracted_valid": 95195,
+      "ocr_ref_valid": 95195,
+      "delta": 0
+    },
+    {
+      "drive_id": "1u9Djagcs-xpQxfkHQWjODtSKXzXOQfQd",
+      "province": "นราธิวาส",
+      "district": 2,
+      "type": "cons",
+      "extracted_valid": 70635,
+      "ocr_ref_valid": 70635,
+      "delta": 0
+    },
+    {
+      "drive_id": "1uhLo9KDViWMLVbHNT7VtClNlFY2tMwio",
+      "province": "ขอนแก่น",
+      "district": 3,
+      "type": "cons",
+      "extracted_valid": 84748,
+      "ocr_ref_valid": 84748,
+      "delta": 0
+    },
+    {
+      "drive_id": "1vwe5AfBOIa7X-rw0UdtMsiOOEOCRFmIk",
+      "province": "ชุมพร",
+      "district": 3,
+      "type": "party",
+      "extracted_valid": 4,
+      "ocr_ref_valid": 95882,
+      "delta": -95878
+    },
+    {
+      "drive_id": "1xZZ-yOyFHuSk9gH6YLJEe65oJfI8I79S",
+      "province": "ปัตตานี",
+      "district": 1,
+      "type": "cons",
+      "extracted_valid": 69214,
+      "ocr_ref_valid": 69214,
+      "delta": 0
+    },
+    {
+      "drive_id": "1xmv9Dureju69TuqgL3xjtYP9Ay1oszRl",
+      "province": "กรุงเทพมหานคร",
+      "district": 29,
+      "type": "party",
+      "extracted_valid": 94610,
+      "ocr_ref_valid": 98610,
+      "delta": -4000
+    },
+    {
+      "drive_id": "1ybMxyu9c8tJ4LDaM_BjHAyLMX_KVO3HW",
+      "province": "มหาสารคาม",
+      "district": 4,
+      "type": "cons",
+      "extracted_valid": 80681,
+      "ocr_ref_valid": 80681,
+      "delta": 0
+    },
+    {
+      "drive_id": "1yt7uv22Wmn9YXeQoH-dtv_y05tX_lVl7",
+      "province": "อุทัยธานี",
+      "district": 1,
+      "type": "cons",
+      "extracted_valid": 76524,
+      "ocr_ref_valid": 76524,
+      "delta": 0
+    },
+    {
+      "drive_id": "1zDtsVfHjSf0YNFOSme4nbwrtsWIEXh8T",
+      "province": "เชียงใหม่",
+      "district": 4,
+      "type": "cons",
+      "extracted_valid": 105843,
+      "ocr_ref_valid": 105843,
+      "delta": 0
+    },
+    {
+      "drive_id": "1zxzT55LJcXfVsFFgwCG8EyJH3efEZiA5",
+      "province": "เชียงราย",
+      "district": 4,
+      "type": "party",
+      "extracted_valid": 98804,
+      "ocr_ref_valid": 98804,
+      "delta": 0
+    },
+    {
+      "drive_id": "1ec3vCReFnYuwI7VXcn4CMfRmA9DNKSbC",
+      "province": "นครราชสีมา",
+      "district": 2,
+      "type": "cons",
+      "extracted_valid": 96710,
+      "ocr_ref_valid": 96710,
+      "delta": 0
+    },
+    {
+      "drive_id": "1eaSgfvLvOtTEe6EOEgTjlCmQ4uqoRRcF",
+      "province": "ระยอง",
+      "district": 3,
+      "type": "cons",
+      "extracted_valid": 76463,
+      "ocr_ref_valid": 76463,
+      "delta": 0
+    },
+    {
+      "drive_id": "1lFcqb8WjMdR33lNWgFI2fxcYE2LoEBjl",
+      "province": "พิษณุโลก",
+      "district": 3,
+      "type": "party",
+      "extracted_valid": 85820,
+      "ocr_ref_valid": 85820,
+      "delta": 0
+    },
+    {
+      "drive_id": "1p7Y-9aOvmwUy2K5yqOuzU5jdDfXE9BLq",
+      "province": "นนทบุรี",
+      "district": 8,
+      "type": "party",
+      "extracted_valid": 90783,
+      "ocr_ref_valid": 90783,
+      "delta": 0
+    }
+  ]
+}

@@ -432,7 +432,159 @@ class TesseractOCR:
 
         return result
 
-    def extract_vote_counts(self, image_path: str) -> dict[int, int]:
+    @staticmethod
+    def _is_continuation_page(image_path: str) -> bool:
+        """Infer whether image is page 2+ from filename convention."""
+        filename = os.path.basename(image_path).lower()
+        match = re.search(r"page[\s_-]*0*(\d+)", filename, flags=re.IGNORECASE)
+        return bool(match and int(match.group(1)) > 1)
+
+    @staticmethod
+    def _normalize_digits(token: str) -> str:
+        """Normalize Thai/Arabic mixed digits to ASCII digits only."""
+        trans = str.maketrans("๐๑๒๓๔๕๖๗๘๙", "0123456789")
+        normalized = token.translate(trans)
+        return re.sub(r"[^\d]", "", normalized)
+
+    def _extract_vote_counts_from_column(
+        self,
+        image_path: str,
+        form_type=None,
+    ) -> dict[int, int]:
+        """
+        Extract vote counts from cropped vote-number column using OCR boxes.
+
+        This path is robust on continuation pages where full-page OCR only sees
+        headers and misses handwritten counts.
+        """
+        if not TESSERACT_AVAILABLE:
+            return {}
+
+        crop_path = None
+        preprocessed_path = None
+        try:
+            from crop_utils import (
+                crop_page_image,
+                FORM_TEMPLATES,
+                _DEFAULT_TEMPLATE,
+                detect_form_type_from_path,
+            )
+
+            detected_form = form_type or detect_form_type_from_path(image_path)
+            template = FORM_TEMPLATES.get(detected_form, _DEFAULT_TEMPLATE)
+
+            is_continuation = self._is_continuation_page(image_path)
+            crop_region = template.vote_numbers_cont if is_continuation else template.vote_numbers_p1
+
+            # Trim a bit more top area on continuation pages to avoid header noise.
+            if is_continuation:
+                left, top, right, bottom = crop_region
+                crop_region = (left, max(top, 0.12), right, bottom)
+
+            crop_path = crop_page_image(image_path, crop_region)
+            preprocessed_path = preprocess_for_numbers(crop_path)
+            target = preprocessed_path or crop_path
+
+            img = Image.open(target)
+            w, h = img.size
+
+            configs = [
+                ("eng", "--oem 1 --psm 11 -c tessedit_char_whitelist=0123456789"),
+                ("eng", "--oem 1 --psm 6 -c tessedit_char_whitelist=0123456789"),
+                ("tha+eng", "--oem 1 --psm 11"),
+            ]
+
+            tokens = []
+            for lang, config in configs:
+                try:
+                    data = pytesseract.image_to_data(
+                        img,
+                        lang=lang,
+                        config=config,
+                        output_type=pytesseract.Output.DICT,
+                    )
+                except Exception:
+                    continue
+
+                n = len(data.get("text", []))
+                for i in range(n):
+                    raw = (data["text"][i] or "").strip()
+                    if not raw:
+                        continue
+                    conf_raw = data.get("conf", [0] * n)[i]
+                    try:
+                        conf = float(conf_raw)
+                    except Exception:
+                        conf = 0.0
+
+                    normalized = self._normalize_digits(raw)
+                    if not normalized:
+                        continue
+                    # Ignore tiny/noisy values that are likely row markers.
+                    if len(normalized) > 5:
+                        continue
+                    value = int(normalized)
+                    if value > 99999:
+                        continue
+
+                    left = int(data["left"][i])
+                    top = int(data["top"][i])
+                    width = int(data["width"][i])
+                    height = int(data["height"][i])
+                    y_center = top + height / 2.0
+                    x_center = left + width / 2.0
+                    # Skip the very top area where headers often leak into crop.
+                    if y_center < (0.08 * h):
+                        continue
+                    tokens.append((y_center, x_center, value, conf, width, height))
+
+            if not tokens:
+                return {}
+
+            # Cluster into rows by y-center; then keep the rightmost/largest token.
+            tokens.sort(key=lambda t: t[0])
+            row_threshold = max(10, int(h * 0.012))
+            rows = []
+            current = [tokens[0]]
+            for tok in tokens[1:]:
+                if abs(tok[0] - current[-1][0]) <= row_threshold:
+                    current.append(tok)
+                else:
+                    rows.append(current)
+                    current = [tok]
+            rows.append(current)
+
+            row_values = []
+            for row in rows:
+                # In vote-number crops, the vote count is usually rightmost.
+                # If tied, prefer larger value over tiny row indices.
+                row_sorted = sorted(row, key=lambda t: (t[1], t[2]))
+                candidate = row_sorted[-1]
+                value = candidate[2]
+                if value < 0:
+                    continue
+                row_values.append(value)
+
+            # De-duplicate near-identical repeated detections from multiple OCR passes.
+            compact_values = []
+            for value in row_values:
+                if not compact_values or compact_values[-1] != value:
+                    compact_values.append(value)
+
+            # Keep realistic rows only.
+            compact_values = compact_values[:60]
+            return {idx + 1: val for idx, val in enumerate(compact_values)}
+        except Exception:
+            return {}
+        finally:
+            for p in (crop_path, preprocessed_path):
+                if p and os.path.exists(p):
+                    try:
+                        os.unlink(p)
+                    except OSError:
+                        pass
+
+    def extract_vote_counts(self, image_path: str, form_type=None) -> dict[int, int]:
         """
         Extract vote counts from a ballot image.
 
@@ -445,6 +597,10 @@ class TesseractOCR:
         Returns:
             Dictionary mapping position numbers to vote counts
         """
+        column_votes = self._extract_vote_counts_from_column(image_path, form_type=form_type)
+        if column_votes:
+            return column_votes
+
         result = self.process_ballot(image_path)
         if not result:
             return {}
@@ -479,11 +635,12 @@ class TesseractOCR:
         # Pattern 3: Look for consecutive numbers in vote column format
         # Find all multi-digit numbers that could be vote counts
         if not vote_counts:
-            all_numbers = re.findall(r'\b(\d{2,5})\b', text)
+            normalized_text = text.translate(str.maketrans("๐๑๒๓๔๕๖๗๘๙", "0123456789"))
+            all_numbers = re.findall(r'\b(\d{1,5})\b', normalized_text)
             # Filter likely vote counts (2+ digits, reasonable range)
-            likely_votes = [int(n) for n in all_numbers if 10 <= int(n) <= 9999]
+            likely_votes = [int(n) for n in all_numbers if 0 <= int(n) <= 99999]
             # Assign to positions 1, 2, 3... based on order found
-            for i, votes in enumerate(likely_votes[:10], 1):
+            for i, votes in enumerate(likely_votes[:60], 1):
                 vote_counts[i] = votes
 
         return vote_counts

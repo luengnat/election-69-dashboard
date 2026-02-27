@@ -1,0 +1,37 @@
+{
+  "rows_with_ref": 769,
+  "exact_match": 768,
+  "mismatch_rows": 1,
+  "mismatch_rate": 0.0013003901170351106,
+  "mismatch_type_counts": {
+    "other_mismatch": 1
+  },
+  "guidance": {
+    "sum_inconsistency_in_our_data": "Recompute totals from row-level votes and reject record when sum != valid_votes.",
+    "catastrophic_parse_or_truncation": "Add strict numeric sanity checks and rerun extraction with stronger prompt/OCR fallback.",
+    "weak_summary_source_low_confidence": "Prioritize raw image OCR or manual verification for weak summary rows.",
+    "small_numeric_noise": "Apply targeted digit normalization and small-value correction pass.",
+    "medium_digit_parse_error": "Use per-cell OCR or candidate-row crops for re-read.",
+    "likely_thousand_block_or_grouping_error": "Check Thai separators/grouping, missing leading digits, and comma/space parse.",
+    "partial_row_capture": "Detect missing rows and run continuation/page-layout-aware extraction.",
+    "major_structural_mismatch": "Likely wrong form/page mapping; verify province/district/form assignment first.",
+    "other_mismatch": "Manual review needed."
+  },
+  "top_mismatches": [
+    {
+      "drive_id": "1TAXGRGeK1vt5KXaiUbzwaxxkin1nPHuH",
+      "name": "ปราจีนบุรี เขต 1 (บช)",
+      "province": "ปราจีนบุรี",
+      "district": 1,
+      "election_type": "party_list",
+      "our_valid": 80540,
+      "killernay_valid": 84899,
+      "delta": -4359,
+      "abs_delta": 4359,
+      "weak_summary": false,
+      "vote_count": 54,
+      "vote_sum": 80540,
+      "mismatch_type": "other_mismatch"
+    }
+  ]
+}

@@ -1,3 +1,72 @@
+# Build system configuration
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# Project metadata
+[project]
+name = "thai-ballot-ocr"
+version = "1.1.0"
+description = "Automated ballot verification system for Thai elections using AI Vision OCR"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Thai Election Ballot OCR Contributors"}
+]
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Sociology",
+]
+keywords = ["thai", "election", "ballot", "ocr", "ai", "vision", "verification"]
+dependencies = [
+    "requests>=2.28.0",
+    "tenacity>=8.0.0",
+    "gradio>=4.0.0",
+    "reportlab>=4.0.0",
+    "Pillow>=9.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "ruff>=0.1.0",
+    "pyright>=0.1.0",
+    "pre-commit>=3.0.0",
+]
+tesseract = [
+    "pytesseract>=0.3.10",
+]
+gdrive = [
+    "google-api-python-client>=2.0.0",
+    "google-auth-oauthlib>=1.0.0",
+    "gdown>=5.0.0",
+]
+
+[project.scripts]
+ballot-ocr = "ballot_ocr.cli.main:main"
+thai-ballot-ocr = "ballot_ocr.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/election"
+
+# Setuptools configuration
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ballot_ocr = ["py.typed"]
+
 # pytest configuration
 [tool.pytest.ini_options]
 testpaths = ["tests"]

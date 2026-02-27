@@ -1,0 +1,149 @@
+{
+  "rows": 16,
+  "items": [
+    {
+      "drive_id": "1TAXGRGeK1vt5KXaiUbzwaxxkin1nPHuH",
+      "name": "ปราจีนบุรี เขต 1 (บช)",
+      "our": 83769,
+      "kcsv": 84900,
+      "kdrv": 80541,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1487ZDm0vUn3rkEALvhKUvTHsIAStHHY-",
+      "name": "นครสวรรค์ เขต 6 (บช)",
+      "our": 80672,
+      "kcsv": 81637,
+      "kdrv": 80356,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1aqb4gW7J2F7hpIeDGqbcitGTlzMFJzD7",
+      "name": "นครราชสีมา เขต 13 (บช)",
+      "our": 68836,
+      "kcsv": 69224,
+      "kdrv": 59749,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1Y9pZ76pSpv19tY_Z6pHo_ArL8M7FPkMC",
+      "name": "ปราจีนบุรี เขต 3 (บช)",
+      "our": 84661,
+      "kcsv": 84893,
+      "kdrv": 84525,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1E0O4j3G10-4XAREzQE2ll_XR9qgX6Nq1",
+      "name": "สงขลา เขต 4 (บช)",
+      "our": 95657,
+      "kcsv": 95827,
+      "kdrv": 95194,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1I_RDI6wG2NWTc_C9wNwRFVXql_oD273o",
+      "name": "ชัยภูมิ เขต 1 (บช)",
+      "our": 81150,
+      "kcsv": 81275,
+      "kdrv": 81069,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1gpZ3Cr_r6LR_LyapXIZO2EPou774f4RF",
+      "name": "ปัตตานี เขต 2 (บช)",
+      "our": 75441,
+      "kcsv": 75538,
+      "kdrv": 75428,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1C8Pi5_EoX5VwrgKwN2KsDNxAgu5rmfFB",
+      "name": "สตูล เขต 2 (บช)",
+      "our": 92655,
+      "kcsv": 92747,
+      "kdrv": 92701,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1lUcGZjwlQ-1n3osX8Bq98g1spydLs_qE",
+      "name": "นครราชสีมา เขต 10 (บช)",
+      "our": 100825,
+      "kcsv": 100890,
+      "kdrv": 100830,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1GDCFtiEf56CaCcxbXLTodwrzB97ecoxJ",
+      "name": "ขอนแก่น เขต 7 (บช)",
+      "our": 83193,
+      "kcsv": 83257,
+      "kdrv": 83183,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1fx1cHJBn41Py_WC7uxiwqTsRQnR4O50j",
+      "name": "อุตรดิตถ์ เขต 2 (บช)",
+      "our": 74506,
+      "kcsv": 74563,
+      "kdrv": 74516,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1JIM7_8xeyGmJfDlDfPovZWY_jG817FmD",
+      "name": "นครปฐม เขต 3 (บช)",
+      "our": 82036,
+      "kcsv": 82066,
+      "kdrv": 82040,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "18CoxX7jIOV3Oo-m5jqj6FEvkPsSQ25UF",
+      "name": "กรุงเทพมหานคร เขต 19 (บช)",
+      "our": 94982,
+      "kcsv": 95000,
+      "kdrv": 94973,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "1kxoESaaABDMAr6Y7TdVhSbfCUA2zUWlr",
+      "name": "มหาสารคาม เขต 6 (บช)",
+      "our": 85971,
+      "kcsv": 85988,
+      "kdrv": 85945,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "17KQ-MXVGSeRLj_TGp1R6zwTBBG_TKfOd",
+      "name": "กรุงเทพมหานคร เขต 5 (บช)",
+      "our": 92858,
+      "kcsv": 92873,
+      "kdrv": 92819,
+      "consensus": null,
+      "verdict": "manual_needed"
+    },
+    {
+      "drive_id": "17kN56fpRgdAKLnClJxTKRA74idHwxMCV",
+      "name": "กรุงเทพมหานคร เขต 12 (บช)",
+      "our": 106744,
+      "kcsv": 106754,
+      "kdrv": 106736,
+      "consensus": 106754,
+      "verdict": "supports_killernay_csv"
+    }
+  ]
+}

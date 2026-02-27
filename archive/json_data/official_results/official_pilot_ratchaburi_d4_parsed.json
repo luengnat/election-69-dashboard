@@ -1,0 +1,74 @@
+[
+  {
+    "drive_id": "1DtCvEB76l9hvEVVfNJms6UrhCTwE5bp6",
+    "name": "51. ราชบุรี เขต 4.pdf",
+    "status": "ok",
+    "parsed": {
+      "drive_id": "51. ราชบุรี เขต 4.pdf",
+      "province": "ราชบุรี",
+      "district_number": 4,
+      "form_type": "ส.ส.๖/๑",
+      "election_type": "constituency",
+      "candidate_scores": [
+        {
+          "number": 3,
+          "name": "นายอัครเดช วงษ์พิทักษ์โรจน์",
+          "party": "ภูมิใจไทย",
+          "score": 55778
+        },
+        {
+          "number": 4,
+          "name": "นายชยานันท์ กอจิตตวนิจ",
+          "party": "ประชาชน",
+          "score": 25938
+        },
+        {
+          "number": null,
+          "name": "นางสาวชะวรลัทธิ์ ชินธรรมมิตร",
+          "party": "กล้าธรรม",
+          "score": 20627
+        },
+        {
+          "number": 5,
+          "name": "นางสาวสุรีย์วรรณ สิงห์อยู่",
+          "party": "เพื่อไทย",
+          "score": 3116
+        },
+        {
+          "number": 6,
+          "name": "นายสรวิชญ์ ขำเจริญ",
+          "party": "ประชาธิปัตย์",
+          "score": 855
+        },
+        {
+          "number": null,
+          "name": "นายเอกพัฒน์ ถ้ำสุวรรณ",
+          "party": "เศรษฐกิจ",
+          "score": 639
+        },
+        {
+          "number": null,
+          "name": "นายกฤซจ์พนธ์ อัฏฐาธนมงคล",
+          "party": "รวมไทยสร้างชาติ",
+          "score": 626
+        }
+      ],
+      "party_scores": [],
+      "totals": {
+        "valid_votes": 107579,
+        "invalid_votes": 2805,
+        "blank_votes": 2544,
+        "total_votes": 112928
+      }
+    },
+    "row_count": 7,
+    "sum_scores": 107579,
+    "valid_votes": 107579,
+    "delta": 0
+  },
+  {
+    "drive_id": "13Qt2g2m3-VCpoPwhOkmVZVh1hF-Auxm-",
+    "name": "51. ราชบุรี เขต 4 (บช).pdf",
+    "status": "no_json"
+  }
+]
