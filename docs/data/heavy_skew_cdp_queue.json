@@ -1,0 +1,41 @@
+{
+  "count": 4,
+  "items": [
+    {
+      "province": "ลพบุรี",
+      "district": 4,
+      "diff": 9868,
+      "const_id": "1ZUZ03q1yly5smzZw4vXbDQbBZ47W8VL3",
+      "party_id": "18h3ED1RVL29N_snbZAlZlGxCnQp4zUCV",
+      "const_url": "https://drive.google.com/file/d/1ZUZ03q1yly5smzZw4vXbDQbBZ47W8VL3/view",
+      "party_url": "https://drive.google.com/file/d/18h3ED1RVL29N_snbZAlZlGxCnQp4zUCV/view"
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 7,
+      "diff": -2429,
+      "const_id": "1ValgLEY9IDP2tjduGw73t2M8x6aEuSKl",
+      "party_id": "1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS",
+      "const_url": "https://drive.google.com/file/d/1ValgLEY9IDP2tjduGw73t2M8x6aEuSKl/view",
+      "party_url": "https://drive.google.com/file/d/1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS/view"
+    },
+    {
+      "province": "นครศรีธรรมราช",
+      "district": 2,
+      "diff": -1733,
+      "const_id": "160PpjAVMsGt1s52robMo5aa7qduqOhGP",
+      "party_id": "1xbe1V0XBJb0MbsemcV_6tErL1S9VKpI-",
+      "const_url": "https://drive.google.com/file/d/160PpjAVMsGt1s52robMo5aa7qduqOhGP/view",
+      "party_url": "https://drive.google.com/file/d/1xbe1V0XBJb0MbsemcV_6tErL1S9VKpI-/view"
+    },
+    {
+      "province": "สกลนคร",
+      "district": 2,
+      "diff": -358,
+      "const_id": "127TllTdQoVVUB-tM5pwYwAyb1evUW4DP",
+      "party_id": "1aoAJGJPeRPpc3Hzy6DDUxUlCsBygoGSC",
+      "const_url": "https://drive.google.com/file/d/127TllTdQoVVUB-tM5pwYwAyb1evUW4DP/view",
+      "party_url": "https://drive.google.com/file/d/1aoAJGJPeRPpc3Hzy6DDUxUlCsBygoGSC/view"
+    }
+  ]
+}

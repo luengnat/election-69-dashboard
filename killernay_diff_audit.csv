@@ -1,0 +1,2 @@
+drive_id,name,province,district,election_type,our_valid,killernay_valid,delta,abs_delta,weak_summary,vote_count,vote_sum,mismatch_type
+1TAXGRGeK1vt5KXaiUbzwaxxkin1nPHuH,ปราจีนบุรี เขต 1 (บช),ปราจีนบุรี,1,party_list,80540,84899,-4359,4359,False,54,80540,other_mismatch

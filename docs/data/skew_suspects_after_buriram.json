@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "province": "น่าน",
+      "district": 1,
+      "read_skew": -15053,
+      "k_skew": null,
+      "const_id": "missing::น่าน::1::constituency",
+      "party_id": "1O7swJzj0hH-mT67zR4lP9CjH9PuuGMTG",
+      "const_url": "https://drive.google.com/file/d/missing::น่าน::1::constituency/view",
+      "party_url": "https://drive.google.com/file/d/1O7swJzj0hH-mT67zR4lP9CjH9PuuGMTG/view"
+    },
+    {
+      "province": "ลพบุรี",
+      "district": 4,
+      "read_skew": 5932,
+      "k_skew": null,
+      "const_id": "1ZUZ03q1yly5smzZw4vXbDQbBZ47W8VL3",
+      "party_id": "18h3ED1RVL29N_snbZAlZlGxCnQp4zUCV",
+      "const_url": "https://drive.google.com/file/d/1ZUZ03q1yly5smzZw4vXbDQbBZ47W8VL3/view",
+      "party_url": "https://drive.google.com/file/d/18h3ED1RVL29N_snbZAlZlGxCnQp4zUCV/view"
+    },
+    {
+      "province": "นครพนม",
+      "district": 2,
+      "read_skew": 4469,
+      "k_skew": null,
+      "const_id": "1eUWE2Yvh9fzOT2a0ACLYLopuDgJMVhLa",
+      "party_id": "missing::นครพนม::2::party_list",
+      "const_url": "https://drive.google.com/file/d/1eUWE2Yvh9fzOT2a0ACLYLopuDgJMVhLa/view",
+      "party_url": "https://drive.google.com/file/d/missing::นครพนม::2::party_list/view"
+    },
+    {
+      "province": "อุดรธานี",
+      "district": 6,
+      "read_skew": 3654,
+      "k_skew": null,
+      "const_id": "1Sh5Br6y0CQqPk2qn3JTqzCC2PivTtwZR",
+      "party_id": "missing::อุดรธานี::6::party_list",
+      "const_url": "https://drive.google.com/file/d/1Sh5Br6y0CQqPk2qn3JTqzCC2PivTtwZR/view",
+      "party_url": "https://drive.google.com/file/d/missing::อุดรธานี::6::party_list/view"
+    },
+    {
+      "province": "กรุงเทพมหานคร",
+      "district": 7,
+      "read_skew": -2429,
+      "k_skew": null,
+      "const_id": "1ValgLEY9IDP2tjduGw73t2M8x6aEuSKl",
+      "party_id": "1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS",
+      "const_url": "https://drive.google.com/file/d/1ValgLEY9IDP2tjduGw73t2M8x6aEuSKl/view",
+      "party_url": "https://drive.google.com/file/d/1LOYfrXZdBQ46zkd2dB4JMFoPQ8MX8JeS/view"
+    },
+    {
+      "province": "นนทบุรี",
+      "district": 6,
+      "read_skew": -103,
+      "k_skew": 2,
+      "const_id": "1A3Bd-NMdEFtIljMRpAMp98JHq0Xpija5",
+      "party_id": "1FOoRVeiYO1JkpWlgOgAMfNsjhHUdq-OI",
+      "const_url": "https://drive.google.com/file/d/1A3Bd-NMdEFtIljMRpAMp98JHq0Xpija5/view",
+      "party_url": "https://drive.google.com/file/d/1FOoRVeiYO1JkpWlgOgAMfNsjhHUdq-OI/view"
+    }
+  ]
+}

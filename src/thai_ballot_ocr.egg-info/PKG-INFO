@@ -1,0 +1,241 @@
+Metadata-Version: 2.4
+Name: thai-ballot-ocr
+Version: 1.1.0
+Summary: Automated ballot verification system for Thai elections using AI Vision OCR
+Home-page: https://github.com/yourusername/election
+Author: Thai Election Ballot OCR Contributors
+Author-email: 
+License: MIT
+Project-URL: Homepage, https://github.com/yourusername/election
+Keywords: thai,election,ballot,ocr,ai,vision,verification
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
+Classifier: Topic :: Scientific/Engineering :: Image Recognition
+Classifier: Topic :: Sociology
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: requests>=2.28.0
+Requires-Dist: tenacity>=8.0.0
+Requires-Dist: gradio>=4.0.0
+Requires-Dist: reportlab>=4.0.0
+Requires-Dist: Pillow>=9.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: pyright>=0.1.0; extra == "dev"
+Requires-Dist: pre-commit>=3.0.0; extra == "dev"
+Provides-Extra: tesseract
+Requires-Dist: pytesseract>=0.3.10; extra == "tesseract"
+Provides-Extra: gdrive
+Requires-Dist: google-api-python-client>=2.0.0; extra == "gdrive"
+Requires-Dist: google-auth-oauthlib>=1.0.0; extra == "gdrive"
+Requires-Dist: gdown>=5.0.0; extra == "gdrive"
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Thai Election Ballot OCR
+
+Automated ballot verification system for Thai elections using AI Vision OCR. Extracts vote counts from handwritten ballot images, validates against official Election Commission of Thailand (ECT) data, and detects discrepancies.
+
+## Features
+
+- **High-Accuracy OCR**:
+  - **Adaptive Preprocessing**: Automatically handles noisy/skewed images.
+  - **Advanced Vision**: Deskewing and line removal for structural correction.
+  - **Ensemble Support**: Tesseract, PaddleOCR, TrOCR, Claude, and OpenRouter.
+- **Performance**:
+  - **Result Caching**: SQLite-based caching for instant re-runs.
+  - **Parallel Processing**: Thread-pooled execution with rate limiting.
+- **Web Interface**:
+  - **Review Queue**: Manual verification for low-confidence results.
+  - **Bulk Operations**: ZIP file upload and processing.
+  - **Secure**: Basic authentication support.
+- **Verification**:
+  - **ECT Integration**: Validates against 3,491 official candidates.
+  - **Logic Checks**: Sum validation and anomaly detection.
+- **Reporting**:
+  - **PDF Exports**: Executive summary, constituency reports, and batch summaries.
+  - **Data Exports**: JSON and CSV formats.
+
+## Quick Start
+
+### Option 1: Docker (Recommended)
+
+```bash
+# Clone and configure
+git clone https://github.com/yourusername/election.git
+cd election
+
+# Set environment variables
+cp .env.example .env
+# Edit .env with your API keys (optional for local OCR)
+
+# Run with Docker Compose
+docker-compose up -d
+
+# Open http://localhost:7860
+```
+
+### Option 2: Native Installation
+
+```bash
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install Tesseract OCR (required fallback)
+# macOS:
+brew install tesseract tesseract-lang poppler
+# Ubuntu/Debian:
+sudo apt-get install tesseract-ocr tesseract-ocr-tha poppler-utils libgl1
+```
+
+## Usage
+
+### Web Interface
+
+```bash
+# Run locally
+python web_ui.py
+
+# With authentication
+WEB_UI_USERNAME=admin WEB_UI_PASSWORD=secret python web_ui.py
+```
+
+Open http://localhost:7860. You can:
+1.  **Upload**: Select images or ZIP files (up to 500/batch).
+2.  **Process**: Watch real-time progress.
+3.  **Review**: Verify low-confidence results in the "Review" tab.
+4.  **Export**: Download PDF reports or raw data.
+
+### Command Line
+
+```bash
+# Process a directory
+python ballot_ocr.py ballots/ --parallel --output results.json
+
+# Process with specific options
+python ballot_ocr.py ballots/ --no-cache --verify --reports
+
+# Download ballots from Google Drive
+python download_ballots.py --province "กรุงเทพมหานคร" --output ./ballots/
+```
+
+### Google Drive Folder Browsing (CDP)
+
+For programmatic folder-level browsing in an authenticated Chrome session, and extracting file-level Gemini context without OCR, use:
+
+- `/Users/nat/dev/election/drive_cdp_browser.py`
+- Mapping helper: `/Users/nat/dev/election/drive_mapping.py`
+- Handoff guide: `/Users/nat/dev/election/docs/DRIVE_CDP_WORKFLOW.md`
+
+## Current State
+
+For the latest operational snapshot (dashboard behavior, validation status, known caveats, and re-validation commands), see:
+
+- `docs/CURRENT_STATE.md`
+
+## Documentation Map
+
+Use these docs as the project handoff backbone:
+
+- `docs/PROJECT_OVERVIEW.md` - what the system does and major workflows
+- `docs/DATA_CONTRACTS.md` - canonical data model and consistency rules
+- `docs/OPERATIONS_RUNBOOK.md` - run/validate/publish operational steps
+- `docs/REPO_CLEANUP_PLAN.md` - repository cleanup direction and conventions
+
+## Configuration
+
+Set these environment variables in `.env`:
+
+```bash
+# OCR Backends (comma-separated, priority order)
+EXTRACTION_BACKENDS="ollama,openrouter,anthropic,tesseract,paddle"
+
+# Local Ollama (for custom local vision OCR)
+OLLAMA_BASE_URL="http://127.0.0.1:11434"
+OLLAMA_MODEL="minicpm-v:latest"
+# Optional runtime tuning (useful on macOS if Metal crashes)
+# OLLAMA_NUM_GPU="0"       # force CPU
+# OLLAMA_NUM_THREAD="8"
+
+# API Keys (if using cloud backends)
+OPENROUTER_API_KEY="your-key"
+ANTHROPIC_API_KEY="your-key"
+
+# Web UI Security
+WEB_UI_USERNAME="admin"
+WEB_UI_PASSWORD="password"
+
+# Processing
+MAX_WORKERS=5
+RATE_LIMIT=2.0
+```
+
+## Benchmarks
+
+Accuracy on test dataset (clean scans):
+
+| Backend Strategy | Ballot Accuracy | Field Accuracy | Notes |
+|------------------|-----------------|----------------|-------|
+| Tesseract Only | 100% | 100% | Baseline with adaptive preprocessing |
+| Weighted Ensemble | 100% | 100% | Falls back gracefully if advanced models missing |
+
+*Note: PaddleOCR backend is recommended for complex table layouts and provides the highest robustness against rotation and grid lines when installed.*
+
+## Advanced Features
+
+### Adaptive Preprocessing
+The system analyzes each image (resolution, contrast, noise) and applies optimal filters:
+- **Deskewing**: Corrects rotation using projection profiles.
+- **Line Removal**: Removes table grids to isolate handwriting.
+- **Padding**: Adds borders to prevent text cutoff.
+
+### Caching
+Results are cached in `.serena/cache/ocr_results.db`. To force reprocessing:
+- **CLI**: Use `--no-cache`.
+- **Web UI**: Check "Force Reprocess".
+
+### PaddleOCR (Optional)
+For higher accuracy on local machines, install PaddleOCR:
+```bash
+pip install paddlepaddle paddleocr
+```
+Then verify it's active in the startup logs.
+
+## Project Structure
+
+```
+.
+├── ballot_ocr.py        # CLI entry point
+├── batch_processor.py   # Parallel processing engine
+├── web_ui.py            # Gradio interface
+├── ballot_extraction.py # Main OCR logic
+├── adaptive_ocr.py      # Image preprocessing & analysis
+├── model_backends.py    # OCR engine wrappers (Tesseract, Paddle, etc.)
+├── ocr_cache.py         # SQLite result cache
+├── crop_utils.py        # Zone-based cropping templates
+├── ect_api.py           # Election Commission data integration
+└── ...
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## License
+
+[MIT License](LICENSE)

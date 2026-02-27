@@ -1,0 +1,28 @@
+Read this election PDF and return ONLY valid JSON (no markdown).
+
+Output schema:
+{
+  "province": "<thai province name>",
+  "district_number": <int>,
+  "election_type": "constituency" | "party_list",
+  "form_type": "<exact form code>",
+  "valid_votes": <int|null>,
+  "invalid_votes": <int|null>,
+  "blank_votes": <int|null>,
+  "total_votes": <int|null>,
+  "votes": {
+    "1": <int>,
+    "2": <int>
+  },
+  "notes": "short note if uncertain"
+}
+
+Rules:
+- Use ARABIC numbers only (0-9), never Thai numerals.
+- votes keys must be candidate/party number as strings.
+- Include only numbers you can read from the document.
+- If a vote row is missing/unclear, omit that key from votes.
+- If a total is unclear, set it to null.
+- Do not invent data.
+- If this is party-list form (บช), set election_type="party_list".
+- If this is constituency form, set election_type="constituency".

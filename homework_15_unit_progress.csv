@@ -1,0 +1,16 @@
+province,district,score_hint,unit_level_status,const_status,const_has_file,const_read_valid,const_ect_valid,const_delta_read_vs_ect,const_drive_id,party_status,party_has_file,party_read_valid,party_ect_valid,party_delta_read_vs_ect,party_drive_id
+เชียงใหม่,1,68.83%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,93695,81664,12031,1NfltwwsfkpUzTIus-V2VMhCpOtuNiCQg,read-ok,True,96338,81664,14674,1YBTUUvGdAbBV0Nq4mwyvWrabD6be7uYe
+สมุทรปราการ,4,66.86%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,92620,83459,9161,163vUrbLbBeG5Mqw8VJLMAR5GiW4tyvbG,read-ok,True,95537,83459,12078,1jNUBveZJQy_YulqGCYEKylCnEOrnVazl
+สุโขทัย,2,64.82%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,71207,67737,3470,1Ixhj1lsXlNi7jIb7jHsDbRy7ckjiQ0p-,read-ok,True,70647,67737,2910,1iFTKazTPrIDzlIjZjADZpVMri6xxpg0K
+มหาสารคาม,1,64.81%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,84916,79831,5085,1IO2mowaFL3d6-WQaaQwpNDIx1pQujQQQ,read-ok,True,84685,79831,4854,1iIVxHpNhMJITJYTfyIyOLvF_WU2o33AF
+ระยอง,1,64.00%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,85091,79332,5759,1egHzkfNT5KM524XgS80PCqOzfamz6_3g,read-ok,True,86327,79332,6995,1RxBl92eWFsLYeYnuNys7UwGRub9ODkE3
+เชียงราย,6,53.75%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,76481,71873,4608,1eYovEvqkmUziQeMYO3Ce370rkRbnK1ck,read-ok,True,78227,71873,6354,1JRMFDXP32gdC5_vUSbC12xESm6NkclUt
+สกลนคร,1,51.50%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,90090,83226,6864,1mafFv4NdqwuM4gsqnHBcrYXgi438Fiak,read-ok,True,89020,83226,5794,1kIm0liXTa7mJ1XM8TzzFkPE7mYqvtBqX
+ขอนแก่น,2,47.43%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,96299,91205,5094,1o7M5eV-xVDybAPMEGW8zB2fNpetFFjEj,read-ok,True,98548,91205,7343,1pbqyfJc3osHAzdyz40u7ORu-ck8aPzJe
+สงขลา,2,47.42%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,78663,74548,4115,1Nh8zcREMw2k0XXfgUaPdavBZt0wlGXuu,read-ok,True,78784,74548,4236,1r95PtNsL8GoURxEzyjRLM75O19CDovW9
+นครราชสีมา,2,47.42%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,96710,87403,9307,1ec3vCReFnYuwI7VXcn4CMfRmA9DNKSbC,read-ok,True,96874,87403,9471,1gWjLeskpwPHfxYgpkfOxDr-DTymNtGxR
+นราธิวาส,3,43.35%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,79299,78576,723,19SEQ3JlF1d9-5azJeDhp09KnWrKG-c90,read-ok,True,77064,78576,-1512,1Fft1UDsEkrl-QwQiKSjE4OfMc04ONMrp
+นครราชสีมา,1,39.41%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,80985,76007,4978,15ZGFtRWsjCMd5zInmWlMBH6irip22Cpj,read-ok,True,83542,76007,7535,1N194FsykU8B2aO3OQlxq1SPyQd_ISMfi
+อุดรธานี,1,28.18%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,76456,73783,2673,1p3E2sb1lKmg-YI-pUNsb7fZcpoPVu327,read-ok,True,79136,73783,5353,19QW8kw-c0-FGTJEDGWGcVZ8oneek1Wu4
+ราชบุรี,4,27.67%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,107579,102509,5070,1DtCvEB76l9hvEVVfNJms6UrhCTwE5bp6,read-ok,True,102853,102509,344,13Qt2g2m3-VCpoPwhOkmVZVh1hF-Auxm-
+ศรีสะเกษ,1,17.54%,pending-no-unit-level-rows-in-dashboard-data,read-ok,True,94666,78704,15962,14TXAj8mlYfj2zdCWQEuVs1kGLmw06_O5,read-ok,True,92842,78704,14138,1S9e09zh-G6MWcgjyIX5TZf6hRA_lfKQ-

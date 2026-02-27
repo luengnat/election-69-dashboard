@@ -1,0 +1,8 @@
+Return only JSON. No prose.
+Keys: valid_votes, invalid_votes, blank_votes, total_votes, votes, rows.
+- votes: object where key is candidate/party number and value is vote count.
+- rows: array of objects: {"number": <int>, "name": "<name in row>", "votes": <int>}.
+Rules:
+- Read ONLY left-most row number column for number.
+- If row number unclear, skip that row.
+- No non-numeric keys.

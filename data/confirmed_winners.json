@@ -1,0 +1,2378 @@
+[
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 1,
+    "winner_name": "นายปารเมศ วิทยารักษ์สรรค์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 2,
+    "winner_name": "นายเสกสิทธิ์ แย้มสงวนศักดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 3,
+    "winner_name": "นายจรยุทธ จตุรพรประสิทธิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 4,
+    "winner_name": "นายภัณฑิล น่วมเจิม",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 5,
+    "winner_name": "นายปิติกรณ์ บรรณเภสัช",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 6,
+    "winner_name": "นายกัณตภณ ดวงอัมพร",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 7,
+    "winner_name": "นางสาวภัสริน รามวงศ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 8,
+    "winner_name": "นายชยพล สท้อนดี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 9,
+    "winner_name": "นายศุภณัฐ มีนชัยนันท์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 10,
+    "winner_name": "นายเอกราช อุดมอำนวย",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 11,
+    "winner_name": "นางสาวศศินันท์ ธรรมนิฐินันท์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 12,
+    "winner_name": "นายภูริวรรธก์ ใจสำราญ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 13,
+    "winner_name": "เรืออากาศโท ธนเดช เพ็งสุข",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 14,
+    "winner_name": "นายก่อเกียรติ ก่อสูงศักดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 15,
+    "winner_name": "นายวิทวัส ติชะวาณิชย์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 16,
+    "winner_name": "นางสาวพิมพ์กาญจน์ กีรติวิราปกรณ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 17,
+    "winner_name": "นายวีรวุธ รักเที่ยง",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 18,
+    "winner_name": "นายธีรัจชัย พันธุมาศ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 19,
+    "winner_name": "นายกันต์พงษ์ ประยูรศักดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 20,
+    "winner_name": "นายชุมพล หลักค า",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 21,
+    "winner_name": "นายณัฐพงศ์ เปรมพูลสวัสดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 22,
+    "winner_name": "นายสุภกร ตันติไพบูลย์ธนะ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 23,
+    "winner_name": "นายชลธาร ทรัพย์ไพบูลย์เลิศ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 24,
+    "winner_name": "นายณพัฎน์ จิตตภินันท์กัณตา",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 25,
+    "winner_name": "นางสาวแอนศิริ วลัยกนก",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 26,
+    "winner_name": "นายพงษ์สรณัฐ ทองลี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 27,
+    "winner_name": "นายนฤพล เลิศปัญญาโรจน์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 28,
+    "winner_name": "นางสาวชลณัฏฐ์ โกยกุล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 29,
+    "winner_name": "นางสาวทิสรัตน์ เลาหพล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 30,
+    "winner_name": "นายธัญธร ธนินวัฒนาธร",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 31,
+    "winner_name": "นายอนุสรณ์ ธรรมใจ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 32,
+    "winner_name": "นางสาวปวิตรา จิตตกิจ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กรุงเทพมหานคร",
+    "constituency_no": 33,
+    "winner_name": "นายเท่าพิภพ ลิ้มจิตรกร",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "กระบี่",
+    "constituency_no": 1,
+    "winner_name": "นายกิตติกิตติธรกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กระบี่",
+    "constituency_no": 2,
+    "winner_name": "นายถิรเดช ตั้งมั่นก่อกิจ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กระบี่",
+    "constituency_no": 3,
+    "winner_name": "นายกิตติชัย เอ่งฉ้วน",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กาญจนบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายอัครนันท์ กัณณ์กิตตินันท์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาญจนบุรี",
+    "constituency_no": 2,
+    "winner_name": "นายชูเกียรติ จีนาภักดิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กาญจนบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายยศวัฒน์ มาไพศาลสิน",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กาญจนบุรี",
+    "constituency_no": 4,
+    "winner_name": "นางสาววิสุดา วิเชียรศิลป์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กาญจนบุรี",
+    "constituency_no": 5,
+    "winner_name": "นายพนม โพธิ์แก้ว",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาฬสินธุ์",
+    "constituency_no": 1,
+    "winner_name": "นายวิรัช พิมพะนิตย์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาฬสินธุ์",
+    "constituency_no": 2,
+    "winner_name": "นายพลากร พิมพะนิตย์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาฬสินธุ์",
+    "constituency_no": 3,
+    "winner_name": "นายจำลอง ภูนวนทา",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "กาฬสินธุ์",
+    "constituency_no": 4,
+    "winner_name": "นายณัฐวัชต์ พิมพะนิตย์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาฬสินธุ์",
+    "constituency_no": 5,
+    "winner_name": "นางสาวบุญญาภา นาชัยเวียง ปุณณนิฏฐา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "กาฬสินธุ์",
+    "constituency_no": 6,
+    "winner_name": "นายชนะวุธ อุทโท",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาแพงเพชร",
+    "constituency_no": 1,
+    "winner_name": "นายไผ่ ลิกค์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "กาแพงเพชร",
+    "constituency_no": 2,
+    "winner_name": "นายเพชรภูมิอาภรณ์รัตน์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "กาแพงเพชร",
+    "constituency_no": 3,
+    "winner_name": "นายนพพล ผลอำนวย",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "กาแพงเพชร",
+    "constituency_no": 4,
+    "winner_name": "นายสุรสิทธิ์ วงศ์วิทยานันท์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 1,
+    "winner_name": "นายวีรนันท์ ฮวดศรี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 2,
+    "winner_name": "นายอิทธิพล ชลธราศิริ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 3,
+    "winner_name": "นายเอกชัย สืบสารคาม",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 4,
+    "winner_name": "นายรุ่งโรจน์ เย็นสบาย",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 5,
+    "winner_name": "นายปราชญา หงอกชัย",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 6,
+    "winner_name": "นายวิศรุต ปู่เพ็ง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 7,
+    "winner_name": "นายสุรพจน์ เตาะเจริญสุข",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 8,
+    "winner_name": "นายธนิก มาสีพิทักษ์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 9,
+    "winner_name": "นายณัฐพล กลุ่มเหรียญทอง",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 10,
+    "winner_name": "นายพชรกร อรรณนพพร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ขอนแก่น",
+    "constituency_no": 11,
+    "winner_name": "นายองอาจ ฉัตรชัยพลรัตน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "จันทบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายชรัตน์ เนรัญชร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ฉะเชิงเทรา",
+    "constituency_no": 1,
+    "winner_name": "นางฐิติมา ฉายแสง",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ฉะเชิงเทรา",
+    "constituency_no": 2,
+    "winner_name": "นายอรรถกร ศิริลัทธยากร",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ฉะเชิงเทรา",
+    "constituency_no": 3,
+    "winner_name": "นายชัยวัฒน์ เป้าเปี่ยมทรัพย์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ฉะเชิงเทรา",
+    "constituency_no": 4,
+    "winner_name": "จ่าเอก ยศสิงห์ เหลี่ยมเลิศ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายสุชาติ ชมกลิ่น",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 2,
+    "winner_name": "นางสาววรรณิดา นพสิทธิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 3,
+    "winner_name": "ร้อยต ารวจเอก สิทธิพัฒน์ ภาวสุทธิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 4,
+    "winner_name": "นายจิรวุฒิ สิงห์โตทอง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 5,
+    "winner_name": "นายอนันต์ ปรีดาสุทธิจิตต์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 6,
+    "winner_name": "นางนฤมาศ เปี่ยมบัณฑิต",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 7,
+    "winner_name": "นายสหัสวัต คุ้มคง",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 8,
+    "winner_name": "นายเชาวลิตร แสงอุทัย",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 9,
+    "winner_name": "นายยอดชาย พึ่งพร",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ชลบุรี",
+    "constituency_no": 10,
+    "winner_name": "นายธนาธาร ประมูลพงษ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ชัยนาท",
+    "constituency_no": 1,
+    "winner_name": "นายอนุชา นาคาศัย",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ชัยนาท",
+    "constituency_no": 2,
+    "winner_name": "นายมณเฑียร สงฆ์ประชา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 1,
+    "winner_name": "นายโอชิษฐ์ เกียรติก้องชูชัย",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 2,
+    "winner_name": "นายเชิงชาย ชาลีรินทร์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 3,
+    "winner_name": "นายสัมฤทธิ์ แทนทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 4,
+    "winner_name": "นางสาวสุชาดา ซาง แทนทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 5,
+    "winner_name": "นายศิวะ พงศ์ธีระดุลย์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 6,
+    "winner_name": "นายเชวงศักดิ์ เร่งไพบูลย์วงษ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชัยภูมิ",
+    "constituency_no": 7,
+    "winner_name": "นายอัครแสนคีรีโล่ห์วีระ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ชุมพร",
+    "constituency_no": 1,
+    "winner_name": "นายวิชัย สุดสวาสดิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชุมพร",
+    "constituency_no": 2,
+    "winner_name": "นายกิตติศักดิ์ พรหมรัตน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ชุมพร",
+    "constituency_no": 3,
+    "winner_name": "นายสุพล จุลใส",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 1,
+    "winner_name": "นายธนรัช จงสุทธานามณี",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 2,
+    "winner_name": "นางสาวปิยะรัฐชย์ ติยะไพรัช",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 3,
+    "winner_name": "นายพิทักษ์ แสงค า",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 4,
+    "winner_name": "นายสุรสิทธิ์ เจียมวิจักษณ์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 5,
+    "winner_name": "นายรังสรรค์ วันไชยธนวงศ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 6,
+    "winner_name": "นางมลธิชา ไชยบาล",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงราย",
+    "constituency_no": 7,
+    "winner_name": "นายสุธีระพงษ์ วันไชยธนวงศ์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 1,
+    "winner_name": "นางสาวเพชรรัตน์ ใหม่ชมภู",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 2,
+    "winner_name": "นางสาวการณิก จันทดา",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 3,
+    "winner_name": "นายณัฐพล โตวิจักษณ์ชัยกุล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 4,
+    "winner_name": "นางสาวพุธิตา ชัยอนันต์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 5,
+    "winner_name": "นายสมชิด กันธะยา",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 6,
+    "winner_name": "นางสาวสุภานันท์ ปัญญาทิพย์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 7,
+    "winner_name": "นายการุณย์ คูเจริญชัยกุล",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 8,
+    "winner_name": "นายภัทรพงษ์ ลีลาภัทร์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 9,
+    "winner_name": "นายนเรศ ธ ารงค์ทิพยคุณ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "เชียงใหม่",
+    "constituency_no": 10,
+    "winner_name": "นายนรพล ตันติมนตรี",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ตรัง",
+    "constituency_no": 1,
+    "winner_name": "นายเอกพล ณ พัทลุง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ตรัง",
+    "constituency_no": 2,
+    "winner_name": "นายทวีสุระบาล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ตรัง",
+    "constituency_no": 3,
+    "winner_name": "นายกฤตย์อิชย์ ภาคย์อิชณน์",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "ตรัง",
+    "constituency_no": 4,
+    "winner_name": "นายกาญจน์ ตั้งปอง",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "ตราด",
+    "constituency_no": 1,
+    "winner_name": "นายพิชานนท์ อิงประสาร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ตาก",
+    "constituency_no": 1,
+    "winner_name": "นายธนัสถ์ ทวีเกื้อกูลกิจ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ตาก",
+    "constituency_no": 2,
+    "winner_name": "นายชิงชัย ก่อประภากิจ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ตาก",
+    "constituency_no": 3,
+    "winner_name": "นายภาคภูมิ บูลย์ประมุข",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นครนายก",
+    "constituency_no": 1,
+    "winner_name": "นายปิยวัฒน์ กิตติธเนศวร",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นครนายก",
+    "constituency_no": 2,
+    "winner_name": "นายเกรียงไกร กิตติธเนศวร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครปฐม",
+    "constituency_no": 1,
+    "winner_name": "นายศุภโชค ศรีสุขจร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครปฐม",
+    "constituency_no": 2,
+    "winner_name": "พันโท สินธพ แก้วพิจิตร",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นครปฐม",
+    "constituency_no": 3,
+    "winner_name": "นายพาณุวัฒณ์ สะสมทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครปฐม",
+    "constituency_no": 4,
+    "winner_name": "พันเอก สุขชาต สะสมทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครปฐม",
+    "constituency_no": 5,
+    "winner_name": "นายอนุชา สะสมทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครปฐม",
+    "constituency_no": 6,
+    "winner_name": "นายชลพฤกษ วงศ์อรุณนิยม",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นครพนม",
+    "constituency_no": 1,
+    "winner_name": "นางสาวศุภพานี โพธิ์สุ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครพนม",
+    "constituency_no": 2,
+    "winner_name": "นางมนพร เจริญศรี",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครพนม",
+    "constituency_no": 3,
+    "winner_name": "นายอลงกต มณีกาศ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครพนม",
+    "constituency_no": 4,
+    "winner_name": "นายชาญชัย ค าจำปา",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 1,
+    "winner_name": "นายฉัตร สุภัทรวณิชย์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 2,
+    "winner_name": "นายวัชรพล โตมรศักดิ์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 3,
+    "winner_name": "นายศุทธสิทธิ์ พจน์ฐศักดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 4,
+    "winner_name": "นางสาวณัฐจิรา อิ่มวิเศษ",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 5,
+    "winner_name": "นายสมเกียรติตันดิลกตระกูล",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 6,
+    "winner_name": "นางพัชราวรรณ ภิญโญ",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 7,
+    "winner_name": "นางสาวปิยะนุช ยินดีสุข",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 8,
+    "winner_name": "นายนิกร โสมกลาง",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 9,
+    "winner_name": "นายพลพีร์ สุวรรณฉวี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 10,
+    "winner_name": "นายบุญจง วงศ์ไตรรัตน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 11,
+    "winner_name": "นายอาทิตย์ หวังศุภกิจโกศล",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 12,
+    "winner_name": "นายนรเสฎฐ์ ศิริโรจนกุล",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 13,
+    "winner_name": "นายพชร จันทรรวงทอง",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 14,
+    "winner_name": "นายหนึ่ง ขัติยะนนท์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 15,
+    "winner_name": "นายรชตะ ด่านกุล",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "นครราชสีมา",
+    "constituency_no": 16,
+    "winner_name": "นายตติรัฐ รัตนเศรษฐ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 1,
+    "winner_name": "นายทรงศักดิ์ มุสิกอง",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 2,
+    "winner_name": "นางสาวนันทวัน วิเชียร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 3,
+    "winner_name": "นายพิทักษ์เดช เดชเดโช",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 4,
+    "winner_name": "นางกนกพร เดชเดโช",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 5,
+    "winner_name": "นายสมศักดิ์ แสงอารยะกุล",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 6,
+    "winner_name": "นายจอมไกร สวัสดิวงศ์",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 7,
+    "winner_name": "นายอภินันท์ สโมสร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 8,
+    "winner_name": "นางอวยพรศรีเชาวลิต",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครศรีธรรมราช",
+    "constituency_no": 9,
+    "winner_name": "นางสาวพิมพ์ภัทรา วิชัยกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครสวรรค์",
+    "constituency_no": 1,
+    "winner_name": "นางสาวภัทราวดี นิโรจน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครสวรรค์",
+    "constituency_no": 2,
+    "winner_name": "นายชานนท์ ไทยเศรษฐ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครสวรรค์",
+    "constituency_no": 3,
+    "winner_name": "นายสัญญา นิลสุพรรณ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นครสวรรค์",
+    "constituency_no": 4,
+    "winner_name": "นายมารุต ศรีผึ้ง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครสวรรค์",
+    "constituency_no": 5,
+    "winner_name": "นายพีระเดช ศิริวันสาณฑ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นครสวรรค์",
+    "constituency_no": 6,
+    "winner_name": "นายประสาท ตันประเสริฐ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายวุฒากร นุตยกุล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 2,
+    "winner_name": "นางปัญญารัตน์ นันทภูษิตานนท์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายอนุสรณ์ แก้ววิเชียร",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 4,
+    "winner_name": "นายกรณ์ มีดี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 5,
+    "winner_name": "นายปรีติเจริญศิลป์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 6,
+    "winner_name": "นายสุทัศน์ มีศิริ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 7,
+    "winner_name": "นายเกียรติคุณ ต้นยาง",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นนทบุรี",
+    "constituency_no": 8,
+    "winner_name": "นายนนท์ ไพศาลลิ้มเจริญกิจ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "นราธิวาส",
+    "constituency_no": 1,
+    "winner_name": "นายลุตฟี หะยีอีแต",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นราธิวาส",
+    "constituency_no": 2,
+    "winner_name": "นายอามินทร์ มะยูโซ๊ะ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นราธิวาส",
+    "constituency_no": 3,
+    "winner_name": "นายสัมพันธ์ มะยูโซ๊ะ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "นราธิวาส",
+    "constituency_no": 4,
+    "winner_name": "นายซาการียา สะอิ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "นราธิวาส",
+    "constituency_no": 5,
+    "winner_name": "นายกมลศักดิ์ ลีวาเมาะ",
+    "winner_party": "ประชาชาติ"
+  },
+  {
+    "province": "น่าน",
+    "constituency_no": 1,
+    "winner_name": "นายเชาว์วิชญ์ อินน้อย",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "น่าน",
+    "constituency_no": 2,
+    "winner_name": "นายประสิทธิ์ โนทะ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "น่าน",
+    "constituency_no": 3,
+    "winner_name": "นายเจริญ อภิภัทรโกศล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "บึงกาฬ",
+    "constituency_no": 1,
+    "winner_name": "นายสยาม เพ็งทอง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บึงกาฬ",
+    "constituency_no": 2,
+    "winner_name": "นายสุริยา แป้นสุขา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บึงกาฬ",
+    "constituency_no": 3,
+    "winner_name": "นายวิโรจน์ สาระวงศ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 1,
+    "winner_name": "นายสนอง เทพอักษรณรงค์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 2,
+    "winner_name": "นางสาวณัฐธิดา เล็กอุดากร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 3,
+    "winner_name": "นายอดิพงษ์ ฐิติพิทยา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 4,
+    "winner_name": "นายชนกันต์ ทิมาตฤกะ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 5,
+    "winner_name": "นายโสภณ ซารัมย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 6,
+    "winner_name": "นายศักดิ์ ซารัมย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 7,
+    "winner_name": "นายพรชัย ศรีสุริยันโยธิน",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 8,
+    "winner_name": "นายไตรเทพ งามกมล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 9,
+    "winner_name": "นายรุ่งโรจน์ ทองศรี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "บุรีรัมย์",
+    "constituency_no": 10,
+    "winner_name": "นายจักรกฤษณ์ ทองศรี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 1,
+    "winner_name": "นายเจษฎา ดนตรีเสนาะ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 2,
+    "winner_name": "นายศุภชัย นพข า",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 3,
+    "winner_name": "นายเอกศักดิ์ หอมชื่น",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 4,
+    "winner_name": "นายสกล สุนทรวาณิชย์กิจ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 5,
+    "winner_name": "นายเชตวัน เตือประโคน",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 6,
+    "winner_name": "นายธนภัทร ตระกูลภูชัย",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 7,
+    "winner_name": "นายพิษณุ พลธี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปทุมธานี",
+    "constituency_no": 8,
+    "winner_name": "นางสาวพรพิมล ธรรมสาร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ประจวบคีรีขันธ์",
+    "constituency_no": 1,
+    "winner_name": "นายสังคม แดงโชติ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ประจวบคีรีขันธ์",
+    "constituency_no": 2,
+    "winner_name": "นายจักพันธ์ ปิยพรไพบูลย์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ประจวบคีรีขันธ์",
+    "constituency_no": 3,
+    "winner_name": "นายพงษ์พันธ์ เผ่าประทาน",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปราจีนบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายอ านาจ วิลาวัลย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปราจีนบุรี",
+    "constituency_no": 2,
+    "winner_name": "นายชยุต ภุมมะกาญจนะ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปราจีนบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายสฤษดิ์ บุตรเนียร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปัตตานี",
+    "constituency_no": 1,
+    "winner_name": "นายบาฮารุดดีน ยูโซะ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปัตตานี",
+    "constituency_no": 2,
+    "winner_name": "นายคอซีย์ มามุ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปัตตานี",
+    "constituency_no": 3,
+    "winner_name": "นายบูรฮันธ์ สะเม๊าะ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ปัตตานี",
+    "constituency_no": 4,
+    "winner_name": "นายยูนัยดีวาบา",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ปัตตานี",
+    "constituency_no": 5,
+    "winner_name": "นายสาเหะมูหามัด อัลอิดรุส",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พระนครศรีอยุธยา",
+    "constituency_no": 1,
+    "winner_name": "นายทรงพล สุขสมบูรณ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พระนครศรีอยุธยา",
+    "constituency_no": 2,
+    "winner_name": "นายนพ ชีวานันท์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พระนครศรีอยุธยา",
+    "constituency_no": 3,
+    "winner_name": "นางสาวพิมพฤดา ตันจรารักษ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พระนครศรีอยุธยา",
+    "constituency_no": 4,
+    "winner_name": "นายคงกฤช รามศักดิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พระนครศรีอยุธยา",
+    "constituency_no": 5,
+    "winner_name": "นายปะดิธ สังขจาย",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พะเยา",
+    "constituency_no": 2,
+    "winner_name": "นายอนุรัตน์ ตันบรรจง",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "พะเยา",
+    "constituency_no": 3,
+    "winner_name": "นายจีรเดช ศรีวิราช",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "พังงา",
+    "constituency_no": 1,
+    "winner_name": "นายอรรถพล ไตรศรี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พังงา",
+    "constituency_no": 2,
+    "winner_name": "นายฉกาจ พัฒนกิจวิบูลย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พัทลุง",
+    "constituency_no": 1,
+    "winner_name": "นาวาอากาศเอก อธิคุณ คงมี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พัทลุง",
+    "constituency_no": 2,
+    "winner_name": "นายวรท เทอดวีระพงศ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พัทลุง",
+    "constituency_no": 3,
+    "winner_name": "นายจรัญ จันทร์แก้ว",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "พิจิตร",
+    "constituency_no": 1,
+    "winner_name": "นายภัทรพงศ์ ภัทรประสิทธิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พิจิตร",
+    "constituency_no": 2,
+    "winner_name": "นายวินัย ภัทรประสิทธิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พิจิตร",
+    "constituency_no": 3,
+    "winner_name": "นายศิริวัฒน์ ขจรประศาสน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พิษณุโลก",
+    "constituency_no": 1,
+    "winner_name": "นายณฐชนน ชนะบูรณาศักดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "พิษณุโลก",
+    "constituency_no": 2,
+    "winner_name": "นายนพพล เหลืองทองนารา",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "พิษณุโลก",
+    "constituency_no": 3,
+    "winner_name": "นายพงษ์มนู ทองหนัก",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พิษณุโลก",
+    "constituency_no": 4,
+    "winner_name": "นายนิยม ช่างพินิจ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "พิษณุโลก",
+    "constituency_no": 5,
+    "winner_name": "นายจุติ ไกรฤกษ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบุรี",
+    "constituency_no": 1,
+    "winner_name": "นางธิวัลรัตน์ อังกินันทน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบุรี",
+    "constituency_no": 2,
+    "winner_name": "นายฤกษ์ อยู่ดี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบุรี",
+    "constituency_no": 3,
+    "winner_name": "จ่าอากาศเอก อภิชาติแก้วโกศล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบูรณ์",
+    "constituency_no": 1,
+    "winner_name": "นางสาวพิมพ์พร พรพฤฒิพันธุ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบูรณ์",
+    "constituency_no": 2,
+    "winner_name": "นายยุพราช บัวอินทร์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบูรณ์",
+    "constituency_no": 3,
+    "winner_name": "นายบุญชัย กิตติธาราทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบูรณ์",
+    "constituency_no": 4,
+    "winner_name": "นายวรโชติสุคนธ์ขจร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบูรณ์",
+    "constituency_no": 5,
+    "winner_name": "นางวันเพ็ญ พร้อมพัฒน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เพชรบูรณ์",
+    "constituency_no": 6,
+    "winner_name": "นายอัคร ทองใจสด",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "แพร่",
+    "constituency_no": 1,
+    "winner_name": "นางสาวชนกนันท์ ศุภศิริ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "แพร่",
+    "constituency_no": 2,
+    "winner_name": "นายชนาธิป ศุภศิริ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "แพร่",
+    "constituency_no": 3,
+    "winner_name": "นางสาวลักษณารีย์ ดวงตาด า",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ภูเก็ต",
+    "constituency_no": 1,
+    "winner_name": "ว่าที่ร้อยตรีสมชาติเตชถาวรเจริญ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ภูเก็ต",
+    "constituency_no": 2,
+    "winner_name": "นายเฉลิมพงศ์ แสงดี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ภูเก็ต",
+    "constituency_no": 3,
+    "winner_name": "นางสาวอรทัย เกิดทรัพย์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "มหาสารคาม",
+    "constituency_no": 1,
+    "winner_name": "นายฤทธิรงค์ ภูมิสวัสดิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "มหาสารคาม",
+    "constituency_no": 2,
+    "winner_name": "นายประวัติ ทองสมบูรณ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "มหาสารคาม",
+    "constituency_no": 3,
+    "winner_name": "นายลัทธชัย โชคชัยวัฒนากร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "มหาสารคาม",
+    "constituency_no": 4,
+    "winner_name": "นายวิเชียร จงชูวณิชย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "มหาสารคาม",
+    "constituency_no": 5,
+    "winner_name": "นายจิรวัฒน์ ศิริพานิชย์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "มหาสารคาม",
+    "constituency_no": 6,
+    "winner_name": "นางคมคาย อุดรพิมพ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "มุกดาหาร",
+    "constituency_no": 1,
+    "winner_name": "นายวิริยะ ทองผา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "มุกดาหาร",
+    "constituency_no": 2,
+    "winner_name": "นายเลขาด าไตรสรณคมน์ หนองเรือง",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "แม่ฮ่องสอน",
+    "constituency_no": 1,
+    "winner_name": "นายปกรณ์ จีนาค า",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "แม่ฮ่องสอน",
+    "constituency_no": 2,
+    "winner_name": "นายสมบัติยะสินธุ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ยโสธร",
+    "constituency_no": 1,
+    "winner_name": "นางสุภาพร สลับศรี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ยโสธร",
+    "constituency_no": 2,
+    "winner_name": "นายวรายุทธ จงอักษร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ยโสธร",
+    "constituency_no": 3,
+    "winner_name": "นายธนพัฒน์ ศรีชนะ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ยะลา",
+    "constituency_no": 1,
+    "winner_name": "นายสุไลมาน บือแนปีแน",
+    "winner_party": "ประชาชาติ"
+  },
+  {
+    "province": "ยะลา",
+    "constituency_no": 2,
+    "winner_name": "นายซูการ์โน มะทา",
+    "winner_party": "ประชาชาติ"
+  },
+  {
+    "province": "ยะลา",
+    "constituency_no": 3,
+    "winner_name": "นายอับดุลอายีสาแม็ง",
+    "winner_party": "ประชาชาติ"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 1,
+    "winner_name": "นายอนุรักษ์ จุรีมาศ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 2,
+    "winner_name": "นายเอกรัฐ พลซื่อ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 3,
+    "winner_name": "นางรัชนี พลซื่อ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 4,
+    "winner_name": "นายศุภศิษย์ กอเจริญยศ",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 5,
+    "winner_name": "นางสาวจิราพร สินธุไพร",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 6,
+    "winner_name": "นายทองลี มีหินกอง",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 7,
+    "winner_name": "นายชัชวาล แพทยาไทย",
+    "winner_party": "ไทยสร้างไทย"
+  },
+  {
+    "province": "ร้อยเอ็ด",
+    "constituency_no": 8,
+    "winner_name": "นางสาวชญาภา สินธุไพร",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ระนอง",
+    "constituency_no": 1,
+    "winner_name": "นายคงกฤษ ฉัตรมาลีรัตน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ระยอง",
+    "constituency_no": 1,
+    "winner_name": "นางสาวกมนทรรศน์ กิตติสุนทรสกุล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ระยอง",
+    "constituency_no": 2,
+    "winner_name": "นายกฤช ศิลปชัย",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ระยอง",
+    "constituency_no": 3,
+    "winner_name": "นายพศิน ปิตุเตชะ",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "ระยอง",
+    "constituency_no": 4,
+    "winner_name": "นายฉัตรชัย ปิตุเตชะ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ระยอง",
+    "constituency_no": 5,
+    "winner_name": "นายวัชรพงษ์ ศิริรักษ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ราชบุรี",
+    "constituency_no": 1,
+    "winner_name": "นางสาวกุลวลี นพอมรบดี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ราชบุรี",
+    "constituency_no": 2,
+    "winner_name": "นางบุญยิ่ง นิติกาญจนา",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ราชบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายจตุพร กมลพันธ์ทิพย์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ราชบุรี",
+    "constituency_no": 4,
+    "winner_name": "นายอัครเดช วงษ์พิทักษ์โรจน์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ราชบุรี",
+    "constituency_no": 5,
+    "winner_name": "นายบุญลือ ประเสริฐโสภา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ลพบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายนรินทร์ คลังผา",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ลพบุรี",
+    "constituency_no": 2,
+    "winner_name": "นางสาวมัลลิกา จิระพันธุ์วาณิช",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ลพบุรี",
+    "constituency_no": 3,
+    "winner_name": "นางสาวกาญจนาพร จิระพันธุ์วาณิช",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ลพบุรี",
+    "constituency_no": 4,
+    "winner_name": "นายวรวงศ์ วรปัญญา",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ล าปาง",
+    "constituency_no": 1,
+    "winner_name": "นางทิพา ปวีณาเสถียร",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ล าปาง",
+    "constituency_no": 2,
+    "winner_name": "นายดาชัย เอกปฐพี",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ล าปาง",
+    "constituency_no": 3,
+    "winner_name": "นายชลธานีเชื้อน้อย",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ล าปาง",
+    "constituency_no": 4,
+    "winner_name": "นางสาวเพ็ญภัค รัตนค าฟู",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "ล าพูน",
+    "constituency_no": 1,
+    "winner_name": "นายวิทวิสิทธิ์ ปันสวนปลูก",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "ล าพูน",
+    "constituency_no": 2,
+    "winner_name": "นายชัชพีร์ วรรณาพิรัชย์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "เลย",
+    "constituency_no": 1,
+    "winner_name": "นายเลิศศักดิ์ พัฒนชัยกุล",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "เลย",
+    "constituency_no": 2,
+    "winner_name": "นายศรัณย์ ทิมสุวรรณ",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "เลย",
+    "constituency_no": 3,
+    "winner_name": "นายธนยศ ทิมสุวรรณ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "เลย",
+    "constituency_no": 4,
+    "winner_name": "นายสมเจตน์ แสงเจริญรัตน์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 1,
+    "winner_name": "นายสิริพงศ์ อังคสกุลเกียรติ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 2,
+    "winner_name": "นายศุภกิจ สีหาภาค",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 3,
+    "winner_name": "นายธนา กิจไพบูลย์ชัย",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 4,
+    "winner_name": "นายชิตพล ไตรสรณกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 5,
+    "winner_name": "นางสาวจินณ์ตวรรณ ไตรสรณกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 6,
+    "winner_name": "นายวีระพล จิตสัมฤทธิ์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 7,
+    "winner_name": "นางสาววิลดา อินฉัตร",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 8,
+    "winner_name": "นายอาสพลธ์ สรรณ์ไตรภพ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "ศรีสะเกษ",
+    "constituency_no": 9,
+    "winner_name": "นายวิทวัส ไตรสรณกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 1,
+    "winner_name": "นายสิรภพ สมผล",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 2,
+    "winner_name": "นายชาตรี หล้าพรหม",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 3,
+    "winner_name": "นางสาวจิรัชยา สัพโส",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 4,
+    "winner_name": "นายพัฒนา สัพโส",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 5,
+    "winner_name": "นางสาววงศ์อะเคื้อ บุญศล",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 6,
+    "winner_name": "นายบรม เอ่งฉ้วน",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สกลนคร",
+    "constituency_no": 7,
+    "winner_name": "นายอิสรพงษ์ อุประ",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 1,
+    "winner_name": "นายสรรเพชญ บุญญามณี",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 2,
+    "winner_name": "นายจูรี นุ่มแก้ว",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 3,
+    "winner_name": "นายสมยศ พลายด้วง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 4,
+    "winner_name": "นายชนนพัฒฐ์ นาคสั้ว",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 5,
+    "winner_name": "นายวงศ์วชร ขาวทอง",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 6,
+    "winner_name": "นายอนุกูล พฤกษานุศักดิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 7,
+    "winner_name": "นายณัฏฐ์ชนน ศรีก่อเกื้อ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 8,
+    "winner_name": "พลต ารวจตรีสุรินทร์ ปาลาเร่",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สงขลา",
+    "constituency_no": 9,
+    "winner_name": "นายศักดิ์สิทธิ์ ขาวทอง",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "สตูล",
+    "constituency_no": 1,
+    "winner_name": "นายพีรพัฒน์ รัชกิจประการ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สตูล",
+    "constituency_no": 2,
+    "winner_name": "นายวรศิษฎ์ เลียงประสิทธิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 1,
+    "winner_name": "นางสาวพนิดา มงคลสวัสดิ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 2,
+    "winner_name": "นางสาวรัชนก สุขประเสริฐ",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 3,
+    "winner_name": "นายพิชัย แจ้งจรรยาวงศ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 4,
+    "winner_name": "นายชนสิษฎ์ ยอดฉิม",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 5,
+    "winner_name": "นางสาวนิตยา มีศรี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 6,
+    "winner_name": "นายฐาปกรณ์ กุลเจริญ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 7,
+    "winner_name": "นายบุญเลิศ แสงพันธุ์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรปราการ",
+    "constituency_no": 8,
+    "winner_name": "นายเทพฤทธิ์ ภาษี",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรสงคราม",
+    "constituency_no": 1,
+    "winner_name": "นายอานุภาพ ลิขิตอำนวยชัย",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรสาคร",
+    "constituency_no": 1,
+    "winner_name": "นายณัฐพงษ์ สุมโนธรรม",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรสาคร",
+    "constituency_no": 2,
+    "winner_name": "นายอนุสรณ์ ไกรวัตนุสสรณ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สมุทรสาคร",
+    "constituency_no": 3,
+    "winner_name": "นายศิริโรจน์ ธนิกกุล",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "สมุทรสาคร",
+    "constituency_no": 4,
+    "winner_name": "นายปัญญา ชวนบุญ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สระแก้ว",
+    "constituency_no": 1,
+    "winner_name": "นายบดีเทียนทอง",
+    "winner_party": "พลังประชารัฐ"
+  },
+  {
+    "province": "สระแก้ว",
+    "constituency_no": 2,
+    "winner_name": "นางสาวตรีนุช เทียนทอง",
+    "winner_party": "พลังประชารัฐ"
+  },
+  {
+    "province": "สระแก้ว",
+    "constituency_no": 3,
+    "winner_name": "นายสุรศักดิ์ ชิงนวรรณ์",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สระบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายขุนทอง แสนวิเศษ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สระบุรี",
+    "constituency_no": 2,
+    "winner_name": "นายอรรถพล วงษ์ประยูร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สระบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายวัชรพงศ์ คูวิจิตรสุวรรณ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สระบุรี",
+    "constituency_no": 4,
+    "winner_name": "นายองอาจ วงษ์ประยูร",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สิงห์บุรี",
+    "constituency_no": 1,
+    "winner_name": "นายโชติวุฒิธนาคมานุสรณ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุโขทัย",
+    "constituency_no": 1,
+    "winner_name": "นางสาวณัคนางค์ กุลนาถศิริ",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "สุโขทัย",
+    "constituency_no": 2,
+    "winner_name": "นายชูศักดิ์ คีรีมาศทอง",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "สุโขทัย",
+    "constituency_no": 3,
+    "winner_name": "นางสาวประภาพร ทองปากน้ า",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "สุโขทัย",
+    "constituency_no": 4,
+    "winner_name": "นายสมเจตน์ ลิมปะพันธุ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุพรรณบุรี",
+    "constituency_no": 1,
+    "winner_name": "นายสรชัด สุจิตต์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุพรรณบุรี",
+    "constituency_no": 3,
+    "winner_name": "นายณัฐชาติ วงศ์ประเสริฐ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สุพรรณบุรี",
+    "constituency_no": 4,
+    "winner_name": "นายเสมอกัน เที่ยงธรรม",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุพรรณบุรี",
+    "constituency_no": 5,
+    "winner_name": "นายประภัตร โพธสุธน",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 1,
+    "winner_name": "นางสาวกานสินีโอภาสรังสรรค์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 2,
+    "winner_name": "นายพิพิธ รัตนรักษ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 3,
+    "winner_name": "นางสาววชิราภรณ์ กาญจนะ",
+    "winner_party": "ไทรวมพลัง"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 4,
+    "winner_name": "นายสมชาติ ประดิษฐพร",
+    "winner_party": "ประชาธิปัตย์"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 5,
+    "winner_name": "นายปรเมษฐ์ จินา",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 6,
+    "winner_name": "นายพิชัย ชมภูพล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุราษฎร์ธานี",
+    "constituency_no": 7,
+    "winner_name": "นายพงษ์ศักดิ์ จ่าแก้ว",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 1,
+    "winner_name": "นางสาวเบญญา มุ่งเจริญพร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 2,
+    "winner_name": "นายณัฏฐพล จรัสรพีพงษ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 3,
+    "winner_name": "นางสาวผกามาศ เจริญพันธ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 4,
+    "winner_name": "นางสาวสุรีย์ ธัมมาตร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 5,
+    "winner_name": "นายภุชงค์ สุภัควรางกูร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 6,
+    "winner_name": "นายล้ าเลิศ พัวพัฒนโชติ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 7,
+    "winner_name": "นายเรืองวิทย์ คูณวัฒนาพงษ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "สุรินทร์",
+    "constituency_no": 8,
+    "winner_name": "นางปทิดา ตันติรัตนานนท์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "หนองคาย",
+    "constituency_no": 1,
+    "winner_name": "นายกระแสร์ ตระกูลพรพงศ์",
+    "winner_party": "พลังประชารัฐ"
+  },
+  {
+    "province": "หนองคาย",
+    "constituency_no": 2,
+    "winner_name": "นายยุทธนา ศรีตะบุตร",
+    "winner_party": "พลังประชารัฐ"
+  },
+  {
+    "province": "หนองคาย",
+    "constituency_no": 3,
+    "winner_name": "นายศักดิ์ดา จันทรสุวรรณ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "หนองบัวล าภู",
+    "constituency_no": 1,
+    "winner_name": "นายชยานันท์ เกตุเมฆ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "หนองบัวล าภู",
+    "constituency_no": 2,
+    "winner_name": "นายรุ่งเพชร ศรีกาญจนา",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "หนองบัวล าภู",
+    "constituency_no": 3,
+    "winner_name": "นายพรณรงค์ นิลนะมะ",
+    "winner_party": "กล้าธรรม"
+  },
+  {
+    "province": "อ่างทอง",
+    "constituency_no": 1,
+    "winner_name": "นายภราดร ปริศนานันทกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อ่างทอง",
+    "constituency_no": 2,
+    "winner_name": "นายกรวีร์ ปริศนานันทกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อำนาจเจริญ",
+    "constituency_no": 1,
+    "winner_name": "นางสุขสมรวย วันทนียกุล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อำนาจเจริญ",
+    "constituency_no": 2,
+    "winner_name": "นางญาณีนาถ เข็มนาค",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 1,
+    "winner_name": "นายอานันท์ อมรินทร์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 2,
+    "winner_name": "นางหทัยรัตน์ เพชรพนมพร",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 3,
+    "winner_name": "นายหรั่ง ธุระพล",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 4,
+    "winner_name": "นายไตรภพ ค าเพชร",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 5,
+    "winner_name": "นางบัวเงิน รอดขันเมือง",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 6,
+    "winner_name": "นายอดิศักดิ์ แก้วมุงคุณทรัพย์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 7,
+    "winner_name": "นายสุริยา วงศ์อารีย์",
+    "winner_party": "ประชาชน"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 8,
+    "winner_name": "นายสุภีรภัทร ภูมิภักดิ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 9,
+    "winner_name": "นายวัชระพล ขาวข า",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุดรธานี",
+    "constituency_no": 10,
+    "winner_name": "นางเทียบจุฑา ขาวข า",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุตรดิตถ์",
+    "constituency_no": 1,
+    "winner_name": "นายพิชญุตม์ พอจิต",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุตรดิตถ์",
+    "constituency_no": 2,
+    "winner_name": "นางสาวรสรินทร์ ศรัณย์เกตุ",
+    "winner_party": "โอกาสใหม่"
+  },
+  {
+    "province": "อุตรดิตถ์",
+    "constituency_no": 3,
+    "winner_name": "นายรวีเล็กอุทัย",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุทัยธานี",
+    "constituency_no": 1,
+    "winner_name": "นายเจเศรษฐ์ ไทยเศรษฐ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุทัยธานี",
+    "constituency_no": 2,
+    "winner_name": "นายชาดา ไทยเศรษฐ์",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 1,
+    "winner_name": "นายวรสิทธิ์ กัลป์ตินันท์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 2,
+    "winner_name": "นายณรงค์ชัย วีระกุล",
+    "winner_party": "ไทรวมพลัง"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 3,
+    "winner_name": "นางพิมพกาญจน์ พลสมัคร",
+    "winner_party": "ไทรวมพลัง"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 4,
+    "winner_name": "นางสาวกิตติ์ธัญญา วาจาดี",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 5,
+    "winner_name": "นายสุทธิชัย จรูญเนตร",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 6,
+    "winner_name": "นางสาวธัญธารีย์ สันตพันธุ์",
+    "winner_party": "เพื่อไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 7,
+    "winner_name": "นางสาวสุดารัตน์ พิทักษ์พรพัลลภ",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 8,
+    "winner_name": "นางสาวแนน บุณย์ธิดา สมชัย",
+    "winner_party": "ภูมิใจไทย"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 9,
+    "winner_name": "นางจิตรวรรณ หวังศุภกิจโกศล",
+    "winner_party": "ไทรวมพลัง"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 10,
+    "winner_name": "นายสมศักดิ์ บุญประชม",
+    "winner_party": "ไทรวมพลัง"
+  },
+  {
+    "province": "อุบลราชธานี",
+    "constituency_no": 11,
+    "winner_name": "นางสาวตวงทิพย์ จินตะเวช",
+    "winner_party": "ภูมิใจไทย"
+  }
+]

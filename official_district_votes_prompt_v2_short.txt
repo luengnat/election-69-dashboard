@@ -1,0 +1,8 @@
+Return ONLY one JSON object. No prose.
+Schema:
+{"province":"...","district_number":0,"election_type":"constituency|party_list","form_type":"...","valid_votes":null,"invalid_votes":null,"blank_votes":null,"total_votes":null,"votes":{"1":0}}
+Rules:
+- Arabic digits only.
+- Fill only what is readable from PDF.
+- Omit unreadable vote keys.
+- If unclear, use null.

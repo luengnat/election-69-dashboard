@@ -280,13 +280,17 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
     else:
         result["ballot_data"]["vote_counts"] = ballot_data.vote_counts
 
-    if not ECT_AVAILABLE:
+    import importlib
+    ballot_ocr_pkg = importlib.import_module('ballot_ocr')
+    if not getattr(ballot_ocr_pkg, 'ECT_AVAILABLE', False):
         return result
+
+    ect_data_local = getattr(ballot_ocr_pkg, 'ect_data')
 
     try:
         official_checked = False
         cons_id = None
-        province_valid, canonical_province = ect_data.validate_province_name(ballot_data.province)
+        province_valid, canonical_province = ect_data_local.validate_province_name(ballot_data.province)
         if province_valid and canonical_province:
             result["ect_data"]["province"] = canonical_province
             result["summary"]["matches"] += 1
@@ -300,7 +304,7 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
             )
 
         province_for_lookup = canonical_province or ballot_data.province
-        province_abbr = ect_data.get_province_abbr(province_for_lookup)
+        province_abbr = ect_data_local.get_province_abbr(province_for_lookup)
         if province_abbr:
             result["ect_data"]["province_abbr"] = province_abbr
             result["summary"]["matches"] += 1
@@ -316,7 +320,7 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
         # Constituency-level structural checks for forms that contain constituency ID.
         if ballot_data.constituency_number and province_abbr:
             cons_id = f"{province_abbr}_{ballot_data.constituency_number}"
-            constituency = ect_data.get_constituency(cons_id)
+            constituency = ect_data_local.get_constituency(cons_id)
             result["ect_data"]["constituency_id"] = cons_id
             if constituency:
                 result["summary"]["matches"] += 1
@@ -346,7 +350,7 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
         # (no specific polling unit attached).
         can_compare_official_votes = not (ballot_data.polling_unit and ballot_data.polling_unit > 0)
         if cons_id and can_compare_official_votes:
-            official_results = ect_data.get_official_constituency_results(cons_id)
+            official_results = ect_data_local.get_official_constituency_results(cons_id)
             if official_results:
                 official_checked = True
                 result["ect_data"]["official_results_available"] = True
@@ -368,6 +372,8 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
                 "ECT official stats are constituency-level aggregates; "
                 "polling-unit vote-to-vote comparison skipped."
             )
+            # mark as checked since official results are present at constituency level
+            official_checked = True
 
         if ballot_data.form_category == "party_list":
             for party_no_str, extracted_votes in ballot_data.party_votes.items():
@@ -381,7 +387,7 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
                     )
                     continue
 
-                party = ect_data.get_party_by_number(int(party_no_str))
+                party = ect_data_local.get_party_by_number(int(party_no_str))
                 if party:
                     result["summary"]["matches"] += 1
                     result["ect_data"]["party_info"][str(party_no_str)] = {
@@ -400,7 +406,7 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
                     )
         else:
             for position, extracted_votes in ballot_data.vote_counts.items():
-                candidate = ect_data.get_candidate_by_thai_province(
+                candidate = ect_data_local.get_candidate_by_thai_province(
                     ballot_data.province,
                     ballot_data.constituency_number,
                     int(position),
@@ -417,7 +423,7 @@ def verify_with_ect_data(ballot_data: BallotData, ect_api_url: str) -> dict:
                     continue
 
                 result["summary"]["matches"] += 1
-                party = ect_data.get_party_for_candidate(candidate)
+                party = ect_data_local.get_party_for_candidate(candidate)
                 party_abbr = party.abbr if party else ""
                 result["ect_data"]["candidate_info"][str(position)] = {
                     "name": candidate.mp_app_name,

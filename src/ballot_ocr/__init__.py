@@ -36,6 +36,9 @@ from ballot_ocr.core.types import (
 # Configuration - imported from core module
 from ballot_ocr.core.config import Config, config, get_config, reload_config
 
+# ECT reference data (re-export ect_data for tests and external use)
+from ect_api import ect_data
+
 # Extraction - imported from root-level module (shim)
 from ballot_extraction import (
     extract_ballot_data_with_ai,
@@ -93,6 +96,7 @@ __all__ = [
     # Extraction
     "extract_ballot_data_with_ai",
     "ECT_AVAILABLE",
+    "ect_data",
     "pdf_to_images",
     # Validation
     "detect_discrepancies",

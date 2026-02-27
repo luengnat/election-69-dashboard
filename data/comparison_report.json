@@ -1,0 +1,60 @@
+{
+  "summary": {
+    "total_constituencies": 400,
+    "matches": 393,
+    "discrepancies": 7
+  },
+  "discrepancies": [
+    {
+      "type": "no_votes",
+      "province": "กรุงเทพมหานคร",
+      "district": 15,
+      "message": "No vote data in dashboard"
+    },
+    {
+      "type": "missing_confirmed",
+      "province": "จันทบุรี",
+      "district": 1,
+      "message": "Constituency not found in confirmed list"
+    },
+    {
+      "type": "missing_confirmed",
+      "province": "จันทบุรี",
+      "district": 2,
+      "message": "Constituency not found in confirmed list"
+    },
+    {
+      "type": "no_votes",
+      "province": "น่าน",
+      "district": 1,
+      "message": "No vote data in dashboard"
+    },
+    {
+      "type": "missing_confirmed",
+      "province": "พะเยา",
+      "district": 1,
+      "message": "Constituency not found in confirmed list"
+    },
+    {
+      "type": "missing_confirmed",
+      "province": "สุพรรณบุรี",
+      "district": 2,
+      "message": "Constituency not found in confirmed list"
+    },
+    {
+      "type": "winner_mismatch",
+      "province": "อานาจเจริญ",
+      "district": 2,
+      "dashboard_winner": "นางญาญีนาถ เข็มนาค (ภูมิใจไทย)",
+      "confirmed_winner": "นางญาณีนาถ เข็มนาค (ภูมิใจไทย)",
+      "votes": {
+        "2": 17340,
+        "3": 19048,
+        "4": 1671,
+        "5": 43016,
+        "6": 12398,
+        "7": 389
+      }
+    }
+  ]
+}

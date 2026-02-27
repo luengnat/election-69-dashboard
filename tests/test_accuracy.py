@@ -140,7 +140,7 @@ def validate_extraction(extraction: BallotData, expected: dict) -> tuple[dict, l
     return checks, errors
 
 
-def test_image(image_path: str, ground_truth: dict) -> TestResult:
+def run_image_test(image_path: str, ground_truth: dict) -> TestResult:
     """Test a single image against ground truth."""
     image_name = Path(image_path).name
 
@@ -224,7 +224,7 @@ def run_all_tests(test_images_dir: str = "test_images") -> list:
         return results
 
     for image_path in sorted(test_dir.glob("*.png")):
-        result = test_image(str(image_path), ground_truth)
+        result = run_image_test(str(image_path), ground_truth)
         results.append(result)
 
     return results
@@ -267,7 +267,7 @@ def main():
 
     if args.image:
         ground_truth = load_ground_truth()
-        result = test_image(args.image, ground_truth)
+        result = run_image_test(args.image, ground_truth)
         results.append(result)
     elif args.all:
         results = run_all_tests(args.test_images_dir)

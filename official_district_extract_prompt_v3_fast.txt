@@ -1,0 +1,24 @@
+Extract district-level official results from this PDF.
+Return STRICT JSON only:
+{
+  "drive_id": "...",
+  "province": "...",
+  "district_number": null,
+  "election_type": "constituency|party_list",
+  "scores": [
+    {"number": 1, "score": 0}
+  ],
+  "totals": {
+    "valid_votes": null,
+    "invalid_votes": null,
+    "blank_votes": null,
+    "total_votes": null
+  }
+}
+Rules:
+- Use Arabic numerals only (ASCII 0-9).
+- number/score/totals are integer or null only.
+- If constituency form: scores = candidate number -> score.
+- If party-list form: scores = party number -> score.
+- Prefer numeric cells; if unreadable set null.
+- No markdown, no extra text.

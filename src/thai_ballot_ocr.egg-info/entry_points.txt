@@ -1,0 +1,3 @@
+[console_scripts]
+ballot-ocr = ballot_ocr.cli.main:main
+thai-ballot-ocr = ballot_ocr.cli.main:main
