@@ -92,8 +92,11 @@ function irregularityFlagLabel(flag) {
   const map = {
     high_delta_killernay: 'ต่างจาก killernay สูง',
     delta_killernay: 'ต่างจาก killernay',
+    high_delta_ect: 'ต่างจาก ECT (94%) สูง',
+    delta_ect: 'ต่างจาก ECT (94%)',
     high_invalid_blank_ratio: 'สัดส่วนบัตรเสีย+ไม่เลือกสูง',
     winner_disagreement: 'ผู้ชนะไม่ตรงกัน',
+    sum_mismatch: 'ผลรวมไม่ตรง',
     vote62_far_from_read: 'ต่างจาก vote62 มาก'
   };
   return map[flag] || String(flag || '-');
@@ -167,6 +170,12 @@ function killernayGap(row) {
   const s = sourceValidValues(row);
   if (s.read === null || s.killernay === null) return null;
   return s.read - s.killernay;
+}
+
+function ectGap(row) {
+  const s = sourceValidValues(row);
+  if (s.read === null || s.ect === null) return null;
+  return s.read - s.ect;
 }
 
 function valueStatusChip(ok) {
@@ -618,6 +627,7 @@ function computeIrregularityRows(items) {
   items.forEach((r) => {
     const vals = sourceValidValues(r);
     const kGap = killernayGap(r);
+    const eGap = ectGap(r);
     const spreadAll = sourceSpreadAll(r);
     const v62Gap = vote62Gap(r);
     const inv = numOrNull(r?.invalid_votes ?? r?.sources?.read?.invalid_votes);
@@ -636,6 +646,13 @@ function computeIrregularityRows(items) {
       severity += 3;
     } else if (kGap !== null && Math.abs(kGap) >= 200) {
       flags.push('delta_killernay');
+      severity += 2;
+    }
+    if (eGap !== null && Math.abs(eGap) >= 1000) {
+      flags.push('high_delta_ect');
+      severity += 3;
+    } else if (eGap !== null && Math.abs(eGap) >= 200) {
+      flags.push('delta_ect');
       severity += 2;
     }
     if (badRate !== null && badRate >= 0.10) {
@@ -663,6 +680,7 @@ function computeIrregularityRows(items) {
       severity,
       tier,
       spread: kGap === null ? null : Math.abs(kGap),
+      ectSpread: eGap === null ? null : Math.abs(eGap),
       spreadAll,
       v62Gap,
       badRate,
