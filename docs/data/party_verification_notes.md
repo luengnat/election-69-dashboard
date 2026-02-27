@@ -73,22 +73,31 @@ OCR misread Thai numeral "๓๙" (39) as "๓๔" (34) for candidate 6's vote c
 
 ## 2026-02-27: Complete sum!=valid Audit
 
-All 12 remaining sum!=valid issues fixed via killernay verification:
+All 12 remaining sum!=valid issues fixed:
 
-| District | Issue | Fix |
-|----------|-------|-----|
-| ชัยภูมิ เขต 1 (บช) | OCR row shift | Parties 14-18 corrected |
-| ขอนแก่น เขต 3 (บช) | Party 47 OCR | 301 → 111 |
-| มหาสารคาม เขต 3 (แบ่งเขต) | Candidate 6 OCR | 34,612 → 39,612 |
-| สงขลา เขต 5 (บช) | valid_votes OCR | 97,917 → 98,003 |
-| สระแก้ว เขต 3 (บช) | Party 57 missing | 0 → 85 |
-| นครสวรรค์ เขต 5 (บช) | Party 47 undercount | 255 → 316 |
-| พิจิตร เขต 1 (บช) | Party 36 OCR | 491 → 541 |
-| อุตรดิตถ์ เขต 2 (แบ่งเขต) | Candidate 1 OCR | 15,545 → 15,595 |
-| กรุงเทพ เขต 11 (แบ่งเขต) | Candidate 3 OCR | 181 → 180 |
-| นนทบุรี เขต 6 (บช) | Party 10 + valid | 570, valid 103,366 |
-| มหาสารคาม เขต 6 (บช) | Parties 19,20 + valid | 0, 17, valid 85,945 |
-| กรุงเทพ เขต 19 (บช) | Party 20 + valid | 18, valid 94,973 |
+### HIGH CONFIDENCE ✓ (Verified via Gemini/User)
+
+| District | Issue | Fix | Verified By |
+|----------|-------|-----|-------------|
+| ชัยภูมิ เขต 1 (บช) | OCR row shift | Parties 14-18 corrected | Gemini |
+| ขอนแก่น เขต 3 (บช) | Party 47 OCR | 301 → 111 | Gemini |
+| มหาสารคาม เขต 3 (แบ่งเขต) | Candidate 6 OCR | 34,612 → 39,612 | User |
+
+### MEDIUM CONFIDENCE ⚠️ (Killernay only - needs verification)
+
+| District | Issue | Fix | Needs |
+|----------|-------|-----|-------|
+| สงขลา เขต 5 (บช) | valid_votes OCR | 97,917 → 98,003 | Gemini verify |
+| สระแก้ว เขต 3 (บช) | Party 57 missing | 0 → 85 | Gemini verify |
+| นครสวรรค์ เขต 5 (บช) | Party 47 undercount | 255 → 316 | Gemini verify |
+| พิจิตร เขต 1 (บช) | Party 36 OCR | 491 → 541 | Gemini verify |
+| อุตรดิตถ์ เขต 2 (แบ่งเขต) | Candidate 1 OCR | 15,545 → 15,595 | Gemini verify |
+| กรุงเทพ เขต 11 (แบ่งเขต) | Candidate 3 OCR | 181 → 180 | Gemini verify |
+| นนทบุรี เขต 6 (บช) | Party 10 + valid | 570, valid 103,366 | Gemini verify |
+| มหาสารคาม เขต 6 (บช) | Parties 19,20 + valid | 0, 17, valid 85,945 | Gemini verify |
+| กรุงเทพ เขต 19 (บช) | Party 20 + valid | 18, valid 94,973 | Gemini verify |
+
+**Note:** Killernay-based fixes may contain OCR errors. Verify against original ballot papers when possible.
 
 **Result:** All 800 districts now have sum(votes) == valid_votes ✓
 
