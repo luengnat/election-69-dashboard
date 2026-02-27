@@ -99,5 +99,18 @@ All 12 remaining sum!=valid issues fixed:
 
 **Note:** Killernay-based fixes may contain OCR errors. Verify against original ballot papers when possible.
 
-**Result:** All 800 districts now have sum(votes) == valid_votes ✓
+**Result:** All 800 verified districts now have sum(votes) == valid_votes ✓
+
+## 2026-02-27: Buriram Re-extraction (In Progress)
+
+11 Buriram districts need re-extraction:
+- District 1: constituency (started, incomplete extraction), party_list (pending)
+- District 3: party_list (pending)
+- District 5: both forms (pending)
+- District 6: both forms (pending)
+- District 7: constituency (pending)
+- District 9: both forms (pending)
+- District 10: constituency (pending)
+
+Drive IDs available in `docs/data/buriram_dualport_votes.jsonl`
 
