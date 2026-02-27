@@ -11625,7 +11625,7 @@
             "57": 13,
             "19": 0
           },
-          "valid_votes": 94982,
+          "valid_votes": 95000,
           "invalid_votes": 1570,
           "blank_votes": 2350
         },
@@ -28898,7 +28898,7 @@
             "56": 26,
             "57": 58
           },
-          "valid_votes": 84711,
+          "valid_votes": 84521,
           "invalid_votes": 4458,
           "blank_votes": 1650
         },
@@ -39019,8 +39019,8 @@
             "10": 372
           },
           "valid_votes": 95514,
-          "invalid_votes": 2214,
-          "blank_votes": 4908
+          "invalid_votes": 3638,
+          "blank_votes": 4827
         },
         "ect": {
           "votes": {
