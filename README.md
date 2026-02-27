@@ -184,6 +184,29 @@ MAX_WORKERS=5
 RATE_LIMIT=2.0
 ```
 
+## Deployment
+
+To update the public GitHub Pages website with the latest data:
+
+```bash
+# Run the update script
+./scripts/update_website.sh /path/to/election-website
+
+# Or with default path (/tmp/election-main)
+./scripts/update_website.sh
+
+# Then commit and push in the website repo
+cd /tmp/election-main
+git add -A
+git commit -m "Update election data: $(date +%Y-%m-%d)"
+git push
+```
+
+The script copies:
+- `docs/data/district_dashboard_data.json` - Main dashboard data
+- `recheck_all_*.csv/json` - Comparison reports
+- Generates `export_first2_*.csv` for constituency and party-list data
+
 ## Benchmarks
 
 Accuracy on test dataset (clean scans):
