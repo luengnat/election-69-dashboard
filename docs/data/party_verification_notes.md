@@ -52,3 +52,71 @@ The 43,544 value was from a different/incorrect source.
 Candidate 2 (กล้าธรรม) = 43,594 votes ✓
 ```
 
+## 2026-02-27: มหาสารคาม เขต 3 Constituency OCR Error Fix
+
+### Issue
+Sum of candidate votes (79,786) did not match valid_votes (84,786) - a difference of 5,000 votes.
+
+### Root Cause
+OCR misread Thai numeral "๓๙" (39) as "๓๔" (34) for candidate 6's vote count.
+
+| Field | Before (Wrong) | After (Correct) |
+|-------|----------------|-----------------|
+| Candidate 6 (ภูมิใจไทย) | 34,612 | 39,612 |
+
+**Fix applied:** Updated `docs/data/district_dashboard_data.json`
+
+### Verification
+- Sum of votes now: 84,786 ✓
+- Valid votes: 84,786 ✓
+- Delta: 0 ✓
+
+## 2026-02-27: Complete sum!=valid Audit
+
+All 12 remaining sum!=valid issues fixed:
+
+### HIGH CONFIDENCE ✓ (Verified via Gemini/User)
+
+| District | Issue | Fix | Verified By |
+|----------|-------|-----|-------------|
+| ชัยภูมิ เขต 1 (บช) | OCR row shift | Parties 14-18 corrected | Gemini |
+| ขอนแก่น เขต 3 (บช) | Party 47 OCR | 301 → 111 | Gemini |
+| มหาสารคาม เขต 3 (แบ่งเขต) | Candidate 6 OCR | 34,612 → 39,612 | User |
+
+### MEDIUM CONFIDENCE ⚠️ (Killernay only - needs verification)
+
+| District | Issue | Fix | Needs |
+|----------|-------|-----|-------|
+| สงขลา เขต 5 (บช) | valid_votes OCR | 97,917 → 98,003 | Gemini verify |
+| สระแก้ว เขต 3 (บช) | Party 57 missing | 0 → 85 | Gemini verify |
+| นครสวรรค์ เขต 5 (บช) | Party 47 undercount | 255 → 316 | Gemini verify |
+| พิจิตร เขต 1 (บช) | Party 36 OCR | 491 → 541 | Gemini verify |
+| อุตรดิตถ์ เขต 2 (แบ่งเขต) | Candidate 1 OCR | 15,545 → 15,595 | Gemini verify |
+| กรุงเทพ เขต 11 (แบ่งเขต) | Candidate 3 OCR | 181 → 180 | Gemini verify |
+| นนทบุรี เขต 6 (บช) | Party 10 + valid | 570, valid 103,366 | Gemini verify |
+| มหาสารคาม เขต 6 (บช) | Parties 19,20 + valid | 0, 17, valid 85,945 | Gemini verify |
+| กรุงเทพ เขต 19 (บช) | Party 20 + valid | 18, valid 94,973 | Gemini verify |
+
+**Note:** Killernay-based fixes may contain OCR errors. Verify against original ballot papers when possible.
+
+**Result:** All 800 verified districts now have sum(votes) == valid_votes ✓
+
+## 2026-02-27: Buriram Complete Re-extraction ✓
+
+All 20 Buriram forms (10 districts × 2 forms) now have complete data:
+
+| District | Constituency | Party List | Source |
+|----------|--------------|------------|--------|
+| 1 | ✓ 78,889 | ✓ 80,645 | Gemini + User |
+| 2 | ✓ 75,055 | ✓ 75,773 | Earlier extraction |
+| 3 | ✓ 72,175 | ✓ 72,834 | Earlier extraction |
+| 4 | ✓ 69,445 | ✓ 69,590 | Earlier extraction |
+| 5 | ✓ 76,650 | ✓ 76,953 | Gemini + User |
+| 6 | ✓ 73,608 | ✓ 74,605 | Gemini + User |
+| 7 | ✓ 74,537 | ✓ 74,639 | Gemini + User |
+| 8 | ✓ 78,428 | ✓ 78,587 | Earlier extraction |
+| 9 | ✓ 73,695 | ✓ 73,596 | Gemini + User |
+| 10 | ✓ 69,176 | ✓ 69,607 | Gemini + User |
+
+**Verification:** All sum(votes) == valid_votes ✓
+
