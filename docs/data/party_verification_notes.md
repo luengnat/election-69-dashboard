@@ -71,3 +71,24 @@ OCR misread Thai numeral "๓๙" (39) as "๓๔" (34) for candidate 6's vote c
 - Valid votes: 84,786 ✓
 - Delta: 0 ✓
 
+## 2026-02-27: Complete sum!=valid Audit
+
+All 12 remaining sum!=valid issues fixed via killernay verification:
+
+| District | Issue | Fix |
+|----------|-------|-----|
+| ชัยภูมิ เขต 1 (บช) | OCR row shift | Parties 14-18 corrected |
+| ขอนแก่น เขต 3 (บช) | Party 47 OCR | 301 → 111 |
+| มหาสารคาม เขต 3 (แบ่งเขต) | Candidate 6 OCR | 34,612 → 39,612 |
+| สงขลา เขต 5 (บช) | valid_votes OCR | 97,917 → 98,003 |
+| สระแก้ว เขต 3 (บช) | Party 57 missing | 0 → 85 |
+| นครสวรรค์ เขต 5 (บช) | Party 47 undercount | 255 → 316 |
+| พิจิตร เขต 1 (บช) | Party 36 OCR | 491 → 541 |
+| อุตรดิตถ์ เขต 2 (แบ่งเขต) | Candidate 1 OCR | 15,545 → 15,595 |
+| กรุงเทพ เขต 11 (แบ่งเขต) | Candidate 3 OCR | 181 → 180 |
+| นนทบุรี เขต 6 (บช) | Party 10 + valid | 570, valid 103,366 |
+| มหาสารคาม เขต 6 (บช) | Parties 19,20 + valid | 0, 17, valid 85,945 |
+| กรุงเทพ เขต 19 (บช) | Party 20 + valid | 18, valid 94,973 |
+
+**Result:** All 800 districts now have sum(votes) == valid_votes ✓
+
