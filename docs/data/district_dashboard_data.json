@@ -25567,7 +25567,7 @@
       "province": "กำแพงเพชร",
       "district_number": 1,
       "form_type": "party_list",
-      "valid_votes_extracted": 91264,
+      "valid_votes_extracted": 91168,
       "weak_summary": false,
       "ocr_check": {
         "exact": true,
@@ -25754,7 +25754,7 @@
             "56": 74,
             "57": 79
           },
-          "valid_votes": 91264,
+          "valid_votes": 91168,
           "invalid_votes": 6367,
           "blank_votes": 3907
         },
