@@ -1085,7 +1085,7 @@ function setupTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260223-manual-recheck-final';
+  const dataVersion = '20260305-lopburi-d4-update';
   const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
   const data = await res.json();
   state.items = (data.items || []).filter((r) =>
