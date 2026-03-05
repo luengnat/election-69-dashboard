@@ -92,8 +92,11 @@ function irregularityFlagLabel(flag) {
   const map = {
     high_delta_killernay: 'ต่างจาก killernay สูง',
     delta_killernay: 'ต่างจาก killernay',
+    high_delta_ect: 'ต่างจาก ECT (94%) สูง',
+    delta_ect: 'ต่างจาก ECT (94%)',
     high_invalid_blank_ratio: 'สัดส่วนบัตรเสีย+ไม่เลือกสูง',
     winner_disagreement: 'ผู้ชนะไม่ตรงกัน',
+    sum_mismatch: 'ผลรวมไม่ตรง',
     vote62_far_from_read: 'ต่างจาก vote62 มาก'
   };
   return map[flag] || String(flag || '-');
@@ -169,6 +172,12 @@ function killernayGap(row) {
   return s.read - s.killernay;
 }
 
+function ectGap(row) {
+  const s = sourceValidValues(row);
+  if (s.read === null || s.ect === null) return null;
+  return s.read - s.ect;
+}
+
 function valueStatusChip(ok) {
   if (ok) return makeChip('มี', 'form-chip constituency');
   return makeChip('ไม่มี', 'form-chip party_list');
@@ -190,6 +199,21 @@ function winnerDisagreement(row) {
   ].filter((x) => x !== null);
   if (wins.length < 2) return false;
   return new Set(wins).size > 1;
+}
+
+function sumVotesMismatch(votesObj, reportedValid) {
+  const reported = numOrNull(reportedValid);
+  if (reported === null || !votesObj) return false;
+  let sum = 0;
+  let hasValid = false;
+  for (const v of Object.values(votesObj)) {
+    const num = numOrNull(v);
+    if (num !== null) {
+      sum += num;
+      hasValid = true;
+    }
+  }
+  return hasValid && sum !== reported;
 }
 
 function renderRows(rows) {
@@ -234,6 +258,14 @@ function renderRows(rows) {
     }
     if (winnerDisagreement(r)) {
       flagsCell.append(makeChip('ผู้ชนะไม่ตรงกัน', 'form-chip party_list'));
+    }
+    const sumMismatchRead = sumVotesMismatch(r.votes, vals.read);
+    const sumMismatchKillernay = sumVotesMismatch(r.sources?.killernay?.votes, vals.killernay);
+    if (sumMismatchRead) {
+      flagsCell.append(makeChip('Sum mismatch (อ่านได้)', 'form-chip party_list'));
+    }
+    if (sumMismatchKillernay) {
+      flagsCell.append(makeChip('Sum mismatch (killernay)', 'form-chip party_list'));
     }
     if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
       flagsCell.append(makeChip('ต่างจาก vote62 มาก', 'form-chip constituency'));
@@ -307,6 +339,10 @@ function renderDetail(row) {
     ...Object.keys(vote62Votes),
     ...Object.keys(killernayVotes)
   ]);
+  if (row.form_type === 'party_list') {
+    // Always render complete party range 1..57 for easier auditing.
+    for (let i = 1; i <= 57; i += 1) allNumbers.add(String(i));
+  }
 
   const rows = [...allNumbers]
     .map((number) => {
@@ -316,7 +352,17 @@ function renderDetail(row) {
       const killernay = numOrNull(killernayVotes[number]);
       return { number, read, ect, vote62, killernay };
     })
-    .sort((a, b) => (b.read ?? -1) - (a.read ?? -1) || Number(a.number) - Number(b.number));
+    .sort((a, b) => {
+      if (row.form_type === 'party_list') {
+        const an = Number(a.number);
+        const bn = Number(b.number);
+        const aInRange = Number.isFinite(an) && an >= 1 && an <= 57;
+        const bInRange = Number.isFinite(bn) && bn >= 1 && bn <= 57;
+        if (aInRange !== bInRange) return aInRange ? -1 : 1;
+        return an - bn;
+      }
+      return (b.read ?? -1) - (a.read ?? -1) || Number(a.number) - Number(b.number);
+    });
 
   rows.forEach(({ number, read, ect, vote62, killernay }) => {
     const tr = document.createElement('tr');
@@ -348,10 +394,19 @@ function renderDetail(row) {
 }
 
 function rowTotals(row) {
-  const read = row?.sources?.read || {};
-  const valid = numOrNull(read.valid_votes);
-  const invalid = numOrNull(read.invalid_votes);
-  const blank = numOrNull(read.blank_votes);
+  const valid = numOrNull(row?.valid_votes_extracted ?? row?.valid_votes ?? row?.sources?.read?.valid_votes);
+  const invalid = numOrNull(
+    row?.invalid_votes ??
+    row?.sources?.read?.invalid_votes ??
+    row?.sources?.ect?.invalid_votes ??
+    row?.sources?.vote62?.invalid_votes
+  );
+  const blank = numOrNull(
+    row?.blank_votes ??
+    row?.sources?.read?.blank_votes ??
+    row?.sources?.ect?.blank_votes ??
+    row?.sources?.vote62?.blank_votes
+  );
   if (valid === null || invalid === null || blank === null) {
     return { valid, invalid, blank, total: null };
   }
@@ -373,8 +428,6 @@ function _collectSkewDistrictRows(items, includeZero = false) {
   const out = [];
   byKey.forEach((g) => {
     if (!g.constituency || !g.party_list) return;
-    if (NO_FILE_REASON_MAP.has(`${g.province}|${g.district_number}`)) return;
-    if (!g.constituency?.availability?.has_extracted || !g.party_list?.availability?.has_extracted) return;
     const ct = rowTotals(g.constituency);
     const pt = rowTotals(g.party_list);
     if (ct.total === null || pt.total === null) return;
@@ -574,19 +627,17 @@ function computeIrregularityRows(items) {
   items.forEach((r) => {
     const vals = sourceValidValues(r);
     const kGap = killernayGap(r);
+    const eGap = ectGap(r);
     const spreadAll = sourceSpreadAll(r);
     const v62Gap = vote62Gap(r);
     const inv = numOrNull(r?.invalid_votes ?? r?.sources?.read?.invalid_votes);
     const blank = numOrNull(r?.blank_votes ?? r?.sources?.read?.blank_votes);
     const read = vals.read;
     const badRate = (read !== null && inv !== null && blank !== null && read > 0) ? ((inv + blank) / read) : null;
-    const winMismatch = (() => {
-      const src = r?.sources || {};
-      const a = winnerNumber(r?.votes || {});
-      const b = winnerNumber(src?.killernay?.votes || {});
-      if (a === null || b === null) return false;
-      return a !== b;
-    })();
+    const winMismatch = winnerDisagreement(r);
+    const sumMismatchRead = sumVotesMismatch(r.votes, vals.read);
+    const sumMismatchKillernay = sumVotesMismatch(r.sources?.killernay?.votes, vals.killernay);
+
     const flags = [];
     let severity = 0;
 
@@ -597,12 +648,23 @@ function computeIrregularityRows(items) {
       flags.push('delta_killernay');
       severity += 2;
     }
+    if (eGap !== null && Math.abs(eGap) >= 1000) {
+      flags.push('high_delta_ect');
+      severity += 3;
+    } else if (eGap !== null && Math.abs(eGap) >= 200) {
+      flags.push('delta_ect');
+      severity += 2;
+    }
     if (badRate !== null && badRate >= 0.10) {
       flags.push('high_invalid_blank_ratio');
       severity += 2;
     }
     if (winMismatch) {
       flags.push('winner_disagreement');
+      severity += 2;
+    }
+    if (sumMismatchRead || sumMismatchKillernay) {
+      flags.push('sum_mismatch');
       severity += 2;
     }
     if (v62Gap !== null && Math.abs(v62Gap) >= 5000) {
@@ -618,6 +680,7 @@ function computeIrregularityRows(items) {
       severity,
       tier,
       spread: kGap === null ? null : Math.abs(kGap),
+      ectSpread: eGap === null ? null : Math.abs(eGap),
       spreadAll,
       v62Gap,
       badRate,
@@ -1022,7 +1085,7 @@ function setupTabs() {
 }
 
 async function init() {
-  const dataVersion = '20260222-k7';
+  const dataVersion = '20260305-lopburi-d4-update';
   const res = await fetch(`./data/district_dashboard_data.json?v=${dataVersion}`);
   const data = await res.json();
   state.items = (data.items || []).filter((r) =>
