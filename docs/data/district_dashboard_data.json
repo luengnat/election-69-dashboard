@@ -152236,7 +152236,7 @@
       "province": "สมุทรสาคร",
       "district_number": 3,
       "form_type": "party_list",
-      "valid_votes_extracted": 76686,
+      "valid_votes_extracted": 76687,
       "weak_summary": false,
       "ocr_check": {
         "exact": true,
@@ -152290,7 +152290,7 @@
         "43": 145,
         "44": 101,
         "45": 71,
-        "46": 36220,
+        "46": 36221,
         "47": 99,
         "48": 445,
         "49": 261,
@@ -152628,8 +152628,8 @@
         "has_vote62": true,
         "has_killernay": true
       },
-      "updated_by": "policy_take_killernay",
-      "update_reason": "user_policy_take_killernay_unless_invalid"
+      "updated_by": "policy_take_killernay; Form 6/1 correction",
+      "update_reason": "Corrected Party 46 votes: 36,220 (website) → 36,221 (Form 6/1 official)"
     },
     {
       "drive_id": "1UAcq9cPe0JiXj2SHDvRwfs5FdE9DY5ip",
