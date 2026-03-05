@@ -129304,7 +129304,10 @@
       "updated_by": [
         "ECT official PDF"
       ],
-      "update_reason": "Updated with official ECT PDF data from 2026-02-08"
+      "update_reason": "Updated with official ECT PDF data from 2026-02-08",
+      "total_votes_cast": 116195,
+      "invalid_votes": 7267,
+      "blank_votes": 3444
     },
     {
       "drive_id": "1W_1A7Vcy3fcUxw1jRFV7pw7VQKeCFgAX",
