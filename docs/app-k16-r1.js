@@ -1,6 +1,6 @@
 console.info('[Election69 Dashboard] app-k16 loaded', new Date().toISOString());
 const BUILD_TAG = 'redv59-buriram-killernay-sanitize';
-const DATA_VERSION = '20260223-k12';
+const DATA_VERSION = '20260316-fix-restore';
 
 const els = {
   kpiGrid: document.getElementById('kpiGrid'),
